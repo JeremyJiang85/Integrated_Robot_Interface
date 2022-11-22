@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller.cs" />
+    <Compile Include="Fanuc.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +84,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\lion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="FRRJIf">
+      <Guid>{347AE5E2-B639-4527-B2EC-9D4F4DC4E7A9}</Guid>
+      <VersionMajor>42</VersionMajor>
+      <VersionMinor>15</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="FRRobotIFLib">
+      <Guid>{E84CC822-360D-4712-90FF-EE4C8C1E0B19}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
