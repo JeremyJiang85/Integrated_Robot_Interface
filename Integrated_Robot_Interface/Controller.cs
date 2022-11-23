@@ -11,7 +11,7 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         Fanuc myfanuc;
-        private int _robot = -1;
+        
         public int Robot
         {
             get
@@ -21,45 +21,53 @@ namespace Integrated_Robot_Interface
             set
             {
 
-                if (value >= (int)Robotnum.Fanuc && value <= (int)Robotnum.Ourarm)
+                if (value >= (int)Robotnum.None && value <= (int)Robotnum.Ourarm)
                 {
                     _robot = value;
                 }
                 else
                 {
-                    MessageBox.Show("Controller setting out of range");
+                    MessageBox.Show("手臂選擇超出範圍");
                 }
             }
         }
-        public string IP { get; set; }
+        private int _robot = (int)Robotnum.None;
+
+        public string IP = "";
         public enum Robotnum
         {
-            Null = -1,
-            Fanuc = 0,
-            Nexcom = 1,
-            Ourarm = 2
+            None, Fanuc, Nexcom, Ourarm
         }
 
-        public void Connect()
+        public bool Connect()
         {
             switch (_robot)
             {
-                case (int)Robotnum.Fanuc :
+                case (int)Robotnum.Fanuc:
                     myfanuc = new Fanuc();
-
-                    if (myfanuc.Connect(IP))
-                    {
-                        MessageBox.Show("Fanuc Robot is successfully connected");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fanuc Robot connect is failed");
-                    }
-                    break;
-
+                    return myfanuc.Connect(IP);
+                case (int)Robotnum.Nexcom:
+                    return false;
+                case (int)Robotnum.Ourarm:
+                    return false;
+                default:
+                    return false;
             }
         }
-        public void Disconnect() { }
+        public bool Disconnect()
+        {
+            switch (_robot)
+            {
+                case (int)Robotnum.Fanuc:
+                    return myfanuc.Disconnect();
+                case (int)Robotnum.Nexcom:
+                    return false;
+                case (int)Robotnum.Ourarm:
+                    return false;
+                default:
+                    return false;
+            }
+        }
         public void Refresh() { }
         public void Alarm() { }
     }

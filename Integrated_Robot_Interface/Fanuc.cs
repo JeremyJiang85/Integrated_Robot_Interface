@@ -9,7 +9,6 @@ namespace Integrated_Robot_Interface
     public class Fanuc
     {
         //變數宣告
-
         private FRRJIf.Core mobjCore;
         private FRRJIf.DataTable mobjDataTable;
 
