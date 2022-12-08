@@ -16,14 +16,14 @@ namespace Integrated_Robot_Interface
         {
             get
             {
-                return _robot;
+                return robot;
             }
             set
             {
 
                 if (value >= (int)Robotnum.None && value <= (int)Robotnum.Ourarm)
                 {
-                    _robot = value;
+                    robot = value;
                 }
                 else
                 {
@@ -31,9 +31,8 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
-        private int _robot = (int)Robotnum.None;
-
-        public string IP = "";
+        private int robot = (int)Robotnum.None;
+        public string IP { get; set; } = "";
         public enum Robotnum
         {
             None, Fanuc, Nexcom, Ourarm
@@ -41,7 +40,7 @@ namespace Integrated_Robot_Interface
 
         public bool Connect()
         {
-            switch (_robot)
+            switch (robot)
             {
                 case (int)Robotnum.Fanuc:
                     myfanuc = new Fanuc();
@@ -56,7 +55,7 @@ namespace Integrated_Robot_Interface
         }
         public bool Disconnect()
         {
-            switch (_robot)
+            switch (robot)
             {
                 case (int)Robotnum.Fanuc:
                     return myfanuc.Disconnect();
@@ -68,7 +67,21 @@ namespace Integrated_Robot_Interface
                     return false;
             }
         }
-        public void Refresh() { }
+        public void Refresh()
+        {
+            switch (robot)
+            {
+                case (int)Robotnum.Fanuc:
+                    myfanuc.Refresh();
+                    break;
+                case (int)Robotnum.Nexcom:
+                    break;
+                case (int)Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
+        }
         public void Alarm() { }
     }
 }

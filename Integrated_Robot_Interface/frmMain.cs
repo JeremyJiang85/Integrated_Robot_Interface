@@ -13,8 +13,9 @@ namespace Integrated_Robot_Interface
     public partial class FrmMain : Form
     {
         //變數宣告
-        Controller mycontroller = new Controller();
-        public static bool fgConnectionStatus = false;
+        Controller myController = new Controller();
+        public bool fgConnectionStatus { get; set; } = false;
+        
 
 
         public FrmMain()
@@ -24,43 +25,27 @@ namespace Integrated_Robot_Interface
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            mycontroller = new Controller();
+            FormInitialize();
         }
-        
-        //gbConnection
-        private void rdbFanuc_CheckedChanged(object sender, EventArgs e)
+
+        private void FormInitialize()
         {
-            if (rdbFanuc.Checked)
-            {
-                mycontroller.Robot = (int)Controller.Robotnum.Fanuc;
-                lblSelect.Text = "Select Robot : Fanuc";
-            }
+            string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
+                                            Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
+            cboRobot.Items.AddRange(Robot);
+            cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
         }
-        private void rdbNexcom_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdbNexcom.Checked)
-            {
-                mycontroller.Robot = (int)Controller.Robotnum.Nexcom;
-                lblSelect.Text = "Select Robot : Nexcom";
-            }
-        }
-        private void rdbOurarm_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdbOurarm.Checked)
-            {
-                mycontroller.Robot = (int)Controller.Robotnum.Ourarm;
-                lblSelect.Text = "Select Robot : Ourarm";
-            }
-        }
+
+        #region <gbConnection>
 
         private void btnConnection_Click(object sender, EventArgs e)
         {
             if (!fgConnectionStatus)
             {
-                switch (mycontroller.Robot)
+                switch (myController.Robot)
                 {
                     case (int)Controller.Robotnum.Fanuc:
-                        mycontroller.IP = txtConnection.Text;
+                        myController.IP = txtIP.Text;
                         break;
                     case (int)Controller.Robotnum.Nexcom:
                         break;
@@ -70,7 +55,7 @@ namespace Integrated_Robot_Interface
                         MessageBox.Show("請選擇手臂型號");
                         return;
                 }
-                if (mycontroller.Connect())
+                if (myController.Connect())
                 {
                     fgConnectionStatus = true;
                     lblConnectionStatus.Text = "Connection Status : Connected";
@@ -84,7 +69,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (mycontroller.Disconnect())
+                if (myController.Disconnect())
                 {
                     fgConnectionStatus = false;
                     lblConnectionStatus.Text = "Connection Status : Disconnected";
@@ -97,7 +82,11 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
+        #endregion
 
-        
+        private void btnEsc_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
