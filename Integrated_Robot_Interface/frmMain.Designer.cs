@@ -130,6 +130,7 @@
             this.cboRobot.Name = "cboRobot";
             this.cboRobot.Size = new System.Drawing.Size(155, 24);
             this.cboRobot.TabIndex = 8;
+            this.cboRobot.SelectedIndexChanged += new System.EventHandler(this.cboRobot_SelectedIndexChanged);
             // 
             // lblIP
             // 

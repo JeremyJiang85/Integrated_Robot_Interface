@@ -10,7 +10,7 @@ namespace Integrated_Robot_Interface
     public class Controller
     {
         //變數宣告
-        Fanuc myfanuc;
+        RobotAdapter myRobotAdapter = null;
         
         public int Robot
         {
@@ -32,7 +32,6 @@ namespace Integrated_Robot_Interface
             }
         }
         private int robot = (int)Robotnum.None;
-        public string IP { get; set; } = "";
         public enum Robotnum
         {
             None, Fanuc, Nexcom, Ourarm
@@ -43,8 +42,8 @@ namespace Integrated_Robot_Interface
             switch (robot)
             {
                 case (int)Robotnum.Fanuc:
-                    myfanuc = new Fanuc();
-                    return myfanuc.Connect(IP);
+                    myRobotAdapter = new FanucAdapter();
+                    return myRobotAdapter.Connect();
                 case (int)Robotnum.Nexcom:
                     return false;
                 case (int)Robotnum.Ourarm:
@@ -58,7 +57,7 @@ namespace Integrated_Robot_Interface
             switch (robot)
             {
                 case (int)Robotnum.Fanuc:
-                    return myfanuc.Disconnect();
+                    return myRobotAdapter.Disconnect();
                 case (int)Robotnum.Nexcom:
                     return false;
                 case (int)Robotnum.Ourarm:
@@ -69,18 +68,7 @@ namespace Integrated_Robot_Interface
         }
         public void Refresh()
         {
-            switch (robot)
-            {
-                case (int)Robotnum.Fanuc:
-                    myfanuc.Refresh();
-                    break;
-                case (int)Robotnum.Nexcom:
-                    break;
-                case (int)Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
+            
         }
         public void Alarm() { }
     }

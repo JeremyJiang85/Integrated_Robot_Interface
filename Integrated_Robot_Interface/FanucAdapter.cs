@@ -10,20 +10,20 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         Fanuc myfanuc;
-        public string IP { get; set; } = "";
+        public static string IP { get; set; } = "";
 
         public FanucAdapter()
         {
             myfanuc = new Fanuc();
         }
 
-        public override void Connect()
+        public override bool Connect()
         {
-            myfanuc.Connect(IP);
+            return myfanuc.Connect(IP);
         }
-        public override void Disconnect()
+        public override bool Disconnect()
         {
-            myfanuc.Disconnect();
+            return myfanuc.Disconnect();
         }
     }
 }

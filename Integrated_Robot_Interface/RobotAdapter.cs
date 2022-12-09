@@ -6,21 +6,16 @@ using System.Threading.Tasks;
 
 namespace Integrated_Robot_Interface
 {
-    public class RobotAdapter
+    public abstract class RobotAdapter
     {
         //變數宣告
 
 
 
         //功能介面
-        public virtual void Connect()           //連線與開啟手臂
-        {
+        public abstract bool Connect();           //連線與開啟手臂
 
-        }
-        public virtual void Disconnect()        //離線與關閉手臂
-        {
-
-        }
+        public abstract bool Disconnect();        //離線與關閉手臂
         public void Refresh()                   //更新資料
         {
 
