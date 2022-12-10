@@ -6,67 +6,39 @@ using System.Threading.Tasks;
 
 namespace Integrated_Robot_Interface
 {
-    public abstract class RobotAdapter
+    public class RobotAdapter
     {
         //變數宣告
-
-
+        public static string IP { get; set; } = "";
+        public static string AlarmText { get; set; } = "";
 
         //功能介面
-        public abstract bool Connect();           //連線與開啟手臂
-
-        public abstract bool Disconnect();        //離線與關閉手臂
-        public void Refresh()                   //更新資料
+        public virtual bool Connect()           //連線與開啟手臂
         {
-
+            return false;
         }
-        public void Alarm()
+        public virtual bool Disconnect()        //離線與關閉手臂
         {
-
+            return false;
         }
-        public void CPosition()
+        public virtual bool Refresh()           //更新資料
         {
-
+            return false;
         }
-        public void JPosition()
+        public virtual bool Alarm()             //警示檢查
         {
-
+            return false;
         }
-        public void Home()
-        {
-
-        }
-        public void CPositionSet()
-        {
-
-        }
-        public void JPositionSet()
-        {
-
-        }
-        public void Override()
-        {
-
-        }
-        public void Velocity()
-        {
-
-        }
-        public void VelocitySet()
-        {
-
-        }
-        public void Register()
-        {
-
-        }
-        public void RegisterSet()
-        {
-
-        }
-        public void PositionMove()
-        {
-
-        }
+        //public void CPosition()
+        //public void JPosition()
+        //public void Home()
+        //public void CPositionSet()
+        //public void JPositionSet()
+        //public void Override()
+        //public void Velocity()
+        //public void VelocitySet()
+        //public void Register()
+        //public void RegisterSet()
+        //public void PositionMove()
     }
 }

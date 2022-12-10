@@ -26,17 +26,28 @@ namespace Integrated_Robot_Interface
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            FormInitialize();
-        }
-
-        private void FormInitialize()
-        {
+            timer1.Enabled = false;
+            timer1.Interval = 500;
             txtIP.Enabled = false;
             string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
                                             Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
             cboRobot.Items.AddRange(Robot);
             cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
+            richTextBox1.Enabled = false;
         }
+
+        private void Initialize()
+        {
+            timer1.Enabled = false;
+            txtIP.Enabled = false;
+            cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
+            fgConnectionStatus = false;
+            lblConnectionStatus.Text = "Connection Status : Disconnected";
+            btnConnection.Text = "Connect";
+            cboRobot.Enabled = true;
+            richTextBox1.Enabled = false;
+        }
+
 
         #region <gbConnection>
         private void cboRobot_SelectedIndexChanged(object sender, EventArgs e)
@@ -49,12 +60,15 @@ namespace Integrated_Robot_Interface
                     break;
                 case (int)Controller.Robotnum.Nexcom:
                     myController.Robot = (int)Controller.Robotnum.Nexcom;
+                    txtIP.Enabled = false;
                     break;
                 case (int)Controller.Robotnum.Ourarm:
                     myController.Robot = (int)Controller.Robotnum.Ourarm;
+                    txtIP.Enabled = false;
                     break;
                 default:
                     myController.Robot = (int)Controller.Robotnum.None;
+                    txtIP.Enabled = false;
                     break;
             }
         }
@@ -66,8 +80,7 @@ namespace Integrated_Robot_Interface
                 switch (myController.Robot)
                 {
                     case (int)Controller.Robotnum.Fanuc:
-                        FanucAdapter.IP = txtIP.Text;
-                        txtIP.Enabled = false;
+                        RobotAdapter.IP = txtIP.Text;
                         break;
                     case (int)Controller.Robotnum.Nexcom:
                         break;
@@ -83,6 +96,9 @@ namespace Integrated_Robot_Interface
                     lblConnectionStatus.Text = "Connection Status : Connected";
                     btnConnection.Text = "Disconnect";
                     cboRobot.Enabled = false;
+                    timer1.Enabled = true;
+                    txtIP.Enabled = false;
+                    richTextBox1.Enabled = true;
                     MessageBox.Show("手臂連線成功");
                 }
                 else
@@ -94,37 +110,100 @@ namespace Integrated_Robot_Interface
             {
                 if (myController.Disconnect())
                 {
-                    fgConnectionStatus = false;
-                    lblConnectionStatus.Text = "Connection Status : Disconnected";
-                    btnConnection.Text = "Connect";
-                    cboRobot.Enabled = true;
+                    Initialize();
                     MessageBox.Show("手臂離線成功");
                 }
                 else
                 {
                     MessageBox.Show("手臂離線失敗");
                 }
-                switch (myController.Robot)
-                {
-                    case (int)Controller.Robotnum.Fanuc:
-                        txtIP.Enabled = true;
-                        break;
-                    case (int)Controller.Robotnum.Nexcom:
-                        break;
-                    case (int)Controller.Robotnum.Ourarm:
-                        break;
-                    default:
-                        MessageBox.Show("請選擇手臂型號");
-                        return;
-                }
             }
         }
         #endregion
 
+        #region <NOgb>
+
+        #endregion
         private void btnEsc_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DialogResult result;
+            if (!myController.Refresh())
+            {
+                timer1.Enabled = false;
+                result = MessageBox.Show("Refresh失敗", "Refresh狀態", MessageBoxButtons.AbortRetryIgnore);
+                if (result == DialogResult.Abort)
+                {
+                    if (myController.Disconnect())
+                    {
+                        Initialize();
+                        MessageBox.Show("手臂離線成功");
+                    }
+                    else
+                    {
+                        timer1.Enabled = true;
+                        MessageBox.Show("手臂離線失敗");
+                    }
+                }
+                else 
+                {
+                    timer1.Enabled = true;
+                }
+            }
+
+            if (!myController.Alarm())
+            {
+                timer1.Enabled = false;
+                result = MessageBox.Show("取得警示失敗", "取得警示狀態", MessageBoxButtons.AbortRetryIgnore);
+                if (result == DialogResult.Abort)
+                {
+                    if (myController.Disconnect())
+                    {
+                        Initialize();
+                        MessageBox.Show("手臂離線成功");
+                    }
+                    else
+                    {
+                        timer1.Enabled = true;
+                        MessageBox.Show("手臂離線失敗");
+                    }
+                }
+                else
+                {
+                    timer1.Enabled = true;
+                }
+            }
+            else
+            {
+                if (RobotAdapter.AlarmText != "")
+                {
+                    timer1.Enabled = false;
+                    richTextBox1.Text += RobotAdapter.AlarmText;
+                    result = MessageBox.Show($"{RobotAdapter.AlarmText}", "取得警示狀態", MessageBoxButtons.AbortRetryIgnore);
+                    if (result == DialogResult.Abort)
+                    {
+                        if (myController.Disconnect())
+                        {
+                            Initialize();
+                            MessageBox.Show("手臂離線成功");
+                        }
+                        else
+                        {
+                            timer1.Enabled = true;
+                            MessageBox.Show("手臂離線失敗");
+                        }
+                    }
+                    else
+                    {
+                        timer1.Enabled = true;
+                    }
+                }
+                
+            }
+        }
     }
 }

@@ -66,10 +66,13 @@ namespace Integrated_Robot_Interface
                     return false;
             }
         }
-        public void Refresh()
+        public bool Refresh()
         {
-            
+            return myRobotAdapter.Refresh();
         }
-        public void Alarm() { }
+        public bool Alarm()
+        {
+            return myRobotAdapter.Alarm();
+        }
     }
 }

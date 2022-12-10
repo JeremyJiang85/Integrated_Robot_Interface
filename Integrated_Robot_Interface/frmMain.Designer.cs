@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pblogo = new System.Windows.Forms.PictureBox();
             this.btnEsc = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
@@ -37,6 +38,8 @@
             this.txtIP = new System.Windows.Forms.TextBox();
             this.cboRobot = new System.Windows.Forms.ComboBox();
             this.lblIP = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.SuspendLayout();
@@ -113,11 +116,12 @@
             // 
             this.txtIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIP.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtIP.Location = new System.Drawing.Point(49, 88);
+            this.txtIP.Location = new System.Drawing.Point(50, 88);
             this.txtIP.Name = "txtIP";
             this.txtIP.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtIP.Size = new System.Drawing.Size(112, 27);
+            this.txtIP.Size = new System.Drawing.Size(111, 27);
             this.txtIP.TabIndex = 2;
+            this.txtIP.Text = "127.0.0.1";
             this.txtIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // cboRobot
@@ -142,11 +146,24 @@
             this.lblIP.TabIndex = 9;
             this.lblIP.Text = "IP :";
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(446, 12);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(355, 128);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = "";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1239, 642);
+            this.ClientSize = new System.Drawing.Size(1252, 534);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.gbConnection);
             this.Controls.Add(this.btnEsc);
             this.Controls.Add(this.pblogo);
@@ -171,6 +188,8 @@
         private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.Label lblIP;
         private System.Windows.Forms.ComboBox cboRobot;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

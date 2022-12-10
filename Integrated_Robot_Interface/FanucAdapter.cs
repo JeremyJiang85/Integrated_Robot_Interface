@@ -10,7 +10,6 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         Fanuc myfanuc;
-        public static string IP { get; set; } = "";
 
         public FanucAdapter()
         {
@@ -24,6 +23,18 @@ namespace Integrated_Robot_Interface
         public override bool Disconnect()
         {
             return myfanuc.Disconnect();
+        }
+        public override bool Refresh()
+        {
+            return myfanuc.Refresh();
+        }
+        public override bool Alarm()
+        {
+            bool ret = false;
+            string txt = "";
+            ret = myfanuc.Alarm(ref txt);
+            AlarmText = txt;
+            return ret;
         }
     }
 }
