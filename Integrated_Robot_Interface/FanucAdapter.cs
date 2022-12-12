@@ -36,5 +36,21 @@ namespace Integrated_Robot_Interface
             AlarmText = txt;
             return ret;
         }
+        public override bool CPosition()
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[6];
+            ret = myfanuc.CPosition(ref Xyzwpr);
+            Cposition = Xyzwpr;
+            return ret;
+        }
+        public override bool JPosition()
+        {
+            bool ret = false;
+            Array Joint = new float[6];
+            ret = myfanuc.JPosition(ref Joint);
+            Jposition = Joint;
+            return ret;
+        }
     }
 }

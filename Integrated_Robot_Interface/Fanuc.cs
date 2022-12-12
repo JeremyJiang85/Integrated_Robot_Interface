@@ -61,14 +61,14 @@ namespace Integrated_Robot_Interface
             string AlarmMessage = null;
             string CauseAlarmMessage = null;
             string SeverityMessage = null;
+
             ret = mobjAlarmCurrent.GetValue(Count, ref AlarmID, ref AlarmNumber, ref CauseAlarmID, ref CauseAlarmNumber, ref Severity,
                 ref Year, ref Month, ref Day, ref Hour, ref Minute, ref Second, ref AlarmMessage, ref CauseAlarmMessage, ref SeverityMessage);
             if (ret)
             {
                 if (AlarmID != 0)
                 {
-                    AlarmText = AlarmID + ", " + AlarmNumber + ", " + CauseAlarmID + ", " + CauseAlarmNumber + ", " + Severity + "\r\n" +
-                    Year + "/" + Month + "/" + Day + ", " + Hour + ":" + Minute + ":" + Second + "\r\n";
+                    AlarmText = Year + "/" + Month + "/" + Day + ", " + Hour + ":" + Minute + ":" + Second + "\r\n";
                     if (!string.IsNullOrEmpty(AlarmMessage))
                     {
                         AlarmText += AlarmMessage + "\r\n";
@@ -79,7 +79,7 @@ namespace Integrated_Robot_Interface
                     }
                     if (!string.IsNullOrEmpty(SeverityMessage))
                     {
-                        AlarmText += SeverityMessage;
+                        AlarmText += SeverityMessage + "\r\n";
                     }
                     return ret;
                 }
@@ -91,7 +91,50 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                AlarmText = "取得警示失敗";
+                return ret;
+            }
+        }
+        public bool CPosition(ref Array xyzwpr)
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 0;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (ret)
+            {
+                xyzwpr = Xyzwpr;
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+        public bool JPosition(ref Array joint)
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 0;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (ret)
+            {
+                joint = Joint;
+                return ret;
+            }
+            else
+            {
                 return ret;
             }
         }

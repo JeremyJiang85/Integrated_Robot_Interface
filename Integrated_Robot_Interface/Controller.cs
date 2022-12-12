@@ -37,6 +37,7 @@ namespace Integrated_Robot_Interface
             None, Fanuc, Nexcom, Ourarm
         }
 
+
         public bool Connect()
         {
             switch (robot)
@@ -73,6 +74,14 @@ namespace Integrated_Robot_Interface
         public bool Alarm()
         {
             return myRobotAdapter.Alarm();
+        }
+        public bool CPosition()
+        {
+            return myRobotAdapter.CPosition();
+        }
+        public bool JPosition()
+        {
+            return myRobotAdapter.JPosition();
         }
     }
 }

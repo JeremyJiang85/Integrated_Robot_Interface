@@ -33,7 +33,6 @@ namespace Integrated_Robot_Interface
                                             Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
             cboRobot.Items.AddRange(Robot);
             cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
-            richTextBox1.Enabled = false;
         }
 
         private void Initialize()
@@ -45,7 +44,9 @@ namespace Integrated_Robot_Interface
             lblConnectionStatus.Text = "Connection Status : Disconnected";
             btnConnection.Text = "Connect";
             cboRobot.Enabled = true;
-            richTextBox1.Enabled = false;
+            gbCurrentPosition.Enabled = false;
+            lblXyzwpr.Text = "卡式座標\r\nX : \r\nY : \r\nZ : \r\nW: \r\nP : \r\nR : ";
+            lblJoint.Text = "軸座標\r\nJ1 : \r\nJ2 : \r\nJ3 : \r\nJ4 : \r\nJ5 : \r\nJ6 : ";
         }
 
 
@@ -87,6 +88,7 @@ namespace Integrated_Robot_Interface
                     case (int)Controller.Robotnum.Ourarm:
                         break;
                     default:
+                        richTextBox1.Text += "請選擇手臂型號\r\n";
                         MessageBox.Show("請選擇手臂型號");
                         return;
                 }
@@ -98,11 +100,13 @@ namespace Integrated_Robot_Interface
                     cboRobot.Enabled = false;
                     timer1.Enabled = true;
                     txtIP.Enabled = false;
-                    richTextBox1.Enabled = true;
+                    richTextBox1.Clear();
+                    richTextBox1.Text += "手臂連線成功\r\n";
                     MessageBox.Show("手臂連線成功");
                 }
                 else
                 {
+                    richTextBox1.Text += "手臂連線失敗\r\n";
                     MessageBox.Show("手臂連線失敗");
                 }
             }
@@ -111,10 +115,12 @@ namespace Integrated_Robot_Interface
                 if (myController.Disconnect())
                 {
                     Initialize();
+                    richTextBox1.Text += "手臂離線成功\r\n";
                     MessageBox.Show("手臂離線成功");
                 }
                 else
                 {
+                    richTextBox1.Text += "手臂離線失敗\r\n";
                     MessageBox.Show("手臂離線失敗");
                 }
             }
@@ -131,78 +137,77 @@ namespace Integrated_Robot_Interface
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            DialogResult result;
             if (!myController.Refresh())
             {
-                timer1.Enabled = false;
-                result = MessageBox.Show("Refresh失敗", "Refresh狀態", MessageBoxButtons.AbortRetryIgnore);
-                if (result == DialogResult.Abort)
-                {
-                    if (myController.Disconnect())
-                    {
-                        Initialize();
-                        MessageBox.Show("手臂離線成功");
-                    }
-                    else
-                    {
-                        timer1.Enabled = true;
-                        MessageBox.Show("手臂離線失敗");
-                    }
-                }
-                else 
-                {
-                    timer1.Enabled = true;
-                }
+                ShowMessage("刷新失敗", "取得刷新狀態");
             }
 
             if (!myController.Alarm())
             {
-                timer1.Enabled = false;
-                result = MessageBox.Show("取得警示失敗", "取得警示狀態", MessageBoxButtons.AbortRetryIgnore);
-                if (result == DialogResult.Abort)
-                {
-                    if (myController.Disconnect())
-                    {
-                        Initialize();
-                        MessageBox.Show("手臂離線成功");
-                    }
-                    else
-                    {
-                        timer1.Enabled = true;
-                        MessageBox.Show("手臂離線失敗");
-                    }
-                }
-                else
-                {
-                    timer1.Enabled = true;
-                }
+                ShowMessage("取得警示失敗", "取得警示狀態");
             }
             else
             {
                 if (RobotAdapter.AlarmText != "")
                 {
-                    timer1.Enabled = false;
-                    richTextBox1.Text += RobotAdapter.AlarmText;
-                    result = MessageBox.Show($"{RobotAdapter.AlarmText}", "取得警示狀態", MessageBoxButtons.AbortRetryIgnore);
-                    if (result == DialogResult.Abort)
-                    {
-                        if (myController.Disconnect())
-                        {
-                            Initialize();
-                            MessageBox.Show("手臂離線成功");
-                        }
-                        else
-                        {
-                            timer1.Enabled = true;
-                            MessageBox.Show("手臂離線失敗");
-                        }
-                    }
-                    else
-                    {
-                        timer1.Enabled = true;
-                    }
+                    ShowMessage($"{RobotAdapter.AlarmText}", "取得警示狀態");
                 }
-                
+            }
+
+            if (!myController.CPosition())
+            {
+                ShowMessage("取得卡氏座標失敗", "取得卡氏座標狀態");
+            }
+            else
+            {
+                lblXyzwpr.Text = "卡式座標\r\n";
+                lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Cposition.GetValue(5)).ToString("###0.000"))}\r\n";
+            }
+
+            if (!myController.JPosition())
+            {
+                ShowMessage("取得軸座標失敗", "取得軸座標狀態");
+            }
+            else
+            {
+                lblJoint.Text = "卡式座標\r\n";
+                lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.Jposition.GetValue(5)).ToString("###0.000"))}\r\n";
+            }
+        }
+        private void ShowMessage(string content, string title)
+        {
+            DialogResult result;
+            timer1.Enabled = false;
+            richTextBox1.Text += $"{content}\r\n";
+            result = MessageBox.Show($"{content}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
+            if (result == DialogResult.Abort)
+            {
+                if (myController.Disconnect())
+                {
+                    Initialize();
+                    richTextBox1.Text += "手臂離線成功\r\n";
+                    MessageBox.Show("手臂離線成功");
+                }
+                else
+                {
+                    timer1.Enabled = true;
+                    richTextBox1.Text += "手臂離線失敗\r\n";
+                    MessageBox.Show("手臂離線失敗");
+                }
+            }
+            else
+            {
+                timer1.Enabled = true;
             }
         }
     }

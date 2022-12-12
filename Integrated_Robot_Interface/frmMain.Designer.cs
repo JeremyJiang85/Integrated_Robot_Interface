@@ -40,8 +40,12 @@
             this.lblIP = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.gbCurrentPosition = new System.Windows.Forms.GroupBox();
+            this.lblXyzwpr = new System.Windows.Forms.Label();
+            this.lblJoint = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
+            this.gbCurrentPosition.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
@@ -56,7 +60,7 @@
             // 
             // btnEsc
             // 
-            this.btnEsc.Location = new System.Drawing.Point(1068, 12);
+            this.btnEsc.Location = new System.Drawing.Point(982, 18);
             this.btnEsc.Name = "btnEsc";
             this.btnEsc.Size = new System.Drawing.Size(75, 75);
             this.btnEsc.TabIndex = 1;
@@ -158,11 +162,42 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // gbCurrentPosition
+            // 
+            this.gbCurrentPosition.Controls.Add(this.lblJoint);
+            this.gbCurrentPosition.Controls.Add(this.lblXyzwpr);
+            this.gbCurrentPosition.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbCurrentPosition.Location = new System.Drawing.Point(12, 146);
+            this.gbCurrentPosition.Name = "gbCurrentPosition";
+            this.gbCurrentPosition.Size = new System.Drawing.Size(279, 184);
+            this.gbCurrentPosition.TabIndex = 4;
+            this.gbCurrentPosition.TabStop = false;
+            this.gbCurrentPosition.Text = "CurrentPosition";
+            // 
+            // lblXyzwpr
+            // 
+            this.lblXyzwpr.AutoSize = true;
+            this.lblXyzwpr.Location = new System.Drawing.Point(6, 29);
+            this.lblXyzwpr.Name = "lblXyzwpr";
+            this.lblXyzwpr.Size = new System.Drawing.Size(94, 147);
+            this.lblXyzwpr.TabIndex = 0;
+            this.lblXyzwpr.Text = "卡氏座標\r\nX :\r\nY :\r\nZ :\r\nW:\r\nP :\r\nR :";
+            // 
+            // lblJoint
+            // 
+            this.lblJoint.AutoSize = true;
+            this.lblJoint.Location = new System.Drawing.Point(140, 29);
+            this.lblJoint.Name = "lblJoint";
+            this.lblJoint.Size = new System.Drawing.Size(73, 147);
+            this.lblJoint.TabIndex = 1;
+            this.lblJoint.Text = "軸座標\r\nJ1:\r\nJ2:\r\nJ3:\r\nJ4:\r\nJ5:\r\nJ6:";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1252, 534);
+            this.ClientSize = new System.Drawing.Size(1148, 548);
+            this.Controls.Add(this.gbCurrentPosition);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.gbConnection);
             this.Controls.Add(this.btnEsc);
@@ -173,6 +208,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).EndInit();
             this.gbConnection.ResumeLayout(false);
             this.gbConnection.PerformLayout();
+            this.gbCurrentPosition.ResumeLayout(false);
+            this.gbCurrentPosition.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -190,6 +227,9 @@
         private System.Windows.Forms.ComboBox cboRobot;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.GroupBox gbCurrentPosition;
+        private System.Windows.Forms.Label lblJoint;
+        private System.Windows.Forms.Label lblXyzwpr;
     }
 }
 

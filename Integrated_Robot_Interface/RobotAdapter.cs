@@ -11,6 +11,9 @@ namespace Integrated_Robot_Interface
         //變數宣告
         public static string IP { get; set; } = "";
         public static string AlarmText { get; set; } = "";
+        public static Array Cposition { get; set; } = new float[6];
+        public static Array Jposition { get; set; } = new float[6];
+
 
         //功能介面
         public virtual bool Connect()           //連線與開啟手臂
@@ -29,8 +32,14 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        //public void CPosition()
-        //public void JPosition()
+        public virtual bool CPosition()
+        {
+            return false;
+        }
+        public virtual bool JPosition()
+        {
+            return false;
+        }
         //public void Home()
         //public void CPositionSet()
         //public void JPositionSet()
