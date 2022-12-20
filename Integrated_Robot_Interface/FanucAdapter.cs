@@ -36,6 +36,14 @@ namespace Integrated_Robot_Interface
             AlarmText = txt;
             return ret;
         }
+        public override bool Override()
+        {
+            bool ret = false;
+            string txt = "";
+            ret = myfanuc.Override(ref txt);
+            OverrideText = txt;
+            return ret;
+        }
         public override bool CPosition()
         {
             bool ret = false;
@@ -51,6 +59,20 @@ namespace Integrated_Robot_Interface
             ret = myfanuc.JPosition(ref Joint);
             Jposition = Joint;
             return ret;
+        }
+        public override bool CPositionSet()
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[6];
+            Xyzwpr = CpositionSet;
+            return ret = myfanuc.CPositionSet(Xyzwpr);
+        }
+        public override bool JPositionSet()
+        {
+            bool ret = false;
+            Array Joint = new float[6];
+            Joint = JpositionSet;
+            return ret = myfanuc.JPositionSet(Joint);
         }
     }
 }

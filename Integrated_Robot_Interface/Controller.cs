@@ -36,6 +36,29 @@ namespace Integrated_Robot_Interface
         {
             None, Fanuc, Nexcom, Ourarm
         }
+        public int Coordinate
+        {
+            get
+            {
+                return coordinate;
+            }
+            set
+            {
+                if (value >= (int)Coordinatenum.Cartesian && value <= (int)Coordinatenum.Joint)
+                {
+                    coordinate = value;
+                }
+                else
+                {
+                    MessageBox.Show("座標選擇超出範圍");
+                }
+            }
+        }
+        private int coordinate = (int)Coordinatenum.Cartesian;
+        public enum Coordinatenum
+        {
+            Cartesian, Joint
+        }
 
 
         public bool Connect()
@@ -75,6 +98,10 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Alarm();
         }
+        public bool Override()
+        {
+            return myRobotAdapter.Override();
+        }
         public bool CPosition()
         {
             return myRobotAdapter.CPosition();
@@ -82,6 +109,14 @@ namespace Integrated_Robot_Interface
         public bool JPosition()
         {
             return myRobotAdapter.JPosition();
+        }
+        public bool CPositionSet()
+        {
+            return myRobotAdapter.CPositionSet();
+        }
+        public bool JPositionSet()
+        {
+            return myRobotAdapter.JPositionSet();
         }
     }
 }

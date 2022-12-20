@@ -94,6 +94,24 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
+
+        public bool Override(ref string OverrideText)
+        {
+            bool ret = false;
+            object Value = null;
+
+            ret = mobjSysVarInt.GetValue(ref Value);
+            if (ret)
+            {
+                OverrideText = Convert.ToString(Value) + "%";
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool CPosition(ref Array xyzwpr)
         {
             bool ret = false;
@@ -101,7 +119,7 @@ namespace Integrated_Robot_Interface
             Array Config = new short[7];
             Array Joint = new float[9];
             short UF = 0;
-            short UT = 0;
+            short UT = 1;
             short ValidC = 0;
             short ValidJ = 0;
 
@@ -116,6 +134,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
+
         public bool JPosition(ref Array joint)
         {
             bool ret = false;
@@ -123,7 +142,7 @@ namespace Integrated_Robot_Interface
             Array Config = new short[7];
             Array Joint = new float[9];
             short UF = 0;
-            short UT = 0;
+            short UT = 1;
             short ValidC = 0;
             short ValidJ = 0;
 
@@ -131,6 +150,55 @@ namespace Integrated_Robot_Interface
             if (ret)
             {
                 joint = Joint;
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+        public bool CPositionSet(Array xyzwpr)
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 1;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (ret)
+            {
+                int Index = 1;
+
+                ret = mobjPosReg.SetValueXyzwpr(Index, xyzwpr, Config, UF, UT);
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+
+        public bool JPositionSet(Array joint)
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 1;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (ret)
+            {
+                int Index = 1;
+
+                ret = mobjPosReg.SetValueJoint(Index, joint, UF, UT);
                 return ret;
             }
             else
