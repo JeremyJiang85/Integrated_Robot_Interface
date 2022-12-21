@@ -74,5 +74,12 @@ namespace Integrated_Robot_Interface
             Joint = JpositionSet;
             return ret = myfanuc.JPositionSet(Joint);
         }
+        public override bool Home()
+        {
+            bool ret = false;
+            Array Home = new float[6];
+            Home = HomepositionSet;
+            return ret = myfanuc.Home(Home);
+        }
     }
 }

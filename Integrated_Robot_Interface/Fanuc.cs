@@ -206,5 +206,29 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
+        public bool Home(Array home)
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 1;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (ret)
+            {
+                int Index = 1;
+
+                ret = mobjPosReg.SetValueXyzwpr(Index, home, Config, UF, UT);
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
     }
 }

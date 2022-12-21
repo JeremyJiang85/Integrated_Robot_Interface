@@ -12,10 +12,11 @@ namespace Integrated_Robot_Interface
         public static string IP { get; set; } = "";
         public static string AlarmText { get; set; } = "";
         public static string OverrideText { get; set; } = "";
-        public static Array Cposition { get; set; } = new float[6] {0, 0, 0, 0, 0, 0};
+        public static Array Cposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array Jposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array CpositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array JpositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array HomepositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
 
 
         //功能介面
@@ -55,7 +56,10 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        //public virtual bool Home()
+        public virtual bool Home()
+        {
+            return false;
+        }
         //public virtual bool Velocity()
         //public virtual bool VelocitySet()
         //public virtual bool Register()

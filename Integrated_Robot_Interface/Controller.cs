@@ -118,5 +118,25 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.JPositionSet();
         }
+        public bool Home()
+        {
+            switch (robot)
+            {
+                case (int)Robotnum.Fanuc:
+                    RobotAdapter.HomepositionSet.SetValue(180, 0);
+                    RobotAdapter.HomepositionSet.SetValue(0, 1);
+                    RobotAdapter.HomepositionSet.SetValue(280, 2);
+                    RobotAdapter.HomepositionSet.SetValue(180, 3);
+                    RobotAdapter.HomepositionSet.SetValue(0, 4);
+                    RobotAdapter.HomepositionSet.SetValue(0, 5);
+                    return myRobotAdapter.Home();
+                case (int)Robotnum.Nexcom:
+                    return false;
+                case (int)Robotnum.Ourarm:
+                    return false;
+                default:
+                    return false;
+            }
+        }
     }
 }

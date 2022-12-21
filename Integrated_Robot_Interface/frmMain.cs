@@ -25,16 +25,13 @@ namespace Integrated_Robot_Interface
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
             timer1.Interval = 500;
-            txtIP.Enabled = false;
             string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
                                             Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
             cboRobot.Items.AddRange(Robot);
-            cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
             cboCoordinate.Items.AddRange(Coordinate);
-            cboCoordinate.SelectedIndex = (int)Controller.Coordinatenum.Cartesian;
+            Initialize();
         }
 
         #region <object status>
@@ -117,6 +114,7 @@ namespace Integrated_Robot_Interface
                     cboRobot.Enabled = false;
                     timer1.Enabled = true;
                     txtIP.Enabled = false;
+                    gbEnbleControl(true);
                     richTextBox1.Clear();
                     richTextBox1.Text += "手臂連線成功\r\n";
                     MessageBox.Show("手臂連線成功");
@@ -147,24 +145,57 @@ namespace Integrated_Robot_Interface
         #region <NOgb>
         private void btnEsc_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            if (fgConnectionStatus)
+            {
+                switch (myController.Robot)
+                {
+                    case (int)Controller.Robotnum.Fanuc:
+                        if (myController.Disconnect())
+                        {
+                            Initialize();
+                            richTextBox1.Text += "手臂離線成功\r\n";
+                            MessageBox.Show("手臂離線成功");
+                            Application.Exit();
+                        }
+                        else
+                        {
+                            richTextBox1.Text += "手臂離線失敗\r\n";
+                            MessageBox.Show("手臂離線失敗");
+                        }
+                        break;
+                    case (int)Controller.Robotnum.Nexcom:
+                        break;
+                    case (int)Controller.Robotnum.Ourarm:
+                        break;
+                    default:
+                        Application.Exit();
+                        break ;
+                }
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!myController.Refresh())
             {
                 ShowMessage("刷新失敗", "取得刷新狀態");
+                return;
             }
 
             if (!myController.Alarm())
             {
                 ShowMessage("讀取警示失敗", "讀取警示狀態");
+                return;
             }
             else
             {
                 if (RobotAdapter.AlarmText != "")
                 {
                     ShowMessage($"{RobotAdapter.AlarmText}", "讀取警示狀態");
+                    return;
                 }
             }
 
@@ -178,6 +209,7 @@ namespace Integrated_Robot_Interface
                 lblXyzwpr.Text += $"W: Error\r\n";
                 lblXyzwpr.Text += $"P : Error\r\n";
                 lblXyzwpr.Text += $"R : Error\r\n";
+                return;
             }
             else
             {
@@ -200,6 +232,7 @@ namespace Integrated_Robot_Interface
                 lblJoint.Text += $"J4 : Error\r\n";
                 lblJoint.Text += $"J5 : Error\r\n";
                 lblJoint.Text += $"J6 : Error\r\n";
+                return;
             }
             else
             {
@@ -216,6 +249,7 @@ namespace Integrated_Robot_Interface
             {
                 ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
                 lblOverride.Text = "Error";
+                return;
             }
             else
             {
@@ -363,6 +397,14 @@ namespace Integrated_Robot_Interface
             catch (Exception)
             {
                 MessageBox.Show("請輸入有效數值");
+            }
+        }
+
+        private void btnPositionHome_Click(object sender, EventArgs e)
+        {
+            if (!myController.Home())
+            {
+                ShowMessage("回到原點失敗", "回到原點狀態");
             }
         }
 

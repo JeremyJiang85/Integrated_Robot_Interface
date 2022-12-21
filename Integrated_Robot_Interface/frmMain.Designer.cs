@@ -46,6 +46,7 @@
             this.gbOverride = new System.Windows.Forms.GroupBox();
             this.lblOverride = new System.Windows.Forms.Label();
             this.gbPositionSet = new System.Windows.Forms.GroupBox();
+            this.btnPositionHome = new System.Windows.Forms.Button();
             this.btnPositionSet = new System.Windows.Forms.Button();
             this.btnPositionCopy = new System.Windows.Forms.Button();
             this.lblYJ2Set = new System.Windows.Forms.Label();
@@ -61,11 +62,14 @@
             this.tbYJ2Set = new System.Windows.Forms.TextBox();
             this.tbXJ1Set = new System.Windows.Forms.TextBox();
             this.cboCoordinate = new System.Windows.Forms.ComboBox();
+            this.gbRegister = new System.Windows.Forms.GroupBox();
+            this.lblRegister = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
             this.gbOverride.SuspendLayout();
             this.gbPositionSet.SuspendLayout();
+            this.gbRegister.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
@@ -234,6 +238,7 @@
             // 
             // gbPositionSet
             // 
+            this.gbPositionSet.Controls.Add(this.btnPositionHome);
             this.gbPositionSet.Controls.Add(this.btnPositionSet);
             this.gbPositionSet.Controls.Add(this.btnPositionCopy);
             this.gbPositionSet.Controls.Add(this.lblYJ2Set);
@@ -256,6 +261,17 @@
             this.gbPositionSet.TabIndex = 6;
             this.gbPositionSet.TabStop = false;
             this.gbPositionSet.Text = "PositionSet";
+            // 
+            // btnPositionHome
+            // 
+            this.btnPositionHome.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnPositionHome.Location = new System.Drawing.Point(192, 236);
+            this.btnPositionHome.Name = "btnPositionHome";
+            this.btnPositionHome.Size = new System.Drawing.Size(85, 50);
+            this.btnPositionHome.TabIndex = 15;
+            this.btnPositionHome.Text = "Home";
+            this.btnPositionHome.UseVisualStyleBackColor = true;
+            this.btnPositionHome.Click += new System.EventHandler(this.btnPositionHome_Click);
             // 
             // btnPositionSet
             // 
@@ -404,11 +420,32 @@
             this.cboCoordinate.TabIndex = 0;
             this.cboCoordinate.SelectedIndexChanged += new System.EventHandler(this.cboCoordinate_SelectedIndexChanged);
             // 
+            // gbRegister
+            // 
+            this.gbRegister.Controls.Add(this.lblRegister);
+            this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbRegister.Location = new System.Drawing.Point(782, 146);
+            this.gbRegister.Name = "gbRegister";
+            this.gbRegister.Size = new System.Drawing.Size(325, 301);
+            this.gbRegister.TabIndex = 7;
+            this.gbRegister.TabStop = false;
+            this.gbRegister.Text = "Register";
+            // 
+            // lblRegister
+            // 
+            this.lblRegister.AutoSize = true;
+            this.lblRegister.Location = new System.Drawing.Point(6, 29);
+            this.lblRegister.Name = "lblRegister";
+            this.lblRegister.Size = new System.Drawing.Size(49, 105);
+            this.lblRegister.TabIndex = 0;
+            this.lblRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1148, 548);
+            this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbPositionSet);
             this.Controls.Add(this.gbOverride);
             this.Controls.Add(this.gbCurrentPosition);
@@ -428,6 +465,8 @@
             this.gbOverride.PerformLayout();
             this.gbPositionSet.ResumeLayout(false);
             this.gbPositionSet.PerformLayout();
+            this.gbRegister.ResumeLayout(false);
+            this.gbRegister.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -466,6 +505,9 @@
         private System.Windows.Forms.TextBox tbXJ1Set;
         private System.Windows.Forms.Button btnPositionCopy;
         private System.Windows.Forms.Button btnPositionSet;
+        private System.Windows.Forms.Button btnPositionHome;
+        private System.Windows.Forms.GroupBox gbRegister;
+        private System.Windows.Forms.Label lblRegister;
     }
 }
 
