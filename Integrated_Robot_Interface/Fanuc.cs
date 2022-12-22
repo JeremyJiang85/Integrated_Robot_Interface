@@ -26,23 +26,21 @@ namespace Integrated_Robot_Interface
             mobjCurPos = mobjDataTable.AddCurPos(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1);
             mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 10);
             mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
+            mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 10);
         }
 
         public bool Connect(string IP)
         {
             return mobjCore.Connect(IP);
         }
-
         public bool Disconnect()
         {
             return mobjCore.Disconnect();
         }
-
         public bool Refresh()
         {
             return mobjDataTable.Refresh();
         }
-
         public bool Alarm(ref string AlarmText)
         {
             bool ret = false;
@@ -94,7 +92,6 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-
         public bool Override(ref string OverrideText)
         {
             bool ret = false;
@@ -111,8 +108,7 @@ namespace Integrated_Robot_Interface
                 return false;
             }
         }
-
-        public bool CPosition(ref Array xyzwpr)
+        public bool GetCPosition(ref Array xyzwpr)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -134,8 +130,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-
-        public bool JPosition(ref Array joint)
+        public bool GetJPosition(ref Array joint)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -157,7 +152,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-        public bool CPositionSet(Array xyzwpr)
+        public bool SetCPosition(Array xyzwpr)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -181,8 +176,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-
-        public bool JPositionSet(Array joint)
+        public bool SetJPosition(Array joint)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -223,6 +217,22 @@ namespace Integrated_Robot_Interface
                 int Index = 1;
 
                 ret = mobjPosReg.SetValueXyzwpr(Index, home, Config, UF, UT);
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+        public bool GetRegister(ref object value, int index)
+        {
+            bool ret = false;
+            object Value = null;
+
+            ret = mobjNumReg.GetValue(index, ref Value);
+            if (ret)
+            {
+                value = Value;
                 return ret;
             }
             else

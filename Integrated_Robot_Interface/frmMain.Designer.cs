@@ -64,6 +64,17 @@
             this.cboCoordinate = new System.Windows.Forms.ComboBox();
             this.gbRegister = new System.Windows.Forms.GroupBox();
             this.lblRegister = new System.Windows.Forms.Label();
+            this.tbR1Set = new System.Windows.Forms.TextBox();
+            this.lblR1Set = new System.Windows.Forms.Label();
+            this.lblR2Set = new System.Windows.Forms.Label();
+            this.lblR3Set = new System.Windows.Forms.Label();
+            this.lblR4Set = new System.Windows.Forms.Label();
+            this.lblR5Set = new System.Windows.Forms.Label();
+            this.tbR2Set = new System.Windows.Forms.TextBox();
+            this.tbR3Set = new System.Windows.Forms.TextBox();
+            this.tbR4Set = new System.Windows.Forms.TextBox();
+            this.tbR5Set = new System.Windows.Forms.TextBox();
+            this.btnRegisterSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -422,11 +433,22 @@
             // 
             // gbRegister
             // 
+            this.gbRegister.Controls.Add(this.btnRegisterSet);
+            this.gbRegister.Controls.Add(this.tbR5Set);
+            this.gbRegister.Controls.Add(this.tbR4Set);
+            this.gbRegister.Controls.Add(this.tbR3Set);
+            this.gbRegister.Controls.Add(this.tbR2Set);
+            this.gbRegister.Controls.Add(this.lblR5Set);
+            this.gbRegister.Controls.Add(this.tbR1Set);
+            this.gbRegister.Controls.Add(this.lblR4Set);
             this.gbRegister.Controls.Add(this.lblRegister);
+            this.gbRegister.Controls.Add(this.lblR3Set);
+            this.gbRegister.Controls.Add(this.lblR1Set);
+            this.gbRegister.Controls.Add(this.lblR2Set);
             this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbRegister.Location = new System.Drawing.Point(782, 146);
+            this.gbRegister.Location = new System.Drawing.Point(790, 146);
             this.gbRegister.Name = "gbRegister";
-            this.gbRegister.Size = new System.Drawing.Size(325, 301);
+            this.gbRegister.Size = new System.Drawing.Size(323, 301);
             this.gbRegister.TabIndex = 7;
             this.gbRegister.TabStop = false;
             this.gbRegister.Text = "Register";
@@ -439,6 +461,112 @@
             this.lblRegister.Size = new System.Drawing.Size(49, 105);
             this.lblRegister.TabIndex = 0;
             this.lblRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =";
+            // 
+            // tbR1Set
+            // 
+            this.tbR1Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR1Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR1Set.Location = new System.Drawing.Point(61, 144);
+            this.tbR1Set.Name = "tbR1Set";
+            this.tbR1Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR1Set.TabIndex = 16;
+            this.tbR1Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblR1Set
+            // 
+            this.lblR1Set.AutoSize = true;
+            this.lblR1Set.Location = new System.Drawing.Point(6, 144);
+            this.lblR1Set.Name = "lblR1Set";
+            this.lblR1Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR1Set.TabIndex = 16;
+            this.lblR1Set.Text = "R1 =";
+            // 
+            // lblR2Set
+            // 
+            this.lblR2Set.AutoSize = true;
+            this.lblR2Set.Location = new System.Drawing.Point(6, 173);
+            this.lblR2Set.Name = "lblR2Set";
+            this.lblR2Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR2Set.TabIndex = 17;
+            this.lblR2Set.Text = "R2 =";
+            // 
+            // lblR3Set
+            // 
+            this.lblR3Set.AutoSize = true;
+            this.lblR3Set.Location = new System.Drawing.Point(6, 202);
+            this.lblR3Set.Name = "lblR3Set";
+            this.lblR3Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR3Set.TabIndex = 18;
+            this.lblR3Set.Text = "R3 =";
+            // 
+            // lblR4Set
+            // 
+            this.lblR4Set.AutoSize = true;
+            this.lblR4Set.Location = new System.Drawing.Point(6, 231);
+            this.lblR4Set.Name = "lblR4Set";
+            this.lblR4Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR4Set.TabIndex = 19;
+            this.lblR4Set.Text = "R4 =";
+            // 
+            // lblR5Set
+            // 
+            this.lblR5Set.AutoSize = true;
+            this.lblR5Set.Location = new System.Drawing.Point(6, 260);
+            this.lblR5Set.Name = "lblR5Set";
+            this.lblR5Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR5Set.TabIndex = 20;
+            this.lblR5Set.Text = "R5 =";
+            // 
+            // tbR2Set
+            // 
+            this.tbR2Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR2Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR2Set.Location = new System.Drawing.Point(61, 173);
+            this.tbR2Set.Name = "tbR2Set";
+            this.tbR2Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR2Set.TabIndex = 21;
+            this.tbR2Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR3Set
+            // 
+            this.tbR3Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR3Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR3Set.Location = new System.Drawing.Point(61, 202);
+            this.tbR3Set.Name = "tbR3Set";
+            this.tbR3Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR3Set.TabIndex = 22;
+            this.tbR3Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR4Set
+            // 
+            this.tbR4Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR4Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR4Set.Location = new System.Drawing.Point(61, 231);
+            this.tbR4Set.Name = "tbR4Set";
+            this.tbR4Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR4Set.TabIndex = 23;
+            this.tbR4Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR5Set
+            // 
+            this.tbR5Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR5Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR5Set.Location = new System.Drawing.Point(61, 260);
+            this.tbR5Set.Name = "tbR5Set";
+            this.tbR5Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR5Set.TabIndex = 24;
+            this.tbR5Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnRegisterSet
+            // 
+            this.btnRegisterSet.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnRegisterSet.Location = new System.Drawing.Point(201, 120);
+            this.btnRegisterSet.Name = "btnRegisterSet";
+            this.btnRegisterSet.Size = new System.Drawing.Size(85, 50);
+            this.btnRegisterSet.TabIndex = 25;
+            this.btnRegisterSet.Text = "Set";
+            this.btnRegisterSet.UseVisualStyleBackColor = true;
+            this.btnRegisterSet.Click += new System.EventHandler(this.btnRegisterSet_Click);
             // 
             // FrmMain
             // 
@@ -508,6 +636,17 @@
         private System.Windows.Forms.Button btnPositionHome;
         private System.Windows.Forms.GroupBox gbRegister;
         private System.Windows.Forms.Label lblRegister;
+        private System.Windows.Forms.TextBox tbR1Set;
+        private System.Windows.Forms.TextBox tbR5Set;
+        private System.Windows.Forms.TextBox tbR4Set;
+        private System.Windows.Forms.TextBox tbR3Set;
+        private System.Windows.Forms.TextBox tbR2Set;
+        private System.Windows.Forms.Label lblR5Set;
+        private System.Windows.Forms.Label lblR4Set;
+        private System.Windows.Forms.Label lblR3Set;
+        private System.Windows.Forms.Label lblR1Set;
+        private System.Windows.Forms.Label lblR2Set;
+        private System.Windows.Forms.Button btnRegisterSet;
     }
 }
 

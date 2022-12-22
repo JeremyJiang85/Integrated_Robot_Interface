@@ -102,41 +102,29 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Override();
         }
-        public bool CPosition()
+        public bool GetCPosition()
         {
-            return myRobotAdapter.CPosition();
+            return myRobotAdapter.GetCPosition();
         }
-        public bool JPosition()
+        public bool GetJPosition()
         {
-            return myRobotAdapter.JPosition();
+            return myRobotAdapter.GetJPosition();
         }
-        public bool CPositionSet()
+        public bool SetCPosition()
         {
-            return myRobotAdapter.CPositionSet();
+            return myRobotAdapter.SetCPosition();
         }
-        public bool JPositionSet()
+        public bool SetJPosition()
         {
-            return myRobotAdapter.JPositionSet();
+            return myRobotAdapter.SetJPosition();
         }
         public bool Home()
         {
-            switch (robot)
-            {
-                case (int)Robotnum.Fanuc:
-                    RobotAdapter.HomepositionSet.SetValue(180, 0);
-                    RobotAdapter.HomepositionSet.SetValue(0, 1);
-                    RobotAdapter.HomepositionSet.SetValue(280, 2);
-                    RobotAdapter.HomepositionSet.SetValue(180, 3);
-                    RobotAdapter.HomepositionSet.SetValue(0, 4);
-                    RobotAdapter.HomepositionSet.SetValue(0, 5);
-                    return myRobotAdapter.Home();
-                case (int)Robotnum.Nexcom:
-                    return false;
-                case (int)Robotnum.Ourarm:
-                    return false;
-                default:
-                    return false;
-            }
+            return myRobotAdapter.Home();
+        }
+        public bool GetRegister()
+        {
+            return myRobotAdapter.GetRegister();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Integrated_Robot_Interface
         {
             myfanuc = new Fanuc();
         }
-
         public override bool Connect()
         {
             return myfanuc.Connect(IP);
@@ -44,42 +43,56 @@ namespace Integrated_Robot_Interface
             OverrideText = txt;
             return ret;
         }
-        public override bool CPosition()
+        public override bool GetCPosition()
         {
             bool ret = false;
             Array Xyzwpr = new float[6];
-            ret = myfanuc.CPosition(ref Xyzwpr);
-            Cposition = Xyzwpr;
+            ret = myfanuc.GetCPosition(ref Xyzwpr);
+            GetCposition = Xyzwpr;
             return ret;
         }
-        public override bool JPosition()
+        public override bool GetJPosition()
         {
             bool ret = false;
             Array Joint = new float[6];
-            ret = myfanuc.JPosition(ref Joint);
-            Jposition = Joint;
+            ret = myfanuc.GetJPosition(ref Joint);
+            GetJposition = Joint;
             return ret;
         }
-        public override bool CPositionSet()
+        public override bool SetCPosition()
         {
             bool ret = false;
             Array Xyzwpr = new float[6];
-            Xyzwpr = CpositionSet;
-            return ret = myfanuc.CPositionSet(Xyzwpr);
+            Xyzwpr = SetCposition;
+            return ret = myfanuc.SetCPosition(Xyzwpr);
         }
-        public override bool JPositionSet()
+        public override bool SetJPosition()
         {
             bool ret = false;
             Array Joint = new float[6];
-            Joint = JpositionSet;
-            return ret = myfanuc.JPositionSet(Joint);
+            Joint = SetJposition;
+            return ret = myfanuc.SetJPosition(Joint);
         }
         public override bool Home()
         {
             bool ret = false;
             Array Home = new float[6];
-            Home = HomepositionSet;
+            Home = Homeposition;
             return ret = myfanuc.Home(Home);
         }
+        public override bool GetRegister()
+        {
+            bool ret = false;
+            int Index = (int)Getregister.GetValue(1);
+            object Value = null;
+
+            ret = myfanuc.GetRegister(ref Value, Index);
+            Getregister.SetValue(Value, 0);
+            return ret;
+        }
+        //public override bool SetRegister()
+        //{
+
+        //}
     }
 }

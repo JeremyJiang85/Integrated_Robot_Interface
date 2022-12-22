@@ -12,11 +12,13 @@ namespace Integrated_Robot_Interface
         public static string IP { get; set; } = "";
         public static string AlarmText { get; set; } = "";
         public static string OverrideText { get; set; } = "";
-        public static Array Cposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array Jposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array CpositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array JpositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array HomepositionSet { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array GetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array GetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array SetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array SetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array Homeposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array Getregister { get; set; } = new float[2] { 0, 0 };
+        public static Array Setregister { get; set; } = new float[5] { 0, 0, 0, 0, 0 };
 
 
         //功能介面
@@ -40,19 +42,19 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool CPosition()
+        public virtual bool GetCPosition()
         {
             return false;
         }
-        public virtual bool JPosition()
+        public virtual bool GetJPosition()
         {
             return false;
         }
-        public virtual bool CPositionSet()
+        public virtual bool SetCPosition()
         {
             return false;
         }
-        public virtual bool JPositionSet()
+        public virtual bool SetJPosition()
         {
             return false;
         }
@@ -62,8 +64,14 @@ namespace Integrated_Robot_Interface
         }
         //public virtual bool Velocity()
         //public virtual bool VelocitySet()
-        //public virtual bool Register()
-        //public virtual bool RegisterSet()
+        public virtual bool GetRegister()
+        {
+            return false;
+        }
+        public virtual bool SetRegister()
+        {
+            return false;
+        }
         //public virtual bool PositionMove()
     }
 }
