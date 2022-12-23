@@ -126,5 +126,9 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetRegister();
         }
+        public bool SetRegister()
+        {
+            return myRobotAdapter.SetRegister();
+        }
     }
 }

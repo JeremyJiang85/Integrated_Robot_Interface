@@ -265,7 +265,7 @@ namespace Integrated_Robot_Interface
             {
                 lblOverride.Text = RobotAdapter.OverrideText;
             }
-
+            
             for (int Index = 1; Index <= 5; Index++)
             {
                 RobotAdapter.Getregister.SetValue(Index, 1);
@@ -277,7 +277,7 @@ namespace Integrated_Robot_Interface
                     lblRegister.Text += "R3 = Erorr\r\n";
                     lblRegister.Text += "R4 = Erorr\r\n";
                     lblRegister.Text += "R5 = Erorr";
-                    break;
+                    return;
                 }
                 else
                 {
@@ -397,7 +397,7 @@ namespace Integrated_Robot_Interface
                                 RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbRJ6Set.Text), 5);
                                 if (!myController.SetCPosition())
                                 {
-                                    ShowMessage("座標設定失敗", "點到點移動狀態");
+                                    ShowMessage("設定座標失敗", "點到點移動狀態");
                                 }
                             }
                             break;
@@ -421,7 +421,7 @@ namespace Integrated_Robot_Interface
                                 RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbRJ6Set.Text), 5);
                                 if (!myController.SetJPosition())
                                 {
-                                    ShowMessage("座標設定失敗", "點到點移動狀態");
+                                    ShowMessage("設定座標失敗", "點到點移動狀態");
                                 }
                             }
                             break;
@@ -460,7 +460,63 @@ namespace Integrated_Robot_Interface
         #region <gbRegister>
         private void btnRegisterSet_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (!string.IsNullOrEmpty(tbR1Set.Text))
+                {
+                    RobotAdapter.Setregister.SetValue(1, 1);
+                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR1Set.Text), 0);
+                    if (!myController.SetRegister())
+                    {
+                        ShowMessage("設定暫存器R1失敗", "設定暫存器狀態");
+                        tbR1Set.Text = "";
+                    }
+                }
+                if (!string.IsNullOrEmpty(tbR2Set.Text))
+                {
+                    RobotAdapter.Setregister.SetValue(2, 1);
+                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR2Set.Text), 0);
+                    if (!myController.SetRegister())
+                    {
+                        ShowMessage("設定暫存器R2失敗", "設定暫存器狀態");
+                        tbR2Set.Text = "";
+                    }
+                }
+                if (!string.IsNullOrEmpty(tbR3Set.Text))
+                {
+                    RobotAdapter.Setregister.SetValue(3, 1);
+                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR3Set.Text), 0);
+                    if (!myController.SetRegister())
+                    {
+                        ShowMessage("設定暫存器R3失敗", "設定暫存器狀態");
+                        tbR3Set.Text = "";
+                    }
+                }
+                if (!string.IsNullOrEmpty(tbR4Set.Text))
+                {
+                    RobotAdapter.Setregister.SetValue(4, 1);
+                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR4Set.Text), 0);
+                    if (!myController.SetRegister())
+                    {
+                        ShowMessage("設定暫存器R4失敗", "設定暫存器狀態");
+                        tbR4Set.Text = "";
+                    }
+                }
+                if (!string.IsNullOrEmpty(tbR5Set.Text))
+                {
+                    RobotAdapter.Setregister.SetValue(5, 1);
+                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR5Set.Text), 0);
+                    if (!myController.SetRegister())
+                    {
+                        ShowMessage("設定暫存器R5失敗", "設定暫存器狀態");
+                        tbR5Set.Text = "";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("請輸入有效數值");
+            }
         }
         #endregion
 

@@ -240,5 +240,9 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
+        public bool SetRegister(object value, int index)
+        {
+            return mobjNumReg.SetValue(index, value);
+        }
     }
 }

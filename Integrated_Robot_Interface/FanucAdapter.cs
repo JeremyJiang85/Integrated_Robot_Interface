@@ -83,16 +83,19 @@ namespace Integrated_Robot_Interface
         public override bool GetRegister()
         {
             bool ret = false;
-            int Index = (int)Getregister.GetValue(1);
+            int Index = Convert.ToInt32(Getregister.GetValue(1));
             object Value = null;
 
             ret = myfanuc.GetRegister(ref Value, Index);
             Getregister.SetValue(Value, 0);
             return ret;
         }
-        //public override bool SetRegister()
-        //{
+        public override bool SetRegister()
+        {
+            int Index = Convert.ToInt32(Setregister.GetValue(1));
+            object Value = Convert.ToSingle(Setregister.GetValue(0));
 
-        //}
+            return myfanuc.SetRegister(Value, Index);
+        }
     }
 }

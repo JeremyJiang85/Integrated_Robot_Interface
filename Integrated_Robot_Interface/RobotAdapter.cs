@@ -18,7 +18,7 @@ namespace Integrated_Robot_Interface
         public static Array SetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array Homeposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array Getregister { get; set; } = new float[2] { 0, 0 };
-        public static Array Setregister { get; set; } = new float[5] { 0, 0, 0, 0, 0 };
+        public static Array Setregister { get; set; } = new float[2] { 0, 0 };
 
 
         //功能介面
