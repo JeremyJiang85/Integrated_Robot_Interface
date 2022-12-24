@@ -19,6 +19,7 @@ namespace Integrated_Robot_Interface
         public static Array Homeposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array Getregister { get; set; } = new float[2] { 0, 0 };
         public static Array Setregister { get; set; } = new float[2] { 0, 0 };
+        public static Array Axisposition { get; set; } = new int[2] { 0, 0 };
 
 
         //功能介面
@@ -72,6 +73,13 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        //public virtual bool PositionMove()
+        public virtual bool Inc()
+        {
+            return false;
+        }
+        public virtual bool Jog()
+        {
+            return false;
+        }
     }
 }

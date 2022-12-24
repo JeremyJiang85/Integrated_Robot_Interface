@@ -130,5 +130,9 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetRegister();
         }
+        public bool Inc()
+        {
+            return myRobotAdapter.Inc();
+        }
     }
 }

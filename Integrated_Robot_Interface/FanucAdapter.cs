@@ -61,24 +61,21 @@ namespace Integrated_Robot_Interface
         }
         public override bool SetCPosition()
         {
-            bool ret = false;
             Array Xyzwpr = new float[6];
             Xyzwpr = SetCposition;
-            return ret = myfanuc.SetCPosition(Xyzwpr);
+            return myfanuc.SetCPosition(Xyzwpr);
         }
         public override bool SetJPosition()
         {
-            bool ret = false;
             Array Joint = new float[6];
             Joint = SetJposition;
-            return ret = myfanuc.SetJPosition(Joint);
+            return myfanuc.SetJPosition(Joint);
         }
         public override bool Home()
         {
-            bool ret = false;
             Array Home = new float[6];
             Home = Homeposition;
-            return ret = myfanuc.Home(Home);
+            return myfanuc.Home(Home);
         }
         public override bool GetRegister()
         {
@@ -96,6 +93,13 @@ namespace Integrated_Robot_Interface
             object Value = Convert.ToSingle(Setregister.GetValue(0));
 
             return myfanuc.SetRegister(Value, Index);
+        }
+        public override bool Inc()
+        {
+            int Index = Convert.ToInt32(Axisposition.GetValue(1));
+            int Value = Convert.ToInt32(Axisposition.GetValue(0));
+
+            return myfanuc.Inc(Value, Index);
         }
     }
 }

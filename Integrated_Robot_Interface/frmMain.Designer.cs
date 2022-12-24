@@ -75,12 +75,26 @@
             this.tbR4Set = new System.Windows.Forms.TextBox();
             this.tbR5Set = new System.Windows.Forms.TextBox();
             this.btnRegisterSet = new System.Windows.Forms.Button();
+            this.gbPositionMove = new System.Windows.Forms.GroupBox();
+            this.btnXJ1Negative = new System.Windows.Forms.Button();
+            this.btnXJ1Positive = new System.Windows.Forms.Button();
+            this.btnYJ2Positive = new System.Windows.Forms.Button();
+            this.btnYJ2Negative = new System.Windows.Forms.Button();
+            this.btnZJ3Positive = new System.Windows.Forms.Button();
+            this.btnZJ3Negative = new System.Windows.Forms.Button();
+            this.btnWJ4Positive = new System.Windows.Forms.Button();
+            this.btnWJ4Negative = new System.Windows.Forms.Button();
+            this.btnPJ5Positive = new System.Windows.Forms.Button();
+            this.btnPJ5Negative = new System.Windows.Forms.Button();
+            this.btnRJ6Positive = new System.Windows.Forms.Button();
+            this.btnRJ6Negative = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
             this.gbOverride.SuspendLayout();
             this.gbPositionSet.SuspendLayout();
             this.gbRegister.SuspendLayout();
+            this.gbPositionMove.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
@@ -268,7 +282,7 @@
             this.gbPositionSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gbPositionSet.Location = new System.Drawing.Point(322, 146);
             this.gbPositionSet.Name = "gbPositionSet";
-            this.gbPositionSet.Size = new System.Drawing.Size(435, 324);
+            this.gbPositionSet.Size = new System.Drawing.Size(319, 302);
             this.gbPositionSet.TabIndex = 6;
             this.gbPositionSet.TabStop = false;
             this.gbPositionSet.Text = "PositionSet";
@@ -446,9 +460,9 @@
             this.gbRegister.Controls.Add(this.lblR1Set);
             this.gbRegister.Controls.Add(this.lblR2Set);
             this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbRegister.Location = new System.Drawing.Point(790, 146);
+            this.gbRegister.Location = new System.Drawing.Point(647, 146);
             this.gbRegister.Name = "gbRegister";
-            this.gbRegister.Size = new System.Drawing.Size(323, 301);
+            this.gbRegister.Size = new System.Drawing.Size(236, 302);
             this.gbRegister.TabIndex = 7;
             this.gbRegister.TabStop = false;
             this.gbRegister.Text = "Register";
@@ -560,7 +574,7 @@
             // btnRegisterSet
             // 
             this.btnRegisterSet.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnRegisterSet.Location = new System.Drawing.Point(201, 120);
+            this.btnRegisterSet.Location = new System.Drawing.Point(109, 62);
             this.btnRegisterSet.Name = "btnRegisterSet";
             this.btnRegisterSet.Size = new System.Drawing.Size(85, 50);
             this.btnRegisterSet.TabIndex = 25;
@@ -568,11 +582,166 @@
             this.btnRegisterSet.UseVisualStyleBackColor = true;
             this.btnRegisterSet.Click += new System.EventHandler(this.btnRegisterSet_Click);
             // 
+            // gbPositionMove
+            // 
+            this.gbPositionMove.Controls.Add(this.btnRJ6Positive);
+            this.gbPositionMove.Controls.Add(this.btnRJ6Negative);
+            this.gbPositionMove.Controls.Add(this.btnPJ5Positive);
+            this.gbPositionMove.Controls.Add(this.btnPJ5Negative);
+            this.gbPositionMove.Controls.Add(this.btnWJ4Positive);
+            this.gbPositionMove.Controls.Add(this.btnWJ4Negative);
+            this.gbPositionMove.Controls.Add(this.btnZJ3Positive);
+            this.gbPositionMove.Controls.Add(this.btnZJ3Negative);
+            this.gbPositionMove.Controls.Add(this.btnYJ2Positive);
+            this.gbPositionMove.Controls.Add(this.btnYJ2Negative);
+            this.gbPositionMove.Controls.Add(this.btnXJ1Positive);
+            this.gbPositionMove.Controls.Add(this.btnXJ1Negative);
+            this.gbPositionMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbPositionMove.Location = new System.Drawing.Point(889, 146);
+            this.gbPositionMove.Name = "gbPositionMove";
+            this.gbPositionMove.Size = new System.Drawing.Size(232, 286);
+            this.gbPositionMove.TabIndex = 8;
+            this.gbPositionMove.TabStop = false;
+            this.gbPositionMove.Text = "PositionMove";
+            // 
+            // btnXJ1Negative
+            // 
+            this.btnXJ1Negative.Location = new System.Drawing.Point(6, 32);
+            this.btnXJ1Negative.Name = "btnXJ1Negative";
+            this.btnXJ1Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnXJ1Negative.TabIndex = 0;
+            this.btnXJ1Negative.Tag = "1";
+            this.btnXJ1Negative.Text = "-X";
+            this.btnXJ1Negative.UseVisualStyleBackColor = true;
+            this.btnXJ1Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnXJ1Positive
+            // 
+            this.btnXJ1Positive.Location = new System.Drawing.Point(112, 32);
+            this.btnXJ1Positive.Name = "btnXJ1Positive";
+            this.btnXJ1Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnXJ1Positive.TabIndex = 1;
+            this.btnXJ1Positive.Tag = "0";
+            this.btnXJ1Positive.Text = "+X";
+            this.btnXJ1Positive.UseVisualStyleBackColor = true;
+            this.btnXJ1Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnYJ2Positive
+            // 
+            this.btnYJ2Positive.Location = new System.Drawing.Point(112, 68);
+            this.btnYJ2Positive.Name = "btnYJ2Positive";
+            this.btnYJ2Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnYJ2Positive.TabIndex = 3;
+            this.btnYJ2Positive.Tag = "2";
+            this.btnYJ2Positive.Text = "+Y";
+            this.btnYJ2Positive.UseVisualStyleBackColor = true;
+            this.btnYJ2Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnYJ2Negative
+            // 
+            this.btnYJ2Negative.Location = new System.Drawing.Point(6, 68);
+            this.btnYJ2Negative.Name = "btnYJ2Negative";
+            this.btnYJ2Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnYJ2Negative.TabIndex = 2;
+            this.btnYJ2Negative.Tag = "3";
+            this.btnYJ2Negative.Text = "-Y";
+            this.btnYJ2Negative.UseVisualStyleBackColor = true;
+            this.btnYJ2Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnZJ3Positive
+            // 
+            this.btnZJ3Positive.Location = new System.Drawing.Point(112, 104);
+            this.btnZJ3Positive.Name = "btnZJ3Positive";
+            this.btnZJ3Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnZJ3Positive.TabIndex = 5;
+            this.btnZJ3Positive.Tag = "4";
+            this.btnZJ3Positive.Text = "+Z";
+            this.btnZJ3Positive.UseVisualStyleBackColor = true;
+            this.btnZJ3Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnZJ3Negative
+            // 
+            this.btnZJ3Negative.Location = new System.Drawing.Point(6, 104);
+            this.btnZJ3Negative.Name = "btnZJ3Negative";
+            this.btnZJ3Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnZJ3Negative.TabIndex = 4;
+            this.btnZJ3Negative.Tag = "5";
+            this.btnZJ3Negative.Text = "-Z";
+            this.btnZJ3Negative.UseVisualStyleBackColor = true;
+            this.btnZJ3Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnWJ4Positive
+            // 
+            this.btnWJ4Positive.Location = new System.Drawing.Point(112, 140);
+            this.btnWJ4Positive.Name = "btnWJ4Positive";
+            this.btnWJ4Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnWJ4Positive.TabIndex = 7;
+            this.btnWJ4Positive.Tag = "6";
+            this.btnWJ4Positive.Text = "+W";
+            this.btnWJ4Positive.UseVisualStyleBackColor = true;
+            this.btnWJ4Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnWJ4Negative
+            // 
+            this.btnWJ4Negative.Location = new System.Drawing.Point(6, 140);
+            this.btnWJ4Negative.Name = "btnWJ4Negative";
+            this.btnWJ4Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnWJ4Negative.TabIndex = 6;
+            this.btnWJ4Negative.Tag = "7";
+            this.btnWJ4Negative.Text = "-W";
+            this.btnWJ4Negative.UseVisualStyleBackColor = true;
+            this.btnWJ4Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnPJ5Positive
+            // 
+            this.btnPJ5Positive.Location = new System.Drawing.Point(112, 176);
+            this.btnPJ5Positive.Name = "btnPJ5Positive";
+            this.btnPJ5Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnPJ5Positive.TabIndex = 9;
+            this.btnPJ5Positive.Tag = "8";
+            this.btnPJ5Positive.Text = "+P";
+            this.btnPJ5Positive.UseVisualStyleBackColor = true;
+            this.btnPJ5Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnPJ5Negative
+            // 
+            this.btnPJ5Negative.Location = new System.Drawing.Point(6, 176);
+            this.btnPJ5Negative.Name = "btnPJ5Negative";
+            this.btnPJ5Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnPJ5Negative.TabIndex = 8;
+            this.btnPJ5Negative.Tag = "9";
+            this.btnPJ5Negative.Text = "-P";
+            this.btnPJ5Negative.UseVisualStyleBackColor = true;
+            this.btnPJ5Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnRJ6Positive
+            // 
+            this.btnRJ6Positive.Location = new System.Drawing.Point(112, 212);
+            this.btnRJ6Positive.Name = "btnRJ6Positive";
+            this.btnRJ6Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnRJ6Positive.TabIndex = 11;
+            this.btnRJ6Positive.Tag = "10";
+            this.btnRJ6Positive.Text = "+R";
+            this.btnRJ6Positive.UseVisualStyleBackColor = true;
+            this.btnRJ6Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnRJ6Negative
+            // 
+            this.btnRJ6Negative.Location = new System.Drawing.Point(6, 212);
+            this.btnRJ6Negative.Name = "btnRJ6Negative";
+            this.btnRJ6Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnRJ6Negative.TabIndex = 10;
+            this.btnRJ6Negative.Tag = "11";
+            this.btnRJ6Negative.Text = "-R";
+            this.btnRJ6Negative.UseVisualStyleBackColor = true;
+            this.btnRJ6Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1148, 548);
+            this.Controls.Add(this.gbPositionMove);
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbPositionSet);
             this.Controls.Add(this.gbOverride);
@@ -582,6 +751,7 @@
             this.Controls.Add(this.btnEsc);
             this.Controls.Add(this.pblogo);
             this.Name = "FrmMain";
+            this.Tag = "0";
             this.Text = "Integrated Robot Interface";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).EndInit();
@@ -595,6 +765,7 @@
             this.gbPositionSet.PerformLayout();
             this.gbRegister.ResumeLayout(false);
             this.gbRegister.PerformLayout();
+            this.gbPositionMove.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -647,6 +818,19 @@
         private System.Windows.Forms.Label lblR1Set;
         private System.Windows.Forms.Label lblR2Set;
         private System.Windows.Forms.Button btnRegisterSet;
+        private System.Windows.Forms.GroupBox gbPositionMove;
+        private System.Windows.Forms.Button btnRJ6Positive;
+        private System.Windows.Forms.Button btnRJ6Negative;
+        private System.Windows.Forms.Button btnPJ5Positive;
+        private System.Windows.Forms.Button btnPJ5Negative;
+        private System.Windows.Forms.Button btnWJ4Positive;
+        private System.Windows.Forms.Button btnWJ4Negative;
+        private System.Windows.Forms.Button btnZJ3Positive;
+        private System.Windows.Forms.Button btnZJ3Negative;
+        private System.Windows.Forms.Button btnYJ2Positive;
+        private System.Windows.Forms.Button btnYJ2Negative;
+        private System.Windows.Forms.Button btnXJ1Positive;
+        private System.Windows.Forms.Button btnXJ1Negative;
     }
 }
 
