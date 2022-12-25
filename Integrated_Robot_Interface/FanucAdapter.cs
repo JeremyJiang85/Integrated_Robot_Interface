@@ -96,9 +96,9 @@ namespace Integrated_Robot_Interface
         }
         public override bool Inc()
         {
-            int Index = Convert.ToInt32(Axisposition.GetValue(1));
-            int Value = Convert.ToInt32(Axisposition.GetValue(0));
-
+            int Index = Convert.ToInt32(Axismove.GetValue(1));
+            int Value = Convert.ToInt32(Axismove.GetValue(0));
+            
             return myfanuc.Inc(Value, Index);
         }
     }

@@ -59,6 +59,29 @@ namespace Integrated_Robot_Interface
         {
             Cartesian, Joint
         }
+        public int Step
+        {
+            get
+            {
+                return step;
+            }
+            set
+            {
+                if (value >= (int)Stepnum.One && value <= (int)Stepnum.Cont)
+                {
+                    step = value;
+                }
+                else
+                {
+                    MessageBox.Show("步數選擇超出範圍");
+                }
+            }
+        }
+        private int step = (int)Stepnum.One;
+        public enum Stepnum
+        {
+            One, Five, Ten, Cont
+        }
 
 
         public bool Connect()

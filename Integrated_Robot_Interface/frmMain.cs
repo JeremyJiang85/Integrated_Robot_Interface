@@ -15,7 +15,8 @@ namespace Integrated_Robot_Interface
         //變數宣告
         Controller myController = new Controller();
         public bool fgConnectionStatus { get; set; } = false;
-
+        public bool fgJogStatus { get; set; } = false;
+        public bool fgJog { get; set; } = false;
 
 
         public FrmMain()
@@ -25,11 +26,15 @@ namespace Integrated_Robot_Interface
         private void FrmMain_Load(object sender, EventArgs e)
         {
             timer1.Interval = 500;
+            timer2.Interval = 200;
             string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
                                             Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
             cboRobot.Items.AddRange(Robot);
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
             cboCoordinate.Items.AddRange(Coordinate);
+            string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
+                                           Controller.Stepnum.Ten.ToString(),Controller.Stepnum.Cont.ToString(),};
+            cboStep.Items.AddRange(Step);
             Initialize();
         }
 
@@ -37,11 +42,13 @@ namespace Integrated_Robot_Interface
         private void Initialize()
         {
             timer1.Enabled = false;
+            timer2.Enabled = false;
             txtIP.Enabled = false;
             fgConnectionStatus = false;
             cboRobot.Enabled = true;
             cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
             cboCoordinate.SelectedIndex = (int)Controller.Coordinatenum.Cartesian;
+            cboStep.SelectedIndex = (int)Controller.Stepnum.One;
             gbEnbleControl(false);
             txtInitialize();
         }
@@ -51,6 +58,7 @@ namespace Integrated_Robot_Interface
             gbCurrentPosition.Enabled = tf;
             gbPositionSet.Enabled = tf;
             gbRegister.Enabled = tf;
+            gbPositionMove.Enabled = tf;
         }
         private void txtInitialize()
         {
@@ -128,6 +136,9 @@ namespace Integrated_Robot_Interface
                     richTextBox1.Clear();
                     richTextBox1.Text += "手臂連線成功\r\n";
                     MessageBox.Show("手臂連線成功");
+                    myController.GetCPosition();
+                    RobotAdapter.SetCposition = RobotAdapter.GetCposition;
+                    myController.SetCPosition();
                 }
                 else
                 {
@@ -521,51 +532,66 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <gbPositionMove>
-        private void btnXJ1Positive_Click(object sender, EventArgs e)
+        private void cboStep_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            switch (btn.Tag)
+            switch (cboStep.SelectedIndex)
             {
-                case 0:
-
+                case (int)Controller.Stepnum.One:
+                    fgJogStatus = false;
+                    RobotAdapter.Axismove.SetValue(1, 0);
                     break;
-                case 1:
-
+                case (int)Controller.Stepnum.Five:
+                    fgJogStatus = false;
+                    RobotAdapter.Axismove.SetValue(5, 0);
                     break;
-                case 2:
-
+                case (int)Controller.Stepnum.Ten:
+                    fgJogStatus = false;
+                    RobotAdapter.Axismove.SetValue(10, 0);
                     break;
-                case 3:
-
-                    break;
-                case 4:
-
-                    break;
-                case 5:
-
-                    break;
-                case 6:
-
-                    break;
-                case 7:
-
-                    break;
-                case 8:
-
-                    break;
-                case 9:
-
-                    break;
-                case 10:
-
-                    break;
-                case 11:
-
+                case (int)Controller.Stepnum.Cont:
+                    fgJogStatus = true;
+                    RobotAdapter.Axismove.SetValue(10, 0);
                     break;
             }
         }
-        #endregion
-
-
+        private void btnXJ1Positive_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            
+            if (fgJogStatus)
+            {
+                if (!fgJog)
+                {
+                    fgJog = true;
+                    RobotAdapter.Axismove.SetValue(Convert.ToInt32(btn.Tag), 1);
+                    timer2.Enabled = true;
+                }
+                else
+                {
+                    fgJog = false;
+                    timer2.Enabled = false;
+                }
+            }
+            else
+            {
+                RobotAdapter.Axismove.SetValue(Convert.ToInt32(btn.Tag), 1);
+                if (!myController.Inc())
+                {
+                    ShowMessage("單動移動失敗", "單動移動狀態");
+                }
+                
+            }
+        }
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (!myController.Inc())
+            {
+                ShowMessage("單動移動失敗", "單動移動狀態");
+            }
+        }
     }
+
+    #endregion
+
+
 }

@@ -88,6 +88,9 @@
             this.btnPJ5Negative = new System.Windows.Forms.Button();
             this.btnRJ6Positive = new System.Windows.Forms.Button();
             this.btnRJ6Negative = new System.Windows.Forms.Button();
+            this.lblStep = new System.Windows.Forms.Label();
+            this.cboStep = new System.Windows.Forms.ComboBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -221,7 +224,7 @@
             this.gbCurrentPosition.Size = new System.Drawing.Size(304, 184);
             this.gbCurrentPosition.TabIndex = 4;
             this.gbCurrentPosition.TabStop = false;
-            this.gbCurrentPosition.Text = "CurrentPosition";
+            this.gbCurrentPosition.Text = "Current Position";
             // 
             // lblJoint
             // 
@@ -285,7 +288,7 @@
             this.gbPositionSet.Size = new System.Drawing.Size(319, 302);
             this.gbPositionSet.TabIndex = 6;
             this.gbPositionSet.TabStop = false;
-            this.gbPositionSet.Text = "PositionSet";
+            this.gbPositionSet.Text = "Position Set";
             // 
             // btnPositionHome
             // 
@@ -584,6 +587,8 @@
             // 
             // gbPositionMove
             // 
+            this.gbPositionMove.Controls.Add(this.cboStep);
+            this.gbPositionMove.Controls.Add(this.lblStep);
             this.gbPositionMove.Controls.Add(this.btnRJ6Positive);
             this.gbPositionMove.Controls.Add(this.btnRJ6Negative);
             this.gbPositionMove.Controls.Add(this.btnPJ5Positive);
@@ -599,14 +604,14 @@
             this.gbPositionMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gbPositionMove.Location = new System.Drawing.Point(889, 146);
             this.gbPositionMove.Name = "gbPositionMove";
-            this.gbPositionMove.Size = new System.Drawing.Size(232, 286);
+            this.gbPositionMove.Size = new System.Drawing.Size(247, 302);
             this.gbPositionMove.TabIndex = 8;
             this.gbPositionMove.TabStop = false;
-            this.gbPositionMove.Text = "PositionMove";
+            this.gbPositionMove.Text = "Position Move";
             // 
             // btnXJ1Negative
             // 
-            this.btnXJ1Negative.Location = new System.Drawing.Point(6, 32);
+            this.btnXJ1Negative.Location = new System.Drawing.Point(6, 60);
             this.btnXJ1Negative.Name = "btnXJ1Negative";
             this.btnXJ1Negative.Size = new System.Drawing.Size(100, 30);
             this.btnXJ1Negative.TabIndex = 0;
@@ -617,7 +622,7 @@
             // 
             // btnXJ1Positive
             // 
-            this.btnXJ1Positive.Location = new System.Drawing.Point(112, 32);
+            this.btnXJ1Positive.Location = new System.Drawing.Point(112, 60);
             this.btnXJ1Positive.Name = "btnXJ1Positive";
             this.btnXJ1Positive.Size = new System.Drawing.Size(100, 30);
             this.btnXJ1Positive.TabIndex = 1;
@@ -628,7 +633,7 @@
             // 
             // btnYJ2Positive
             // 
-            this.btnYJ2Positive.Location = new System.Drawing.Point(112, 68);
+            this.btnYJ2Positive.Location = new System.Drawing.Point(112, 96);
             this.btnYJ2Positive.Name = "btnYJ2Positive";
             this.btnYJ2Positive.Size = new System.Drawing.Size(100, 30);
             this.btnYJ2Positive.TabIndex = 3;
@@ -639,7 +644,7 @@
             // 
             // btnYJ2Negative
             // 
-            this.btnYJ2Negative.Location = new System.Drawing.Point(6, 68);
+            this.btnYJ2Negative.Location = new System.Drawing.Point(6, 96);
             this.btnYJ2Negative.Name = "btnYJ2Negative";
             this.btnYJ2Negative.Size = new System.Drawing.Size(100, 30);
             this.btnYJ2Negative.TabIndex = 2;
@@ -650,7 +655,7 @@
             // 
             // btnZJ3Positive
             // 
-            this.btnZJ3Positive.Location = new System.Drawing.Point(112, 104);
+            this.btnZJ3Positive.Location = new System.Drawing.Point(112, 132);
             this.btnZJ3Positive.Name = "btnZJ3Positive";
             this.btnZJ3Positive.Size = new System.Drawing.Size(100, 30);
             this.btnZJ3Positive.TabIndex = 5;
@@ -661,7 +666,7 @@
             // 
             // btnZJ3Negative
             // 
-            this.btnZJ3Negative.Location = new System.Drawing.Point(6, 104);
+            this.btnZJ3Negative.Location = new System.Drawing.Point(6, 132);
             this.btnZJ3Negative.Name = "btnZJ3Negative";
             this.btnZJ3Negative.Size = new System.Drawing.Size(100, 30);
             this.btnZJ3Negative.TabIndex = 4;
@@ -672,7 +677,7 @@
             // 
             // btnWJ4Positive
             // 
-            this.btnWJ4Positive.Location = new System.Drawing.Point(112, 140);
+            this.btnWJ4Positive.Location = new System.Drawing.Point(112, 168);
             this.btnWJ4Positive.Name = "btnWJ4Positive";
             this.btnWJ4Positive.Size = new System.Drawing.Size(100, 30);
             this.btnWJ4Positive.TabIndex = 7;
@@ -683,7 +688,7 @@
             // 
             // btnWJ4Negative
             // 
-            this.btnWJ4Negative.Location = new System.Drawing.Point(6, 140);
+            this.btnWJ4Negative.Location = new System.Drawing.Point(6, 168);
             this.btnWJ4Negative.Name = "btnWJ4Negative";
             this.btnWJ4Negative.Size = new System.Drawing.Size(100, 30);
             this.btnWJ4Negative.TabIndex = 6;
@@ -694,7 +699,7 @@
             // 
             // btnPJ5Positive
             // 
-            this.btnPJ5Positive.Location = new System.Drawing.Point(112, 176);
+            this.btnPJ5Positive.Location = new System.Drawing.Point(112, 204);
             this.btnPJ5Positive.Name = "btnPJ5Positive";
             this.btnPJ5Positive.Size = new System.Drawing.Size(100, 30);
             this.btnPJ5Positive.TabIndex = 9;
@@ -705,7 +710,7 @@
             // 
             // btnPJ5Negative
             // 
-            this.btnPJ5Negative.Location = new System.Drawing.Point(6, 176);
+            this.btnPJ5Negative.Location = new System.Drawing.Point(6, 204);
             this.btnPJ5Negative.Name = "btnPJ5Negative";
             this.btnPJ5Negative.Size = new System.Drawing.Size(100, 30);
             this.btnPJ5Negative.TabIndex = 8;
@@ -716,7 +721,7 @@
             // 
             // btnRJ6Positive
             // 
-            this.btnRJ6Positive.Location = new System.Drawing.Point(112, 212);
+            this.btnRJ6Positive.Location = new System.Drawing.Point(112, 240);
             this.btnRJ6Positive.Name = "btnRJ6Positive";
             this.btnRJ6Positive.Size = new System.Drawing.Size(100, 30);
             this.btnRJ6Positive.TabIndex = 11;
@@ -727,7 +732,7 @@
             // 
             // btnRJ6Negative
             // 
-            this.btnRJ6Negative.Location = new System.Drawing.Point(6, 212);
+            this.btnRJ6Negative.Location = new System.Drawing.Point(6, 240);
             this.btnRJ6Negative.Name = "btnRJ6Negative";
             this.btnRJ6Negative.Size = new System.Drawing.Size(100, 30);
             this.btnRJ6Negative.TabIndex = 10;
@@ -735,6 +740,30 @@
             this.btnRJ6Negative.Text = "-R";
             this.btnRJ6Negative.UseVisualStyleBackColor = true;
             this.btnRJ6Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // lblStep
+            // 
+            this.lblStep.AutoSize = true;
+            this.lblStep.Location = new System.Drawing.Point(6, 29);
+            this.lblStep.Name = "lblStep";
+            this.lblStep.Size = new System.Drawing.Size(55, 21);
+            this.lblStep.TabIndex = 12;
+            this.lblStep.Text = "Step :";
+            // 
+            // cboStep
+            // 
+            this.cboStep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStep.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboStep.FormattingEnabled = true;
+            this.cboStep.Location = new System.Drawing.Point(67, 30);
+            this.cboStep.Name = "cboStep";
+            this.cboStep.Size = new System.Drawing.Size(145, 24);
+            this.cboStep.TabIndex = 13;
+            this.cboStep.SelectedIndexChanged += new System.EventHandler(this.cboStep_SelectedIndexChanged);
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // FrmMain
             // 
@@ -766,6 +795,7 @@
             this.gbRegister.ResumeLayout(false);
             this.gbRegister.PerformLayout();
             this.gbPositionMove.ResumeLayout(false);
+            this.gbPositionMove.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -831,6 +861,9 @@
         private System.Windows.Forms.Button btnYJ2Negative;
         private System.Windows.Forms.Button btnXJ1Positive;
         private System.Windows.Forms.Button btnXJ1Negative;
+        private System.Windows.Forms.ComboBox cboStep;
+        private System.Windows.Forms.Label lblStep;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

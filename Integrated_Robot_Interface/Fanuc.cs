@@ -253,10 +253,6 @@ namespace Integrated_Robot_Interface
         {
             return mobjNumReg.SetValue(index, value);
         }
-        //public bool Jog(Array jog)
-        //{
-            
-        //}
         public bool Inc(int value, int index)
         {
             bool ret = false;
@@ -284,43 +280,43 @@ namespace Integrated_Robot_Interface
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 2:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + value, 1);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(1)) + value, 1);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 3:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - value, 1);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(1)) - value, 1);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 4:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + value, 2);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(2)) + value, 2);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 5:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - value, 2);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(2)) - value, 2);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 6:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + value, 3);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(3)) + value, 3);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 7:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - value, 3);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(3)) - value, 3);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 8:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + value, 4);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(4)) + value, 4);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 9:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - value, 4);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(4)) - value, 4);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 10:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + value, 5);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(5)) + value, 5);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     case 11:
-                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - value, 5);
+                        Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(5)) - value, 5);
                         ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
                         return ret;
                     default:
