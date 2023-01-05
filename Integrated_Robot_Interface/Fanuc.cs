@@ -29,9 +29,9 @@ namespace Integrated_Robot_Interface
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 10);
         }
 
-        public bool Connect(string IP)
+        public bool Connect(string ip)
         {
-            return mobjCore.Connect(IP);
+            return mobjCore.Connect(ip);
         }
         public bool Disconnect()
         {
@@ -157,6 +157,7 @@ namespace Integrated_Robot_Interface
             bool ret = false;
             Array Xyzwpr = new float[9];
             Array Config = new short[7];
+            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
             Array Joint = new float[9];
             short UF = 0;
             short UT = 1;
@@ -168,7 +169,7 @@ namespace Integrated_Robot_Interface
             {
                 int Index = 1;
 
-                ret = mobjPosReg.SetValueXyzwpr(Index, xyzwpr, Config, UF, UT);
+                ret = mobjPosReg.SetValueXyzwpr(Index, xyzwpr, config, UF, UT);
                 return ret;
             }
             else

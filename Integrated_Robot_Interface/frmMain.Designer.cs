@@ -46,6 +46,9 @@
             this.gbOverride = new System.Windows.Forms.GroupBox();
             this.lblOverride = new System.Windows.Forms.Label();
             this.gbPositionSet = new System.Windows.Forms.GroupBox();
+            this.lblRange = new System.Windows.Forms.Label();
+            this.tbVelocity = new System.Windows.Forms.TextBox();
+            this.lblVelocity = new System.Windows.Forms.Label();
             this.btnPositionHome = new System.Windows.Forms.Button();
             this.btnPositionSet = new System.Windows.Forms.Button();
             this.btnPositionCopy = new System.Windows.Forms.Button();
@@ -63,33 +66,33 @@
             this.tbXJ1Set = new System.Windows.Forms.TextBox();
             this.cboCoordinate = new System.Windows.Forms.ComboBox();
             this.gbRegister = new System.Windows.Forms.GroupBox();
-            this.lblRegister = new System.Windows.Forms.Label();
+            this.btnRegisterSet = new System.Windows.Forms.Button();
+            this.tbR5Set = new System.Windows.Forms.TextBox();
+            this.tbR4Set = new System.Windows.Forms.TextBox();
+            this.tbR3Set = new System.Windows.Forms.TextBox();
+            this.tbR2Set = new System.Windows.Forms.TextBox();
+            this.lblR5Set = new System.Windows.Forms.Label();
             this.tbR1Set = new System.Windows.Forms.TextBox();
+            this.lblR4Set = new System.Windows.Forms.Label();
+            this.lblRegister = new System.Windows.Forms.Label();
+            this.lblR3Set = new System.Windows.Forms.Label();
             this.lblR1Set = new System.Windows.Forms.Label();
             this.lblR2Set = new System.Windows.Forms.Label();
-            this.lblR3Set = new System.Windows.Forms.Label();
-            this.lblR4Set = new System.Windows.Forms.Label();
-            this.lblR5Set = new System.Windows.Forms.Label();
-            this.tbR2Set = new System.Windows.Forms.TextBox();
-            this.tbR3Set = new System.Windows.Forms.TextBox();
-            this.tbR4Set = new System.Windows.Forms.TextBox();
-            this.tbR5Set = new System.Windows.Forms.TextBox();
-            this.btnRegisterSet = new System.Windows.Forms.Button();
             this.gbPositionMove = new System.Windows.Forms.GroupBox();
-            this.btnXJ1Negative = new System.Windows.Forms.Button();
-            this.btnXJ1Positive = new System.Windows.Forms.Button();
-            this.btnYJ2Positive = new System.Windows.Forms.Button();
-            this.btnYJ2Negative = new System.Windows.Forms.Button();
-            this.btnZJ3Positive = new System.Windows.Forms.Button();
-            this.btnZJ3Negative = new System.Windows.Forms.Button();
-            this.btnWJ4Positive = new System.Windows.Forms.Button();
-            this.btnWJ4Negative = new System.Windows.Forms.Button();
-            this.btnPJ5Positive = new System.Windows.Forms.Button();
-            this.btnPJ5Negative = new System.Windows.Forms.Button();
+            this.cboStep = new System.Windows.Forms.ComboBox();
+            this.lblStep = new System.Windows.Forms.Label();
             this.btnRJ6Positive = new System.Windows.Forms.Button();
             this.btnRJ6Negative = new System.Windows.Forms.Button();
-            this.lblStep = new System.Windows.Forms.Label();
-            this.cboStep = new System.Windows.Forms.ComboBox();
+            this.btnPJ5Positive = new System.Windows.Forms.Button();
+            this.btnPJ5Negative = new System.Windows.Forms.Button();
+            this.btnWJ4Positive = new System.Windows.Forms.Button();
+            this.btnWJ4Negative = new System.Windows.Forms.Button();
+            this.btnZJ3Positive = new System.Windows.Forms.Button();
+            this.btnZJ3Negative = new System.Windows.Forms.Button();
+            this.btnYJ2Positive = new System.Windows.Forms.Button();
+            this.btnYJ2Negative = new System.Windows.Forms.Button();
+            this.btnXJ1Positive = new System.Windows.Forms.Button();
+            this.btnXJ1Negative = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
@@ -112,9 +115,9 @@
             // 
             // btnEsc
             // 
-            this.btnEsc.Location = new System.Drawing.Point(982, 18);
+            this.btnEsc.Location = new System.Drawing.Point(807, 12);
             this.btnEsc.Name = "btnEsc";
-            this.btnEsc.Size = new System.Drawing.Size(75, 75);
+            this.btnEsc.Size = new System.Drawing.Size(96, 55);
             this.btnEsc.TabIndex = 1;
             this.btnEsc.Text = "ESC";
             this.btnEsc.UseVisualStyleBackColor = true;
@@ -221,7 +224,7 @@
             this.gbCurrentPosition.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gbCurrentPosition.Location = new System.Drawing.Point(12, 146);
             this.gbCurrentPosition.Name = "gbCurrentPosition";
-            this.gbCurrentPosition.Size = new System.Drawing.Size(304, 184);
+            this.gbCurrentPosition.Size = new System.Drawing.Size(279, 353);
             this.gbCurrentPosition.TabIndex = 4;
             this.gbCurrentPosition.TabStop = false;
             this.gbCurrentPosition.Text = "Current Position";
@@ -248,7 +251,7 @@
             // 
             this.gbOverride.Controls.Add(this.lblOverride);
             this.gbOverride.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbOverride.Location = new System.Drawing.Point(824, 12);
+            this.gbOverride.Location = new System.Drawing.Point(807, 70);
             this.gbOverride.Name = "gbOverride";
             this.gbOverride.Size = new System.Drawing.Size(96, 70);
             this.gbOverride.TabIndex = 5;
@@ -266,6 +269,9 @@
             // 
             // gbPositionSet
             // 
+            this.gbPositionSet.Controls.Add(this.lblRange);
+            this.gbPositionSet.Controls.Add(this.tbVelocity);
+            this.gbPositionSet.Controls.Add(this.lblVelocity);
             this.gbPositionSet.Controls.Add(this.btnPositionHome);
             this.gbPositionSet.Controls.Add(this.btnPositionSet);
             this.gbPositionSet.Controls.Add(this.btnPositionCopy);
@@ -283,17 +289,45 @@
             this.gbPositionSet.Controls.Add(this.tbXJ1Set);
             this.gbPositionSet.Controls.Add(this.cboCoordinate);
             this.gbPositionSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbPositionSet.Location = new System.Drawing.Point(322, 146);
+            this.gbPositionSet.Location = new System.Drawing.Point(297, 146);
             this.gbPositionSet.Name = "gbPositionSet";
-            this.gbPositionSet.Size = new System.Drawing.Size(319, 302);
+            this.gbPositionSet.Size = new System.Drawing.Size(249, 353);
             this.gbPositionSet.TabIndex = 6;
             this.gbPositionSet.TabStop = false;
             this.gbPositionSet.Text = "Position Set";
             // 
+            // lblRange
+            // 
+            this.lblRange.AutoSize = true;
+            this.lblRange.Location = new System.Drawing.Point(6, 262);
+            this.lblRange.Name = "lblRange";
+            this.lblRange.Size = new System.Drawing.Size(87, 84);
+            this.lblRange.TabIndex = 18;
+            this.lblRange.Text = "X :\r\nY :\r\nZ :\r\nVelocity :";
+            // 
+            // tbVelocity
+            // 
+            this.tbVelocity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbVelocity.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbVelocity.Location = new System.Drawing.Point(46, 236);
+            this.tbVelocity.Name = "tbVelocity";
+            this.tbVelocity.Size = new System.Drawing.Size(100, 23);
+            this.tbVelocity.TabIndex = 17;
+            this.tbVelocity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblVelocity
+            // 
+            this.lblVelocity.AutoSize = true;
+            this.lblVelocity.Location = new System.Drawing.Point(6, 236);
+            this.lblVelocity.Name = "lblVelocity";
+            this.lblVelocity.Size = new System.Drawing.Size(34, 21);
+            this.lblVelocity.TabIndex = 16;
+            this.lblVelocity.Text = "V :";
+            // 
             // btnPositionHome
             // 
             this.btnPositionHome.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPositionHome.Location = new System.Drawing.Point(192, 236);
+            this.btnPositionHome.Location = new System.Drawing.Point(152, 209);
             this.btnPositionHome.Name = "btnPositionHome";
             this.btnPositionHome.Size = new System.Drawing.Size(85, 50);
             this.btnPositionHome.TabIndex = 15;
@@ -304,7 +338,7 @@
             // btnPositionSet
             // 
             this.btnPositionSet.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPositionSet.Location = new System.Drawing.Point(101, 236);
+            this.btnPositionSet.Location = new System.Drawing.Point(152, 134);
             this.btnPositionSet.Name = "btnPositionSet";
             this.btnPositionSet.Size = new System.Drawing.Size(85, 50);
             this.btnPositionSet.TabIndex = 14;
@@ -315,7 +349,7 @@
             // btnPositionCopy
             // 
             this.btnPositionCopy.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPositionCopy.Location = new System.Drawing.Point(10, 236);
+            this.btnPositionCopy.Location = new System.Drawing.Point(152, 62);
             this.btnPositionCopy.Name = "btnPositionCopy";
             this.btnPositionCopy.Size = new System.Drawing.Size(85, 50);
             this.btnPositionCopy.TabIndex = 13;
@@ -444,7 +478,7 @@
             this.cboCoordinate.FormattingEnabled = true;
             this.cboCoordinate.Location = new System.Drawing.Point(6, 32);
             this.cboCoordinate.Name = "cboCoordinate";
-            this.cboCoordinate.Size = new System.Drawing.Size(146, 24);
+            this.cboCoordinate.Size = new System.Drawing.Size(140, 24);
             this.cboCoordinate.TabIndex = 0;
             this.cboCoordinate.SelectedIndexChanged += new System.EventHandler(this.cboCoordinate_SelectedIndexChanged);
             // 
@@ -463,21 +497,72 @@
             this.gbRegister.Controls.Add(this.lblR1Set);
             this.gbRegister.Controls.Add(this.lblR2Set);
             this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbRegister.Location = new System.Drawing.Point(647, 146);
+            this.gbRegister.Location = new System.Drawing.Point(777, 146);
             this.gbRegister.Name = "gbRegister";
-            this.gbRegister.Size = new System.Drawing.Size(236, 302);
+            this.gbRegister.Size = new System.Drawing.Size(126, 353);
             this.gbRegister.TabIndex = 7;
             this.gbRegister.TabStop = false;
             this.gbRegister.Text = "Register";
             // 
-            // lblRegister
+            // btnRegisterSet
             // 
-            this.lblRegister.AutoSize = true;
-            this.lblRegister.Location = new System.Drawing.Point(6, 29);
-            this.lblRegister.Name = "lblRegister";
-            this.lblRegister.Size = new System.Drawing.Size(49, 105);
-            this.lblRegister.TabIndex = 0;
-            this.lblRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =";
+            this.btnRegisterSet.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnRegisterSet.Location = new System.Drawing.Point(10, 289);
+            this.btnRegisterSet.Name = "btnRegisterSet";
+            this.btnRegisterSet.Size = new System.Drawing.Size(101, 58);
+            this.btnRegisterSet.TabIndex = 25;
+            this.btnRegisterSet.Text = "Set";
+            this.btnRegisterSet.UseVisualStyleBackColor = true;
+            this.btnRegisterSet.Click += new System.EventHandler(this.btnRegisterSet_Click);
+            // 
+            // tbR5Set
+            // 
+            this.tbR5Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR5Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR5Set.Location = new System.Drawing.Point(61, 260);
+            this.tbR5Set.Name = "tbR5Set";
+            this.tbR5Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR5Set.TabIndex = 24;
+            this.tbR5Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR4Set
+            // 
+            this.tbR4Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR4Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR4Set.Location = new System.Drawing.Point(61, 231);
+            this.tbR4Set.Name = "tbR4Set";
+            this.tbR4Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR4Set.TabIndex = 23;
+            this.tbR4Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR3Set
+            // 
+            this.tbR3Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR3Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR3Set.Location = new System.Drawing.Point(61, 202);
+            this.tbR3Set.Name = "tbR3Set";
+            this.tbR3Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR3Set.TabIndex = 22;
+            this.tbR3Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbR2Set
+            // 
+            this.tbR2Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbR2Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbR2Set.Location = new System.Drawing.Point(61, 173);
+            this.tbR2Set.Name = "tbR2Set";
+            this.tbR2Set.Size = new System.Drawing.Size(50, 23);
+            this.tbR2Set.TabIndex = 21;
+            this.tbR2Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblR5Set
+            // 
+            this.lblR5Set.AutoSize = true;
+            this.lblR5Set.Location = new System.Drawing.Point(6, 260);
+            this.lblR5Set.Name = "lblR5Set";
+            this.lblR5Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR5Set.TabIndex = 20;
+            this.lblR5Set.Text = "R5 =";
             // 
             // tbR1Set
             // 
@@ -488,6 +573,33 @@
             this.tbR1Set.Size = new System.Drawing.Size(50, 23);
             this.tbR1Set.TabIndex = 16;
             this.tbR1Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblR4Set
+            // 
+            this.lblR4Set.AutoSize = true;
+            this.lblR4Set.Location = new System.Drawing.Point(6, 231);
+            this.lblR4Set.Name = "lblR4Set";
+            this.lblR4Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR4Set.TabIndex = 19;
+            this.lblR4Set.Text = "R4 =";
+            // 
+            // lblRegister
+            // 
+            this.lblRegister.AutoSize = true;
+            this.lblRegister.Location = new System.Drawing.Point(6, 29);
+            this.lblRegister.Name = "lblRegister";
+            this.lblRegister.Size = new System.Drawing.Size(49, 105);
+            this.lblRegister.TabIndex = 0;
+            this.lblRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =";
+            // 
+            // lblR3Set
+            // 
+            this.lblR3Set.AutoSize = true;
+            this.lblR3Set.Location = new System.Drawing.Point(6, 202);
+            this.lblR3Set.Name = "lblR3Set";
+            this.lblR3Set.Size = new System.Drawing.Size(49, 21);
+            this.lblR3Set.TabIndex = 18;
+            this.lblR3Set.Text = "R3 =";
             // 
             // lblR1Set
             // 
@@ -507,84 +619,6 @@
             this.lblR2Set.TabIndex = 17;
             this.lblR2Set.Text = "R2 =";
             // 
-            // lblR3Set
-            // 
-            this.lblR3Set.AutoSize = true;
-            this.lblR3Set.Location = new System.Drawing.Point(6, 202);
-            this.lblR3Set.Name = "lblR3Set";
-            this.lblR3Set.Size = new System.Drawing.Size(49, 21);
-            this.lblR3Set.TabIndex = 18;
-            this.lblR3Set.Text = "R3 =";
-            // 
-            // lblR4Set
-            // 
-            this.lblR4Set.AutoSize = true;
-            this.lblR4Set.Location = new System.Drawing.Point(6, 231);
-            this.lblR4Set.Name = "lblR4Set";
-            this.lblR4Set.Size = new System.Drawing.Size(49, 21);
-            this.lblR4Set.TabIndex = 19;
-            this.lblR4Set.Text = "R4 =";
-            // 
-            // lblR5Set
-            // 
-            this.lblR5Set.AutoSize = true;
-            this.lblR5Set.Location = new System.Drawing.Point(6, 260);
-            this.lblR5Set.Name = "lblR5Set";
-            this.lblR5Set.Size = new System.Drawing.Size(49, 21);
-            this.lblR5Set.TabIndex = 20;
-            this.lblR5Set.Text = "R5 =";
-            // 
-            // tbR2Set
-            // 
-            this.tbR2Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbR2Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbR2Set.Location = new System.Drawing.Point(61, 173);
-            this.tbR2Set.Name = "tbR2Set";
-            this.tbR2Set.Size = new System.Drawing.Size(50, 23);
-            this.tbR2Set.TabIndex = 21;
-            this.tbR2Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tbR3Set
-            // 
-            this.tbR3Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbR3Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbR3Set.Location = new System.Drawing.Point(61, 202);
-            this.tbR3Set.Name = "tbR3Set";
-            this.tbR3Set.Size = new System.Drawing.Size(50, 23);
-            this.tbR3Set.TabIndex = 22;
-            this.tbR3Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tbR4Set
-            // 
-            this.tbR4Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbR4Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbR4Set.Location = new System.Drawing.Point(61, 231);
-            this.tbR4Set.Name = "tbR4Set";
-            this.tbR4Set.Size = new System.Drawing.Size(50, 23);
-            this.tbR4Set.TabIndex = 23;
-            this.tbR4Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tbR5Set
-            // 
-            this.tbR5Set.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbR5Set.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbR5Set.Location = new System.Drawing.Point(61, 260);
-            this.tbR5Set.Name = "tbR5Set";
-            this.tbR5Set.Size = new System.Drawing.Size(50, 23);
-            this.tbR5Set.TabIndex = 24;
-            this.tbR5Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // btnRegisterSet
-            // 
-            this.btnRegisterSet.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnRegisterSet.Location = new System.Drawing.Point(109, 62);
-            this.btnRegisterSet.Name = "btnRegisterSet";
-            this.btnRegisterSet.Size = new System.Drawing.Size(85, 50);
-            this.btnRegisterSet.TabIndex = 25;
-            this.btnRegisterSet.Text = "Set";
-            this.btnRegisterSet.UseVisualStyleBackColor = true;
-            this.btnRegisterSet.Click += new System.EventHandler(this.btnRegisterSet_Click);
-            // 
             // gbPositionMove
             // 
             this.gbPositionMove.Controls.Add(this.cboStep);
@@ -602,122 +636,32 @@
             this.gbPositionMove.Controls.Add(this.btnXJ1Positive);
             this.gbPositionMove.Controls.Add(this.btnXJ1Negative);
             this.gbPositionMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbPositionMove.Location = new System.Drawing.Point(889, 146);
+            this.gbPositionMove.Location = new System.Drawing.Point(552, 146);
             this.gbPositionMove.Name = "gbPositionMove";
-            this.gbPositionMove.Size = new System.Drawing.Size(247, 302);
+            this.gbPositionMove.Size = new System.Drawing.Size(219, 353);
             this.gbPositionMove.TabIndex = 8;
             this.gbPositionMove.TabStop = false;
             this.gbPositionMove.Text = "Position Move";
             // 
-            // btnXJ1Negative
+            // cboStep
             // 
-            this.btnXJ1Negative.Location = new System.Drawing.Point(6, 60);
-            this.btnXJ1Negative.Name = "btnXJ1Negative";
-            this.btnXJ1Negative.Size = new System.Drawing.Size(100, 30);
-            this.btnXJ1Negative.TabIndex = 0;
-            this.btnXJ1Negative.Tag = "1";
-            this.btnXJ1Negative.Text = "-X";
-            this.btnXJ1Negative.UseVisualStyleBackColor = true;
-            this.btnXJ1Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.cboStep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStep.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboStep.FormattingEnabled = true;
+            this.cboStep.Location = new System.Drawing.Point(67, 30);
+            this.cboStep.Name = "cboStep";
+            this.cboStep.Size = new System.Drawing.Size(145, 24);
+            this.cboStep.TabIndex = 13;
+            this.cboStep.SelectedIndexChanged += new System.EventHandler(this.cboStep_SelectedIndexChanged);
             // 
-            // btnXJ1Positive
+            // lblStep
             // 
-            this.btnXJ1Positive.Location = new System.Drawing.Point(112, 60);
-            this.btnXJ1Positive.Name = "btnXJ1Positive";
-            this.btnXJ1Positive.Size = new System.Drawing.Size(100, 30);
-            this.btnXJ1Positive.TabIndex = 1;
-            this.btnXJ1Positive.Tag = "0";
-            this.btnXJ1Positive.Text = "+X";
-            this.btnXJ1Positive.UseVisualStyleBackColor = true;
-            this.btnXJ1Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnYJ2Positive
-            // 
-            this.btnYJ2Positive.Location = new System.Drawing.Point(112, 96);
-            this.btnYJ2Positive.Name = "btnYJ2Positive";
-            this.btnYJ2Positive.Size = new System.Drawing.Size(100, 30);
-            this.btnYJ2Positive.TabIndex = 3;
-            this.btnYJ2Positive.Tag = "2";
-            this.btnYJ2Positive.Text = "+Y";
-            this.btnYJ2Positive.UseVisualStyleBackColor = true;
-            this.btnYJ2Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnYJ2Negative
-            // 
-            this.btnYJ2Negative.Location = new System.Drawing.Point(6, 96);
-            this.btnYJ2Negative.Name = "btnYJ2Negative";
-            this.btnYJ2Negative.Size = new System.Drawing.Size(100, 30);
-            this.btnYJ2Negative.TabIndex = 2;
-            this.btnYJ2Negative.Tag = "3";
-            this.btnYJ2Negative.Text = "-Y";
-            this.btnYJ2Negative.UseVisualStyleBackColor = true;
-            this.btnYJ2Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnZJ3Positive
-            // 
-            this.btnZJ3Positive.Location = new System.Drawing.Point(112, 132);
-            this.btnZJ3Positive.Name = "btnZJ3Positive";
-            this.btnZJ3Positive.Size = new System.Drawing.Size(100, 30);
-            this.btnZJ3Positive.TabIndex = 5;
-            this.btnZJ3Positive.Tag = "4";
-            this.btnZJ3Positive.Text = "+Z";
-            this.btnZJ3Positive.UseVisualStyleBackColor = true;
-            this.btnZJ3Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnZJ3Negative
-            // 
-            this.btnZJ3Negative.Location = new System.Drawing.Point(6, 132);
-            this.btnZJ3Negative.Name = "btnZJ3Negative";
-            this.btnZJ3Negative.Size = new System.Drawing.Size(100, 30);
-            this.btnZJ3Negative.TabIndex = 4;
-            this.btnZJ3Negative.Tag = "5";
-            this.btnZJ3Negative.Text = "-Z";
-            this.btnZJ3Negative.UseVisualStyleBackColor = true;
-            this.btnZJ3Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnWJ4Positive
-            // 
-            this.btnWJ4Positive.Location = new System.Drawing.Point(112, 168);
-            this.btnWJ4Positive.Name = "btnWJ4Positive";
-            this.btnWJ4Positive.Size = new System.Drawing.Size(100, 30);
-            this.btnWJ4Positive.TabIndex = 7;
-            this.btnWJ4Positive.Tag = "6";
-            this.btnWJ4Positive.Text = "+W";
-            this.btnWJ4Positive.UseVisualStyleBackColor = true;
-            this.btnWJ4Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnWJ4Negative
-            // 
-            this.btnWJ4Negative.Location = new System.Drawing.Point(6, 168);
-            this.btnWJ4Negative.Name = "btnWJ4Negative";
-            this.btnWJ4Negative.Size = new System.Drawing.Size(100, 30);
-            this.btnWJ4Negative.TabIndex = 6;
-            this.btnWJ4Negative.Tag = "7";
-            this.btnWJ4Negative.Text = "-W";
-            this.btnWJ4Negative.UseVisualStyleBackColor = true;
-            this.btnWJ4Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnPJ5Positive
-            // 
-            this.btnPJ5Positive.Location = new System.Drawing.Point(112, 204);
-            this.btnPJ5Positive.Name = "btnPJ5Positive";
-            this.btnPJ5Positive.Size = new System.Drawing.Size(100, 30);
-            this.btnPJ5Positive.TabIndex = 9;
-            this.btnPJ5Positive.Tag = "8";
-            this.btnPJ5Positive.Text = "+P";
-            this.btnPJ5Positive.UseVisualStyleBackColor = true;
-            this.btnPJ5Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
-            // 
-            // btnPJ5Negative
-            // 
-            this.btnPJ5Negative.Location = new System.Drawing.Point(6, 204);
-            this.btnPJ5Negative.Name = "btnPJ5Negative";
-            this.btnPJ5Negative.Size = new System.Drawing.Size(100, 30);
-            this.btnPJ5Negative.TabIndex = 8;
-            this.btnPJ5Negative.Tag = "9";
-            this.btnPJ5Negative.Text = "-P";
-            this.btnPJ5Negative.UseVisualStyleBackColor = true;
-            this.btnPJ5Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.lblStep.AutoSize = true;
+            this.lblStep.Location = new System.Drawing.Point(6, 29);
+            this.lblStep.Name = "lblStep";
+            this.lblStep.Size = new System.Drawing.Size(55, 21);
+            this.lblStep.TabIndex = 12;
+            this.lblStep.Text = "Step :";
             // 
             // btnRJ6Positive
             // 
@@ -741,25 +685,115 @@
             this.btnRJ6Negative.UseVisualStyleBackColor = true;
             this.btnRJ6Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
             // 
-            // lblStep
+            // btnPJ5Positive
             // 
-            this.lblStep.AutoSize = true;
-            this.lblStep.Location = new System.Drawing.Point(6, 29);
-            this.lblStep.Name = "lblStep";
-            this.lblStep.Size = new System.Drawing.Size(55, 21);
-            this.lblStep.TabIndex = 12;
-            this.lblStep.Text = "Step :";
+            this.btnPJ5Positive.Location = new System.Drawing.Point(112, 204);
+            this.btnPJ5Positive.Name = "btnPJ5Positive";
+            this.btnPJ5Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnPJ5Positive.TabIndex = 9;
+            this.btnPJ5Positive.Tag = "8";
+            this.btnPJ5Positive.Text = "+P";
+            this.btnPJ5Positive.UseVisualStyleBackColor = true;
+            this.btnPJ5Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
             // 
-            // cboStep
+            // btnPJ5Negative
             // 
-            this.cboStep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboStep.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.cboStep.FormattingEnabled = true;
-            this.cboStep.Location = new System.Drawing.Point(67, 30);
-            this.cboStep.Name = "cboStep";
-            this.cboStep.Size = new System.Drawing.Size(145, 24);
-            this.cboStep.TabIndex = 13;
-            this.cboStep.SelectedIndexChanged += new System.EventHandler(this.cboStep_SelectedIndexChanged);
+            this.btnPJ5Negative.Location = new System.Drawing.Point(6, 204);
+            this.btnPJ5Negative.Name = "btnPJ5Negative";
+            this.btnPJ5Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnPJ5Negative.TabIndex = 8;
+            this.btnPJ5Negative.Tag = "9";
+            this.btnPJ5Negative.Text = "-P";
+            this.btnPJ5Negative.UseVisualStyleBackColor = true;
+            this.btnPJ5Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnWJ4Positive
+            // 
+            this.btnWJ4Positive.Location = new System.Drawing.Point(112, 168);
+            this.btnWJ4Positive.Name = "btnWJ4Positive";
+            this.btnWJ4Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnWJ4Positive.TabIndex = 7;
+            this.btnWJ4Positive.Tag = "6";
+            this.btnWJ4Positive.Text = "+W";
+            this.btnWJ4Positive.UseVisualStyleBackColor = true;
+            this.btnWJ4Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnWJ4Negative
+            // 
+            this.btnWJ4Negative.Location = new System.Drawing.Point(6, 168);
+            this.btnWJ4Negative.Name = "btnWJ4Negative";
+            this.btnWJ4Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnWJ4Negative.TabIndex = 6;
+            this.btnWJ4Negative.Tag = "7";
+            this.btnWJ4Negative.Text = "-W";
+            this.btnWJ4Negative.UseVisualStyleBackColor = true;
+            this.btnWJ4Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnZJ3Positive
+            // 
+            this.btnZJ3Positive.Location = new System.Drawing.Point(112, 132);
+            this.btnZJ3Positive.Name = "btnZJ3Positive";
+            this.btnZJ3Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnZJ3Positive.TabIndex = 5;
+            this.btnZJ3Positive.Tag = "4";
+            this.btnZJ3Positive.Text = "+Z";
+            this.btnZJ3Positive.UseVisualStyleBackColor = true;
+            this.btnZJ3Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnZJ3Negative
+            // 
+            this.btnZJ3Negative.Location = new System.Drawing.Point(6, 132);
+            this.btnZJ3Negative.Name = "btnZJ3Negative";
+            this.btnZJ3Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnZJ3Negative.TabIndex = 4;
+            this.btnZJ3Negative.Tag = "5";
+            this.btnZJ3Negative.Text = "-Z";
+            this.btnZJ3Negative.UseVisualStyleBackColor = true;
+            this.btnZJ3Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnYJ2Positive
+            // 
+            this.btnYJ2Positive.Location = new System.Drawing.Point(112, 96);
+            this.btnYJ2Positive.Name = "btnYJ2Positive";
+            this.btnYJ2Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnYJ2Positive.TabIndex = 3;
+            this.btnYJ2Positive.Tag = "2";
+            this.btnYJ2Positive.Text = "+Y";
+            this.btnYJ2Positive.UseVisualStyleBackColor = true;
+            this.btnYJ2Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnYJ2Negative
+            // 
+            this.btnYJ2Negative.Location = new System.Drawing.Point(6, 96);
+            this.btnYJ2Negative.Name = "btnYJ2Negative";
+            this.btnYJ2Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnYJ2Negative.TabIndex = 2;
+            this.btnYJ2Negative.Tag = "3";
+            this.btnYJ2Negative.Text = "-Y";
+            this.btnYJ2Negative.UseVisualStyleBackColor = true;
+            this.btnYJ2Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnXJ1Positive
+            // 
+            this.btnXJ1Positive.Location = new System.Drawing.Point(112, 60);
+            this.btnXJ1Positive.Name = "btnXJ1Positive";
+            this.btnXJ1Positive.Size = new System.Drawing.Size(100, 30);
+            this.btnXJ1Positive.TabIndex = 1;
+            this.btnXJ1Positive.Tag = "0";
+            this.btnXJ1Positive.Text = "+X";
+            this.btnXJ1Positive.UseVisualStyleBackColor = true;
+            this.btnXJ1Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            // 
+            // btnXJ1Negative
+            // 
+            this.btnXJ1Negative.Location = new System.Drawing.Point(6, 60);
+            this.btnXJ1Negative.Name = "btnXJ1Negative";
+            this.btnXJ1Negative.Size = new System.Drawing.Size(100, 30);
+            this.btnXJ1Negative.TabIndex = 0;
+            this.btnXJ1Negative.Tag = "1";
+            this.btnXJ1Negative.Text = "-X";
+            this.btnXJ1Negative.UseVisualStyleBackColor = true;
+            this.btnXJ1Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
             // 
             // timer2
             // 
@@ -769,15 +803,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1148, 548);
+            this.ClientSize = new System.Drawing.Size(911, 503);
             this.Controls.Add(this.gbPositionMove);
+            this.Controls.Add(this.btnEsc);
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbPositionSet);
             this.Controls.Add(this.gbOverride);
             this.Controls.Add(this.gbCurrentPosition);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.gbConnection);
-            this.Controls.Add(this.btnEsc);
             this.Controls.Add(this.pblogo);
             this.Name = "FrmMain";
             this.Tag = "0";
@@ -864,6 +898,9 @@
         private System.Windows.Forms.ComboBox cboStep;
         private System.Windows.Forms.Label lblStep;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.TextBox tbVelocity;
+        private System.Windows.Forms.Label lblVelocity;
+        private System.Windows.Forms.Label lblRange;
     }
 }
 

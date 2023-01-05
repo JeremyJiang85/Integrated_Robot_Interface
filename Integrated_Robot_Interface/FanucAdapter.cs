@@ -77,6 +77,23 @@ namespace Integrated_Robot_Interface
             Home = Homeposition;
             return myfanuc.Home(Home);
         }
+        public override bool GetVelocity()
+        {
+            bool ret = false;
+            int Index = 7;
+            object Value = null;
+
+            ret = myfanuc.GetRegister(ref Value, Index);
+            Getvelocity = (float)Value;
+            return ret;
+        }
+        public override bool SetVelocity()
+        {
+            int Index = 7;
+            object Value = Setvelocity;
+
+            return myfanuc.SetRegister(Value, Index);
+        }
         public override bool GetRegister()
         {
             bool ret = false;

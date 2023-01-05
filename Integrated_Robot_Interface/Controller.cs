@@ -145,6 +145,14 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Home();
         }
+        public bool GetVelocity()
+        {
+            return myRobotAdapter.GetVelocity();
+        }
+        public bool SetVelocity()
+        {
+            return myRobotAdapter.SetVelocity();
+        }
         public bool GetRegister()
         {
             return myRobotAdapter.GetRegister();
