@@ -55,6 +55,18 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Nexcom.cs" />
+    <Compile Include="NexcomAdapter.cs" />
+    <Compile Include="NexMotionSDK\Adapter\NexMotion_AxisAdapter.cs" />
+    <Compile Include="NexMotionSDK\Adapter\NexMotion_DeviceAdapter.cs" />
+    <Compile Include="NexMotionSDK\Adapter\NexMotion_GroupAdapter.cs" />
+    <Compile Include="NexMotionSDK\Adapter\NexMotion_IOAdapter.cs" />
+    <Compile Include="NexMotionSDK\MCATConfig.cs" />
+    <Compile Include="NexMotionSDK\NexMotion_API.cs" />
+    <Compile Include="NexMotionSDK\NexMotion_Common.cs" />
+    <Compile Include="NexMotionSDK\NexMotion_Define.cs" />
+    <Compile Include="NexMotionSDK\NexMotion_ErrCode.cs" />
+    <Compile Include="NexMotionSDK\NexMotion_Struct.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotAdapter.cs" />

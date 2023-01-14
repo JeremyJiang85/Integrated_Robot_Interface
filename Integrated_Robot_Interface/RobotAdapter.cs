@@ -22,6 +22,7 @@ namespace Integrated_Robot_Interface
         public static Array Getregister { get; set; } = new float[2] { 0, 0 };
         public static Array Setregister { get; set; } = new float[2] { 0, 0 };
         public static Array Axismove { get; set; } = new int[2] { 0, 0 };
+        public static string ErrorMessage { get; set; } = "";
 
 
         //功能介面

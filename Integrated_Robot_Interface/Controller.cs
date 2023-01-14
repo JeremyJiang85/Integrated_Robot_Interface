@@ -92,7 +92,8 @@ namespace Integrated_Robot_Interface
                     myRobotAdapter = new FanucAdapter();
                     return myRobotAdapter.Connect();
                 case (int)Robotnum.Nexcom:
-                    return false;
+                    myRobotAdapter = new NexcomAdapter();
+                    return myRobotAdapter.Connect();
                 case (int)Robotnum.Ourarm:
                     return false;
                 default:

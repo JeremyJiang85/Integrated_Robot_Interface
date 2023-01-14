@@ -37,6 +37,32 @@ namespace Integrated_Robot_Interface
             cboStep.Items.AddRange(Step);
             Initialize();
         }
+        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (fgConnectionStatus)
+            {
+                switch (myController.Robot)
+                {
+                    case (int)Controller.Robotnum.Fanuc:
+                        if (myController.Disconnect())
+                        {
+                            Initialize();
+                            richTextBox1.Text += "手臂離線成功\r\n";
+                            MessageBox.Show("手臂離線成功");
+                        }
+                        else
+                        {
+                            richTextBox1.Text += "手臂離線失敗\r\n";
+                            MessageBox.Show("手臂離線失敗");
+                        }
+                        break;
+                    case (int)Controller.Robotnum.Nexcom:
+                        break;
+                    case (int)Controller.Robotnum.Ourarm:
+                        break;
+                }
+            }
+        }
 
         #region <object status>
         private void Initialize()

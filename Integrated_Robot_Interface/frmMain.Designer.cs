@@ -816,6 +816,7 @@
             this.Name = "FrmMain";
             this.Tag = "0";
             this.Text = "Integrated Robot Interface";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).EndInit();
             this.gbConnection.ResumeLayout(false);
