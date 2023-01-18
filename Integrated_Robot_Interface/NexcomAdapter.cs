@@ -9,34 +9,48 @@ namespace Integrated_Robot_Interface
 {
     public class NexcomAdapter : RobotAdapter
     {
-        Nexcom mynexcom;
+        private NexMotion_DeviceAdapter mobjDeviceAdapter;
+        private NexMotion_GroupAdapter mobjGroupAdapter;
         public int DeviceId = 0;
 
         public NexcomAdapter()
         {
-            mynexcom = new Nexcom();
+            mobjDeviceAdapter = new NexMotion_DeviceAdapter();
         }
         public override bool Connect()
         {
             int ret = 0;
-            ret = mynexcom.NMC_SetIniPath("C:\\NEXCOM\\NexMotionLibConfig.ini");
+            ret = mobjDeviceAdapter.NMC_SetIniPath("C:\\NEXCOM\\NexMotionLibConfig.ini");
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 ErrorMessage = GetErrorMessage("NMC_SetIniPath Fail", ret);
                 return false;
             }
 
-            ret = mynexcom.NMC_DeviceOpenUp(NexMotion_Define.DEV_TYPE_ETHERCAT, 0, ref DeviceId);
+            ret = mobjDeviceAdapter.NMC_DeviceOpenUp(NexMotion_Define.DEV_TYPE_ETHERCAT, 0);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 ErrorMessage = GetErrorMessage("NMC_DeviceOpenUp Fail", ret);
                 return false;
             }
 
-            ret = mynexcom.NMC_DeviceResetStateAll();
+            DeviceId = mobjDeviceAdapter.DeviceId;
+
+            ret = mobjDeviceAdapter.NMC_DeviceResetStateAll();
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 ErrorMessage = GetErrorMessage("NMC_DeviceResetStateAll Fail", ret);
+                return false;
+            }
+
+            return true;
+        }
+        public override bool Disconnect()
+        {
+            int ret = mobjDeviceAdapter.NMC_DeviceShutdown();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                ErrorMessage = GetErrorMessage("NMC_DeviceShutdown Fail", ret);
                 return false;
             }
 

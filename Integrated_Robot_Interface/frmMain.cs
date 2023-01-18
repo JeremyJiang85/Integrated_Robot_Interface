@@ -41,25 +41,16 @@ namespace Integrated_Robot_Interface
         {
             if (fgConnectionStatus)
             {
-                switch (myController.Robot)
+                if (myController.Disconnect())
                 {
-                    case (int)Controller.Robotnum.Fanuc:
-                        if (myController.Disconnect())
-                        {
-                            Initialize();
-                            richTextBox1.Text += "手臂離線成功\r\n";
-                            MessageBox.Show("手臂離線成功");
-                        }
-                        else
-                        {
-                            richTextBox1.Text += "手臂離線失敗\r\n";
-                            MessageBox.Show("手臂離線失敗");
-                        }
-                        break;
-                    case (int)Controller.Robotnum.Nexcom:
-                        break;
-                    case (int)Controller.Robotnum.Ourarm:
-                        break;
+                    Initialize();
+                    richTextBox1.Text += "手臂離線成功\r\n";
+                    MessageBox.Show("手臂離線成功");
+                }
+                else
+                {
+                    richTextBox1.Text += "手臂離線失敗\r\n";
+                    MessageBox.Show("手臂離線失敗");
                 }
             }
         }
@@ -158,7 +149,7 @@ namespace Integrated_Robot_Interface
                     lblConnectionStatus.Text = "Connection Status : Connected";
                     btnConnection.Text = "Disconnect";
                     cboRobot.Enabled = false;
-                    timer1.Enabled = true;
+                    //timer1.Enabled = true;
                     txtIP.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
@@ -167,6 +158,9 @@ namespace Integrated_Robot_Interface
                     {
                         case (int)Controller.Robotnum.Fanuc:
                             lblRange.Text = "X : 0~700\r\nY : -500~600\r\nZ : -130~500\r\nVelocity : 100~500";
+                            myController.GetCPosition();
+                            RobotAdapter.SetCposition = RobotAdapter.GetCposition;
+                            myController.SetCPosition();
                             break;
                         case (int)Controller.Robotnum.Nexcom:
                             break;
@@ -174,14 +168,12 @@ namespace Integrated_Robot_Interface
                             break;
                     }
                     MessageBox.Show("手臂連線成功");
-                    myController.GetCPosition();
-                    RobotAdapter.SetCposition = RobotAdapter.GetCposition;
-                    myController.SetCPosition();
+                    
                 }
                 else
                 {
-                    richTextBox1.Text += "手臂連線失敗\r\n";
-                    MessageBox.Show("手臂連線失敗");
+                    richTextBox1.Text += "手臂連線失敗\r\n" + RobotAdapter.ErrorMessage;
+                    MessageBox.Show("手臂連線失敗\n" + RobotAdapter.ErrorMessage);
                 }
             }
             else
@@ -206,29 +198,17 @@ namespace Integrated_Robot_Interface
         {
             if (fgConnectionStatus)
             {
-                switch (myController.Robot)
+                if (myController.Disconnect())
                 {
-                    case (int)Controller.Robotnum.Fanuc:
-                        if (myController.Disconnect())
-                        {
-                            Initialize();
-                            richTextBox1.Text += "手臂離線成功\r\n";
-                            MessageBox.Show("手臂離線成功");
-                            Application.Exit();
-                        }
-                        else
-                        {
-                            richTextBox1.Text += "手臂離線失敗\r\n";
-                            MessageBox.Show("手臂離線失敗");
-                        }
-                        break;
-                    case (int)Controller.Robotnum.Nexcom:
-                        break;
-                    case (int)Controller.Robotnum.Ourarm:
-                        break;
-                    default:
-                        Application.Exit();
-                        break ;
+                    Initialize();
+                    richTextBox1.Text += "手臂離線成功\r\n";
+                    MessageBox.Show("手臂離線成功");
+                    Application.Exit();
+                }
+                else
+                {
+                    richTextBox1.Text += "手臂離線失敗\r\n";
+                    MessageBox.Show("手臂離線失敗");
                 }
             }
             else
@@ -238,12 +218,21 @@ namespace Integrated_Robot_Interface
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (!myController.Refresh())
+            switch (myController.Robot)
             {
-                ShowMessage("刷新失敗", "取得刷新狀態");
-                return;
+                case (int)Controller.Robotnum.Fanuc:
+                    if (!myController.Refresh())
+                    {
+                        ShowMessage("刷新失敗", "取得刷新狀態");
+                        return;
+                    }
+                    break;
+                case (int)Controller.Robotnum.Nexcom:
+                    break;
+                case (int)Controller.Robotnum.Ourarm:
+                    break;
             }
-
+            
             if (!myController.Alarm())
             {
                 ShowMessage("讀取警示失敗", "讀取警示狀態");
@@ -618,20 +607,24 @@ namespace Integrated_Robot_Interface
             switch (cboStep.SelectedIndex)
             {
                 case (int)Controller.Stepnum.One:
+                    myController.Step = (int)Controller.Stepnum.One;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue(1, 0);
+                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.One, 0);
                     break;
                 case (int)Controller.Stepnum.Five:
+                    myController.Step = (int)Controller.Stepnum.Five;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue(5, 0);
+                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Five, 0);
                     break;
                 case (int)Controller.Stepnum.Ten:
+                    myController.Step = (int)Controller.Stepnum.Ten;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue(10, 0);
+                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Ten, 0);
                     break;
                 case (int)Controller.Stepnum.Cont:
+                    myController.Step = (int)Controller.Stepnum.Cont;
                     fgJogStatus = true;
-                    RobotAdapter.Axismove.SetValue(10, 0);
+                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Cont, 0);
                     break;
             }
         }

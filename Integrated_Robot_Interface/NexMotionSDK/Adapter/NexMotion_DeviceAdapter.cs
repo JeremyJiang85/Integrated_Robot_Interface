@@ -19,12 +19,12 @@ namespace NEXCOMROBOT.MCAT
         }
         #endregion
 
-        public Int32 NMC_DeviceOpenUp( Int32 DevType, Int32 DevIndex, ref Int32 DevId)
+        public Int32 NMC_DeviceOpenUp( Int32 DevType, Int32 DevIndex)
         {
             mDeviceType = DevType;
             mDeviceIndex = DevIndex;
 
-            return NexMotion_API.NMC_DeviceOpenUp(DevType, DevIndex, ref DevId);
+            return NexMotion_API.NMC_DeviceOpenUp(DevType, DevIndex, ref mDeviceId);
         }
 
         public Int32 NMC_DeviceResetStateAll()

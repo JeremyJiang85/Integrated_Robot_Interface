@@ -67,7 +67,8 @@ namespace Integrated_Robot_Interface
             }
             set
             {
-                if (value >= (int)Stepnum.One && value <= (int)Stepnum.Cont)
+                if (value == (int)Stepnum.One || value == (int)Stepnum.Five ||
+                    value == (int)Stepnum.Ten || value == (int)Stepnum.Cont)
                 {
                     step = value;
                 }
@@ -80,7 +81,7 @@ namespace Integrated_Robot_Interface
         private int step = (int)Stepnum.One;
         public enum Stepnum
         {
-            One, Five, Ten, Cont
+            One = 1, Five = 5, Ten = 10, Cont = 20
         }
 
 
@@ -107,7 +108,7 @@ namespace Integrated_Robot_Interface
                 case (int)Robotnum.Fanuc:
                     return myRobotAdapter.Disconnect();
                 case (int)Robotnum.Nexcom:
-                    return false;
+                    return myRobotAdapter.Disconnect();
                 case (int)Robotnum.Ourarm:
                     return false;
                 default:
