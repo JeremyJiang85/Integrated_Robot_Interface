@@ -44,13 +44,11 @@ namespace Integrated_Robot_Interface
                 if (myController.Disconnect())
                 {
                     Initialize();
-                    richTextBox1.Text += "手臂離線成功\r\n";
-                    MessageBox.Show("手臂離線成功");
                 }
                 else
                 {
-                    richTextBox1.Text += "手臂離線失敗\r\n";
-                    MessageBox.Show("手臂離線失敗");
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
                 }
             }
         }
@@ -149,11 +147,10 @@ namespace Integrated_Robot_Interface
                     lblConnectionStatus.Text = "Connection Status : Connected";
                     btnConnection.Text = "Disconnect";
                     cboRobot.Enabled = false;
-                    //timer1.Enabled = true;
+                    timer1.Enabled = true;
                     txtIP.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
-                    richTextBox1.Text += "手臂連線成功\r\n";
                     switch (myController.Robot)
                     {
                         case (int)Controller.Robotnum.Fanuc:
@@ -167,13 +164,11 @@ namespace Integrated_Robot_Interface
                         case (int)Controller.Robotnum.Ourarm:
                             break;
                     }
-                    MessageBox.Show("手臂連線成功");
-                    
                 }
                 else
                 {
-                    richTextBox1.Text += "手臂連線失敗\r\n" + RobotAdapter.ErrorMessage;
-                    MessageBox.Show("手臂連線失敗\n" + RobotAdapter.ErrorMessage);
+                    richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.Apierrtext}";
+                    MessageBox.Show($"手臂連線失敗\r\n{RobotAdapter.Apierrtext}");
                 }
             }
             else
@@ -181,13 +176,11 @@ namespace Integrated_Robot_Interface
                 if (myController.Disconnect())
                 {
                     Initialize();
-                    richTextBox1.Text += "手臂離線成功\r\n";
-                    MessageBox.Show("手臂離線成功");
                 }
                 else
                 {
-                    richTextBox1.Text += "手臂離線失敗\r\n";
-                    MessageBox.Show("手臂離線失敗");
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
                 }
             }
         }
@@ -201,14 +194,12 @@ namespace Integrated_Robot_Interface
                 if (myController.Disconnect())
                 {
                     Initialize();
-                    richTextBox1.Text += "手臂離線成功\r\n";
-                    MessageBox.Show("手臂離線成功");
                     Application.Exit();
                 }
                 else
                 {
-                    richTextBox1.Text += "手臂離線失敗\r\n";
-                    MessageBox.Show("手臂離線失敗");
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
                 }
             }
             else
@@ -226,8 +217,52 @@ namespace Integrated_Robot_Interface
                         ShowMessage("刷新失敗", "取得刷新狀態");
                         return;
                     }
+
+                    for (int Index = 1; Index <= 5; Index++)
+                    {
+                        RobotAdapter.Getregister.SetValue(Index, 1);
+                        if (!myController.GetRegister())
+                        {
+                            ShowMessage("讀取暫存器失敗", "讀取暫存器狀態");
+                            lblRegister.Text = "R1 = Erorr\r\n";
+                            lblRegister.Text += "R2 = Erorr\r\n";
+                            lblRegister.Text += "R3 = Erorr\r\n";
+                            lblRegister.Text += "R4 = Erorr\r\n";
+                            lblRegister.Text += "R5 = Erorr";
+                            return;
+                        }
+                        else
+                        {
+                            if (Index == 1)
+                            {
+                                lblRegister.Text = $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
+                            }
+                            else
+                            {
+                                lblRegister.Text += $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
+                            }
+                        }
+                    }
                     break;
                 case (int)Controller.Robotnum.Nexcom:
+                    if (!myController.GetState())
+                    {
+                        ShowMessage("取得State失敗", "取得State狀態");
+                        return;
+                    }
+                    else
+                    {
+                        lblState.Text = RobotAdapter.Statetext;
+                    }
+                    if (!myController.GetStatus())
+                    {
+                        ShowMessage("取得Status失敗", "取得Status狀態");
+                        return;
+                    }
+                    else
+                    {
+                        lblState.Text += RobotAdapter.Statustext;
+                    }
                     break;
                 case (int)Controller.Robotnum.Ourarm:
                     break;
@@ -240,11 +275,22 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (RobotAdapter.AlarmText != "")
+                if (RobotAdapter.Alarmtext != "")
                 {
-                    ShowMessage($"{RobotAdapter.AlarmText}", "讀取警示狀態");
+                    ShowMessage($"{RobotAdapter.Alarmtext}", "讀取警示狀態");
                     return;
                 }
+            }
+
+            if (!myController.Override())
+            {
+                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
+                lblOverride.Text = "Error";
+                return;
+            }
+            else
+            {
+                lblOverride.Text = RobotAdapter.Overridetext;
             }
 
             if (!myController.GetCPosition())
@@ -293,62 +339,25 @@ namespace Integrated_Robot_Interface
                 lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
             }
 
-            if (!myController.Override())
-            {
-                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
-                lblOverride.Text = "Error";
-                return;
-            }
-            else
-            {
-                lblOverride.Text = RobotAdapter.OverrideText;
-            }
             
-            for (int Index = 1; Index <= 5; Index++)
-            {
-                RobotAdapter.Getregister.SetValue(Index, 1);
-                if (!myController.GetRegister())
-                {
-                    ShowMessage("讀取暫存器失敗", "讀取暫存器狀態");
-                    lblRegister.Text = "R1 = Erorr\r\n";
-                    lblRegister.Text += "R2 = Erorr\r\n";
-                    lblRegister.Text += "R3 = Erorr\r\n";
-                    lblRegister.Text += "R4 = Erorr\r\n";
-                    lblRegister.Text += "R5 = Erorr";
-                    return;
-                }
-                else
-                {
-                    if (Index == 1)
-                    {
-                        lblRegister.Text = $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
-                    }
-                    else
-                    {
-                        lblRegister.Text += $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
-                    }
-                }
-            }
         }
         private void ShowMessage(string content, string title)
         {
             DialogResult result;
             timer1.Enabled = false;
-            richTextBox1.Text += $"{content}\r\n";
-            result = MessageBox.Show($"{content}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
+            richTextBox1.Text += $"{content}\r\n{RobotAdapter.Apierrtext}";
+            result = MessageBox.Show($"{content}\r\n{RobotAdapter.Apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
             if (result == DialogResult.Abort)
             {
                 if (myController.Disconnect())
                 {
                     Initialize();
-                    richTextBox1.Text += "手臂離線成功\r\n";
-                    MessageBox.Show("手臂離線成功");
                 }
                 else
                 {
                     timer1.Enabled = true;
-                    richTextBox1.Text += "手臂離線失敗\r\n";
-                    MessageBox.Show("手臂離線失敗");
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
                 }
             }
             else

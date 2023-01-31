@@ -32,7 +32,7 @@ namespace Integrated_Robot_Interface
             bool ret = false;
             string txt = "";
             ret = myfanuc.Alarm(ref txt);
-            AlarmText = txt;
+            Alarmtext = txt;
             return ret;
         }
         public override bool Override()
@@ -40,7 +40,7 @@ namespace Integrated_Robot_Interface
             bool ret = false;
             string txt = "";
             ret = myfanuc.Override(ref txt);
-            OverrideText = txt;
+            Overridetext = txt;
             return ret;
         }
         public override bool GetCPosition()

@@ -84,7 +84,7 @@ namespace Integrated_Robot_Interface
             One = 1, Five = 5, Ten = 10, Cont = 20
         }
 
-
+        #region <共用>
         public bool Connect()
         {
             switch (robot)
@@ -114,10 +114,6 @@ namespace Integrated_Robot_Interface
                 default:
                     return false;
             }
-        }
-        public bool Refresh()
-        {
-            return myRobotAdapter.Refresh();
         }
         public bool Alarm()
         {
@@ -155,6 +151,17 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetVelocity();
         }
+        public bool Inc()
+        {
+            return myRobotAdapter.Inc();
+        }
+        #endregion
+
+        #region <Fanuc>
+        public bool Refresh()
+        {
+            return myRobotAdapter.Refresh();
+        }
         public bool GetRegister()
         {
             return myRobotAdapter.GetRegister();
@@ -163,9 +170,17 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetRegister();
         }
-        public bool Inc()
+        #endregion
+
+        #region <Nexcom>
+        public bool GetState()
         {
-            return myRobotAdapter.Inc();
+            return myRobotAdapter.GetState();
         }
+        public bool GetStatus()
+        {
+            return myRobotAdapter.GetStatus();
+        }
+        #endregion
     }
 }

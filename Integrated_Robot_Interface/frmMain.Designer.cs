@@ -94,6 +94,7 @@
             this.btnXJ1Positive = new System.Windows.Forms.Button();
             this.btnXJ1Negative = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.lblState = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -219,6 +220,7 @@
             // 
             // gbCurrentPosition
             // 
+            this.gbCurrentPosition.Controls.Add(this.lblState);
             this.gbCurrentPosition.Controls.Add(this.lblJoint);
             this.gbCurrentPosition.Controls.Add(this.lblXyzwpr);
             this.gbCurrentPosition.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -799,6 +801,15 @@
             // 
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Location = new System.Drawing.Point(6, 180);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(58, 21);
+            this.lblState.TabIndex = 2;
+            this.lblState.Text = "label1";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -902,6 +913,7 @@
         private System.Windows.Forms.TextBox tbVelocity;
         private System.Windows.Forms.Label lblVelocity;
         private System.Windows.Forms.Label lblRange;
+        private System.Windows.Forms.Label lblState;
     }
 }
 
