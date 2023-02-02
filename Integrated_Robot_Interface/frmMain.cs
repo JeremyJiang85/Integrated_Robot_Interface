@@ -33,7 +33,7 @@ namespace Integrated_Robot_Interface
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
             cboCoordinate.Items.AddRange(Coordinate);
             string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
-                                           Controller.Stepnum.Ten.ToString(),Controller.Stepnum.Cont.ToString(),};
+                                           Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
             cboStep.Items.AddRange(Step);
             Initialize();
         }
@@ -61,9 +61,9 @@ namespace Integrated_Robot_Interface
             txtIP.Enabled = false;
             fgConnectionStatus = false;
             cboRobot.Enabled = true;
-            cboRobot.SelectedIndex = (int)Controller.Robotnum.None;
-            cboCoordinate.SelectedIndex = (int)Controller.Coordinatenum.Cartesian;
-            cboStep.SelectedIndex = (int)Controller.Stepnum.One;
+            cboRobot.SelectedIndex = 0;
+            cboCoordinate.SelectedIndex = 0;
+            cboStep.SelectedIndex = 0;
             gbEnbleControl(false);
             txtInitialize();
         }
@@ -103,22 +103,22 @@ namespace Integrated_Robot_Interface
         #region <gbConnection>
         private void cboRobot_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cboRobot.SelectedIndex)
+            switch (cboRobot.Text)
             {
-                case (int)Controller.Robotnum.Fanuc:
-                    myController.Robot = (int)Controller.Robotnum.Fanuc;
+                case nameof(Controller.Robotnum.Fanuc):
+                    myController.Robot = Controller.Robotnum.Fanuc;
                     txtIP.Enabled = true;
                     break;
-                case (int)Controller.Robotnum.Nexcom:
-                    myController.Robot = (int)Controller.Robotnum.Nexcom;
+                case nameof(Controller.Robotnum.Nexcom):
+                    myController.Robot = Controller.Robotnum.Nexcom;
                     txtIP.Enabled = false;
                     break;
-                case (int)Controller.Robotnum.Ourarm:
-                    myController.Robot = (int)Controller.Robotnum.Ourarm;
+                case nameof(Controller.Robotnum.Ourarm):
+                    myController.Robot = Controller.Robotnum.Ourarm;
                     txtIP.Enabled = false;
                     break;
                 default:
-                    myController.Robot = (int)Controller.Robotnum.None;
+                    myController.Robot = Controller.Robotnum.None;
                     txtIP.Enabled = false;
                     break;
             }
@@ -129,12 +129,12 @@ namespace Integrated_Robot_Interface
             {
                 switch (myController.Robot)
                 {
-                    case (int)Controller.Robotnum.Fanuc:
+                    case Controller.Robotnum.Fanuc:
                         RobotAdapter.IP = txtIP.Text;
                         break;
-                    case (int)Controller.Robotnum.Nexcom:
+                    case Controller.Robotnum.Nexcom:
                         break;
-                    case (int)Controller.Robotnum.Ourarm:
+                    case Controller.Robotnum.Ourarm:
                         break;
                     default:
                         richTextBox1.Text += "請選擇手臂型號\r\n";
@@ -153,15 +153,16 @@ namespace Integrated_Robot_Interface
                     richTextBox1.Clear();
                     switch (myController.Robot)
                     {
-                        case (int)Controller.Robotnum.Fanuc:
+                        case Controller.Robotnum.Fanuc:
                             lblRange.Text = "X : 0~700\r\nY : -500~600\r\nZ : -130~500\r\nVelocity : 100~500";
                             myController.GetCPosition();
                             RobotAdapter.SetCposition = RobotAdapter.GetCposition;
                             myController.SetCPosition();
                             break;
-                        case (int)Controller.Robotnum.Nexcom:
+                        case Controller.Robotnum.Nexcom:
+                            gbRegister.Enabled = false;
                             break;
-                        case (int)Controller.Robotnum.Ourarm:
+                        case Controller.Robotnum.Ourarm:
                             break;
                     }
                 }
@@ -211,7 +212,7 @@ namespace Integrated_Robot_Interface
         {
             switch (myController.Robot)
             {
-                case (int)Controller.Robotnum.Fanuc:
+                case Controller.Robotnum.Fanuc:
                     if (!myController.Refresh())
                     {
                         ShowMessage("刷新失敗", "取得刷新狀態");
@@ -244,7 +245,7 @@ namespace Integrated_Robot_Interface
                         }
                     }
                     break;
-                case (int)Controller.Robotnum.Nexcom:
+                case Controller.Robotnum.Nexcom:
                     if (!myController.GetState())
                     {
                         ShowMessage("取得State失敗", "取得State狀態");
@@ -264,7 +265,7 @@ namespace Integrated_Robot_Interface
                         lblState.Text += RobotAdapter.Statustext;
                     }
                     break;
-                case (int)Controller.Robotnum.Ourarm:
+                case Controller.Robotnum.Ourarm:
                     break;
             }
             
@@ -370,10 +371,10 @@ namespace Integrated_Robot_Interface
         #region <gbPositionSet>
         private void cboCoordinate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cboCoordinate.SelectedIndex)
+            switch (cboCoordinate.Text)
             {
-                case (int)Controller.Coordinatenum.Cartesian:
-                    myController.Coordinate = (int)Controller.Coordinatenum.Cartesian;
+                case nameof(Controller.Coordinatenum.Cartesian):
+                    myController.Coordinate = Controller.Coordinatenum.Cartesian;
                     lblXJ1Set.Text = "X :";
                     lblYJ2Set.Text = "Y :";
                     lblZJ3Set.Text = "Z :";
@@ -381,8 +382,8 @@ namespace Integrated_Robot_Interface
                     lblPJ5Set.Text = "P :";
                     lblRJ6Set.Text = "R :";
                     break;
-                case (int)Controller.Coordinatenum.Joint:
-                    myController.Coordinate = (int)Controller.Coordinatenum.Joint;
+                case nameof(Controller.Coordinatenum.Joint):
+                    myController.Coordinate = Controller.Coordinatenum.Joint;
                     lblXJ1Set.Text = "J1 :";
                     lblYJ2Set.Text = "J2 :";
                     lblZJ3Set.Text = "J3 :";
@@ -396,7 +397,7 @@ namespace Integrated_Robot_Interface
         {
             switch (myController.Coordinate)
             {
-                case (int)Controller.Coordinatenum.Cartesian:
+                case Controller.Coordinatenum.Cartesian:
                     tbXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(0)).ToString("###0.000"))}";
                     tbYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(1)).ToString("###0.000"))}";
                     tbZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(2)).ToString("###0.000"))}";
@@ -415,7 +416,7 @@ namespace Integrated_Robot_Interface
                         tbVelocity.Text = $"{string.Format("{0,10}", RobotAdapter.Getvelocity.ToString("###0.000"))}";
                     }
                     break;
-                case (int)Controller.Coordinatenum.Joint:
+                case Controller.Coordinatenum.Joint:
                     tbXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(0)).ToString("###0.000"))}";
                     tbYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(1)).ToString("###0.000"))}";
                     tbZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(2)).ToString("###0.000"))}";
@@ -450,13 +451,13 @@ namespace Integrated_Robot_Interface
                 {
                     switch (myController.Coordinate)
                     {
-                        case (int)Controller.Coordinatenum.Cartesian:
+                        case Controller.Coordinatenum.Cartesian:
                             if (Convert.ToSingle(tbXJ1Set.Text) < 0 || Convert.ToSingle(tbXJ1Set.Text) > 700 ||
                                 Convert.ToSingle(tbYJ2Set.Text) < -500 || Convert.ToSingle(tbYJ2Set.Text) > 600 ||
                                 Convert.ToSingle(tbZJ3Set.Text) < -130 || Convert.ToSingle(tbZJ3Set.Text) > 500 ||
                                 Convert.ToSingle(tbVelocity.Text) < 100 || Convert.ToSingle(tbVelocity.Text) > 500)
                             {
-                                MessageBox.Show("座標速度超出安全範圍");
+                                MessageBox.Show("座標或速度超出安全範圍");
                             }
                             else
                             {
@@ -478,7 +479,7 @@ namespace Integrated_Robot_Interface
                                 }
                             }
                             break;
-                        case (int)Controller.Coordinatenum.Joint:
+                        case Controller.Coordinatenum.Joint:
                             if (Convert.ToSingle(tbXJ1Set.Text) < -180 || Convert.ToSingle(tbXJ1Set.Text) > 180 ||
                                 Convert.ToSingle(tbYJ2Set.Text) < -180 || Convert.ToSingle(tbYJ2Set.Text) > 180 ||
                                 Convert.ToSingle(tbZJ3Set.Text) < -180 || Convert.ToSingle(tbZJ3Set.Text) > 180 ||
@@ -521,7 +522,7 @@ namespace Integrated_Robot_Interface
         {
             switch (myController.Robot)
             {
-                case (int)Controller.Robotnum.Fanuc:
+                case Controller.Robotnum.Fanuc:
                     RobotAdapter.Setvelocity = 100;
                     if (!myController.SetVelocity())
                     {
@@ -539,9 +540,9 @@ namespace Integrated_Robot_Interface
                         ShowMessage("回到原點失敗", "回到原點狀態");
                     }
                     break;
-                case (int)Controller.Robotnum.Nexcom:
+                case Controller.Robotnum.Nexcom:
                     break;
-                case (int)Controller.Robotnum.Ourarm:
+                case Controller.Robotnum.Ourarm:
                     break;
             }
         }
@@ -613,29 +614,26 @@ namespace Integrated_Robot_Interface
         #region <gbPositionMove>
         private void cboStep_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cboStep.SelectedIndex)
+            switch (cboStep.Text)
             {
-                case (int)Controller.Stepnum.One:
-                    myController.Step = (int)Controller.Stepnum.One;
+                case nameof(Controller.Stepnum.One):
+                    myController.Step = Controller.Stepnum.One;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.One, 0);
                     break;
-                case (int)Controller.Stepnum.Five:
-                    myController.Step = (int)Controller.Stepnum.Five;
+                case nameof(Controller.Stepnum.Five):
+                    myController.Step = Controller.Stepnum.Five;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Five, 0);
                     break;
-                case (int)Controller.Stepnum.Ten:
-                    myController.Step = (int)Controller.Stepnum.Ten;
+                case nameof(Controller.Stepnum.Ten):
+                    myController.Step = Controller.Stepnum.Ten;
                     fgJogStatus = false;
-                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Ten, 0);
                     break;
-                case (int)Controller.Stepnum.Cont:
-                    myController.Step = (int)Controller.Stepnum.Cont;
+                case nameof(Controller.Stepnum.Cont):
+                    myController.Step = Controller.Stepnum.Cont;
                     fgJogStatus = true;
-                    RobotAdapter.Axismove.SetValue((int)Controller.Stepnum.Cont, 0);
                     break;
             }
+            RobotAdapter.Axismove.SetValue(myController.Step, 0);
         }
         private void btnXJ1Positive_Click(object sender, EventArgs e)
         {

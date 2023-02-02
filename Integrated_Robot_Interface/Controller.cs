@@ -12,90 +12,25 @@ namespace Integrated_Robot_Interface
         //變數宣告
         RobotAdapter myRobotAdapter = null;
         
-        public int Robot
-        {
-            get
-            {
-                return robot;
-            }
-            set
-            {
-
-                if (value >= (int)Robotnum.None && value <= (int)Robotnum.Ourarm)
-                {
-                    robot = value;
-                }
-                else
-                {
-                    MessageBox.Show("手臂選擇超出範圍");
-                }
-            }
-        }
-        private int robot = (int)Robotnum.None;
-        public enum Robotnum
-        {
-            None, Fanuc, Nexcom, Ourarm
-        }
-        public int Coordinate
-        {
-            get
-            {
-                return coordinate;
-            }
-            set
-            {
-                if (value >= (int)Coordinatenum.Cartesian && value <= (int)Coordinatenum.Joint)
-                {
-                    coordinate = value;
-                }
-                else
-                {
-                    MessageBox.Show("座標選擇超出範圍");
-                }
-            }
-        }
-        private int coordinate = (int)Coordinatenum.Cartesian;
-        public enum Coordinatenum
-        {
-            Cartesian, Joint
-        }
-        public int Step
-        {
-            get
-            {
-                return step;
-            }
-            set
-            {
-                if (value == (int)Stepnum.One || value == (int)Stepnum.Five ||
-                    value == (int)Stepnum.Ten || value == (int)Stepnum.Cont)
-                {
-                    step = value;
-                }
-                else
-                {
-                    MessageBox.Show("步數選擇超出範圍");
-                }
-            }
-        }
-        private int step = (int)Stepnum.One;
-        public enum Stepnum
-        {
-            One = 1, Five = 5, Ten = 10, Cont = 20
-        }
+        public Robotnum Robot { get; set; } = Robotnum.None;
+        public enum Robotnum { None, Fanuc, Nexcom, Ourarm }
+        public Coordinatenum Coordinate { get; set; } = Coordinatenum.Cartesian;
+        public enum Coordinatenum { Cartesian, Joint }
+        public Stepnum Step { get; set; } = Stepnum.One;
+        public enum Stepnum : int { One = 1, Five = 5, Ten = 10, Cont = 20 }
 
         #region <共用>
         public bool Connect()
         {
-            switch (robot)
+            switch (Robot)
             {
-                case (int)Robotnum.Fanuc:
+                case Robotnum.Fanuc:
                     myRobotAdapter = new FanucAdapter();
                     return myRobotAdapter.Connect();
-                case (int)Robotnum.Nexcom:
+                case Robotnum.Nexcom:
                     myRobotAdapter = new NexcomAdapter();
                     return myRobotAdapter.Connect();
-                case (int)Robotnum.Ourarm:
+                case Robotnum.Ourarm:
                     return false;
                 default:
                     return false;
@@ -103,13 +38,13 @@ namespace Integrated_Robot_Interface
         }
         public bool Disconnect()
         {
-            switch (robot)
+            switch (Robot)
             {
-                case (int)Robotnum.Fanuc:
+                case Robotnum.Fanuc:
                     return myRobotAdapter.Disconnect();
-                case (int)Robotnum.Nexcom:
+                case Robotnum.Nexcom:
                     return myRobotAdapter.Disconnect();
-                case (int)Robotnum.Ourarm:
+                case Robotnum.Ourarm:
                     return false;
                 default:
                     return false;

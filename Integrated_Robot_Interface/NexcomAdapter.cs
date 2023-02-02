@@ -185,12 +185,12 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            GetCposition.SetValue(PosPcs.pos.GetValue(0), 0);
-            GetCposition.SetValue(PosPcs.pos.GetValue(1), 1);
-            GetCposition.SetValue(PosPcs.pos.GetValue(2), 2);
-            GetCposition.SetValue(PosPcs.pos.GetValue(3), 3);
-            GetCposition.SetValue(PosPcs.pos.GetValue(4), 4);
-            GetCposition.SetValue(PosPcs.pos.GetValue(5), 5);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(0)), 0);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(1)), 1);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(2)), 2);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(3)), 3);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(4)), 4);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(5)), 5);
 
             return true;
         }
@@ -207,12 +207,38 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            GetJposition.SetValue(PosAcs.pos.GetValue(0), 0);
-            GetJposition.SetValue(PosAcs.pos.GetValue(1), 1);
-            GetJposition.SetValue(PosAcs.pos.GetValue(2), 2);
-            GetJposition.SetValue(PosAcs.pos.GetValue(3), 3);
-            GetJposition.SetValue(PosAcs.pos.GetValue(4), 4);
-            GetJposition.SetValue(PosAcs.pos.GetValue(5), 5);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(0)), 0);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(1)), 1);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(2)), 2);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(3)), 3);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(4)), 4);
+            GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(5)), 5);
+
+            return true;
+        }
+
+        public override bool SetCPosition()
+        {
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(1)), 1);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(3)), 3);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(5)), 5);
+
+            int mesk = (int)Math.Pow(2, 6) - 1;
+            double retMaxVel = 0;
+
+            int ret = mobjGroupAdapter.NMC_GroupLine(mesk, ref PosPcs, ref retMaxVel);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupLine Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
 
             return true;
         }
