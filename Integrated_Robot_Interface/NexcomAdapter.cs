@@ -95,6 +95,21 @@ namespace Integrated_Robot_Interface
         {
             return true;
         }
+        public override bool Reset()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupResetState();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupResetState Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            return true;
+        }
         public override bool GetState()
         {
             int PRetState = 0;
@@ -188,9 +203,9 @@ namespace Integrated_Robot_Interface
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(0)), 0);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(1)), 1);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(2)), 2);
-            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(3)), 3);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(5)), 3);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(4)), 4);
-            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(5)), 5);
+            GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(3)), 5);
 
             return true;
         }
@@ -222,9 +237,9 @@ namespace Integrated_Robot_Interface
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(0)), 0);
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(1)), 1);
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(2)), 2);
-            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(3)), 3);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(3)), 5);
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(4)), 4);
-            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(5)), 5);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(5)), 3);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
             double retMaxVel = 0;
@@ -242,7 +257,66 @@ namespace Integrated_Robot_Interface
 
             return true;
         }
+        public override bool SetJPosition()
+        {
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(0)), 0);
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(1)), 1);
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(2)), 2);
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(3)), 3);
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(4)), 4);
+            PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(5)), 5);
 
+            int mesk = (int)Math.Pow(2, 6) - 1;
+
+            int ret = mobjGroupAdapter.NMC_GroupPtpAcsAll(mesk, ref PosAcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            return true;
+        }
+        public override bool GetVelocity()
+        {
+            double PRetParaValueF64 = 0;
+
+            int ret = mobjGroupAdapter.NMC_GroupGetParamF64(0x32, 0, ref PRetParaValueF64);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            Getvelocity = Convert.ToSingle(PRetParaValueF64);
+
+            return true;
+        }
+        public override bool SetVelocity()
+        {
+            double ParaValueF64 = Setvelocity;
+
+            int ret = mobjGroupAdapter.NMC_GroupSetParamF64(0x32, 0, ParaValueF64);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupSetParamF64 Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            return true;
+        }
         public string GetErrorMessage(string api, int errcode)
         {
             string ret = api + "\n";
@@ -265,6 +339,35 @@ namespace Integrated_Robot_Interface
                 return err_des.ToString();
             }
             return "";
+        }
+
+        public override bool Enable()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupEnable();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupEnable Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
+        }
+        public override bool Disable()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupDisable();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupDisable Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
         }
     }
 }

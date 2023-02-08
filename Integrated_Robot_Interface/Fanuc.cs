@@ -92,6 +92,10 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
+        public bool Reset()
+        {
+            return mobjCore.ClearAlarm();
+        }
         public bool Override(ref string OverrideText)
         {
             bool ret = false;

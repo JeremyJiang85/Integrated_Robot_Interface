@@ -40,7 +40,9 @@
             this.lblSelect = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.gbCurrentPosition = new System.Windows.Forms.GroupBox();
+            this.gbCurrentState = new System.Windows.Forms.GroupBox();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.lblState = new System.Windows.Forms.Label();
             this.lblJoint = new System.Windows.Forms.Label();
             this.lblXyzwpr = new System.Windows.Forms.Label();
             this.gbOverride = new System.Windows.Forms.GroupBox();
@@ -79,6 +81,8 @@
             this.lblR1Set = new System.Windows.Forms.Label();
             this.lblR2Set = new System.Windows.Forms.Label();
             this.gbPositionMove = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.cboStep = new System.Windows.Forms.ComboBox();
             this.lblStep = new System.Windows.Forms.Label();
             this.btnRJ6Positive = new System.Windows.Forms.Button();
@@ -94,10 +98,9 @@
             this.btnXJ1Positive = new System.Windows.Forms.Button();
             this.btnXJ1Negative = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.lblState = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
-            this.gbCurrentPosition.SuspendLayout();
+            this.gbCurrentState.SuspendLayout();
             this.gbOverride.SuspendLayout();
             this.gbPositionSet.SuspendLayout();
             this.gbRegister.SuspendLayout();
@@ -116,9 +119,10 @@
             // 
             // btnEsc
             // 
+            this.btnEsc.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnEsc.Location = new System.Drawing.Point(807, 12);
             this.btnEsc.Name = "btnEsc";
-            this.btnEsc.Size = new System.Drawing.Size(96, 55);
+            this.btnEsc.Size = new System.Drawing.Size(96, 52);
             this.btnEsc.TabIndex = 1;
             this.btnEsc.Text = "ESC";
             this.btnEsc.UseVisualStyleBackColor = true;
@@ -218,18 +222,39 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // gbCurrentPosition
+            // gbCurrentState
             // 
-            this.gbCurrentPosition.Controls.Add(this.lblState);
-            this.gbCurrentPosition.Controls.Add(this.lblJoint);
-            this.gbCurrentPosition.Controls.Add(this.lblXyzwpr);
-            this.gbCurrentPosition.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbCurrentPosition.Location = new System.Drawing.Point(12, 146);
-            this.gbCurrentPosition.Name = "gbCurrentPosition";
-            this.gbCurrentPosition.Size = new System.Drawing.Size(279, 353);
-            this.gbCurrentPosition.TabIndex = 4;
-            this.gbCurrentPosition.TabStop = false;
-            this.gbCurrentPosition.Text = "Current Position";
+            this.gbCurrentState.Controls.Add(this.btnReset);
+            this.gbCurrentState.Controls.Add(this.lblState);
+            this.gbCurrentState.Controls.Add(this.lblJoint);
+            this.gbCurrentState.Controls.Add(this.lblXyzwpr);
+            this.gbCurrentState.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbCurrentState.Location = new System.Drawing.Point(12, 146);
+            this.gbCurrentState.Name = "gbCurrentState";
+            this.gbCurrentState.Size = new System.Drawing.Size(279, 353);
+            this.gbCurrentState.TabIndex = 4;
+            this.gbCurrentState.TabStop = false;
+            this.gbCurrentState.Text = "Current State";
+            // 
+            // btnReset
+            // 
+            this.btnReset.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnReset.Location = new System.Drawing.Point(6, 284);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(96, 61);
+            this.btnReset.TabIndex = 3;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Location = new System.Drawing.Point(6, 180);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(58, 21);
+            this.lblState.TabIndex = 2;
+            this.lblState.Text = "label1";
             // 
             // lblJoint
             // 
@@ -623,6 +648,8 @@
             // 
             // gbPositionMove
             // 
+            this.gbPositionMove.Controls.Add(this.button2);
+            this.gbPositionMove.Controls.Add(this.button1);
             this.gbPositionMove.Controls.Add(this.cboStep);
             this.gbPositionMove.Controls.Add(this.lblStep);
             this.gbPositionMove.Controls.Add(this.btnRJ6Positive);
@@ -644,6 +671,26 @@
             this.gbPositionMove.TabIndex = 8;
             this.gbPositionMove.TabStop = false;
             this.gbPositionMove.Text = "Position Move";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(112, 276);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(100, 34);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 276);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 34);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // cboStep
             // 
@@ -801,15 +848,6 @@
             // 
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // lblState
-            // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(6, 180);
-            this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(58, 21);
-            this.lblState.TabIndex = 2;
-            this.lblState.Text = "label1";
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -820,7 +858,7 @@
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbPositionSet);
             this.Controls.Add(this.gbOverride);
-            this.Controls.Add(this.gbCurrentPosition);
+            this.Controls.Add(this.gbCurrentState);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.gbConnection);
             this.Controls.Add(this.pblogo);
@@ -832,8 +870,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).EndInit();
             this.gbConnection.ResumeLayout(false);
             this.gbConnection.PerformLayout();
-            this.gbCurrentPosition.ResumeLayout(false);
-            this.gbCurrentPosition.PerformLayout();
+            this.gbCurrentState.ResumeLayout(false);
+            this.gbCurrentState.PerformLayout();
             this.gbOverride.ResumeLayout(false);
             this.gbOverride.PerformLayout();
             this.gbPositionSet.ResumeLayout(false);
@@ -859,7 +897,7 @@
         private System.Windows.Forms.ComboBox cboRobot;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.GroupBox gbCurrentPosition;
+        private System.Windows.Forms.GroupBox gbCurrentState;
         private System.Windows.Forms.Label lblJoint;
         private System.Windows.Forms.Label lblXyzwpr;
         private System.Windows.Forms.GroupBox gbOverride;
@@ -914,6 +952,9 @@
         private System.Windows.Forms.Label lblVelocity;
         private System.Windows.Forms.Label lblRange;
         private System.Windows.Forms.Label lblState;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

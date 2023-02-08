@@ -116,6 +116,18 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetStatus();
         }
+        public bool Reset()
+        {
+            return myRobotAdapter.Reset();
+        }
+        public bool Enable()
+        {
+            return myRobotAdapter.Enable();
+        }
+        public bool Disable()
+        {
+            return myRobotAdapter.Disable();
+        }
         #endregion
     }
 }

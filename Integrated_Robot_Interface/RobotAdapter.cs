@@ -50,6 +50,10 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
+        public virtual bool Reset()
+        {
+            return false;
+        }
         public virtual bool Override()
         {
             return false;
@@ -109,6 +113,14 @@ namespace Integrated_Robot_Interface
             return false;
         }
         public virtual bool GetStatus()
+        {
+            return false;
+        }
+        public virtual bool Enable()
+        {
+            return false;
+        }
+        public virtual bool Disable()
         {
             return false;
         }

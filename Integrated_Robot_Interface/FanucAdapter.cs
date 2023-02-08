@@ -35,6 +35,10 @@ namespace Integrated_Robot_Interface
             Alarmtext = txt;
             return ret;
         }
+        public override bool Reset()
+        {
+            return myfanuc.Reset();
+        }
         public override bool Override()
         {
             bool ret = false;
