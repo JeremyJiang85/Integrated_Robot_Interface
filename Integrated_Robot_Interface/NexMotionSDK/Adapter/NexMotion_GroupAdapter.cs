@@ -127,6 +127,11 @@ namespace NEXCOMROBOT.MCAT
             return NexMotion_API.NMC_GroupJogAcs(mDeviceId, mGroupIndex, GroupAxisIndex, Dir, ref PAcsMaxVel );
         }
 
+        public Int32 NMC_GroupJogCartFrame(Int32 CartAxis, Int32 Dir, ref Double PMaxVel)
+        {
+            return NexMotion_API.NMC_GroupJogTcpFrame(mDeviceId, mGroupIndex, CartAxis, Dir, ref PMaxVel);
+        }
+
         public Int32 NMC_GroupSetVelRatio( Double Percentage )
         {
             return NexMotion_API.NMC_GroupSetVelRatio(mDeviceId, mGroupIndex, Percentage);

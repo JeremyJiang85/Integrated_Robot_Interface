@@ -263,8 +263,10 @@ namespace NEXCOMROBOT.MCAT
 
 
         [DllImport(MCATConfig.NEXMOTION_PATH, EntryPoint = "NMC_GroupJogAcs", CallingConvention = CallingConvention.StdCall)]
-        public static extern Int32 NMC_GroupJogAcs( Int32 DevID, Int32 GroupIndex, Int32 GroupAxisIndex, Int32 Dir, ref Double PAcsMaxVel  ); 
+        public static extern Int32 NMC_GroupJogAcs( Int32 DevID, Int32 GroupIndex, Int32 GroupAxisIndex, Int32 Dir, ref Double PAcsMaxVel  );
 
+        [DllImport(MCATConfig.NEXMOTION_PATH, EntryPoint = "NMC_GroupJogTcpFrame", CallingConvention = CallingConvention.StdCall)]
+        public static extern Int32 NMC_GroupJogTcpFrame(Int32 DevID, Int32 GroupIndex, Int32 CartAxis, Int32 Dir, ref Double PMaxVel);
 
         [DllImport(MCATConfig.NEXMOTION_PATH, EntryPoint = "NMC_GroupHalt", CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NMC_GroupHalt( Int32 DevID, Int32 GroupIndex );

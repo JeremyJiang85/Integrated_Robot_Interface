@@ -13,7 +13,8 @@ namespace Integrated_Robot_Interface
         public static string IP { get; set; } = "";
         public static string Alarmtext { get; set; } = "";
         public static string Apierrtext { get; set; } = "";
-        public static string Overridetext { get; set; } = "";
+        public static int Getoverride { get; set; } = 0;
+        public static int Setoverride { get; set; } = 0;
         public static Array GetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array GetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array SetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
@@ -23,7 +24,7 @@ namespace Integrated_Robot_Interface
         public static float Setvelocity { get; set; } = 0;
         public static Array Getregister { get; set; } = new float[2] { 0, 0 };
         public static Array Setregister { get; set; } = new float[2] { 0, 0 };
-        public static Array Axismove { get; set; } = new int[2] { 0, 0 };
+        public static Array Jogmove { get; set; } = new int[2] { 0, 0 };
         #endregion
 
         #region <Fanuc>
@@ -54,7 +55,11 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool Override()
+        public virtual bool GetOverride()
+        {
+            return false;
+        }
+        public virtual bool SetOverride()
         {
             return false;
         }
@@ -66,11 +71,11 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool SetCPosition()
+        public virtual bool PTPC()
         {
             return false;
         }
-        public virtual bool SetJPosition()
+        public virtual bool PTPJ()
         {
             return false;
         }

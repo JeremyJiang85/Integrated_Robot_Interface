@@ -96,7 +96,7 @@ namespace Integrated_Robot_Interface
         {
             return mobjCore.ClearAlarm();
         }
-        public bool Override(ref string OverrideText)
+        public bool GetOverride(ref int GetOverride)
         {
             bool ret = false;
             object Value = null;
@@ -104,13 +104,17 @@ namespace Integrated_Robot_Interface
             ret = mobjSysVarInt.GetValue(ref Value);
             if (ret)
             {
-                OverrideText = Convert.ToString(Value) + "%";
+                GetOverride = Convert.ToInt32(Value);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+        public bool SetOverride(int SetOverride)
+        {
+            return mobjSysVarInt.SetValue(SetOverride);
         }
         public bool GetCPosition(ref Array xyzwpr)
         {
@@ -156,7 +160,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-        public bool SetCPosition(Array xyzwpr)
+        public bool PTPC(Array xyzwpr)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -181,7 +185,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
         }
-        public bool SetJPosition(Array joint)
+        public bool PTPJ(Array joint)
         {
             bool ret = false;
             Array Xyzwpr = new float[9];

@@ -166,10 +166,65 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            Statustext = PRetStatusInBit.ToString();
+            for (int i = 0; i > 14; i++)
+            {
+                if ((PRetStatusInBit | 1) == 1)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            Statustext += "0:EMG/r/n";
+                            break;
+                        case 1:
+                            Statustext += "1:ALM/r/n";
+                            break;
+                        case 2:
+                            Statustext += "2:PEL/r/n";
+                            break;
+                        case 3:
+                            Statustext += "3:NEL/r/n";
+                            break;
+                        case 4:
+                            Statustext += "4:PSEL/r/n";
+                            break;
+                        case 5:
+                            Statustext += "5:NSEL/r/n";
+                            break;
+                        case 6:
+                            Statustext += "6:ENA/r/n";
+                            break;
+                        case 7:
+                            Statustext += "7:ERR/r/n";
+                            break;
+                        case 8:
+                            Statustext += "8:CSTP/r/n";
+                            break;
+                        case 9:
+                            Statustext += "9:ACC/r/n";
+                            break;
+                        case 10:
+                            Statustext += "10:DEC/r/n";
+                            break;
+                        case 11:
+                            Statustext += "11:MV/r/n";
+                            break;
+                        case 12:
+                            Statustext += "12:OP/r/n";
+                            break;
+                        case 13:
+                            Statustext += "13:STOP/r/n";
+                            break;
+                        case 14:
+                            Statustext += "14:INP/r/n";
+                            break;
+                    }
+                }
+                PRetStatusInBit >>= 1;
+            }
+
             return true;
         }
-        public override bool Override()
+        public override bool GetOverride()
         {
             double PRetPercentage = 0;
 
@@ -184,7 +239,21 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            Overridetext = PRetPercentage.ToString();
+            Getoverride = (int)PRetPercentage;
+            return true;
+        }
+        public override bool SetOverride()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupSetVelRatio(Setoverride);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupSetVelRatio Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
             return true;
         }
         public override bool GetCPosition()
@@ -232,7 +301,7 @@ namespace Integrated_Robot_Interface
             return true;
         }
 
-        public override bool SetCPosition()
+        public override bool PTPC()
         {
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(0)), 0);
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(1)), 1);
@@ -257,7 +326,7 @@ namespace Integrated_Robot_Interface
 
             return true;
         }
-        public override bool SetJPosition()
+        public override bool PTPJ()
         {
             PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(0)), 0);
             PosAcs.pos.SetValue(Convert.ToSingle(SetJposition.GetValue(1)), 1);
@@ -284,7 +353,7 @@ namespace Integrated_Robot_Interface
         public override bool GetVelocity()
         {
             double PRetParaValueF64 = 0;
-
+            
             int ret = mobjGroupAdapter.NMC_GroupGetParamF64(0x32, 0, ref PRetParaValueF64);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {

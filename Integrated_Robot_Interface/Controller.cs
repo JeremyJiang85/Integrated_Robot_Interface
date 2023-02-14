@@ -54,9 +54,17 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Alarm();
         }
-        public bool Override()
+        public bool Reset()
         {
-            return myRobotAdapter.Override();
+            return myRobotAdapter.Reset();
+        }
+        public bool GetOverride()
+        {
+            return myRobotAdapter.GetOverride();
+        }
+        public bool SetOverride()
+        {
+            return myRobotAdapter.SetOverride();
         }
         public bool GetCPosition()
         {
@@ -66,13 +74,13 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetJPosition();
         }
-        public bool SetCPosition()
+        public bool PTPC()
         {
-            return myRobotAdapter.SetCPosition();
+            return myRobotAdapter.PTPC();
         }
-        public bool SetJPosition()
+        public bool PTPJ()
         {
-            return myRobotAdapter.SetJPosition();
+            return myRobotAdapter.PTPJ();
         }
         public bool Home()
         {
@@ -115,10 +123,6 @@ namespace Integrated_Robot_Interface
         public bool GetStatus()
         {
             return myRobotAdapter.GetStatus();
-        }
-        public bool Reset()
-        {
-            return myRobotAdapter.Reset();
         }
         public bool Enable()
         {

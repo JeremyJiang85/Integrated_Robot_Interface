@@ -39,13 +39,17 @@ namespace Integrated_Robot_Interface
         {
             return myfanuc.Reset();
         }
-        public override bool Override()
+        public override bool GetOverride()
         {
             bool ret = false;
-            string txt = "";
-            ret = myfanuc.Override(ref txt);
-            Overridetext = txt;
+            int Value = 0;
+            ret = myfanuc.GetOverride(ref Value);
+            Getoverride = Value;
             return ret;
+        }
+        public override bool SetOverride()
+        {
+            return myfanuc.SetOverride(Setoverride);
         }
         public override bool GetCPosition()
         {
@@ -63,17 +67,17 @@ namespace Integrated_Robot_Interface
             GetJposition = Joint;
             return ret;
         }
-        public override bool SetCPosition()
+        public override bool PTPC()
         {
             Array Xyzwpr = new float[6];
             Xyzwpr = SetCposition;
-            return myfanuc.SetCPosition(Xyzwpr);
+            return myfanuc.PTPC(Xyzwpr);
         }
-        public override bool SetJPosition()
+        public override bool PTPJ()
         {
             Array Joint = new float[6];
             Joint = SetJposition;
-            return myfanuc.SetJPosition(Joint);
+            return myfanuc.PTPJ(Joint);
         }
         public override bool Home()
         {
@@ -117,8 +121,8 @@ namespace Integrated_Robot_Interface
         }
         public override bool Inc()
         {
-            int Index = Convert.ToInt32(Axismove.GetValue(1));
-            int Value = Convert.ToInt32(Axismove.GetValue(0));
+            int Index = Convert.ToInt32(Jogmove.GetValue(1));
+            int Value = Convert.ToInt32(Jogmove.GetValue(0));
             
             return myfanuc.Inc(Value, Index);
         }
