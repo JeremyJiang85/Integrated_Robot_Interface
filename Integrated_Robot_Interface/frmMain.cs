@@ -33,9 +33,10 @@ namespace Integrated_Robot_Interface
             cboRobot.Items.AddRange(Robot);
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
             cboPTPCoordinate.Items.AddRange(Coordinate);
+            cboLineCoordinate.Items.AddRange(Coordinate);
             string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
                                            Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
-            cboStep.Items.AddRange(Step);
+            cboJogStep.Items.AddRange(Step);
             Initialize();
         }
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -65,7 +66,8 @@ namespace Integrated_Robot_Interface
             cboRobot.Enabled = true;
             cboRobot.SelectedIndex = 0;
             cboPTPCoordinate.SelectedIndex = 0;
-            cboStep.SelectedIndex = 0;
+            cboLineCoordinate.SelectedIndex = 0;
+            cboJogStep.SelectedIndex = 0;
             gbEnbleControl(false);
             txtInitialize();
         }
@@ -75,7 +77,7 @@ namespace Integrated_Robot_Interface
             gbCurrentState.Enabled = tf;
             gbPTP.Enabled = tf;
             gbRegister.Enabled = tf;
-            gbPositionMove.Enabled = tf;
+            gbJog.Enabled = tf;
         }
         private void txtInitialize()
         {
@@ -90,7 +92,13 @@ namespace Integrated_Robot_Interface
             tbPTPWJ4Set.Text = "";
             tbPTPPJ5Set.Text = "";
             tbPTPRJ6Set.Text = "";
-            tbVelocity.Text = "";
+            tbLineXJ1Set.Text = "";
+            tbLineYJ2Set.Text = "";
+            tbLineZJ3Set.Text = "";
+            tbLineWJ4Set.Text = "";
+            tbLinePJ5Set.Text = "";
+            tbLineRJ6Set.Text = "";
+            tbLineVelocitySet.Text = "";
             lblRange.Text = "X :\r\nY :\r\nZ :\r\nVelocity :";
             lblRegister.Text = "R1 = \r\nR2 = \r\nR3 = \r\nR4 = \r\nR5 = ";
             lblOverride.Text = "";
@@ -110,18 +118,26 @@ namespace Integrated_Robot_Interface
                 case nameof(Controller.Robotnum.Fanuc):
                     myController.Robot = Controller.Robotnum.Fanuc;
                     txtIP.Enabled = true;
+                    lblLineVelocityUnit.Text = "mm/sec";
+                    lblLineVelocityRange.Text = "V : 0 ~ 500(預設為100)";
                     break;
                 case nameof(Controller.Robotnum.Nexcom):
                     myController.Robot = Controller.Robotnum.Nexcom;
                     txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V : 0 ~ 40 (預設為10)";
                     break;
                 case nameof(Controller.Robotnum.Ourarm):
                     myController.Robot = Controller.Robotnum.Ourarm;
                     txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V :";
                     break;
                 default:
                     myController.Robot = Controller.Robotnum.None;
                     txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V :";
                     break;
             }
         }
@@ -447,6 +463,12 @@ namespace Integrated_Robot_Interface
                     break;
                 case nameof(Controller.Coordinatenum.Joint):
                     myController.Coordinate = Controller.Coordinatenum.Joint;
+                    lblPTPXJ1Set.Text = "J1 :";
+                    lblPTPYJ2Set.Text = "J2 :";
+                    lblPTPZJ3Set.Text = "J3 :";
+                    lblPTPWJ4Set.Text = "J4 :";
+                    lblPTPPJ5Set.Text = "J5 :";
+                    lblPTPRJ6Set.Text = "J6 :";
                     lblPTPXJ1Unit.Text = "deg";
                     lblPTPYJ2Unit.Text = "deg";
                     lblPTPZJ3Unit.Text = "deg";
@@ -455,6 +477,7 @@ namespace Integrated_Robot_Interface
                     lblPTPRJ6Unit.Text = "deg";
                     break;
             }
+            cboLineCoordinate.SelectedIndex = (int)myController.Coordinate;
         }
         private void btnPTPCopy_Click(object sender, EventArgs e)
         {
@@ -467,17 +490,6 @@ namespace Integrated_Robot_Interface
                     tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(3)).ToString("###0.000"))}";
                     tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(4)).ToString("###0.000"))}";
                     tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(5)).ToString("###0.000"))}";
-
-                    //if (!myController.GetVelocity())
-                    //{
-                    //    ShowMessage("讀取速度失敗", "讀取速度狀態");
-                    //    tbVelocity.Text = "Erorr";
-                    //    return;
-                    //}
-                    //else
-                    //{
-                    //    tbVelocity.Text = $"{string.Format("{0,10}", RobotAdapter.Getvelocity.ToString("###0.000"))}";
-                    //}
                     break;
                 case Controller.Coordinatenum.Joint:
                     tbPTPXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(0)).ToString("###0.000"))}";
@@ -486,17 +498,6 @@ namespace Integrated_Robot_Interface
                     tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(3)).ToString("###0.000"))}";
                     tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(4)).ToString("###0.000"))}";
                     tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
-
-                    //if (!myController.GetVelocity())
-                    //{
-                    //    ShowMessage("讀取速度失敗", "讀取速度狀態");
-                    //    tbVelocity.Text = "Erorr";
-                    //    return;
-                    //}
-                    //else
-                    //{
-                    //    tbVelocity.Text = $"{string.Format("{0,10}", RobotAdapter.Getvelocity.ToString("###0.000"))}";
-                    //}
                     break;
             }
         }
@@ -504,11 +505,11 @@ namespace Integrated_Robot_Interface
         {
             try
             {
-                if (string.IsNullOrEmpty(tbPTPXJ1Set.Text) || string.IsNullOrEmpty(tbPTPYJ2Set.Text) || string.IsNullOrEmpty(tbPTPZJ3Set.Text) ||
-                    string.IsNullOrEmpty(tbPTPWJ4Set.Text) || string.IsNullOrEmpty(tbPTPPJ5Set.Text) || string.IsNullOrEmpty(tbPTPRJ6Set.Text))
-                    //string.IsNullOrEmpty(tbVelocity.Text))
+                if (string.IsNullOrEmpty(tbPTPXJ1Set.Text) || string.IsNullOrEmpty(tbPTPYJ2Set.Text) ||
+                    string.IsNullOrEmpty(tbPTPZJ3Set.Text) || string.IsNullOrEmpty(tbPTPWJ4Set.Text) ||
+                    string.IsNullOrEmpty(tbPTPPJ5Set.Text) || string.IsNullOrEmpty(tbPTPRJ6Set.Text))
                 {
-                    MessageBox.Show("座標值和速度值不可有空白");
+                    MessageBox.Show("座標值不可有空白");
                 }
                 else
                 {
@@ -520,32 +521,30 @@ namespace Integrated_Robot_Interface
                                 case Controller.Robotnum.Fanuc:
                                     if (Convert.ToSingle(tbPTPXJ1Set.Text) < 0 || Convert.ToSingle(tbPTPXJ1Set.Text) > 650 ||
                                         Convert.ToSingle(tbPTPYJ2Set.Text) < -450 || Convert.ToSingle(tbPTPYJ2Set.Text) > 450 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < -270 || Convert.ToSingle(tbPTPZJ3Set.Text) > 400)
-                                        //Convert.ToSingle(tbVelocity.Text) < 0 || Convert.ToSingle(tbVelocity.Text) > 500)
+                                        Convert.ToSingle(tbPTPZJ3Set.Text) < -270 || Convert.ToSingle(tbPTPZJ3Set.Text) > 400 ||
+                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
+                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
+                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
                                     {
-                                        MessageBox.Show("座標或速度超出安全範圍");
+                                        MessageBox.Show("座標超出安全範圍");
                                         return;
                                     }
                                     break;
                                 case Controller.Robotnum.Nexcom:
                                     if (Convert.ToSingle(tbPTPXJ1Set.Text) < 0 || Convert.ToSingle(tbPTPXJ1Set.Text) > 500 ||
                                         Convert.ToSingle(tbPTPYJ2Set.Text) < -450 || Convert.ToSingle(tbPTPYJ2Set.Text) > 450 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < 50 || Convert.ToSingle(tbPTPZJ3Set.Text) > 600)
-                                        //Convert.ToSingle(tbVelocity.Text) < 0 || Convert.ToSingle(tbVelocity.Text) > 40)
+                                        Convert.ToSingle(tbPTPZJ3Set.Text) < 50 || Convert.ToSingle(tbPTPZJ3Set.Text) > 600 ||
+                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
+                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
+                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
                                     {
-                                        MessageBox.Show("座標或速度超出安全範圍");
+                                        MessageBox.Show("座標超出安全範圍");
                                         return;
                                     }
                                     break;
                                 case Controller.Robotnum.Ourarm:
                                     break;
                             }
-                            //RobotAdapter.Setvelocity = Convert.ToSingle(tbVelocity.Text);
-                            //if (!myController.SetVelocity())
-                            //{
-                            //    ShowMessage("設定速度失敗", "設定速度狀態");
-                            //}
-
                             RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPXJ1Set.Text), 0);
                             RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPYJ2Set.Text), 1);
                             RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPZJ3Set.Text), 2);
@@ -567,9 +566,8 @@ namespace Integrated_Robot_Interface
                                         Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
                                         Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
                                         Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                        //Convert.ToSingle(tbVelocity.Text) < 0 || Convert.ToSingle(tbVelocity.Text) > 500)
                                     {
-                                        MessageBox.Show("座標速度超出安全範圍");
+                                        MessageBox.Show("座標超出安全範圍");
                                         return;
                                     }
                                     break;
@@ -580,21 +578,14 @@ namespace Integrated_Robot_Interface
                                         Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
                                         Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
                                         Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                        //Convert.ToSingle(tbVelocity.Text) < 0 || Convert.ToSingle(tbVelocity.Text) > 40)
                                     {
-                                        MessageBox.Show("座標速度超出安全範圍");
+                                        MessageBox.Show("座標超出安全範圍");
                                         return;
                                     }
                                     break;
                                 case Controller.Robotnum.Ourarm:
                                     break;
                             }
-                            //RobotAdapter.Setvelocity = Convert.ToSingle(tbVelocity.Text);
-                            //if (!myController.SetVelocity())
-                            //{
-                            //    ShowMessage("設定速度失敗", "設定速度狀態");
-                            //}
-
                             RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPXJ1Set.Text), 0);
                             RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPYJ2Set.Text), 1);
                             RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPZJ3Set.Text), 2);
@@ -640,6 +631,96 @@ namespace Integrated_Robot_Interface
                     break;
                 case Controller.Robotnum.Ourarm:
                     break;
+            }
+        }
+        #endregion
+
+        #region <gbLine>
+        private void btnLineCopy_Click(object sender, EventArgs e)
+        {
+            tbLineXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(0)).ToString("###0.000"))}";
+            tbLineYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(1)).ToString("###0.000"))}";
+            tbLineZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(2)).ToString("###0.000"))}";
+            tbLineWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(3)).ToString("###0.000"))}";
+            tbLinePJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(4)).ToString("###0.000"))}";
+            tbLineRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(5)).ToString("###0.000"))}";
+
+            if (!myController.GetVelocity())
+            {
+                ShowMessage("讀取速度失敗", "讀取速度狀態");
+                tbLineVelocitySet.Text = "Erorr";
+                return;
+            }
+            else
+            {
+                tbLineVelocitySet.Text = $"{string.Format("{0,10}", RobotAdapter.Getvelocity.ToString("###0.000"))}";
+            }
+        }
+        private void btnLineSet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tbLineXJ1Set.Text) || string.IsNullOrEmpty(tbLineYJ2Set.Text) ||
+                    string.IsNullOrEmpty(tbLineZJ3Set.Text) || string.IsNullOrEmpty(tbLineWJ4Set.Text) ||
+                    string.IsNullOrEmpty(tbLinePJ5Set.Text) || string.IsNullOrEmpty(tbLineRJ6Set.Text) ||
+                    string.IsNullOrEmpty(tbLineVelocitySet.Text))
+                {
+                    MessageBox.Show("座標值和速度值不可有空白");
+                }
+                else
+                {
+                    switch (myController.Robot)
+                    {
+                        case Controller.Robotnum.Fanuc:
+                            if (Convert.ToSingle(tbLineXJ1Set.Text) < 0 || Convert.ToSingle(tbLineXJ1Set.Text) > 650 ||
+                                Convert.ToSingle(tbLineYJ2Set.Text) < -450 || Convert.ToSingle(tbLineYJ2Set.Text) > 450 ||
+                                Convert.ToSingle(tbLineZJ3Set.Text) < -270 || Convert.ToSingle(tbLineZJ3Set.Text) > 400 ||
+                                Convert.ToSingle(tbLineWJ4Set.Text) < -180 || Convert.ToSingle(tbLineWJ4Set.Text) > 180 ||
+                                Convert.ToSingle(tbLinePJ5Set.Text) < -180 || Convert.ToSingle(tbLinePJ5Set.Text) > 180 ||
+                                Convert.ToSingle(tbLineRJ6Set.Text) < -180 || Convert.ToSingle(tbLineRJ6Set.Text) > 180 ||
+                                Convert.ToSingle(tbLineVelocitySet.Text) < 0 || Convert.ToSingle(tbLineVelocitySet.Text) > 500)
+                            {
+                                MessageBox.Show("座標或速度超出安全範圍");
+                                return;
+                            }
+                            break;
+                        case Controller.Robotnum.Nexcom:
+                            if (Convert.ToSingle(tbLineXJ1Set.Text) < 0 || Convert.ToSingle(tbLineXJ1Set.Text) > 500 ||
+                                Convert.ToSingle(tbLineYJ2Set.Text) < -450 || Convert.ToSingle(tbLineYJ2Set.Text) > 450 ||
+                                Convert.ToSingle(tbLineZJ3Set.Text) < 50 || Convert.ToSingle(tbLineZJ3Set.Text) > 600 ||
+                                Convert.ToSingle(tbLineWJ4Set.Text) < -180 || Convert.ToSingle(tbLineWJ4Set.Text) > 180 ||
+                                Convert.ToSingle(tbLinePJ5Set.Text) < -180 || Convert.ToSingle(tbLinePJ5Set.Text) > 180 ||
+                                Convert.ToSingle(tbLineRJ6Set.Text) < -180 || Convert.ToSingle(tbLineRJ6Set.Text) > 180 ||
+                                Convert.ToSingle(tbLineVelocitySet.Text) < 0 || Convert.ToSingle(tbLineVelocitySet.Text) > 100)
+                            {
+                                MessageBox.Show("座標或速度超出安全範圍");
+                                return;
+                            }
+                            break;
+                        case Controller.Robotnum.Ourarm:
+                            break;
+                    }
+                    RobotAdapter.Setvelocity = Convert.ToSingle(tbLineVelocitySet.Text);
+                    if (!myController.SetVelocity())
+                    {
+                        ShowMessage("設定速度失敗", "設定速度狀態");
+                    }
+
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineXJ1Set.Text), 0);
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineYJ2Set.Text), 1);
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineZJ3Set.Text), 2);
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineWJ4Set.Text), 3);
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLinePJ5Set.Text), 4);
+                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineRJ6Set.Text), 5);
+                    if (!myController.Line())
+                    {
+                        ShowMessage("設定座標失敗", "點到點移動狀態");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("請輸入有效數值");
             }
         }
         #endregion
@@ -707,10 +788,47 @@ namespace Integrated_Robot_Interface
         }
         #endregion
 
-        #region <gbPositionMove>
+        #region <gbJog>
+        private void cboLineCoordinate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cboLineCoordinate.Text)
+            {
+                case nameof(Controller.Coordinatenum.Cartesian):
+                    myController.Coordinate = Controller.Coordinatenum.Cartesian;
+                    btnJogXJ1Positive.Text = "+X";
+                    btnJogXJ1Negative.Text = "-X";
+                    btnJogYJ2Positive.Text = "+Y";
+                    btnJogYJ2Negative.Text = "-Y";
+                    btnJogZJ3Positive.Text = "+Z";
+                    btnJogZJ3Negative.Text = "-Z";
+                    btnJogWJ4Positive.Text = "+W";
+                    btnJogWJ4Negative.Text = "-W";
+                    btnJogPJ5Positive.Text = "+P";
+                    btnJogPJ5Negative.Text = "-P";
+                    btnJogRJ6Positive.Text = "+R";
+                    btnJogRJ6Negative.Text = "-R";
+                    break;
+                case nameof(Controller.Coordinatenum.Joint):
+                    myController.Coordinate = Controller.Coordinatenum.Joint;
+                    btnJogXJ1Positive.Text = "+J1";
+                    btnJogXJ1Negative.Text = "-J1";
+                    btnJogYJ2Positive.Text = "+J2";
+                    btnJogYJ2Negative.Text = "-J2";
+                    btnJogZJ3Positive.Text = "+J3";
+                    btnJogZJ3Negative.Text = "-J3";
+                    btnJogWJ4Positive.Text = "+J4";
+                    btnJogWJ4Negative.Text = "-J4";
+                    btnJogPJ5Positive.Text = "+J5";
+                    btnJogPJ5Negative.Text = "-J5";
+                    btnJogRJ6Positive.Text = "+J6";
+                    btnJogRJ6Negative.Text = "-J6";
+                    break;
+            }
+            cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+        }
         private void cboStep_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cboStep.Text)
+            switch (cboJogStep.Text)
             {
                 case nameof(Controller.Stepnum.One):
                     myController.Step = Controller.Stepnum.One;
@@ -804,6 +922,7 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
+
         #endregion
 
     }

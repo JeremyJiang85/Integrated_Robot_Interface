@@ -82,6 +82,10 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.PTPJ();
         }
+        public bool Line()
+        {
+            return myRobotAdapter.Line();
+        }
         public bool Home()
         {
             return myRobotAdapter.Home();

@@ -300,7 +300,6 @@ namespace Integrated_Robot_Interface
 
             return true;
         }
-
         public override bool PTPC()
         {
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(0)), 0);
@@ -311,12 +310,11 @@ namespace Integrated_Robot_Interface
             PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(5)), 3);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
-            double retMaxVel = 0;
 
-            int ret = mobjGroupAdapter.NMC_GroupLine(mesk, ref PosPcs, ref retMaxVel);
+            int ret = mobjGroupAdapter.NMC_GroupPtpCartAll(mesk, ref PosPcs);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                Apierrtext = GetErrorMessage("NMC_GroupLine Fail", ret);
+                Apierrtext = GetErrorMessage("NMC_GroupPtpCartAll", ret);
                 return false;
             }
             else
@@ -341,6 +339,31 @@ namespace Integrated_Robot_Interface
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 Apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            return true;
+        }
+        public override bool Line()
+        {
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(1)), 1);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(3)), 5);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(Convert.ToSingle(SetCposition.GetValue(5)), 3);
+
+            int mesk = (int)Math.Pow(2, 6) - 1;
+            double retMaxVel = Setvelocity;
+
+            int ret = mobjGroupAdapter.NMC_GroupLine(mesk, ref PosPcs, ref retMaxVel);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupLine Fail", ret);
                 return false;
             }
             else

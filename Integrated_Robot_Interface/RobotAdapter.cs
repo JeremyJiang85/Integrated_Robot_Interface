@@ -79,6 +79,10 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
+        public virtual bool Line()
+        {
+            return false;
+        }
         public virtual bool Home()
         {
             return false;

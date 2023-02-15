@@ -71,13 +71,22 @@ namespace Integrated_Robot_Interface
         {
             Array Xyzwpr = new float[6];
             Xyzwpr = SetCposition;
+            myfanuc.SetRegister(1, 6);
             return myfanuc.PTPC(Xyzwpr);
         }
         public override bool PTPJ()
         {
             Array Joint = new float[6];
             Joint = SetJposition;
+            myfanuc.SetRegister(1, 6);
             return myfanuc.PTPJ(Joint);
+        }
+        public override bool Line()
+        {
+            Array Xyzwpr = new float[6];
+            Xyzwpr = SetCposition;
+            myfanuc.SetRegister(2, 6);
+            return myfanuc.Line(Xyzwpr);
         }
         public override bool Home()
         {
