@@ -409,6 +409,145 @@ namespace Integrated_Robot_Interface
 
             return true;
         }
+        public override bool Jog()
+        {
+            
+            return base.Jog();
+        }
+        public override bool IncC()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupGetActualPosPcs(ref PosPcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            switch (Jogmove.GetValue(1))
+            {
+                case 0:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(0)) + Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    break;
+                case 1:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(0)) - Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    break;
+                case 2:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(1)) + Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    break;
+                case 3:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(1)) - Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    break;
+                case 4:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(2)) + Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    break;
+                case 5:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(2)) - Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    break;
+                case 6:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(5)) + Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    break;
+                case 7:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(5)) - Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    break;
+                case 8:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(4)) + Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    break;
+                case 9:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(4)) - Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    break;
+                case 10:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(3)) + Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    break;
+                case 11:
+                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(3)) - Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    break;
+            }
+
+            int mesk = (int)Math.Pow(2, 6) - 1;
+
+            ret = mobjGroupAdapter.NMC_GroupPtpCartAll(mesk, ref PosPcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupPtpCartAll Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
+        }
+        public override bool IncJ()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupGetActualPosAcs(ref PosAcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupGetActualPosAcs Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+
+            switch (Jogmove.GetValue(1))
+            {
+                case 0:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(0)) + Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    break;
+                case 1:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(0)) - Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    break;
+                case 2:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(1)) + Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    break;
+                case 3:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(1)) - Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    break;
+                case 4:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(2)) + Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    break;
+                case 5:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(2)) - Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    break;
+                case 6:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(3)) + Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    break;
+                case 7:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(3)) - Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    break;
+                case 8:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(4)) + Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    break;
+                case 9:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(4)) - Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    break;
+                case 10:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(5)) + Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    break;
+                case 11:
+                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(5)) - Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    break;
+            }
+
+            int mesk = (int)Math.Pow(2, 6) - 1;
+
+            ret = mobjGroupAdapter.NMC_GroupPtpAcsAll(mesk, ref PosAcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
+        }
         public string GetErrorMessage(string api, int errcode)
         {
             string ret = api + "\n";
@@ -432,7 +571,6 @@ namespace Integrated_Robot_Interface
             }
             return "";
         }
-
         public override bool Enable()
         {
             int ret = mobjGroupAdapter.NMC_GroupEnable();

@@ -95,7 +95,15 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool Inc()
+        public virtual bool Jog()
+        {
+            return false;
+        }
+        public virtual bool IncC()
+        {
+            return false;
+        }
+        public virtual bool IncJ()
         {
             return false;
         }

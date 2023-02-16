@@ -98,9 +98,17 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetVelocity();
         }
-        public bool Inc()
+        public bool Jog()
         {
-            return myRobotAdapter.Inc();
+            return myRobotAdapter.Jog();
+        }
+        public bool IncC()
+        {
+            return myRobotAdapter.IncC();
+        }
+        public bool IncJ()
+        {
+            return myRobotAdapter.IncJ();
         }
         #endregion
 

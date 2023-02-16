@@ -128,12 +128,21 @@ namespace Integrated_Robot_Interface
 
             return myfanuc.SetRegister(Value, Index);
         }
-        public override bool Inc()
+        public override bool IncC()
         {
-            int Index = Convert.ToInt32(Jogmove.GetValue(1));
-            int Value = Convert.ToInt32(Jogmove.GetValue(0));
-            
-            return myfanuc.Inc(Value, Index);
+            int Index = (int)Jogmove.GetValue(1);
+            int Value = (int)Jogmove.GetValue(0);
+
+            myfanuc.SetRegister(1, 6);
+            return myfanuc.IncC(Value, Index);
+        }
+        public override bool IncJ()
+        {
+            int Index = (int)Jogmove.GetValue(1);
+            int Value = (int)Jogmove.GetValue(0);
+
+            myfanuc.SetRegister(1, 6);
+            return myfanuc.IncJ(Value, Index);
         }
     }
 }

@@ -852,40 +852,35 @@ namespace Integrated_Robot_Interface
             }
             RobotAdapter.Jogmove.SetValue(myController.Step, 0);
         }
-        private void btnXJ1Positive_Click(object sender, EventArgs e)
+        private void btnJogXJ1Positive_Click(object sender, EventArgs e)
         {
+            if (myController.Step == Controller.Stepnum.Cont)
+            {
+                return;
+            }
+
             Button btn = (Button)sender;
 
-            if (fgJogStatus)
+            RobotAdapter.Jogmove.SetValue(Convert.ToInt32(btn.Tag), 1);
+            switch (myController.Coordinate)
             {
-                if (!fgJog)
-                {
-                    fgJog = true;
-                    RobotAdapter.Jogmove.SetValue(Convert.ToInt32(btn.Tag), 1);
-                    timer2.Enabled = true;
-                }
-                else
-                {
-                    fgJog = false;
-                    timer2.Enabled = false;
-                }
-            }
-            else
-            {
-                RobotAdapter.Jogmove.SetValue(Convert.ToInt32(btn.Tag), 1);
-                if (!myController.Inc())
-                {
-                    ShowMessage("單動移動失敗", "單動移動狀態");
-                }
-
+                case Controller.Coordinatenum.Cartesian:
+                    if (!myController.IncC())
+                    {
+                        ShowMessage("單動移動失敗", "單動移動狀態");
+                    }
+                    break;
+                case Controller.Coordinatenum.Joint:
+                    if (!myController.IncJ())
+                    {
+                        ShowMessage("單動移動失敗", "單動移動狀態");
+                    }
+                    break;
             }
         }
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if (!myController.Inc())
-            {
-                ShowMessage("寸動移動失敗", "寸動移動狀態");
-            }
+            
         }
         #endregion
 

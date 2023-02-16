@@ -808,7 +808,7 @@
             this.btnJogRJ6Positive.Tag = "10";
             this.btnJogRJ6Positive.Text = "+R";
             this.btnJogRJ6Positive.UseVisualStyleBackColor = true;
-            this.btnJogRJ6Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogRJ6Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogRJ6Negative
             // 
@@ -819,7 +819,7 @@
             this.btnJogRJ6Negative.Tag = "11";
             this.btnJogRJ6Negative.Text = "-R";
             this.btnJogRJ6Negative.UseVisualStyleBackColor = true;
-            this.btnJogRJ6Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogRJ6Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogPJ5Positive
             // 
@@ -830,7 +830,7 @@
             this.btnJogPJ5Positive.Tag = "8";
             this.btnJogPJ5Positive.Text = "+P";
             this.btnJogPJ5Positive.UseVisualStyleBackColor = true;
-            this.btnJogPJ5Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogPJ5Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogPJ5Negative
             // 
@@ -841,7 +841,7 @@
             this.btnJogPJ5Negative.Tag = "9";
             this.btnJogPJ5Negative.Text = "-P";
             this.btnJogPJ5Negative.UseVisualStyleBackColor = true;
-            this.btnJogPJ5Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogPJ5Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogWJ4Positive
             // 
@@ -852,7 +852,7 @@
             this.btnJogWJ4Positive.Tag = "6";
             this.btnJogWJ4Positive.Text = "+W";
             this.btnJogWJ4Positive.UseVisualStyleBackColor = true;
-            this.btnJogWJ4Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogWJ4Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogWJ4Negative
             // 
@@ -863,7 +863,7 @@
             this.btnJogWJ4Negative.Tag = "7";
             this.btnJogWJ4Negative.Text = "-W";
             this.btnJogWJ4Negative.UseVisualStyleBackColor = true;
-            this.btnJogWJ4Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogWJ4Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogZJ3Positive
             // 
@@ -874,7 +874,7 @@
             this.btnJogZJ3Positive.Tag = "4";
             this.btnJogZJ3Positive.Text = "+Z";
             this.btnJogZJ3Positive.UseVisualStyleBackColor = true;
-            this.btnJogZJ3Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogZJ3Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogZJ3Negative
             // 
@@ -885,7 +885,7 @@
             this.btnJogZJ3Negative.Tag = "5";
             this.btnJogZJ3Negative.Text = "-Z";
             this.btnJogZJ3Negative.UseVisualStyleBackColor = true;
-            this.btnJogZJ3Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogZJ3Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogYJ2Positive
             // 
@@ -896,7 +896,7 @@
             this.btnJogYJ2Positive.Tag = "2";
             this.btnJogYJ2Positive.Text = "+Y";
             this.btnJogYJ2Positive.UseVisualStyleBackColor = true;
-            this.btnJogYJ2Positive.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogYJ2Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogYJ2Negative
             // 
@@ -907,7 +907,7 @@
             this.btnJogYJ2Negative.Tag = "3";
             this.btnJogYJ2Negative.Text = "-Y";
             this.btnJogYJ2Negative.UseVisualStyleBackColor = true;
-            this.btnJogYJ2Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogYJ2Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogXJ1Positive
             // 
@@ -918,7 +918,7 @@
             this.btnJogXJ1Positive.Tag = "0";
             this.btnJogXJ1Positive.Text = "+X";
             this.btnJogXJ1Positive.UseVisualStyleBackColor = true;
-            this.btnJogXJ1Positive.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnJogXJ1Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnJogXJ1Negative
             // 
@@ -929,7 +929,7 @@
             this.btnJogXJ1Negative.Tag = "1";
             this.btnJogXJ1Negative.Text = "-X";
             this.btnJogXJ1Negative.UseVisualStyleBackColor = true;
-            this.btnJogXJ1Negative.Click += new System.EventHandler(this.btnXJ1Positive_Click);
+            this.btnJogXJ1Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
             // 
             // btnDisable
             // 
