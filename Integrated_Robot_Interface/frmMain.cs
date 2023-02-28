@@ -16,8 +16,6 @@ namespace Integrated_Robot_Interface
         Controller myController = new Controller();
         public bool fgConnectionStatus { get; set; } = false;
         public bool fgState { get; set; } = false;
-        public bool fgJogStatus { get; set; } = false;
-        public bool fgJog { get; set; } = false;
 
 
         public FrmMain()
@@ -26,17 +24,6 @@ namespace Integrated_Robot_Interface
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            timer1.Interval = 500;
-            timer2.Interval = 200;
-            string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
-                                            Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString()};
-            cboRobot.Items.AddRange(Robot);
-            string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
-            cboPTPCoordinate.Items.AddRange(Coordinate);
-            cboLineCoordinate.Items.AddRange(Coordinate);
-            string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
-                                           Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
-            cboJogStep.Items.AddRange(Step);
             Initialize();
         }
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -58,16 +45,29 @@ namespace Integrated_Robot_Interface
         #region <object status>
         private void Initialize()
         {
-            timer1.Enabled = false;
-            timer2.Enabled = false;
-            txtIP.Enabled = false;
-            fgConnectionStatus = false;
-            fgState = false;
-            cboRobot.Enabled = true;
+            string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
+                                            Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString() };
+            cboRobot.Items.Clear();
+            cboRobot.Items.AddRange(Robot);
+            string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
+            cboPTPCoordinate.Items.Clear();
+            cboPTPCoordinate.Items.AddRange(Coordinate);
+            cboLineCoordinate.Items.Clear();
+            cboLineCoordinate.Items.AddRange(Coordinate);
+            string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
+                                           Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
+            cboJogStep.Items.Clear();
+            cboJogStep.Items.AddRange(Step);
             cboRobot.SelectedIndex = 0;
             cboPTPCoordinate.SelectedIndex = 0;
             cboLineCoordinate.SelectedIndex = 0;
             cboJogStep.SelectedIndex = 0;
+            timer1.Interval = 500;
+            timer1.Enabled = false;
+            txtIP.Enabled = false;
+            fgConnectionStatus = false;
+            fgState = false;
+            cboRobot.Enabled = true;
             gbEnbleControl(false);
             txtInitialize();
         }
@@ -125,7 +125,7 @@ namespace Integrated_Robot_Interface
                     myController.Robot = Controller.Robotnum.Nexcom;
                     txtIP.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
-                    lblLineVelocityRange.Text = "V : 0 ~ 40 (預設為10)";
+                    lblLineVelocityRange.Text = "V : 0 ~ 100 (預設為10)";
                     break;
                 case nameof(Controller.Robotnum.Ourarm):
                     myController.Robot = Controller.Robotnum.Ourarm;
@@ -174,6 +174,7 @@ namespace Integrated_Robot_Interface
                     {
                         case Controller.Robotnum.Fanuc:
                             lblRange.Text = "X : 0~650\r\nY : -450~450\r\nZ : -270~400\r\nVelocity : 0~500";
+                            cboJogStep.Items.Remove(Controller.Stepnum.Cont.ToString());
                             RobotAdapter.Setoverride = 20;
                             myController.SetOverride();
                             myController.GetCPosition();
@@ -182,7 +183,7 @@ namespace Integrated_Robot_Interface
                             break;
                         case Controller.Robotnum.Nexcom:
                             gbRegister.Enabled = false;
-                            lblRange.Text = "X : 0~500\r\nY : -450~450\r\nZ : 50~600\r\nVelocity : 0~500";
+                            lblRange.Text = "X : 0~500\r\nY : -450~450\r\nZ : 50~600\r\nVelocity : 0~100";
                             myController.GetCPosition();
                             RobotAdapter.SetCposition = RobotAdapter.GetCposition;
                             myController.PTPC();
@@ -832,25 +833,18 @@ namespace Integrated_Robot_Interface
             {
                 case nameof(Controller.Stepnum.One):
                     myController.Step = Controller.Stepnum.One;
-                    fgJogStatus = false;
-                    timer2.Enabled = false;
                     break;
                 case nameof(Controller.Stepnum.Five):
                     myController.Step = Controller.Stepnum.Five;
-                    fgJogStatus = false;
-                    timer2.Enabled = false;
                     break;
                 case nameof(Controller.Stepnum.Ten):
                     myController.Step = Controller.Stepnum.Ten;
-                    fgJogStatus = false;
-                    timer2.Enabled = false;
                     break;
                 case nameof(Controller.Stepnum.Cont):
                     myController.Step = Controller.Stepnum.Cont;
-                    fgJogStatus = true;
                     break;
             }
-            RobotAdapter.Jogmove.SetValue(myController.Step, 0);
+            RobotAdapter.Incmove.SetValue(myController.Step, 0);
         }
         private void btnJogXJ1Positive_Click(object sender, EventArgs e)
         {
@@ -861,7 +855,7 @@ namespace Integrated_Robot_Interface
 
             Button btn = (Button)sender;
 
-            RobotAdapter.Jogmove.SetValue(Convert.ToInt32(btn.Tag), 1);
+            RobotAdapter.Incmove.SetValue(Convert.ToInt32(btn.Tag), 1);
             switch (myController.Coordinate)
             {
                 case Controller.Coordinatenum.Cartesian:
@@ -878,9 +872,39 @@ namespace Integrated_Robot_Interface
                     break;
             }
         }
-        private void timer2_Tick(object sender, EventArgs e)
+        private void btnJogXJ1Positive_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            if (myController.Step == Controller.Stepnum.Cont)
+            {
+                Button btn = (Button)sender;
+
+                RobotAdapter.Jogmove = Convert.ToInt32(btn.Tag);
+                switch (myController.Coordinate)
+                {
+                    case Controller.Coordinatenum.Cartesian:
+                        if (!myController.JogC())
+                        {
+                            ShowMessage("寸動移動失敗", "寸動移動狀態");
+                        }
+                        break;
+                    case Controller.Coordinatenum.Joint:
+                        if (!myController.JogJ())
+                        {
+                            ShowMessage("寸動移動失敗", "寸動移動狀態");
+                        }
+                        break;
+                }
+            }
+        }
+        private void btnJogXJ1Positive_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (myController.Step == Controller.Stepnum.Cont)
+            {
+                if (!myController.Hold())
+                {
+                    ShowMessage("Hold失敗", "Hold狀態");
+                }
+            }
         }
         #endregion
 

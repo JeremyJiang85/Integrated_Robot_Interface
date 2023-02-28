@@ -409,10 +409,145 @@ namespace Integrated_Robot_Interface
 
             return true;
         }
-        public override bool Jog()
+        public override bool JogC()
         {
-            
-            return base.Jog();
+            int CartAxis = 0;
+            int Dir = 0;
+            double PMaxVel = 0;
+
+            switch (Jogmove)
+            {
+                case 0:
+                    CartAxis = 0;
+                    Dir = 0;
+                    break;
+                case 1:
+                    CartAxis = 0;
+                    Dir = 1;
+                    break;
+                case 2:
+                    CartAxis = 1;
+                    Dir = 0;
+                    break;
+                case 3:
+                    CartAxis = 1;
+                    Dir = 1;
+                    break;
+                case 4:
+                    CartAxis = 2;
+                    Dir = 0;
+                    break;
+                case 5:
+                    CartAxis = 2;
+                    Dir = 1;
+                    break;
+                case 6:
+                    CartAxis = 5;
+                    Dir = 0;
+                    break;
+                case 7:
+                    CartAxis = 5;
+                    Dir = 1;
+                    break;
+                case 8:
+                    CartAxis = 4;
+                    Dir = 0;
+                    break;
+                case 9:
+                    CartAxis = 4;
+                    Dir = 1;
+                    break;
+                case 10:
+                    CartAxis = 3;
+                    Dir = 0;
+                    break;
+                case 11:
+                    CartAxis = 3;
+                    Dir = 1;
+                    break;
+            }
+
+            int ret = mobjGroupAdapter.NMC_GroupJogCartFrame(CartAxis, Dir, ref PMaxVel);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupJogCartFrame", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
+        }
+        public override bool JogJ()
+        {
+            int CartAxis = 0;
+            int Dir = 0;
+            double PMaxVel = 0;
+
+            switch (Jogmove)
+            {
+                case 0:
+                    CartAxis = 0;
+                    Dir = 0;
+                    break;
+                case 1:
+                    CartAxis = 0;
+                    Dir = 1;
+                    break;
+                case 2:
+                    CartAxis = 1;
+                    Dir = 0;
+                    break;
+                case 3:
+                    CartAxis = 1;
+                    Dir = 1;
+                    break;
+                case 4:
+                    CartAxis = 2;
+                    Dir = 0;
+                    break;
+                case 5:
+                    CartAxis = 2;
+                    Dir = 1;
+                    break;
+                case 6:
+                    CartAxis = 3;
+                    Dir = 0;
+                    break;
+                case 7:
+                    CartAxis = 3;
+                    Dir = 1;
+                    break;
+                case 8:
+                    CartAxis = 4;
+                    Dir = 0;
+                    break;
+                case 9:
+                    CartAxis = 4;
+                    Dir = 1;
+                    break;
+                case 10:
+                    CartAxis = 5;
+                    Dir = 0;
+                    break;
+                case 11:
+                    CartAxis = 5;
+                    Dir = 1;
+                    break;
+            }
+
+            int ret = mobjGroupAdapter.NMC_GroupJogAcs(CartAxis, Dir, ref PMaxVel);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupJogJogAcs", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
         }
         public override bool IncC()
         {
@@ -427,52 +562,65 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            switch (Jogmove.GetValue(1))
+            int CartAxis = 0;
+            double CartPos = 0;
+
+            switch (Incmove.GetValue(1))
             {
                 case 0:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(0)) + Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    CartAxis = 0;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(0)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 1:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(0)) - Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    CartAxis = 0;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(0)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 2:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(1)) + Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    CartAxis = 1;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(1)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 3:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(1)) - Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    CartAxis = 1;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(1)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 4:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(2)) + Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    CartAxis = 2;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(2)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 5:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(2)) - Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    CartAxis = 2;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(2)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 6:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(5)) + Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    CartAxis = 5;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(5)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 7:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(5)) - Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    CartAxis = 5;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(5)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 8:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(4)) + Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    CartAxis = 4;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(4)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 9:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(4)) - Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    CartAxis = 4;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(4)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 10:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(3)) + Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    CartAxis = 3;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(3)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 11:
-                    PosPcs.pos.SetValue(Convert.ToInt32(PosPcs.pos.GetValue(3)) - Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    CartAxis = 3;
+                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(3)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
             }
 
-            int mesk = (int)Math.Pow(2, 6) - 1;
-
-            ret = mobjGroupAdapter.NMC_GroupPtpCartAll(mesk, ref PosPcs);
+            ret = mobjGroupAdapter.NMC_GroupPtpCart(CartAxis, CartPos);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                Apierrtext = GetErrorMessage("NMC_GroupPtpCartAll Fail", ret);
+                Apierrtext = GetErrorMessage("NMC_GroupPtpCart Fail", ret);
                 return false;
             }
             else
@@ -494,52 +642,66 @@ namespace Integrated_Robot_Interface
                 Apierrtext = "";
             }
 
-            switch (Jogmove.GetValue(1))
+            int GroupAxisIndex = 0;
+            double AcsPos = 0;
+            double PAcsMaxVel = 0;
+
+            switch (Incmove.GetValue(1))
             {
                 case 0:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(0)) + Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    GroupAxisIndex = 0;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(0)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 1:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(0)) - Convert.ToInt32(Jogmove.GetValue(0)), 0);
+                    GroupAxisIndex = 0;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(0)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 2:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(1)) + Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    GroupAxisIndex = 1;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(1)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 3:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(1)) - Convert.ToInt32(Jogmove.GetValue(1)), 1);
+                    GroupAxisIndex = 1;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(1)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 4:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(2)) + Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    GroupAxisIndex = 2;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(2)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 5:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(2)) - Convert.ToInt32(Jogmove.GetValue(2)), 2);
+                    GroupAxisIndex = 2;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(2)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 6:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(3)) + Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    GroupAxisIndex = 3;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(3)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 7:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(3)) - Convert.ToInt32(Jogmove.GetValue(3)), 3);
+                    GroupAxisIndex = 3;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(3)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 8:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(4)) + Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    GroupAxisIndex = 4;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(4)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 9:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(4)) - Convert.ToInt32(Jogmove.GetValue(4)), 4);
+                    GroupAxisIndex = 4;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(4)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 10:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(5)) + Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    GroupAxisIndex = 5;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(5)) + Convert.ToInt32(Incmove.GetValue(0));
                     break;
                 case 11:
-                    PosAcs.pos.SetValue(Convert.ToInt32(PosAcs.pos.GetValue(5)) - Convert.ToInt32(Jogmove.GetValue(5)), 5);
+                    GroupAxisIndex = 5;
+                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(5)) - Convert.ToInt32(Incmove.GetValue(0));
                     break;
             }
-
-            int mesk = (int)Math.Pow(2, 6) - 1;
-
-            ret = mobjGroupAdapter.NMC_GroupPtpAcsAll(mesk, ref PosAcs);
+            
+            ret = mobjGroupAdapter.NMC_GroupPtpAcs(GroupAxisIndex, AcsPos, ref PAcsMaxVel);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                Apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll Fail", ret);
+                Apierrtext = GetErrorMessage("NMC_GroupPtpAcs Fail", ret);
                 return false;
             }
             else
@@ -591,6 +753,20 @@ namespace Integrated_Robot_Interface
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 Apierrtext = GetErrorMessage("NMC_GroupDisable Fail", ret);
+                return false;
+            }
+            else
+            {
+                Apierrtext = "";
+            }
+            return true;
+        }
+        public override bool Hold()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupHalt();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupHalt Fail", ret);
                 return false;
             }
             else
