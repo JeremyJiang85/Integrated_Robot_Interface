@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="Fanuc.cs" />
     <Compile Include="FanucAdapter.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>

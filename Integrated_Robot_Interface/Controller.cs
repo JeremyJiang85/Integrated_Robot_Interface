@@ -76,14 +76,56 @@ namespace Integrated_Robot_Interface
         }
         public bool PTPC()
         {
+            switch (Robot)
+            {
+                case Robotnum.Fanuc:
+                    RobotAdapter.Setregister.SetValue(1, 0);
+                    RobotAdapter.Setregister.SetValue(6, 1);
+                    myRobotAdapter.SetRegister();
+                    break;
+                case Robotnum.Nexcom:
+                    break;
+                case Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
             return myRobotAdapter.PTPC();
         }
         public bool PTPJ()
         {
+            switch (Robot)
+            {
+                case Robotnum.Fanuc:
+                    RobotAdapter.Setregister.SetValue(1, 0);
+                    RobotAdapter.Setregister.SetValue(6, 1);
+                    myRobotAdapter.SetRegister();
+                    break;
+                case Robotnum.Nexcom:
+                    break;
+                case Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
             return myRobotAdapter.PTPJ();
         }
         public bool Line()
         {
+            switch (Robot)
+            {
+                case Robotnum.Fanuc:
+                    RobotAdapter.Setregister.SetValue(2, 0);
+                    RobotAdapter.Setregister.SetValue(6, 1);
+                    myRobotAdapter.SetRegister();
+                    break;
+                case Robotnum.Nexcom:
+                    break;
+                case Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
             return myRobotAdapter.Line();
         }
         public bool Home()
@@ -108,10 +150,38 @@ namespace Integrated_Robot_Interface
         }
         public bool IncC()
         {
+            switch (Robot)
+            {
+                case Robotnum.Fanuc:
+                    RobotAdapter.Setregister.SetValue(1, 0);
+                    RobotAdapter.Setregister.SetValue(6, 1);
+                    myRobotAdapter.SetRegister();
+                    break;
+                case Robotnum.Nexcom:
+                    break;
+                case Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
             return myRobotAdapter.IncC();
         }
         public bool IncJ()
         {
+            switch (Robot)
+            {
+                case Robotnum.Fanuc:
+                    RobotAdapter.Setregister.SetValue(1, 0);
+                    RobotAdapter.Setregister.SetValue(6, 1);
+                    myRobotAdapter.SetRegister();
+                    break;
+                case Robotnum.Nexcom:
+                    break;
+                case Robotnum.Ourarm:
+                    break;
+                default:
+                    break;
+            }
             return myRobotAdapter.IncJ();
         }
         #endregion
