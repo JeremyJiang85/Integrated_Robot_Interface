@@ -1308,7 +1308,7 @@
             this.Controls.Add(this.pblogo);
             this.Name = "FrmMain";
             this.Tag = "0";
-            this.Text = "`";
+            this.Text = "FrmMain";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).EndInit();

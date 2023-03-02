@@ -17,6 +17,9 @@ namespace Integrated_Robot_Interface
         public bool fgConnectionStatus { get; set; } = false;
         public bool fgState { get; set; } = false;
 
+        FrmFanuc f = new FrmFanuc();
+        
+
 
         public FrmMain()
         {
@@ -38,6 +41,7 @@ namespace Integrated_Robot_Interface
                 {
                     richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
                     MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
+                    RobotAdapter.Apierrtext = "";
                 }
             }
         }
@@ -170,6 +174,7 @@ namespace Integrated_Robot_Interface
                     txtIP.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
+                    f.Show();
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
@@ -194,8 +199,9 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.Apierrtext}";
+                    richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.Apierrtext}\r\n";
                     MessageBox.Show($"手臂連線失敗\r\n{RobotAdapter.Apierrtext}");
+                    RobotAdapter.Apierrtext = "";
                 }
             }
             else
@@ -206,8 +212,9 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}\r\n";
                     MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
+                    RobotAdapter.Apierrtext = "";
                 }
             }
         }
@@ -274,6 +281,7 @@ namespace Integrated_Robot_Interface
                 {
                     richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
                     MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
+                    RobotAdapter.Apierrtext = "";
                 }
             }
             else
@@ -317,6 +325,9 @@ namespace Integrated_Robot_Interface
                             }
                         }
                     }
+
+                    
+                    
                     break;
                 case Controller.Robotnum.Nexcom:
                     if (!myController.GetState())
@@ -413,15 +424,20 @@ namespace Integrated_Robot_Interface
                 lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
             }
 
-
+            if (!myController.GetInformation())
+            {
+                ShowMessage("取得資料失敗", "取得資料狀態");
+                return;
+            }
         }
         private void ShowMessage(string content, string title)
         {
             DialogResult result;
             fgState = false;
             timer1.Enabled = false;
-            richTextBox1.Text += $"{content}\r\n{RobotAdapter.Apierrtext}";
+            richTextBox1.Text += $"{content}\r\n{RobotAdapter.Apierrtext}\r\n";
             result = MessageBox.Show($"{content}\r\n{RobotAdapter.Apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
+            RobotAdapter.Apierrtext = "";
             if (result == DialogResult.Abort)
             {
                 if (myController.Disconnect())
@@ -432,6 +448,7 @@ namespace Integrated_Robot_Interface
                 {
                     richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
                     MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
+                    RobotAdapter.Apierrtext = "";
                 }
             }
             else if (result == DialogResult.Ignore)

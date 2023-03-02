@@ -76,12 +76,13 @@ namespace Integrated_Robot_Interface
         }
         public bool PTPC()
         {
+            bool ret = false;
             switch (Robot)
             {
                 case Robotnum.Fanuc:
                     RobotAdapter.Setregister.SetValue(1, 0);
                     RobotAdapter.Setregister.SetValue(6, 1);
-                    myRobotAdapter.SetRegister();
+                    ret = myRobotAdapter.SetRegister();
                     break;
                 case Robotnum.Nexcom:
                     break;
@@ -183,6 +184,10 @@ namespace Integrated_Robot_Interface
                     break;
             }
             return myRobotAdapter.IncJ();
+        }
+        public bool GetInformation()
+        {
+            return myRobotAdapter.GetInformation();
         }
         #endregion
 

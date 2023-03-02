@@ -26,6 +26,7 @@ namespace Integrated_Robot_Interface
         public static Array Setregister { get; set; } = new float[2] { 0, 0 };
         public static Array Incmove { get; set; } = new int[2] { 0, 0 };
         public static int Jogmove { get; set; } = 0;
+        public static string Information { get; set; } = "";
         #endregion
 
         #region <Fanuc>
@@ -104,18 +105,14 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
+        public virtual bool GetInformation()
+        {
+            return false;
+        }
         #endregion
 
         #region <Fanuc>
         public virtual bool Refresh()           //更新資料
-        {
-            return false;
-        }
-        public virtual bool JogC()
-        {
-            return false;
-        }
-        public virtual bool JogJ()
         {
             return false;
         }
@@ -130,6 +127,14 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
+        public virtual bool JogC()
+        {
+            return false;
+        }
+        public virtual bool JogJ()
+        {
+            return false;
+        }
         public virtual bool GetState()
         {
             return false;

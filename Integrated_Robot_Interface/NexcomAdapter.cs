@@ -43,20 +43,12 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_SetIniPath Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
 
             ret = mobjDeviceAdapter.NMC_DeviceOpenUp(NexMotion_Define.DEV_TYPE_ETHERCAT, 0);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 Apierrtext = GetErrorMessage("NMC_DeviceOpenUp Fail", ret);
                 return false;
-            }
-            else
-            {
-                Apierrtext = "";
             }
 
             ret = mobjDeviceAdapter.NMC_DeviceResetStateAll();
@@ -65,15 +57,9 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_DeviceResetStateAll Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
 
             DeviceId = mobjDeviceAdapter.DeviceId;
-
             mobjGroupAdapter = new NexMotion_GroupAdapter(DeviceId, 0);
-
             return true;
         }
         public override bool Disconnect()
@@ -84,11 +70,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_DeviceShutdown Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool Alarm()
@@ -103,11 +84,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupResetState Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool GetState()
@@ -119,10 +95,6 @@ namespace Integrated_Robot_Interface
             {
                 Apierrtext = GetErrorMessage("NMC_GroupGetState Fail", ret);
                 return false;
-            }
-            else
-            {
-                Apierrtext = "";
             }
 
             switch (PRetState)
@@ -160,10 +132,6 @@ namespace Integrated_Robot_Interface
             {
                 Apierrtext = GetErrorMessage("NMC_GroupGetStatus Fail", ret);
                 return false;
-            }
-            else
-            {
-                Apierrtext = "";
             }
 
             for (int i = 0; i > 14; i++)
@@ -221,7 +189,6 @@ namespace Integrated_Robot_Interface
                 }
                 PRetStatusInBit >>= 1;
             }
-
             return true;
         }
         public override bool GetOverride()
@@ -234,11 +201,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupGetVelRatio Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             Getoverride = (int)PRetPercentage;
             return true;
         }
@@ -250,10 +212,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupSetVelRatio Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
             return true;
         }
         public override bool GetCPosition()
@@ -264,18 +222,12 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(0)), 0);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(1)), 1);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(2)), 2);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(5)), 3);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(4)), 4);
             GetCposition.SetValue(Convert.ToSingle(PosPcs.pos.GetValue(3)), 5);
-
             return true;
         }
         public override bool GetJPosition()
@@ -286,18 +238,12 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupGetActualPosAcs Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(0)), 0);
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(1)), 1);
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(2)), 2);
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(3)), 3);
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(4)), 4);
             GetJposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(5)), 5);
-
             return true;
         }
         public override bool PTPC()
@@ -317,11 +263,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupPtpCartAll", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool PTPJ()
@@ -341,11 +282,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool Line()
@@ -366,11 +302,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupLine Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool GetVelocity()
@@ -383,13 +314,7 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             Getvelocity = Convert.ToSingle(PRetParaValueF64);
-
             return true;
         }
         public override bool SetVelocity()
@@ -402,11 +327,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupSetParamF64 Fail", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
-
             return true;
         }
         public override bool JogC()
@@ -473,10 +393,6 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupJogCartFrame", ret);
                 return false;
             }
-            else
-            {
-                Apierrtext = "";
-            }
             return true;
         }
         public override bool JogJ()
@@ -542,10 +458,6 @@ namespace Integrated_Robot_Interface
             {
                 Apierrtext = GetErrorMessage("NMC_GroupJogJogAcs", ret);
                 return false;
-            }
-            else
-            {
-                Apierrtext = "";
             }
             return true;
         }
@@ -622,10 +534,6 @@ namespace Integrated_Robot_Interface
             {
                 Apierrtext = GetErrorMessage("NMC_GroupPtpCart Fail", ret);
                 return false;
-            }
-            else
-            {
-                Apierrtext = "";
             }
             return true;
         }
@@ -704,9 +612,35 @@ namespace Integrated_Robot_Interface
                 Apierrtext = GetErrorMessage("NMC_GroupPtpAcs Fail", ret);
                 return false;
             }
-            else
+            return true;
+        }
+        public override bool Enable()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupEnable();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                Apierrtext = "";
+                Apierrtext = GetErrorMessage("NMC_GroupEnable Fail", ret);
+                return false;
+            }
+            return true;
+        }
+        public override bool Disable()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupDisable();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupDisable Fail", ret);
+                return false;
+            }
+            return true;
+        }
+        public override bool Hold()
+        {
+            int ret = mobjGroupAdapter.NMC_GroupHalt();
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupHalt Fail", ret);
+                return false;
             }
             return true;
         }
@@ -718,7 +652,7 @@ namespace Integrated_Robot_Interface
             if (errmsg != "")
             {
                 ret += "\nDescription :  \n";
-                ret += errmsg;
+                ret += errmsg + "\r\n";
             }
             return ret;
         }
@@ -732,48 +666,6 @@ namespace Integrated_Robot_Interface
                 return err_des.ToString();
             }
             return "";
-        }
-        public override bool Enable()
-        {
-            int ret = mobjGroupAdapter.NMC_GroupEnable();
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                Apierrtext = GetErrorMessage("NMC_GroupEnable Fail", ret);
-                return false;
-            }
-            else
-            {
-                Apierrtext = "";
-            }
-            return true;
-        }
-        public override bool Disable()
-        {
-            int ret = mobjGroupAdapter.NMC_GroupDisable();
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                Apierrtext = GetErrorMessage("NMC_GroupDisable Fail", ret);
-                return false;
-            }
-            else
-            {
-                Apierrtext = "";
-            }
-            return true;
-        }
-        public override bool Hold()
-        {
-            int ret = mobjGroupAdapter.NMC_GroupHalt();
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                Apierrtext = GetErrorMessage("NMC_GroupHalt Fail", ret);
-                return false;
-            }
-            else
-            {
-                Apierrtext = "";
-            }
-            return true;
         }
     }
 }
