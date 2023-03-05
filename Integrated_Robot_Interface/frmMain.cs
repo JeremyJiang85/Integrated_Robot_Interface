@@ -14,12 +14,10 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         Controller myController = new Controller();
+        FrmInformation f = new FrmInformation();
         public bool fgConnectionStatus { get; set; } = false;
         public bool fgState { get; set; } = false;
-
-        FrmFanuc f = new FrmFanuc();
         
-
 
         public FrmMain()
         {
@@ -73,6 +71,7 @@ namespace Integrated_Robot_Interface
             fgState = false;
             cboRobot.Enabled = true;
             gbEnbleControl(false);
+            f.Hide();
             txtInitialize();
         }
         private void gbEnbleControl(bool tf)
@@ -82,6 +81,8 @@ namespace Integrated_Robot_Interface
             gbPTP.Enabled = tf;
             gbRegister.Enabled = tf;
             gbJog.Enabled = tf;
+            gbControl.Enabled = tf;
+            gbLine.Enabled = tf;
         }
         private void txtInitialize()
         {
@@ -104,7 +105,6 @@ namespace Integrated_Robot_Interface
             tbLineRJ6Set.Text = "";
             tbLineVelocitySet.Text = "";
             lblRange.Text = "X :\r\nY :\r\nZ :\r\nVelocity :";
-            lblRegister.Text = "R1 = \r\nR2 = \r\nR3 = \r\nR4 = \r\nR5 = ";
             lblOverride.Text = "";
             tbR1Set.Text = "";
             tbR2Set.Text = "";
@@ -174,7 +174,7 @@ namespace Integrated_Robot_Interface
                     txtIP.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
-                    f.Show();
+                    
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
@@ -289,6 +289,17 @@ namespace Integrated_Robot_Interface
                 Application.Exit();
             }
         }
+        private void btnInformation_Click(object sender, EventArgs e)
+        {
+            if (f.Visible)
+            {
+                f.Hide();
+            }
+            else
+            {
+                f.Show();
+            }
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             switch (myController.Robot)
@@ -299,55 +310,8 @@ namespace Integrated_Robot_Interface
                         ShowMessage("刷新失敗", "取得刷新狀態");
                         return;
                     }
-
-                    for (int Index = 1; Index <= 5; Index++)
-                    {
-                        RobotAdapter.Getregister.SetValue(Index, 1);
-                        if (!myController.GetRegister())
-                        {
-                            ShowMessage("讀取暫存器失敗", "讀取暫存器狀態");
-                            lblRegister.Text = "R1 = Erorr\r\n";
-                            lblRegister.Text += "R2 = Erorr\r\n";
-                            lblRegister.Text += "R3 = Erorr\r\n";
-                            lblRegister.Text += "R4 = Erorr\r\n";
-                            lblRegister.Text += "R5 = Erorr";
-                            return;
-                        }
-                        else
-                        {
-                            if (Index == 1)
-                            {
-                                lblRegister.Text = $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
-                            }
-                            else
-                            {
-                                lblRegister.Text += $"R{Index} = {Convert.ToSingle(RobotAdapter.Getregister.GetValue(0)).ToString()}\r\n";
-                            }
-                        }
-                    }
-
-                    
-                    
                     break;
                 case Controller.Robotnum.Nexcom:
-                    if (!myController.GetState())
-                    {
-                        ShowMessage("取得State失敗", "取得State狀態");
-                        return;
-                    }
-                    else
-                    {
-                        lblState.Text = RobotAdapter.Statetext;
-                    }
-                    if (!myController.GetStatus())
-                    {
-                        ShowMessage("取得Status失敗", "取得Status狀態");
-                        return;
-                    }
-                    else
-                    {
-                        lblState.Text += RobotAdapter.Statustext;
-                    }
                     break;
                 case Controller.Robotnum.Ourarm:
                     break;
@@ -424,9 +388,24 @@ namespace Integrated_Robot_Interface
                 lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
             }
 
-            if (!myController.GetInformation())
+            if (!myController.GetInformation1())
             {
-                ShowMessage("取得資料失敗", "取得資料狀態");
+                ShowMessage("取得資料1失敗", "取得資料狀態");
+                return;
+            }
+            if (!myController.GetInformation2())
+            {
+                ShowMessage("取得資料2失敗", "取得資料狀態");
+                return;
+            }
+            if (!myController.GetInformation3())
+            {
+                ShowMessage("取得資料3失敗", "取得資料狀態");
+                return;
+            }
+            if (!myController.GetInformation4())
+            {
+                ShowMessage("取得資料4失敗", "取得資料狀態");
                 return;
             }
         }

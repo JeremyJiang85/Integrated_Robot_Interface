@@ -14,17 +14,7 @@ namespace Integrated_Robot_Interface
         public Pos_T PosAcs;
         public Pos_T PosPcs;
         public int DeviceId = 0;
-
-        public enum Statenum
-        {
-            GROUP_STATE_DISABLE,
-            GROUP_STATE_STAND_STILL,
-            GROUP_STATE_STOPPED,
-            GROUP_STATE_STOPPING,
-            GROUP_STATE_MOVING,
-            GROUP_STATE_HOMING,
-            GROUP_STATE_ERROR
-        }
+        
 
         public NexcomAdapter()
         {
@@ -37,6 +27,7 @@ namespace Integrated_Robot_Interface
         public override bool Connect()
         {
             int ret = 0;
+
             ret = mobjDeviceAdapter.NMC_SetIniPath("C:\\NEXCOM\\NexMotionLibConfig.ini");
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
@@ -83,111 +74,6 @@ namespace Integrated_Robot_Interface
             {
                 Apierrtext = GetErrorMessage("NMC_GroupResetState Fail", ret);
                 return false;
-            }
-            return true;
-        }
-        public override bool GetState()
-        {
-            int PRetState = 0;
-
-            int ret = mobjGroupAdapter.NMC_GroupGetState(ref PRetState);
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                Apierrtext = GetErrorMessage("NMC_GroupGetState Fail", ret);
-                return false;
-            }
-
-            switch (PRetState)
-            {
-                case (int)Statenum.GROUP_STATE_DISABLE:
-                    Statetext = "DISABLE";
-                    break;
-                case (int)Statenum.GROUP_STATE_STAND_STILL:
-                    Statetext = "STAND_STILL";
-                    break;
-                case (int)Statenum.GROUP_STATE_STOPPED:
-                    Statetext = "STOPPED";
-                    break;
-                case (int)Statenum.GROUP_STATE_STOPPING:
-                    Statetext = "STOPPING";
-                    break;
-                case (int)Statenum.GROUP_STATE_MOVING:
-                    Statetext = "MOVING";
-                    break;
-                case (int)Statenum.GROUP_STATE_HOMING:
-                    Statetext = "HOMING";
-                    break;
-                case (int)Statenum.GROUP_STATE_ERROR:
-                    Statetext = "ERROR";
-                    break;
-            }
-            return true;
-        }
-        public override bool GetStatus()
-        {
-            int PRetStatusInBit = 0;
-
-            int ret = mobjGroupAdapter.NMC_GroupGetStatus(ref PRetStatusInBit);
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                Apierrtext = GetErrorMessage("NMC_GroupGetStatus Fail", ret);
-                return false;
-            }
-
-            for (int i = 0; i > 14; i++)
-            {
-                if ((PRetStatusInBit | 1) == 1)
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            Statustext += "0:EMG/r/n";
-                            break;
-                        case 1:
-                            Statustext += "1:ALM/r/n";
-                            break;
-                        case 2:
-                            Statustext += "2:PEL/r/n";
-                            break;
-                        case 3:
-                            Statustext += "3:NEL/r/n";
-                            break;
-                        case 4:
-                            Statustext += "4:PSEL/r/n";
-                            break;
-                        case 5:
-                            Statustext += "5:NSEL/r/n";
-                            break;
-                        case 6:
-                            Statustext += "6:ENA/r/n";
-                            break;
-                        case 7:
-                            Statustext += "7:ERR/r/n";
-                            break;
-                        case 8:
-                            Statustext += "8:CSTP/r/n";
-                            break;
-                        case 9:
-                            Statustext += "9:ACC/r/n";
-                            break;
-                        case 10:
-                            Statustext += "10:DEC/r/n";
-                            break;
-                        case 11:
-                            Statustext += "11:MV/r/n";
-                            break;
-                        case 12:
-                            Statustext += "12:OP/r/n";
-                            break;
-                        case 13:
-                            Statustext += "13:STOP/r/n";
-                            break;
-                        case 14:
-                            Statustext += "14:INP/r/n";
-                            break;
-                    }
-                }
-                PRetStatusInBit >>= 1;
             }
             return true;
         }
@@ -644,6 +530,161 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
+        public override bool GetInformation1()
+        {
+            int PRetState = 0;
+
+            Information1name = "State and Status";
+            Information1text = "";
+            int ret = mobjGroupAdapter.NMC_GroupGetState(ref PRetState);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupGetState Fail", ret);
+                return false;
+            }
+
+            switch (PRetState)
+            {
+                case 0:
+                    Information1text = "State : DISABLE";
+                    break;
+                case 1:
+                    Information1text = "State : STAND_STILL";
+                    break;
+                case 2:
+                    Information1text = "State : STOPPED";
+                    break;
+                case 3:
+                    Information1text = "State : STOPPING";
+                    break;
+                case 4:
+                    Information1text = "State : MOVING";
+                    break;
+                case 5:
+                    Information1text = "State : HOMING";
+                    break;
+                case 6:
+                    Information1text = "State : ERROR";
+                    break;
+            }
+
+            int PRetStatusInBit = 0;
+
+            ret = mobjGroupAdapter.NMC_GroupGetStatus(ref PRetStatusInBit);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                Apierrtext = GetErrorMessage("NMC_GroupGetStatus Fail", ret);
+                return false;
+            }
+
+            for (int i = 0; i > 14; i++)
+            {
+                if ((PRetStatusInBit | 1) == 1)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            Information1text += "0:EMG = ON/r/n";
+                            break;
+                        case 1:
+                            Information1text += "1:ALM = ON/r/n";
+                            break;
+                        case 2:
+                            Information1text += "2:PEL = ON/r/n";
+                            break;
+                        case 3:
+                            Information1text += "3:NEL = ON/r/n";
+                            break;
+                        case 4:
+                            Information1text += "4:PSEL = ON/r/n";
+                            break;
+                        case 5:
+                            Information1text += "5:NSEL = ON/r/n";
+                            break;
+                        case 6:
+                            Information1text += "6:ENA = ON/r/n";
+                            break;
+                        case 7:
+                            Information1text += "7:ERR = ON/r/n";
+                            break;
+                        case 8:
+                            Information1text += "8:CSTP = ON/r/n";
+                            break;
+                        case 9:
+                            Information1text += "9:ACC = ON/r/n";
+                            break;
+                        case 10:
+                            Information1text += "10:DEC = ON/r/n";
+                            break;
+                        case 11:
+                            Information1text += "11:MV = ON/r/n";
+                            break;
+                        case 12:
+                            Information1text += "12:OP = ON/r/n";
+                            break;
+                        case 13:
+                            Information1text += "13:STOP = ON/r/n";
+                            break;
+                        case 14:
+                            Information1text += "14:INP = ON/r/n";
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            Information1text += "0:EMG = OFF/r/n";
+                            break;
+                        case 1:
+                            Information1text += "1:ALM = OFF/r/n";
+                            break;
+                        case 2:
+                            Information1text += "2:PEL = OFF/r/n";
+                            break;
+                        case 3:
+                            Information1text += "3:NEL = OFF/r/n";
+                            break;
+                        case 4:
+                            Information1text += "4:PSEL = OFF/r/n";
+                            break;
+                        case 5:
+                            Information1text += "5:NSEL = OFF/r/n";
+                            break;
+                        case 6:
+                            Information1text += "6:ENA = OFF/r/n";
+                            break;
+                        case 7:
+                            Information1text += "7:ERR = OFF/r/n";
+                            break;
+                        case 8:
+                            Information1text += "8:CSTP = OFF/r/n";
+                            break;
+                        case 9:
+                            Information1text += "9:ACC = OFF/r/n";
+                            break;
+                        case 10:
+                            Information1text += "10:DEC = OFF/r/n";
+                            break;
+                        case 11:
+                            Information1text += "11:MV = OFF/r/n";
+                            break;
+                        case 12:
+                            Information1text += "12:OP = OFF/r/n";
+                            break;
+                        case 13:
+                            Information1text += "13:STOP = OFF/r/n";
+                            break;
+                        case 14:
+                            Information1text += "14:INP = OFF/r/n";
+                            break;
+                    }
+                }
+                PRetStatusInBit >>= 1;
+            }
+            return true;
+        }
         public string GetErrorMessage(string api, int errcode)
         {
             string ret = api + "\n";
@@ -651,8 +692,7 @@ namespace Integrated_Robot_Interface
             string errmsg = GetNexMotionErrorMessage(errcode);
             if (errmsg != "")
             {
-                ret += "\nDescription :  \n";
-                ret += errmsg + "\r\n";
+                ret += errmsg;
             }
             return ret;
         }

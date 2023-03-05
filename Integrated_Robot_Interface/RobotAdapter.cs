@@ -26,7 +26,14 @@ namespace Integrated_Robot_Interface
         public static Array Setregister { get; set; } = new float[2] { 0, 0 };
         public static Array Incmove { get; set; } = new int[2] { 0, 0 };
         public static int Jogmove { get; set; } = 0;
-        public static string Information { get; set; } = "";
+        public static string Information1name { get; set; } = "";
+        public static string Information1text { get; set; } = "";
+        public static string Information2name { get; set; } = "";
+        public static string Information2text { get; set; } = "";
+        public static string Information3name { get; set; } = "";
+        public static string Information3text { get; set; } = "";
+        public static string Information4name { get; set; } = "";
+        public static string Information4text { get; set; } = "";
         #endregion
 
         #region <Fanuc>
@@ -34,8 +41,7 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
-        public static string Statetext { get; set; } = "";
-        public static string Statustext { get; set; } = "";
+        
         #endregion
 
 
@@ -105,9 +111,29 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool GetInformation()
+        public virtual bool GetInformation1()
         {
+            Information1name = "";
+            Information1text = "";
             return false;
+        }
+        public virtual bool GetInformation2()
+        {
+            Information2name = "";
+            Information2text = "";
+            return false;
+        }
+        public virtual bool GetInformation3()
+        {
+            Information3name = "";
+            Information3text = "";
+            return true;
+        }
+        public virtual bool GetInformation4()
+        {
+            Information4name = "";
+            Information4text = "";
+            return true;
         }
         #endregion
 
@@ -132,14 +158,6 @@ namespace Integrated_Robot_Interface
             return false;
         }
         public virtual bool JogJ()
-        {
-            return false;
-        }
-        public virtual bool GetState()
-        {
-            return false;
-        }
-        public virtual bool GetStatus()
         {
             return false;
         }

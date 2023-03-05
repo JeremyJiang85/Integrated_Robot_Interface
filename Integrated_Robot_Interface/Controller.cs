@@ -38,17 +38,7 @@ namespace Integrated_Robot_Interface
         }
         public bool Disconnect()
         {
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    return myRobotAdapter.Disconnect();
-                case Robotnum.Nexcom:
-                    return myRobotAdapter.Disconnect();
-                case Robotnum.Ourarm:
-                    return false;
-                default:
-                    return false;
-            }
+            return myRobotAdapter.Disconnect();
         }
         public bool Alarm()
         {
@@ -76,57 +66,14 @@ namespace Integrated_Robot_Interface
         }
         public bool PTPC()
         {
-            bool ret = false;
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    RobotAdapter.Setregister.SetValue(1, 0);
-                    RobotAdapter.Setregister.SetValue(6, 1);
-                    ret = myRobotAdapter.SetRegister();
-                    break;
-                case Robotnum.Nexcom:
-                    break;
-                case Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
             return myRobotAdapter.PTPC();
         }
         public bool PTPJ()
         {
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    RobotAdapter.Setregister.SetValue(1, 0);
-                    RobotAdapter.Setregister.SetValue(6, 1);
-                    myRobotAdapter.SetRegister();
-                    break;
-                case Robotnum.Nexcom:
-                    break;
-                case Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
             return myRobotAdapter.PTPJ();
         }
         public bool Line()
         {
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    RobotAdapter.Setregister.SetValue(2, 0);
-                    RobotAdapter.Setregister.SetValue(6, 1);
-                    myRobotAdapter.SetRegister();
-                    break;
-                case Robotnum.Nexcom:
-                    break;
-                case Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
             return myRobotAdapter.Line();
         }
         public bool Home()
@@ -151,43 +98,27 @@ namespace Integrated_Robot_Interface
         }
         public bool IncC()
         {
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    RobotAdapter.Setregister.SetValue(1, 0);
-                    RobotAdapter.Setregister.SetValue(6, 1);
-                    myRobotAdapter.SetRegister();
-                    break;
-                case Robotnum.Nexcom:
-                    break;
-                case Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
             return myRobotAdapter.IncC();
         }
         public bool IncJ()
         {
-            switch (Robot)
-            {
-                case Robotnum.Fanuc:
-                    RobotAdapter.Setregister.SetValue(1, 0);
-                    RobotAdapter.Setregister.SetValue(6, 1);
-                    myRobotAdapter.SetRegister();
-                    break;
-                case Robotnum.Nexcom:
-                    break;
-                case Robotnum.Ourarm:
-                    break;
-                default:
-                    break;
-            }
             return myRobotAdapter.IncJ();
         }
-        public bool GetInformation()
+        public bool GetInformation1()
         {
-            return myRobotAdapter.GetInformation();
+            return myRobotAdapter.GetInformation1();
+        }
+        public bool GetInformation2()
+        {
+            return myRobotAdapter.GetInformation2();
+        }
+        public bool GetInformation3()
+        {
+            return myRobotAdapter.GetInformation3();
+        }
+        public bool GetInformation4()
+        {
+            return myRobotAdapter.GetInformation4();
         }
         #endregion
 
@@ -207,14 +138,6 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
-        public bool GetState()
-        {
-            return myRobotAdapter.GetState();
-        }
-        public bool GetStatus()
-        {
-            return myRobotAdapter.GetStatus();
-        }
         public bool Enable()
         {
             return myRobotAdapter.Enable();
