@@ -10,30 +10,30 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         #region <共用>
-        public static string IP { get; set; } = "";
-        public static string Alarmtext { get; set; } = "";
-        public static string Apierrtext { get; set; } = "";
-        public static int Getoverride { get; set; } = 0;
-        public static int Setoverride { get; set; } = 0;
-        public static Array GetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array GetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array SetCposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array SetJposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array Homeposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static float Getvelocity { get; set; } = 0;
-        public static float Setvelocity { get; set; } = 0;
-        public static Array Getregister { get; set; } = new float[2] { 0, 0 };
-        public static Array Setregister { get; set; } = new float[2] { 0, 0 };
-        public static Array Incmove { get; set; } = new int[2] { 0, 0 };
-        public static int Jogmove { get; set; } = 0;
-        public static string Information1name { get; set; } = "";
-        public static string Information1text { get; set; } = "";
-        public static string Information2name { get; set; } = "";
-        public static string Information2text { get; set; } = "";
-        public static string Information3name { get; set; } = "";
-        public static string Information3text { get; set; } = "";
-        public static string Information4name { get; set; } = "";
-        public static string Information4text { get; set; } = "";
+        public static string ip { get; set; } = "";
+        public static string alarmtext { get; set; } = "";
+        public static string apierrtext { get; set; } = "";
+        public static int getoverride { get; set; } = 0;
+        public static int setoverride { get; set; } = 0;
+        public static Array getcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array getjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array setcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array setjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array homeposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static float getvelocity { get; set; } = 0;
+        public static float setvelocity { get; set; } = 0;
+        public static Array getregister { get; set; } = new float[2] { 0, 0 };
+        public static Array setregister { get; set; } = new float[2] { 0, 0 };
+        public static Array incmove { get; set; } = new int[2] { 0, 0 };
+        public static int jogmove { get; set; } = 0;
+        public static string information1name { get; set; } = "";
+        public static string information1text { get; set; } = "";
+        public static string information2name { get; set; } = "";
+        public static string information2text { get; set; } = "";
+        public static string information3name { get; set; } = "";
+        public static string information3text { get; set; } = "";
+        public static string information4name { get; set; } = "";
+        public static string information4text { get; set; } = "";
         #endregion
 
         #region <Fanuc>
@@ -113,26 +113,26 @@ namespace Integrated_Robot_Interface
         }
         public virtual bool GetInformation1()
         {
-            Information1name = "";
-            Information1text = "";
-            return false;
+            information1name = "";
+            information1text = "";
+            return true;
         }
         public virtual bool GetInformation2()
         {
-            Information2name = "";
-            Information2text = "";
-            return false;
+            information2name = "";
+            information2text = "";
+            return true;
         }
         public virtual bool GetInformation3()
         {
-            Information3name = "";
-            Information3text = "";
+            information3name = "";
+            information3text = "";
             return true;
         }
         public virtual bool GetInformation4()
         {
-            Information4name = "";
-            Information4text = "";
+            information4name = "";
+            information4text = "";
             return true;
         }
         #endregion

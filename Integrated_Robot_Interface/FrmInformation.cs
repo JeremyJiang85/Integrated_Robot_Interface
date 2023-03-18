@@ -21,18 +21,18 @@ namespace Integrated_Robot_Interface
         {
             timer1.Interval = 500;
             timer1.Enabled = true;
-            gbInformation1.Text = RobotAdapter.Information1name;
-            gbInformation2.Text = RobotAdapter.Information2name;
-            gbInformation3.Text = RobotAdapter.Information3name;
-            gbInformation4.Text = RobotAdapter.Information4name;
+            gbInformation1.Text = RobotAdapter.information1name;
+            gbInformation2.Text = RobotAdapter.information2name;
+            gbInformation3.Text = RobotAdapter.information3name;
+            gbInformation4.Text = RobotAdapter.information4name;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            lblInformation1.Text = RobotAdapter.Information1text;
-            lblInformation2.Text = RobotAdapter.Information2text;
-            lblInformation3.Text = RobotAdapter.Information3text;
-            lblInformation4.Text = RobotAdapter.Information4text;
+            lblInformation1.Text = RobotAdapter.information1text;
+            lblInformation2.Text = RobotAdapter.information2text;
+            lblInformation3.Text = RobotAdapter.information3text;
+            lblInformation4.Text = RobotAdapter.information4text;
         }
 
     }

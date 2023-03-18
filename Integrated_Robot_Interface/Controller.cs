@@ -10,8 +10,10 @@ namespace Integrated_Robot_Interface
     public class Controller
     {
         //變數宣告
-        RobotAdapter myRobotAdapter = null;
-        
+        private RobotAdapter myRobotAdapter = null;
+        public Array saferangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public Array saferangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
         public Robotnum Robot { get; set; } = Robotnum.None;
         public enum Robotnum { None, Fanuc, Nexcom, Ourarm }
         public Coordinatenum Coordinate { get; set; } = Coordinatenum.Cartesian;
@@ -119,6 +121,10 @@ namespace Integrated_Robot_Interface
         public bool GetInformation4()
         {
             return myRobotAdapter.GetInformation4();
+        }
+        public bool SafeRangeCheck()
+        {
+            return false;
         }
         #endregion
 

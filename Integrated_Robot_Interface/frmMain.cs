@@ -13,15 +13,17 @@ namespace Integrated_Robot_Interface
     public partial class FrmMain : Form
     {
         //變數宣告
-        Controller myController = new Controller();
-        FrmInformation f = new FrmInformation();
-        public bool fgConnectionStatus { get; set; } = false;
-        public bool fgState { get; set; } = false;
+        private Controller myController;
+        private FrmInformation f;
+        private bool fgConnectionState { get; set; } = false;
+        private bool fgRobotState { get; set; } = false;
         
 
         public FrmMain()
         {
             InitializeComponent();
+            myController = new Controller();
+            f = new FrmInformation();
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -29,7 +31,7 @@ namespace Integrated_Robot_Interface
         }
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (fgConnectionStatus)
+            if (fgConnectionState)
             {
                 if (myController.Disconnect())
                 {
@@ -37,9 +39,24 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
-                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
-                    RobotAdapter.Apierrtext = "";
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.apierrtext}");
+                    RobotAdapter.apierrtext = "";
+                    if (!myController.Alarm())
+                    {
+                        richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
+                        MessageBox.Show("讀取警示失敗", "讀取警示狀態");
+                        return;
+                    }
+                    else
+                    {
+                        if (RobotAdapter.alarmtext != "")
+                        {
+                            richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
+                            MessageBox.Show(RobotAdapter.alarmtext, "讀取警示狀態");
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -52,6 +69,8 @@ namespace Integrated_Robot_Interface
             cboRobot.Items.Clear();
             cboRobot.Items.AddRange(Robot);
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
+            cboSafeRangeCoordinate.Items.Clear();
+            cboSafeRangeCoordinate.Items.AddRange(Coordinate);
             cboPTPCoordinate.Items.Clear();
             cboPTPCoordinate.Items.AddRange(Coordinate);
             cboLineCoordinate.Items.Clear();
@@ -60,29 +79,43 @@ namespace Integrated_Robot_Interface
                                            Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
             cboJogStep.Items.Clear();
             cboJogStep.Items.AddRange(Step);
+            txtInitialize();
             cboRobot.SelectedIndex = 0;
-            cboPTPCoordinate.SelectedIndex = 0;
-            cboLineCoordinate.SelectedIndex = 0;
-            cboJogStep.SelectedIndex = 0;
             timer1.Interval = 500;
             timer1.Enabled = false;
             txtIP.Enabled = false;
-            fgConnectionStatus = false;
-            fgState = false;
+            fgConnectionState = false;
+            fgRobotState = false;
             cboRobot.Enabled = true;
             gbEnbleControl(false);
+            tbSafeRangeEnbleControl(false);
             f.Hide();
-            txtInitialize();
         }
         private void gbEnbleControl(bool tf)
         {
             gbOverride.Enabled = tf;
-            gbCurrentState.Enabled = tf;
+            gbCurrentPosition.Enabled = tf;
             gbPTP.Enabled = tf;
             gbRegister.Enabled = tf;
             gbJog.Enabled = tf;
             gbControl.Enabled = tf;
             gbLine.Enabled = tf;
+            gbSafeRange.Enabled = tf;
+        }
+        private void tbSafeRangeEnbleControl(bool tf)
+        {
+            tbSafeRangeXJ1min.Enabled = tf;
+            tbSafeRangeXJ1max.Enabled = tf;
+            tbSafeRangeYJ2min.Enabled = tf;
+            tbSafeRangeYJ2max.Enabled = tf;
+            tbSafeRangeZJ3min.Enabled = tf;
+            tbSafeRangeZJ3max.Enabled = tf;
+            tbSafeRangeWJ4min.Enabled = tf;
+            tbSafeRangeWJ4max.Enabled = tf;
+            tbSafeRangePJ5min.Enabled = tf;
+            tbSafeRangePJ5max.Enabled = tf;
+            tbSafeRangeRJ6min.Enabled = tf;
+            tbSafeRangeRJ6max.Enabled = tf;
         }
         private void txtInitialize()
         {
@@ -104,173 +137,31 @@ namespace Integrated_Robot_Interface
             tbLinePJ5Set.Text = "";
             tbLineRJ6Set.Text = "";
             tbLineVelocitySet.Text = "";
-            lblRange.Text = "X :\r\nY :\r\nZ :\r\nVelocity :";
             lblOverride.Text = "";
             tbR1Set.Text = "";
             tbR2Set.Text = "";
             tbR3Set.Text = "";
             tbR4Set.Text = "";
             tbR5Set.Text = "";
-        }
-        #endregion
-
-        #region <gbConnection>
-        private void cboRobot_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cboRobot.Text)
-            {
-                case nameof(Controller.Robotnum.Fanuc):
-                    myController.Robot = Controller.Robotnum.Fanuc;
-                    txtIP.Enabled = true;
-                    lblLineVelocityUnit.Text = "mm/sec";
-                    lblLineVelocityRange.Text = "V : 0 ~ 500(預設為100)";
-                    break;
-                case nameof(Controller.Robotnum.Nexcom):
-                    myController.Robot = Controller.Robotnum.Nexcom;
-                    txtIP.Enabled = false;
-                    lblLineVelocityUnit.Text = "unit/sec";
-                    lblLineVelocityRange.Text = "V : 0 ~ 100 (預設為10)";
-                    break;
-                case nameof(Controller.Robotnum.Ourarm):
-                    myController.Robot = Controller.Robotnum.Ourarm;
-                    txtIP.Enabled = false;
-                    lblLineVelocityUnit.Text = "unit/sec";
-                    lblLineVelocityRange.Text = "V :";
-                    break;
-                default:
-                    myController.Robot = Controller.Robotnum.None;
-                    txtIP.Enabled = false;
-                    lblLineVelocityUnit.Text = "unit/sec";
-                    lblLineVelocityRange.Text = "V :";
-                    break;
-            }
-        }
-        private void btnConnection_Click(object sender, EventArgs e)
-        {
-            if (!fgConnectionStatus)
-            {
-                switch (myController.Robot)
-                {
-                    case Controller.Robotnum.Fanuc:
-                        RobotAdapter.IP = txtIP.Text;
-                        break;
-                    case Controller.Robotnum.Nexcom:
-                        break;
-                    case Controller.Robotnum.Ourarm:
-                        break;
-                    default:
-                        richTextBox1.Text += "請選擇手臂型號\r\n";
-                        MessageBox.Show("請選擇手臂型號");
-                        return;
-                }
-                if (myController.Connect())
-                {
-                    fgConnectionStatus = true;
-                    fgState = true;
-                    lblConnectionStatus.Text = "Connection Status : Connected";
-                    btnConnection.Text = "Disconnect";
-                    cboRobot.Enabled = false;
-                    timer1.Enabled = true;
-                    txtIP.Enabled = false;
-                    gbEnbleControl(true);
-                    richTextBox1.Clear();
-                    
-                    switch (myController.Robot)
-                    {
-                        case Controller.Robotnum.Fanuc:
-                            lblRange.Text = "X : 0~650\r\nY : -450~450\r\nZ : -270~400\r\nVelocity : 0~500";
-                            cboJogStep.Items.Remove(Controller.Stepnum.Cont.ToString());
-                            RobotAdapter.Setoverride = 20;
-                            myController.SetOverride();
-                            myController.GetCPosition();
-                            RobotAdapter.SetCposition = RobotAdapter.GetCposition;
-                            myController.PTPC();
-                            break;
-                        case Controller.Robotnum.Nexcom:
-                            gbRegister.Enabled = false;
-                            lblRange.Text = "X : 0~500\r\nY : -450~450\r\nZ : 50~600\r\nVelocity : 0~100";
-                            myController.GetCPosition();
-                            RobotAdapter.SetCposition = RobotAdapter.GetCposition;
-                            myController.PTPC();
-                            break;
-                        case Controller.Robotnum.Ourarm:
-                            break;
-                    }
-                }
-                else
-                {
-                    richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.Apierrtext}\r\n";
-                    MessageBox.Show($"手臂連線失敗\r\n{RobotAdapter.Apierrtext}");
-                    RobotAdapter.Apierrtext = "";
-                }
-            }
-            else
-            {
-                if (myController.Disconnect())
-                {
-                    Initialize();
-                }
-                else
-                {
-                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}\r\n";
-                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
-                    RobotAdapter.Apierrtext = "";
-                }
-            }
-        }
-        #endregion
-
-        #region <gbOverride>
-        private void btnPercentup_Click(object sender, EventArgs e)
-        {
-            if (!myController.GetOverride())
-            {
-                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
-                lblOverride.Text = "Error";
-                return;
-            }
-
-            RobotAdapter.Setoverride = RobotAdapter.Getoverride + 5;
-
-            if (RobotAdapter.Setoverride > 100)
-            {
-                RobotAdapter.Setoverride = 100;
-            }
-
-            if (!myController.SetOverride())
-            {
-                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
-                return;
-            }
-        }
-        private void btnPercentdown_Click(object sender, EventArgs e)
-        {
-            if (!myController.GetOverride())
-            {
-                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
-                lblOverride.Text = "Error";
-                return;
-            }
-
-            RobotAdapter.Setoverride = RobotAdapter.Getoverride - 5;
-
-            if (RobotAdapter.Setoverride < 0)
-            {
-                RobotAdapter.Setoverride = 0;
-            }
-
-            if (!myController.SetOverride())
-            {
-                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
-                return;
-            }
+            tbSafeRangeXJ1max.Text = "";
+            tbSafeRangeXJ1min.Text = "";
+            tbSafeRangeYJ2max.Text = "";
+            tbSafeRangeYJ2min.Text = "";
+            tbSafeRangeZJ3max.Text = "";
+            tbSafeRangeZJ3min.Text = "";
+            tbSafeRangeWJ4max.Text = "";
+            tbSafeRangeWJ4min.Text = "";
+            tbSafeRangePJ5max.Text = "";
+            tbSafeRangePJ5min.Text = "";
+            tbSafeRangeRJ6max.Text = "";
+            tbSafeRangeRJ6min.Text = "";
         }
         #endregion
 
         #region <NOgb>
         private void btnEsc_Click(object sender, EventArgs e)
         {
-            if (fgConnectionStatus)
+            if (fgConnectionState)
             {
                 if (myController.Disconnect())
                 {
@@ -279,9 +170,9 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
-                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
-                    RobotAdapter.Apierrtext = "";
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.apierrtext}");
+                    RobotAdapter.apierrtext = "";
                 }
             }
             else
@@ -324,9 +215,9 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (RobotAdapter.Alarmtext != "")
+                if (RobotAdapter.alarmtext != "")
                 {
-                    ShowMessage($"{RobotAdapter.Alarmtext}", "讀取警示狀態");
+                    ShowMessage($"{RobotAdapter.alarmtext}", "讀取警示狀態");
                     return;
                 }
             }
@@ -339,7 +230,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                lblOverride.Text = RobotAdapter.Getoverride + "%";
+                lblOverride.Text = RobotAdapter.getoverride + "%";
             }
 
             if (!myController.GetCPosition())
@@ -357,12 +248,12 @@ namespace Integrated_Robot_Interface
             else
             {
                 lblXyzwpr.Text = "Cartesian\r\n";
-                lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(0)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(1)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(2)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(3)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(4)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(5)).ToString("###0.000"))}";
+                lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
             }
 
             if (!myController.GetJPosition())
@@ -380,12 +271,12 @@ namespace Integrated_Robot_Interface
             else
             {
                 lblJoint.Text = "Joint\r\n";
-                lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(0)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(1)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(2)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(3)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(4)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
+                lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
             }
 
             if (!myController.GetInformation1())
@@ -412,11 +303,11 @@ namespace Integrated_Robot_Interface
         private void ShowMessage(string content, string title)
         {
             DialogResult result;
-            fgState = false;
+            fgRobotState = false;
             timer1.Enabled = false;
-            richTextBox1.Text += $"{content}\r\n{RobotAdapter.Apierrtext}\r\n";
-            result = MessageBox.Show($"{content}\r\n{RobotAdapter.Apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
-            RobotAdapter.Apierrtext = "";
+            richTextBox1.Text += $"{content}\r\n{RobotAdapter.apierrtext}\r\n";
+            result = MessageBox.Show($"{content}\r\n{RobotAdapter.apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
+            RobotAdapter.apierrtext = "";
             if (result == DialogResult.Abort)
             {
                 if (myController.Disconnect())
@@ -425,19 +316,191 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.Apierrtext}";
-                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.Apierrtext}");
-                    RobotAdapter.Apierrtext = "";
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.apierrtext}";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.apierrtext}");
+                    RobotAdapter.apierrtext = "";
                 }
             }
             else if (result == DialogResult.Ignore)
             {
-                fgState = true;
+                fgRobotState = true;
                 timer1.Enabled = true;
             }
         }
         #endregion
+        
+        #region <gbConnection>
+        private void cboRobot_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cboRobot.Text)
+            {
+                case nameof(Controller.Robotnum.Fanuc):
+                    myController.Robot = Controller.Robotnum.Fanuc;
+                    txtIP.Enabled = true;
+                    lblLineVelocityUnit.Text = "mm/sec";
+                    lblLineVelocityRange.Text = "V : 0 ~ 500(預設為100)";
+                    myController.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                    myController.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                    break;
+                case nameof(Controller.Robotnum.Nexcom):
+                    myController.Robot = Controller.Robotnum.Nexcom;
+                    txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V : 0 ~ 100 (預設為10)";
+                    myController.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
+                    myController.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                    break;
+                case nameof(Controller.Robotnum.Ourarm):
+                    myController.Robot = Controller.Robotnum.Ourarm;
+                    txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V :";
+                    break;
+                default:
+                    myController.Robot = Controller.Robotnum.None;
+                    txtIP.Enabled = false;
+                    lblLineVelocityUnit.Text = "unit/sec";
+                    lblLineVelocityRange.Text = "V :";
+                    break;
+            }
+        }
+        private void btnConnection_Click(object sender, EventArgs e)
+        {
+            if (!fgConnectionState)
+            {
+                switch (myController.Robot)
+                {
+                    case Controller.Robotnum.Fanuc:
+                        RobotAdapter.ip = txtIP.Text;
+                        break;
+                    case Controller.Robotnum.Nexcom:
+                        break;
+                    case Controller.Robotnum.Ourarm:
+                        break;
+                    default:
+                        richTextBox1.Text += "請選擇手臂型號\r\n";
+                        MessageBox.Show("請選擇手臂型號");
+                        return;
+                }
+                if (myController.Connect())
+                {
+                    fgConnectionState = true;
+                    fgRobotState = true;
+                    lblConnectionStatus.Text = "Connection Status : Connected";
+                    btnConnection.Text = "Disconnect";
+                    cboRobot.Enabled = false;
+                    timer1.Enabled = true;
+                    txtIP.Enabled = false;
+                    gbEnbleControl(true);
+                    richTextBox1.Clear();
+                    cboJogStep.SelectedIndex = 0;
+                    cboSafeRangeCoordinate.SelectedIndex = 0;
 
+                    switch (myController.Robot)
+                    {
+                        case Controller.Robotnum.Fanuc:
+                            cboJogStep.Items.Remove(Controller.Stepnum.Cont.ToString());
+                            RobotAdapter.setoverride = 20;
+                            myController.SetOverride();
+                            myController.GetCPosition();
+                            RobotAdapter.setcposition = RobotAdapter.getcposition;
+                            myController.PTPC();
+                            break;
+                        case Controller.Robotnum.Nexcom:
+                            gbRegister.Enabled = false;
+                            myController.GetCPosition();
+                            RobotAdapter.setcposition = RobotAdapter.getcposition;
+                            myController.PTPC();
+                            break;
+                        case Controller.Robotnum.Ourarm:
+                            break;
+                    }
+                }
+                else
+                {
+                    richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.apierrtext}\r\n";
+                    MessageBox.Show($"手臂連線失敗\r\n{RobotAdapter.apierrtext}");
+                    RobotAdapter.apierrtext = "";
+                    if (!myController.Alarm())
+                    {
+                        richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
+                        MessageBox.Show("讀取警示失敗", "讀取警示狀態");
+                        return;
+                    }
+                    else
+                    {
+                        if (RobotAdapter.alarmtext != "")
+                        {
+                            richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
+                            MessageBox.Show(RobotAdapter.alarmtext, "讀取警示狀態");
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (myController.Disconnect())
+                {
+                    Initialize();
+                }
+                else
+                {
+                    richTextBox1.Text += $"手臂離線失敗\r\n{RobotAdapter.apierrtext}\r\n";
+                    MessageBox.Show($"手臂離線失敗\r\n{RobotAdapter.apierrtext}");
+                    RobotAdapter.apierrtext = "";
+                }
+            }
+        }
+        #endregion
+
+        #region <gbOverride>
+        private void btnPercentup_Click(object sender, EventArgs e)
+        {
+            if (!myController.GetOverride())
+            {
+                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
+                lblOverride.Text = "Error";
+                return;
+            }
+
+            RobotAdapter.setoverride = RobotAdapter.getoverride + 5;
+
+            if (RobotAdapter.setoverride > 100)
+            {
+                RobotAdapter.setoverride = 100;
+            }
+
+            if (!myController.SetOverride())
+            {
+                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
+                return;
+            }
+        }
+        private void btnPercentdown_Click(object sender, EventArgs e)
+        {
+            if (!myController.GetOverride())
+            {
+                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
+                lblOverride.Text = "Error";
+                return;
+            }
+
+            RobotAdapter.setoverride = RobotAdapter.getoverride - 5;
+
+            if (RobotAdapter.setoverride < 0)
+            {
+                RobotAdapter.setoverride = 0;
+            }
+
+            if (!myController.SetOverride())
+            {
+                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
+                return;
+            }
+        }
+        #endregion
+        
         #region <gbPTP>
         private void cboCoordinate_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -475,26 +538,27 @@ namespace Integrated_Robot_Interface
                     break;
             }
             cboLineCoordinate.SelectedIndex = (int)myController.Coordinate;
+            cboSafeRangeCoordinate.SelectedIndex = (int)myController.Coordinate;
         }
         private void btnPTPCopy_Click(object sender, EventArgs e)
         {
             switch (myController.Coordinate)
             {
                 case Controller.Coordinatenum.Cartesian:
-                    tbPTPXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(0)).ToString("###0.000"))}";
-                    tbPTPYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(1)).ToString("###0.000"))}";
-                    tbPTPZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(2)).ToString("###0.000"))}";
-                    tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(3)).ToString("###0.000"))}";
-                    tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(4)).ToString("###0.000"))}";
-                    tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(5)).ToString("###0.000"))}";
+                    tbPTPXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}";
+                    tbPTPYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}";
+                    tbPTPZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}";
+                    tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}";
+                    tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}";
+                    tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
                     break;
                 case Controller.Coordinatenum.Joint:
-                    tbPTPXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(0)).ToString("###0.000"))}";
-                    tbPTPYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(1)).ToString("###0.000"))}";
-                    tbPTPZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(2)).ToString("###0.000"))}";
-                    tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(3)).ToString("###0.000"))}";
-                    tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(4)).ToString("###0.000"))}";
-                    tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetJposition.GetValue(5)).ToString("###0.000"))}";
+                    tbPTPXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}";
+                    tbPTPYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}";
+                    tbPTPZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}";
+                    tbPTPWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}";
+                    tbPTPPJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}";
+                    tbPTPRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
                     break;
             }
         }
@@ -510,85 +574,37 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
+                    float XJ1 = Convert.ToSingle(tbPTPXJ1Set.Text);
+                    float YJ2 = Convert.ToSingle(tbPTPYJ2Set.Text);
+                    float ZJ3 = Convert.ToSingle(tbPTPZJ3Set.Text);
+                    float WJ4 = Convert.ToSingle(tbPTPWJ4Set.Text);
+                    float PJ5 = Convert.ToSingle(tbPTPPJ5Set.Text);
+                    float RJ6 = Convert.ToSingle(tbPTPRJ6Set.Text);
+
+                    if (!SafeCheck(XJ1, YJ2, ZJ3, WJ4, PJ5, RJ6))
+                        return;
+
                     switch (myController.Coordinate)
                     {
                         case Controller.Coordinatenum.Cartesian:
-                            switch (myController.Robot)
-                            {
-                                case Controller.Robotnum.Fanuc:
-                                    if (Convert.ToSingle(tbPTPXJ1Set.Text) < 0 || Convert.ToSingle(tbPTPXJ1Set.Text) > 650 ||
-                                        Convert.ToSingle(tbPTPYJ2Set.Text) < -450 || Convert.ToSingle(tbPTPYJ2Set.Text) > 450 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < -270 || Convert.ToSingle(tbPTPZJ3Set.Text) > 400 ||
-                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                    {
-                                        MessageBox.Show("座標超出安全範圍");
-                                        return;
-                                    }
-                                    break;
-                                case Controller.Robotnum.Nexcom:
-                                    if (Convert.ToSingle(tbPTPXJ1Set.Text) < 0 || Convert.ToSingle(tbPTPXJ1Set.Text) > 500 ||
-                                        Convert.ToSingle(tbPTPYJ2Set.Text) < -450 || Convert.ToSingle(tbPTPYJ2Set.Text) > 450 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < 50 || Convert.ToSingle(tbPTPZJ3Set.Text) > 600 ||
-                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                    {
-                                        MessageBox.Show("座標超出安全範圍");
-                                        return;
-                                    }
-                                    break;
-                                case Controller.Robotnum.Ourarm:
-                                    break;
-                            }
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPXJ1Set.Text), 0);
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPYJ2Set.Text), 1);
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPZJ3Set.Text), 2);
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPWJ4Set.Text), 3);
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPPJ5Set.Text), 4);
-                            RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbPTPRJ6Set.Text), 5);
+                            RobotAdapter.setcposition.SetValue(XJ1, 0);
+                            RobotAdapter.setcposition.SetValue(YJ2, 1);
+                            RobotAdapter.setcposition.SetValue(ZJ3, 2);
+                            RobotAdapter.setcposition.SetValue(WJ4, 3);
+                            RobotAdapter.setcposition.SetValue(PJ5, 4);
+                            RobotAdapter.setcposition.SetValue(RJ6, 5);
                             if (!myController.PTPC())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
                             }
                             break;
                         case Controller.Coordinatenum.Joint:
-                            switch (myController.Robot)
-                            {
-                                case Controller.Robotnum.Fanuc:
-                                    if (Convert.ToSingle(tbPTPXJ1Set.Text) < -180 || Convert.ToSingle(tbPTPXJ1Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPYJ2Set.Text) < -180 || Convert.ToSingle(tbPTPYJ2Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < -180 || Convert.ToSingle(tbPTPZJ3Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                    {
-                                        MessageBox.Show("座標超出安全範圍");
-                                        return;
-                                    }
-                                    break;
-                                case Controller.Robotnum.Nexcom:
-                                    if (Convert.ToSingle(tbPTPXJ1Set.Text) < -180 || Convert.ToSingle(tbPTPXJ1Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPYJ2Set.Text) < -180 || Convert.ToSingle(tbPTPYJ2Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPZJ3Set.Text) < -180 || Convert.ToSingle(tbPTPZJ3Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPWJ4Set.Text) < -180 || Convert.ToSingle(tbPTPWJ4Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPPJ5Set.Text) < -180 || Convert.ToSingle(tbPTPPJ5Set.Text) > 180 ||
-                                        Convert.ToSingle(tbPTPRJ6Set.Text) < -180 || Convert.ToSingle(tbPTPRJ6Set.Text) > 180)
-                                    {
-                                        MessageBox.Show("座標超出安全範圍");
-                                        return;
-                                    }
-                                    break;
-                                case Controller.Robotnum.Ourarm:
-                                    break;
-                            }
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPXJ1Set.Text), 0);
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPYJ2Set.Text), 1);
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPZJ3Set.Text), 2);
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPWJ4Set.Text), 3);
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPPJ5Set.Text), 4);
-                            RobotAdapter.SetJposition.SetValue(Convert.ToSingle(tbPTPRJ6Set.Text), 5);
+                            RobotAdapter.setjposition.SetValue(XJ1, 0);
+                            RobotAdapter.setjposition.SetValue(YJ2, 1);
+                            RobotAdapter.setjposition.SetValue(ZJ3, 2);
+                            RobotAdapter.setjposition.SetValue(WJ4, 3);
+                            RobotAdapter.setjposition.SetValue(PJ5, 4);
+                            RobotAdapter.setjposition.SetValue(RJ6, 5);
                             if (!myController.PTPJ())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -607,18 +623,18 @@ namespace Integrated_Robot_Interface
             switch (myController.Robot)
             {
                 case Controller.Robotnum.Fanuc:
-                    RobotAdapter.Setvelocity = 100;
+                    RobotAdapter.setvelocity = 100;
                     if (!myController.SetVelocity())
                     {
                         ShowMessage("設定速度失敗", "設定速度狀態");
                     }
 
-                    RobotAdapter.Homeposition.SetValue(180, 0);
-                    RobotAdapter.Homeposition.SetValue(0, 1);
-                    RobotAdapter.Homeposition.SetValue(280, 2);
-                    RobotAdapter.Homeposition.SetValue(180, 3);
-                    RobotAdapter.Homeposition.SetValue(0, 4);
-                    RobotAdapter.Homeposition.SetValue(0, 5);
+                    RobotAdapter.homeposition.SetValue(180, 0);
+                    RobotAdapter.homeposition.SetValue(0, 1);
+                    RobotAdapter.homeposition.SetValue(280, 2);
+                    RobotAdapter.homeposition.SetValue(180, 3);
+                    RobotAdapter.homeposition.SetValue(0, 4);
+                    RobotAdapter.homeposition.SetValue(0, 5);
                     if (!myController.Home())
                     {
                         ShowMessage("回到原點失敗", "回到原點狀態");
@@ -635,12 +651,12 @@ namespace Integrated_Robot_Interface
         #region <gbLine>
         private void btnLineCopy_Click(object sender, EventArgs e)
         {
-            tbLineXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(0)).ToString("###0.000"))}";
-            tbLineYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(1)).ToString("###0.000"))}";
-            tbLineZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(2)).ToString("###0.000"))}";
-            tbLineWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(3)).ToString("###0.000"))}";
-            tbLinePJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(4)).ToString("###0.000"))}";
-            tbLineRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.GetCposition.GetValue(5)).ToString("###0.000"))}";
+            tbLineXJ1Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}";
+            tbLineYJ2Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}";
+            tbLineZJ3Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}";
+            tbLineWJ4Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}";
+            tbLinePJ5Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}";
+            tbLineRJ6Set.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
 
             if (!myController.GetVelocity())
             {
@@ -650,7 +666,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                tbLineVelocitySet.Text = $"{string.Format("{0,10}", RobotAdapter.Getvelocity.ToString("###0.000"))}";
+                tbLineVelocitySet.Text = $"{string.Format("{0,10}", RobotAdapter.getvelocity.ToString("###0.000"))}";
             }
         }
         private void btnLineSet_Click(object sender, EventArgs e)
@@ -666,29 +682,28 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
+                    float XJ1 = Convert.ToSingle(tbLineXJ1Set.Text);
+                    float YJ2 = Convert.ToSingle(tbLineYJ2Set.Text);
+                    float ZJ3 = Convert.ToSingle(tbLineZJ3Set.Text);
+                    float WJ4 = Convert.ToSingle(tbLineWJ4Set.Text);
+                    float PJ5 = Convert.ToSingle(tbLinePJ5Set.Text);
+                    float RJ6 = Convert.ToSingle(tbLineRJ6Set.Text);
+                    float V = Convert.ToSingle(tbLineVelocitySet.Text);
+
+                    if (!SafeCheck(XJ1, YJ2, ZJ3, WJ4, PJ5, RJ6))
+                        return;
+
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
-                            if (Convert.ToSingle(tbLineXJ1Set.Text) < 0 || Convert.ToSingle(tbLineXJ1Set.Text) > 650 ||
-                                Convert.ToSingle(tbLineYJ2Set.Text) < -450 || Convert.ToSingle(tbLineYJ2Set.Text) > 450 ||
-                                Convert.ToSingle(tbLineZJ3Set.Text) < -270 || Convert.ToSingle(tbLineZJ3Set.Text) > 400 ||
-                                Convert.ToSingle(tbLineWJ4Set.Text) < -180 || Convert.ToSingle(tbLineWJ4Set.Text) > 180 ||
-                                Convert.ToSingle(tbLinePJ5Set.Text) < -180 || Convert.ToSingle(tbLinePJ5Set.Text) > 180 ||
-                                Convert.ToSingle(tbLineRJ6Set.Text) < -180 || Convert.ToSingle(tbLineRJ6Set.Text) > 180 ||
-                                Convert.ToSingle(tbLineVelocitySet.Text) < 0 || Convert.ToSingle(tbLineVelocitySet.Text) > 500)
+                            if (V < 0 || V > 500)
                             {
-                                MessageBox.Show("座標或速度超出安全範圍");
+                                MessageBox.Show("速度超出安全範圍");
                                 return;
                             }
                             break;
                         case Controller.Robotnum.Nexcom:
-                            if (Convert.ToSingle(tbLineXJ1Set.Text) < 0 || Convert.ToSingle(tbLineXJ1Set.Text) > 500 ||
-                                Convert.ToSingle(tbLineYJ2Set.Text) < -450 || Convert.ToSingle(tbLineYJ2Set.Text) > 450 ||
-                                Convert.ToSingle(tbLineZJ3Set.Text) < 50 || Convert.ToSingle(tbLineZJ3Set.Text) > 600 ||
-                                Convert.ToSingle(tbLineWJ4Set.Text) < -180 || Convert.ToSingle(tbLineWJ4Set.Text) > 180 ||
-                                Convert.ToSingle(tbLinePJ5Set.Text) < -180 || Convert.ToSingle(tbLinePJ5Set.Text) > 180 ||
-                                Convert.ToSingle(tbLineRJ6Set.Text) < -180 || Convert.ToSingle(tbLineRJ6Set.Text) > 180 ||
-                                Convert.ToSingle(tbLineVelocitySet.Text) < 0 || Convert.ToSingle(tbLineVelocitySet.Text) > 100)
+                            if (V < 0 || V > 100)
                             {
                                 MessageBox.Show("座標或速度超出安全範圍");
                                 return;
@@ -697,18 +712,18 @@ namespace Integrated_Robot_Interface
                         case Controller.Robotnum.Ourarm:
                             break;
                     }
-                    RobotAdapter.Setvelocity = Convert.ToSingle(tbLineVelocitySet.Text);
+                    RobotAdapter.setvelocity = V;
                     if (!myController.SetVelocity())
                     {
                         ShowMessage("設定速度失敗", "設定速度狀態");
                     }
 
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineXJ1Set.Text), 0);
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineYJ2Set.Text), 1);
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineZJ3Set.Text), 2);
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineWJ4Set.Text), 3);
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLinePJ5Set.Text), 4);
-                    RobotAdapter.SetCposition.SetValue(Convert.ToSingle(tbLineRJ6Set.Text), 5);
+                    RobotAdapter.setcposition.SetValue(XJ1, 0);
+                    RobotAdapter.setcposition.SetValue(YJ2, 1);
+                    RobotAdapter.setcposition.SetValue(ZJ3, 2);
+                    RobotAdapter.setcposition.SetValue(WJ4, 3);
+                    RobotAdapter.setcposition.SetValue(PJ5, 4);
+                    RobotAdapter.setcposition.SetValue(RJ6, 5);
                     if (!myController.Line())
                     {
                         ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -729,8 +744,8 @@ namespace Integrated_Robot_Interface
             {
                 if (!string.IsNullOrEmpty(tbR1Set.Text))
                 {
-                    RobotAdapter.Setregister.SetValue(1, 1);
-                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR1Set.Text), 0);
+                    RobotAdapter.setregister.SetValue(1, 1);
+                    RobotAdapter.setregister.SetValue(Convert.ToSingle(tbR1Set.Text), 0);
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R1失敗", "設定暫存器狀態");
@@ -739,8 +754,8 @@ namespace Integrated_Robot_Interface
                 }
                 if (!string.IsNullOrEmpty(tbR2Set.Text))
                 {
-                    RobotAdapter.Setregister.SetValue(2, 1);
-                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR2Set.Text), 0);
+                    RobotAdapter.setregister.SetValue(2, 1);
+                    RobotAdapter.setregister.SetValue(Convert.ToSingle(tbR2Set.Text), 0);
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R2失敗", "設定暫存器狀態");
@@ -749,8 +764,8 @@ namespace Integrated_Robot_Interface
                 }
                 if (!string.IsNullOrEmpty(tbR3Set.Text))
                 {
-                    RobotAdapter.Setregister.SetValue(3, 1);
-                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR3Set.Text), 0);
+                    RobotAdapter.setregister.SetValue(3, 1);
+                    RobotAdapter.setregister.SetValue(Convert.ToSingle(tbR3Set.Text), 0);
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R3失敗", "設定暫存器狀態");
@@ -759,8 +774,8 @@ namespace Integrated_Robot_Interface
                 }
                 if (!string.IsNullOrEmpty(tbR4Set.Text))
                 {
-                    RobotAdapter.Setregister.SetValue(4, 1);
-                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR4Set.Text), 0);
+                    RobotAdapter.setregister.SetValue(4, 1);
+                    RobotAdapter.setregister.SetValue(Convert.ToSingle(tbR4Set.Text), 0);
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R4失敗", "設定暫存器狀態");
@@ -769,8 +784,8 @@ namespace Integrated_Robot_Interface
                 }
                 if (!string.IsNullOrEmpty(tbR5Set.Text))
                 {
-                    RobotAdapter.Setregister.SetValue(5, 1);
-                    RobotAdapter.Setregister.SetValue(Convert.ToSingle(tbR5Set.Text), 0);
+                    RobotAdapter.setregister.SetValue(5, 1);
+                    RobotAdapter.setregister.SetValue(Convert.ToSingle(tbR5Set.Text), 0);
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R5失敗", "設定暫存器狀態");
@@ -822,6 +837,7 @@ namespace Integrated_Robot_Interface
                     break;
             }
             cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+            cboSafeRangeCoordinate.SelectedIndex = (int)myController.Coordinate;
         }
         private void cboStep_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -840,7 +856,7 @@ namespace Integrated_Robot_Interface
                     myController.Step = Controller.Stepnum.Cont;
                     break;
             }
-            RobotAdapter.Incmove.SetValue(myController.Step, 0);
+            RobotAdapter.incmove.SetValue(myController.Step, 0);
         }
         private void btnJogXJ1Positive_Click(object sender, EventArgs e)
         {
@@ -851,7 +867,7 @@ namespace Integrated_Robot_Interface
 
             Button btn = (Button)sender;
 
-            RobotAdapter.Incmove.SetValue(Convert.ToInt32(btn.Tag), 1);
+            RobotAdapter.incmove.SetValue(Convert.ToInt32(btn.Tag), 1);
             switch (myController.Coordinate)
             {
                 case Controller.Coordinatenum.Cartesian:
@@ -874,7 +890,7 @@ namespace Integrated_Robot_Interface
             {
                 Button btn = (Button)sender;
 
-                RobotAdapter.Jogmove = Convert.ToInt32(btn.Tag);
+                RobotAdapter.jogmove = Convert.ToInt32(btn.Tag);
                 switch (myController.Coordinate)
                 {
                     case Controller.Coordinatenum.Cartesian:
@@ -922,7 +938,7 @@ namespace Integrated_Robot_Interface
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
-            if (!fgState)
+            if (!fgRobotState)
             {
                 if (!myController.Reset())
                 {
@@ -931,13 +947,157 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    fgState = true;
+                    fgRobotState = true;
                     timer1.Enabled = true;
                     richTextBox1.Text = "";
                 }
             }
         }
 
+        #endregion
+
+        #region <gbSafeRange>
+        private void cboSafeRangeCoordinate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cboSafeRangeCoordinate.Text)
+            {
+                case nameof(Controller.Coordinatenum.Cartesian):
+                    myController.Coordinate = Controller.Coordinatenum.Cartesian;
+                    lblSafeRangeXJ1.Text = "X :                 ~";
+                    lblSafeRangeYJ2.Text = "Y :                 ~";
+                    lblSafeRangeZJ3.Text = "Z :                 ~";
+                    lblSafeRangeWJ4.Text = "W:                 ~";
+                    lblSafeRangePJ5.Text = "P :                  ~";
+                    lblSafeRangeRJ6.Text = "R :                 ~";
+                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(0)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(1)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(2)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(3)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(4)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(5)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(6)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(7)).ToString("###0.000"))}";
+                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(8)).ToString("###0.000"))}";
+                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(9)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(10)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(11)).ToString("###0.000"))}";
+                    break;
+                case nameof(Controller.Coordinatenum.Joint):
+                    myController.Coordinate = Controller.Coordinatenum.Joint;
+                    lblSafeRangeXJ1.Text = "J1:                 ~";
+                    lblSafeRangeYJ2.Text = "J2:                 ~";
+                    lblSafeRangeZJ3.Text = "J3:                 ~";
+                    lblSafeRangeWJ4.Text = "J4:                 ~";
+                    lblSafeRangePJ5.Text = "J5:                 ~";
+                    lblSafeRangeRJ6.Text = "J6:                 ~";
+                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(0)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(1)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(2)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(3)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(4)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(5)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(6)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(7)).ToString("###0.000"))}";
+                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(8)).ToString("###0.000"))}";
+                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(9)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(10)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(11)).ToString("###0.000"))}";
+                    break;
+            }
+            cboLineCoordinate.SelectedIndex = (int)myController.Coordinate;
+            cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+        }
+        private void btnSafeRangeSet_Click(object sender, EventArgs e)
+        {
+            if (!tbSafeRangeXJ1min.Enabled)
+            {
+                tbSafeRangeEnbleControl(true);
+                return;
+            }
+
+            try
+            {
+                switch (myController.Coordinate)
+                {
+                    case Controller.Coordinatenum.Cartesian:
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
+                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
+                        break;
+                    case Controller.Coordinatenum.Joint:
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
+                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
+                        break;
+                }
+                tbSafeRangeEnbleControl(false);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("請輸入有效數值");
+            }
+        }
+        private bool SafeCheck(float xj1, float yj2, float zj3, float wj4, float pj5, float rj6)
+        {
+            switch (myController.Coordinate)
+            {
+                case Controller.Coordinatenum.Cartesian:
+                    if (xj1 < Convert.ToSingle(myController.saferangexyz.GetValue(0)) ||
+                        xj1 > Convert.ToSingle(myController.saferangexyz.GetValue(1)) ||
+                        yj2 < Convert.ToSingle(myController.saferangexyz.GetValue(2)) ||
+                        yj2 > Convert.ToSingle(myController.saferangexyz.GetValue(3)) ||
+                        zj3 < Convert.ToSingle(myController.saferangexyz.GetValue(4)) ||
+                        zj3 > Convert.ToSingle(myController.saferangexyz.GetValue(5)) ||
+                        wj4 < Convert.ToSingle(myController.saferangexyz.GetValue(6)) ||
+                        wj4 > Convert.ToSingle(myController.saferangexyz.GetValue(7)) ||
+                        pj5 < Convert.ToSingle(myController.saferangexyz.GetValue(8)) ||
+                        pj5 > Convert.ToSingle(myController.saferangexyz.GetValue(9)) ||
+                        rj6 < Convert.ToSingle(myController.saferangexyz.GetValue(10)) ||
+                        rj6 > Convert.ToSingle(myController.saferangexyz.GetValue(11)))
+                    {
+                        MessageBox.Show("座標超出安全範圍");
+                        return false;
+                    }
+                    break;
+                case Controller.Coordinatenum.Joint:
+                    if (xj1 < Convert.ToSingle(myController.saferangejoint.GetValue(0)) ||
+                        xj1 > Convert.ToSingle(myController.saferangejoint.GetValue(1)) ||
+                        yj2 < Convert.ToSingle(myController.saferangejoint.GetValue(2)) ||
+                        yj2 > Convert.ToSingle(myController.saferangejoint.GetValue(3)) ||
+                        zj3 < Convert.ToSingle(myController.saferangejoint.GetValue(4)) ||
+                        zj3 > Convert.ToSingle(myController.saferangejoint.GetValue(5)) ||
+                        wj4 < Convert.ToSingle(myController.saferangejoint.GetValue(6)) ||
+                        wj4 > Convert.ToSingle(myController.saferangejoint.GetValue(7)) ||
+                        pj5 < Convert.ToSingle(myController.saferangejoint.GetValue(8)) ||
+                        pj5 > Convert.ToSingle(myController.saferangejoint.GetValue(9)) ||
+                        rj6 < Convert.ToSingle(myController.saferangejoint.GetValue(10)) ||
+                        rj6 > Convert.ToSingle(myController.saferangejoint.GetValue(11)))
+                    {
+                        MessageBox.Show("座標超出安全範圍");
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
         #endregion
 
     }

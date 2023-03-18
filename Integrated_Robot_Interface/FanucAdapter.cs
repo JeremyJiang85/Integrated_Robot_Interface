@@ -31,10 +31,10 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjCore.Connect(IP);
+            ret = mobjCore.Connect(ip);
             if (!ret)
             {
-                Apierrtext = "mobjCore.Connect Fail";
+                apierrtext = "mobjCore.Connect Fail";
                 return ret;
             }
             return ret;
@@ -46,7 +46,7 @@ namespace Integrated_Robot_Interface
             ret = mobjCore.Disconnect();
             if (!ret)
             {
-                Apierrtext = "mobjCore.Disconnect Fail";
+                apierrtext = "mobjCore.Disconnect Fail";
                 return ret;
             }
             return ret;
@@ -58,7 +58,7 @@ namespace Integrated_Robot_Interface
             ret = mobjDataTable.Refresh();
             if (!ret)
             {
-                Apierrtext = "mobjDataTable.Refresh Fail";
+                apierrtext = "mobjDataTable.Refresh Fail";
                 return ret;
             }
             return ret;
@@ -86,28 +86,28 @@ namespace Integrated_Robot_Interface
                 ref Year, ref Month, ref Day, ref Hour, ref Minute, ref Second, ref AlarmMessage, ref CauseAlarmMessage, ref SeverityMessage);
             if (!ret)
             {
-                Apierrtext = "mobjAlarmCurrent.GetValue Fail";
+                apierrtext = "mobjAlarmCurrent.GetValue Fail";
                 return ret;
             }
 
             if (AlarmID == 0)
             {
-                Alarmtext = "";
+                alarmtext = "";
                 return ret;
             }
 
-            Alarmtext = Year + "/" + Month + "/" + Day + ", " + Hour + ":" + Minute + ":" + Second + "\r\n";
+            alarmtext = Year + "/" + Month + "/" + Day + ", " + Hour + ":" + Minute + ":" + Second + "\r\n";
             if (!string.IsNullOrEmpty(AlarmMessage))
             {
-                Alarmtext += AlarmMessage + "\r\n";
+                alarmtext += AlarmMessage + "\r\n";
             }
             if (!string.IsNullOrEmpty(CauseAlarmMessage))
             {
-                Alarmtext += CauseAlarmMessage + "\r\n";
+                alarmtext += CauseAlarmMessage + "\r\n";
             }
             if (!string.IsNullOrEmpty(SeverityMessage))
             {
-                Alarmtext += SeverityMessage + "\r\n";
+                alarmtext += SeverityMessage;
             }
             return ret;
         }
@@ -118,7 +118,7 @@ namespace Integrated_Robot_Interface
             ret = mobjCore.ClearAlarm();
             if (!ret)
             {
-                Apierrtext = "mobjCore.ClearAlarm Fail";
+                apierrtext = "mobjCore.ClearAlarm Fail";
                 return ret;
             }
             return ret;
@@ -131,20 +131,20 @@ namespace Integrated_Robot_Interface
             ret = mobjSysVarInt.GetValue(ref Value);
             if (!ret)
             {
-                Apierrtext = "mobjSysVarInt.GetValue Fail";
+                apierrtext = "mobjSysVarInt.GetValue Fail";
                 return ret;
             }
-            Getoverride = Convert.ToInt32(Value);
+            getoverride = Convert.ToInt32(Value);
             return ret;
         }
         public override bool SetOverride()
         {
             bool ret = false;
 
-            ret = mobjSysVarInt.SetValue(Setoverride);
+            ret = mobjSysVarInt.SetValue(setoverride);
             if (!ret)
             {
-                Apierrtext = "mobjSysVarInt.SetValue Fail";
+                apierrtext = "mobjSysVarInt.SetValue Fail";
                 return ret;
             }
             return ret;
@@ -163,10 +163,10 @@ namespace Integrated_Robot_Interface
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
-            GetCposition = Xyzwpr;
+            getcposition = Xyzwpr;
             return ret;
         }
         public override bool GetJPosition()
@@ -183,10 +183,10 @@ namespace Integrated_Robot_Interface
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
-            GetJposition = Joint;
+            getjposition = Joint;
             return ret;
         }
         public override bool PTPC()
@@ -205,21 +205,21 @@ namespace Integrated_Robot_Interface
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
-            ret = mobjPosReg.SetValueXyzwpr(Index, SetCposition, config, UF, UT);
+            ret = mobjPosReg.SetValueXyzwpr(Index, setcposition, config, UF, UT);
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
             return ret;
@@ -239,22 +239,22 @@ namespace Integrated_Robot_Interface
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
 
             }
 
-            ret = mobjPosReg.SetValueJoint(Index, SetJposition, UF, UT);
+            ret = mobjPosReg.SetValueJoint(Index, setjposition, UF, UT);
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueJoint Fail";
+                apierrtext = "mobjPosReg.SetValueJoint Fail";
                 return ret;
             }
             return ret;
@@ -275,21 +275,21 @@ namespace Integrated_Robot_Interface
             ret = mobjNumReg.SetValue(6, 2);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail\r\n";
+                apierrtext = "mobjNumReg.SetValue Fail\r\n";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail\r\n";
+                apierrtext = "mobjCurPos.GetValue Fail\r\n";
                 return ret;
             }
 
-            ret = mobjPosReg.SetValueXyzwpr(Index, SetCposition, config, UF, UT);
+            ret = mobjPosReg.SetValueXyzwpr(Index, setcposition, config, UF, UT);
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueXyzwpr Fail\r\n";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail\r\n";
                 return ret;
             }
             return ret;
@@ -309,22 +309,22 @@ namespace Integrated_Robot_Interface
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
-            Xyzwpr.SetValue(Homeposition.GetValue(2), 2);
+            Xyzwpr.SetValue(homeposition.GetValue(2), 2);
             ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
 
-            ret = mobjPosReg.SetValueXyzwpr(Index, Homeposition, Config, UF, UT);
+            ret = mobjPosReg.SetValueXyzwpr(Index, homeposition, Config, UF, UT);
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
             return ret;
@@ -337,19 +337,19 @@ namespace Integrated_Robot_Interface
             ret = mobjNumReg.GetValue(7, ref Value);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.GetValue Fail";
+                apierrtext = "mobjNumReg.GetValue Fail";
                 return ret;
             }
-            Getvelocity = Convert.ToSingle(Value);
+            getvelocity = Convert.ToSingle(Value);
             return ret;
         }
         public override bool SetVelocity()
         {
             bool ret = false;
-            ret = mobjNumReg.SetValue(7, Setvelocity);
+            ret = mobjNumReg.SetValue(7, setvelocity);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
             return ret;
@@ -359,23 +359,23 @@ namespace Integrated_Robot_Interface
             bool ret = false;
             object Value = null;
 
-            ret = mobjNumReg.GetValue(Convert.ToInt32(Getregister.GetValue(1)), ref Value);
+            ret = mobjNumReg.GetValue(Convert.ToInt32(getregister.GetValue(1)), ref Value);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.GetValue Fail";
+                apierrtext = "mobjNumReg.GetValue Fail";
                 return ret;
             }
-            Getregister.SetValue(Value, 0);
+            getregister.SetValue(Value, 0);
             return ret;
         }
         public override bool SetRegister()
         {
             bool ret = false;
 
-            ret = mobjNumReg.SetValue(Convert.ToInt32(Setregister.GetValue(1)), Convert.ToSingle(Setregister.GetValue(0)));
+            ret = mobjNumReg.SetValue(Convert.ToInt32(setregister.GetValue(1)), Convert.ToSingle(setregister.GetValue(0)));
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
             return ret;
@@ -390,25 +390,25 @@ namespace Integrated_Robot_Interface
             short UT = 1;
             short ValidC = 0;
             short ValidJ = 0;
-            int Value = Convert.ToInt32(Incmove.GetValue(0));
+            int Value = Convert.ToInt32(incmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
 
             }
 
-            switch (Convert.ToInt32(Incmove.GetValue(1)))
+            switch (Convert.ToInt32(incmove.GetValue(1)))
             {
                 case 0:
                     Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + Value, 0);
@@ -461,7 +461,7 @@ namespace Integrated_Robot_Interface
             }
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
             return ret;
@@ -476,24 +476,24 @@ namespace Integrated_Robot_Interface
             short UT = 1;
             short ValidC = 0;
             short ValidJ = 0;
-            int Value = Convert.ToInt32(Incmove.GetValue(0));
+            int Value = Convert.ToInt32(incmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
-                Apierrtext = "mobjNumReg.SetValue Fail";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                Apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
-            switch (Convert.ToInt32(Incmove.GetValue(1)))
+            switch (Convert.ToInt32(incmove.GetValue(1)))
             {
                 case 0:
                     Joint.SetValue(Convert.ToInt32(Joint.GetValue(0)) + Value, 0);
@@ -546,7 +546,7 @@ namespace Integrated_Robot_Interface
             }
             if (!ret)
             {
-                Apierrtext = "mobjPosReg.SetValueJoint Fail";
+                apierrtext = "mobjPosReg.SetValueJoint Fail";
                 return ret;
             }
             return ret;
@@ -557,13 +557,13 @@ namespace Integrated_Robot_Interface
             short StartIndex = 1;
             short Count = 18;
             Array Buffer = new short[Count];
-            Information1name = "UI";
-            Information1text = "";
+            information1name = "UI";
+            information1text = "";
 
             ret = mobjCore.ReadUI(StartIndex, ref Buffer, Count);
             if (!ret)
             {
-                Apierrtext = "mobjCore.ReadUI Fail";
+                apierrtext = "mobjCore.ReadUI Fail";
                 return ret;
             }
 
@@ -571,11 +571,11 @@ namespace Integrated_Robot_Interface
             {
                 if (Convert.ToInt16(Buffer.GetValue(i - 1)) == 1)
                 {
-                    Information1text += $"UI[{i}] = ON\r\n";
+                    information1text += $"UI[{i}] = ON\r\n";
                 }
                 else
                 {
-                    Information1text += $"UI[{i}] = OFF\r\n";
+                    information1text += $"UI[{i}] = OFF\r\n";
                 }
             }
             return ret;
@@ -586,13 +586,13 @@ namespace Integrated_Robot_Interface
             short StartIndex = 1;
             short Count = 20;
             Array Buffer = new short[Count];
-            Information2name = "UO";
-            Information2text = "";
+            information2name = "UO";
+            information2text = "";
 
             ret = mobjCore.ReadUO(StartIndex, ref Buffer, Count);
-            if (ret)
+            if (!ret)
             {
-                Apierrtext = "mobjCore.ReadUO Fail";
+                apierrtext = "mobjCore.ReadUO Fail";
                 return ret;
             }
 
@@ -600,11 +600,11 @@ namespace Integrated_Robot_Interface
             {
                 if (Convert.ToInt16(Buffer.GetValue(i - 1)) == 1)
                 {
-                    Information2text += $"UO[{i}] = ON\r\n";
+                    information2text += $"UO[{i}] = ON\r\n";
                 }
                 else
                 {
-                    Information2text += $"UO[{i}] = OFF\r\n";
+                    information2text += $"UO[{i}] = OFF\r\n";
                 }
             }
             return ret;
@@ -615,18 +615,18 @@ namespace Integrated_Robot_Interface
             short StartIndex = 1;
             short Count = 20;
             object Value = null;
-            Information3name = "R";
-            Information3text = "";
+            information3name = "R";
+            information3text = "";
 
             for (int i = StartIndex; i <= Count; i++)
             {
                 ret = mobjNumReg.GetValue(i, ref Value);
-                if (ret)
+                if (!ret)
                 {
-                    Apierrtext = $"mobjNumReg.GetValue Fail";
+                    apierrtext = $"mobjNumReg.GetValue Fail";
                     return ret;
                 }
-                Information3text += $"R[{i}] = {Convert.ToInt32(Value)}\r\n";
+                information3text += $"R[{i}] = {Convert.ToInt32(Value)}\r\n";
             }
             return ret;
         }
