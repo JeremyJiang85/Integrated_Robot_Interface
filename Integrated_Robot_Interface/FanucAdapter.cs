@@ -181,7 +181,7 @@ namespace Integrated_Robot_Interface
             short ValidJ = 0;
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (ret)
+            if (!ret)
             {
                 apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
