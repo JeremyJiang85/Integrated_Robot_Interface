@@ -50,6 +50,7 @@
             this.btnPercentup = new System.Windows.Forms.Button();
             this.lblOverride = new System.Windows.Forms.Label();
             this.gbPTP = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.lblPTPRJ6Unit = new System.Windows.Forms.Label();
             this.lblPTPPJ5Unit = new System.Windows.Forms.Label();
             this.lblPTPWJ4Unit = new System.Windows.Forms.Label();
@@ -133,6 +134,17 @@
             this.tbLineYJ2Set = new System.Windows.Forms.TextBox();
             this.tbLineXJ1Set = new System.Windows.Forms.TextBox();
             this.gbSafeRange = new System.Windows.Forms.GroupBox();
+            this.cboSafeRangeCoordinate = new System.Windows.Forms.ComboBox();
+            this.lblSafeRangeCoordinate = new System.Windows.Forms.Label();
+            this.tbSafeRangeRJ6max = new System.Windows.Forms.TextBox();
+            this.tbSafeRangePJ5max = new System.Windows.Forms.TextBox();
+            this.tbSafeRangeWJ4max = new System.Windows.Forms.TextBox();
+            this.tbSafeRangeRJ6min = new System.Windows.Forms.TextBox();
+            this.lblSafeRangeRJ6 = new System.Windows.Forms.Label();
+            this.tbSafeRangeWJ4min = new System.Windows.Forms.TextBox();
+            this.lblSafeRangeWJ4 = new System.Windows.Forms.Label();
+            this.tbSafeRangePJ5min = new System.Windows.Forms.TextBox();
+            this.lblSafeRangePJ5 = new System.Windows.Forms.Label();
             this.tbSafeRangeZJ3max = new System.Windows.Forms.TextBox();
             this.tbSafeRangeYJ2max = new System.Windows.Forms.TextBox();
             this.tbSafeRangeXJ1max = new System.Windows.Forms.TextBox();
@@ -143,17 +155,19 @@
             this.tbSafeRangeYJ2min = new System.Windows.Forms.TextBox();
             this.lblSafeRangeYJ2 = new System.Windows.Forms.Label();
             this.btnSafeRangeSet = new System.Windows.Forms.Button();
-            this.tbSafeRangeRJ6max = new System.Windows.Forms.TextBox();
-            this.tbSafeRangePJ5max = new System.Windows.Forms.TextBox();
-            this.tbSafeRangeWJ4max = new System.Windows.Forms.TextBox();
-            this.tbSafeRangeRJ6min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeRJ6 = new System.Windows.Forms.Label();
-            this.tbSafeRangeWJ4min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeWJ4 = new System.Windows.Forms.Label();
-            this.tbSafeRangePJ5min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangePJ5 = new System.Windows.Forms.Label();
-            this.lblSafeRangeCoordinate = new System.Windows.Forms.Label();
-            this.cboSafeRangeCoordinate = new System.Windows.Forms.ComboBox();
+            this.gbPointsMove = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColumnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnPointsMoveCopy = new System.Windows.Forms.Button();
+            this.btnPointsMoveLoad = new System.Windows.Forms.Button();
+            this.btnPointsMoveSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -164,6 +178,8 @@
             this.gbControl.SuspendLayout();
             this.gbLine.SuspendLayout();
             this.gbSafeRange.SuspendLayout();
+            this.gbPointsMove.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // pblogo
@@ -377,6 +393,7 @@
             // 
             // gbPTP
             // 
+            this.gbPTP.Controls.Add(this.button1);
             this.gbPTP.Controls.Add(this.lblPTPRJ6Unit);
             this.gbPTP.Controls.Add(this.lblPTPPJ5Unit);
             this.gbPTP.Controls.Add(this.lblPTPWJ4Unit);
@@ -406,6 +423,16 @@
             this.gbPTP.TabIndex = 6;
             this.gbPTP.TabStop = false;
             this.gbPTP.Text = "PTP";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 292);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 48);
+            this.button1.TabIndex = 25;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lblPTPRJ6Unit
             // 
@@ -1324,6 +1351,113 @@
             this.gbSafeRange.TabStop = false;
             this.gbSafeRange.Text = "Safe Range";
             // 
+            // cboSafeRangeCoordinate
+            // 
+            this.cboSafeRangeCoordinate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSafeRangeCoordinate.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboSafeRangeCoordinate.FormattingEnabled = true;
+            this.cboSafeRangeCoordinate.Location = new System.Drawing.Point(120, 30);
+            this.cboSafeRangeCoordinate.Name = "cboSafeRangeCoordinate";
+            this.cboSafeRangeCoordinate.Size = new System.Drawing.Size(151, 24);
+            this.cboSafeRangeCoordinate.TabIndex = 25;
+            this.cboSafeRangeCoordinate.SelectedIndexChanged += new System.EventHandler(this.cboSafeRangeCoordinate_SelectedIndexChanged);
+            // 
+            // lblSafeRangeCoordinate
+            // 
+            this.lblSafeRangeCoordinate.AutoSize = true;
+            this.lblSafeRangeCoordinate.Location = new System.Drawing.Point(6, 29);
+            this.lblSafeRangeCoordinate.Name = "lblSafeRangeCoordinate";
+            this.lblSafeRangeCoordinate.Size = new System.Drawing.Size(108, 21);
+            this.lblSafeRangeCoordinate.TabIndex = 25;
+            this.lblSafeRangeCoordinate.Text = "Coordinate :";
+            // 
+            // tbSafeRangeRJ6max
+            // 
+            this.tbSafeRangeRJ6max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangeRJ6max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangeRJ6max.Location = new System.Drawing.Point(144, 205);
+            this.tbSafeRangeRJ6max.Name = "tbSafeRangeRJ6max";
+            this.tbSafeRangeRJ6max.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangeRJ6max.TabIndex = 37;
+            this.tbSafeRangeRJ6max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbSafeRangePJ5max
+            // 
+            this.tbSafeRangePJ5max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangePJ5max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangePJ5max.Location = new System.Drawing.Point(144, 176);
+            this.tbSafeRangePJ5max.Name = "tbSafeRangePJ5max";
+            this.tbSafeRangePJ5max.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangePJ5max.TabIndex = 36;
+            this.tbSafeRangePJ5max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbSafeRangeWJ4max
+            // 
+            this.tbSafeRangeWJ4max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangeWJ4max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangeWJ4max.Location = new System.Drawing.Point(144, 147);
+            this.tbSafeRangeWJ4max.Name = "tbSafeRangeWJ4max";
+            this.tbSafeRangeWJ4max.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangeWJ4max.TabIndex = 35;
+            this.tbSafeRangeWJ4max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tbSafeRangeRJ6min
+            // 
+            this.tbSafeRangeRJ6min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangeRJ6min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangeRJ6min.Location = new System.Drawing.Point(46, 205);
+            this.tbSafeRangeRJ6min.Name = "tbSafeRangeRJ6min";
+            this.tbSafeRangeRJ6min.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangeRJ6min.TabIndex = 33;
+            this.tbSafeRangeRJ6min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblSafeRangeRJ6
+            // 
+            this.lblSafeRangeRJ6.AutoSize = true;
+            this.lblSafeRangeRJ6.Location = new System.Drawing.Point(6, 205);
+            this.lblSafeRangeRJ6.Name = "lblSafeRangeRJ6";
+            this.lblSafeRangeRJ6.Size = new System.Drawing.Size(129, 21);
+            this.lblSafeRangeRJ6.TabIndex = 34;
+            this.lblSafeRangeRJ6.Text = "R :                 ~";
+            // 
+            // tbSafeRangeWJ4min
+            // 
+            this.tbSafeRangeWJ4min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangeWJ4min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangeWJ4min.Location = new System.Drawing.Point(46, 147);
+            this.tbSafeRangeWJ4min.Name = "tbSafeRangeWJ4min";
+            this.tbSafeRangeWJ4min.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangeWJ4min.TabIndex = 29;
+            this.tbSafeRangeWJ4min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblSafeRangeWJ4
+            // 
+            this.lblSafeRangeWJ4.AutoSize = true;
+            this.lblSafeRangeWJ4.Location = new System.Drawing.Point(6, 147);
+            this.lblSafeRangeWJ4.Name = "lblSafeRangeWJ4";
+            this.lblSafeRangeWJ4.Size = new System.Drawing.Size(130, 21);
+            this.lblSafeRangeWJ4.TabIndex = 30;
+            this.lblSafeRangeWJ4.Text = "W:                 ~";
+            // 
+            // tbSafeRangePJ5min
+            // 
+            this.tbSafeRangePJ5min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSafeRangePJ5min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tbSafeRangePJ5min.Location = new System.Drawing.Point(46, 176);
+            this.tbSafeRangePJ5min.Name = "tbSafeRangePJ5min";
+            this.tbSafeRangePJ5min.Size = new System.Drawing.Size(60, 23);
+            this.tbSafeRangePJ5min.TabIndex = 32;
+            this.tbSafeRangePJ5min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblSafeRangePJ5
+            // 
+            this.lblSafeRangePJ5.AutoSize = true;
+            this.lblSafeRangePJ5.Location = new System.Drawing.Point(6, 176);
+            this.lblSafeRangePJ5.Name = "lblSafeRangePJ5";
+            this.lblSafeRangePJ5.Size = new System.Drawing.Size(132, 21);
+            this.lblSafeRangePJ5.TabIndex = 31;
+            this.lblSafeRangePJ5.Text = "P :                  ~";
+            // 
             // tbSafeRangeZJ3max
             // 
             this.tbSafeRangeZJ3max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1421,118 +1555,121 @@
             this.btnSafeRangeSet.UseVisualStyleBackColor = true;
             this.btnSafeRangeSet.Click += new System.EventHandler(this.btnSafeRangeSet_Click);
             // 
-            // tbSafeRangeRJ6max
+            // gbPointsMove
             // 
-            this.tbSafeRangeRJ6max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangeRJ6max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangeRJ6max.Location = new System.Drawing.Point(144, 205);
-            this.tbSafeRangeRJ6max.Name = "tbSafeRangeRJ6max";
-            this.tbSafeRangeRJ6max.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangeRJ6max.TabIndex = 37;
-            this.tbSafeRangeRJ6max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.gbPointsMove.Controls.Add(this.btnPointsMoveSet);
+            this.gbPointsMove.Controls.Add(this.btnPointsMoveLoad);
+            this.gbPointsMove.Controls.Add(this.btnPointsMoveCopy);
+            this.gbPointsMove.Controls.Add(this.dataGridView1);
+            this.gbPointsMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbPointsMove.Location = new System.Drawing.Point(5, 576);
+            this.gbPointsMove.Name = "gbPointsMove";
+            this.gbPointsMove.Size = new System.Drawing.Size(842, 266);
+            this.gbPointsMove.TabIndex = 20;
+            this.gbPointsMove.TabStop = false;
+            this.gbPointsMove.Text = "Points Move";
             // 
-            // tbSafeRangePJ5max
+            // dataGridView1
             // 
-            this.tbSafeRangePJ5max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangePJ5max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangePJ5max.Location = new System.Drawing.Point(144, 176);
-            this.tbSafeRangePJ5max.Name = "tbSafeRangePJ5max";
-            this.tbSafeRangePJ5max.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangePJ5max.TabIndex = 36;
-            this.tbSafeRangePJ5max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnNumber,
+            this.ColumnX,
+            this.ColumnY,
+            this.ColumnZ,
+            this.ColumnW,
+            this.ColumnP,
+            this.ColumnR,
+            this.ColumnV});
+            this.dataGridView1.Location = new System.Drawing.Point(6, 32);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 35;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(665, 218);
+            this.dataGridView1.TabIndex = 0;
             // 
-            // tbSafeRangeWJ4max
+            // ColumnNumber
             // 
-            this.tbSafeRangeWJ4max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangeWJ4max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangeWJ4max.Location = new System.Drawing.Point(144, 147);
-            this.tbSafeRangeWJ4max.Name = "tbSafeRangeWJ4max";
-            this.tbSafeRangeWJ4max.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangeWJ4max.TabIndex = 35;
-            this.tbSafeRangeWJ4max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ColumnNumber.HeaderText = "Num";
+            this.ColumnNumber.Name = "ColumnNumber";
+            this.ColumnNumber.Width = 55;
             // 
-            // tbSafeRangeRJ6min
+            // ColumnX
             // 
-            this.tbSafeRangeRJ6min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangeRJ6min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangeRJ6min.Location = new System.Drawing.Point(46, 205);
-            this.tbSafeRangeRJ6min.Name = "tbSafeRangeRJ6min";
-            this.tbSafeRangeRJ6min.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangeRJ6min.TabIndex = 33;
-            this.tbSafeRangeRJ6min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ColumnX.HeaderText = "X";
+            this.ColumnX.Name = "ColumnX";
+            this.ColumnX.Width = 85;
             // 
-            // lblSafeRangeRJ6
+            // ColumnY
             // 
-            this.lblSafeRangeRJ6.AutoSize = true;
-            this.lblSafeRangeRJ6.Location = new System.Drawing.Point(6, 205);
-            this.lblSafeRangeRJ6.Name = "lblSafeRangeRJ6";
-            this.lblSafeRangeRJ6.Size = new System.Drawing.Size(129, 21);
-            this.lblSafeRangeRJ6.TabIndex = 34;
-            this.lblSafeRangeRJ6.Text = "R :                 ~";
+            this.ColumnY.HeaderText = "Y";
+            this.ColumnY.Name = "ColumnY";
+            this.ColumnY.Width = 85;
             // 
-            // tbSafeRangeWJ4min
+            // ColumnZ
             // 
-            this.tbSafeRangeWJ4min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangeWJ4min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangeWJ4min.Location = new System.Drawing.Point(46, 147);
-            this.tbSafeRangeWJ4min.Name = "tbSafeRangeWJ4min";
-            this.tbSafeRangeWJ4min.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangeWJ4min.TabIndex = 29;
-            this.tbSafeRangeWJ4min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ColumnZ.HeaderText = "Z";
+            this.ColumnZ.Name = "ColumnZ";
+            this.ColumnZ.Width = 85;
             // 
-            // lblSafeRangeWJ4
+            // ColumnW
             // 
-            this.lblSafeRangeWJ4.AutoSize = true;
-            this.lblSafeRangeWJ4.Location = new System.Drawing.Point(6, 147);
-            this.lblSafeRangeWJ4.Name = "lblSafeRangeWJ4";
-            this.lblSafeRangeWJ4.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeWJ4.TabIndex = 30;
-            this.lblSafeRangeWJ4.Text = "W:                 ~";
+            this.ColumnW.HeaderText = "W";
+            this.ColumnW.Name = "ColumnW";
+            this.ColumnW.Width = 85;
             // 
-            // tbSafeRangePJ5min
+            // ColumnP
             // 
-            this.tbSafeRangePJ5min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSafeRangePJ5min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbSafeRangePJ5min.Location = new System.Drawing.Point(46, 176);
-            this.tbSafeRangePJ5min.Name = "tbSafeRangePJ5min";
-            this.tbSafeRangePJ5min.Size = new System.Drawing.Size(60, 23);
-            this.tbSafeRangePJ5min.TabIndex = 32;
-            this.tbSafeRangePJ5min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ColumnP.HeaderText = "P";
+            this.ColumnP.Name = "ColumnP";
+            this.ColumnP.Width = 85;
             // 
-            // lblSafeRangePJ5
+            // ColumnR
             // 
-            this.lblSafeRangePJ5.AutoSize = true;
-            this.lblSafeRangePJ5.Location = new System.Drawing.Point(6, 176);
-            this.lblSafeRangePJ5.Name = "lblSafeRangePJ5";
-            this.lblSafeRangePJ5.Size = new System.Drawing.Size(132, 21);
-            this.lblSafeRangePJ5.TabIndex = 31;
-            this.lblSafeRangePJ5.Text = "P :                  ~";
+            this.ColumnR.HeaderText = "R";
+            this.ColumnR.Name = "ColumnR";
+            this.ColumnR.Width = 85;
             // 
-            // lblSafeRangeCoordinate
+            // ColumnV
             // 
-            this.lblSafeRangeCoordinate.AutoSize = true;
-            this.lblSafeRangeCoordinate.Location = new System.Drawing.Point(6, 29);
-            this.lblSafeRangeCoordinate.Name = "lblSafeRangeCoordinate";
-            this.lblSafeRangeCoordinate.Size = new System.Drawing.Size(108, 21);
-            this.lblSafeRangeCoordinate.TabIndex = 25;
-            this.lblSafeRangeCoordinate.Text = "Coordinate :";
+            this.ColumnV.HeaderText = "V";
+            this.ColumnV.Name = "ColumnV";
+            this.ColumnV.Width = 45;
             // 
-            // cboSafeRangeCoordinate
+            // btnPointsMoveCopy
             // 
-            this.cboSafeRangeCoordinate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSafeRangeCoordinate.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.cboSafeRangeCoordinate.FormattingEnabled = true;
-            this.cboSafeRangeCoordinate.Location = new System.Drawing.Point(120, 30);
-            this.cboSafeRangeCoordinate.Name = "cboSafeRangeCoordinate";
-            this.cboSafeRangeCoordinate.Size = new System.Drawing.Size(151, 24);
-            this.cboSafeRangeCoordinate.TabIndex = 25;
-            this.cboSafeRangeCoordinate.SelectedIndexChanged += new System.EventHandler(this.cboSafeRangeCoordinate_SelectedIndexChanged);
+            this.btnPointsMoveCopy.Location = new System.Drawing.Point(689, 32);
+            this.btnPointsMoveCopy.Name = "btnPointsMoveCopy";
+            this.btnPointsMoveCopy.Size = new System.Drawing.Size(94, 50);
+            this.btnPointsMoveCopy.TabIndex = 21;
+            this.btnPointsMoveCopy.Text = "Copy";
+            this.btnPointsMoveCopy.UseVisualStyleBackColor = true;
+            this.btnPointsMoveCopy.Click += new System.EventHandler(this.btnPointsMoveCopy_Click);
+            // 
+            // btnPointsMoveLoad
+            // 
+            this.btnPointsMoveLoad.Location = new System.Drawing.Point(689, 88);
+            this.btnPointsMoveLoad.Name = "btnPointsMoveLoad";
+            this.btnPointsMoveLoad.Size = new System.Drawing.Size(94, 50);
+            this.btnPointsMoveLoad.TabIndex = 22;
+            this.btnPointsMoveLoad.Text = "Load";
+            this.btnPointsMoveLoad.UseVisualStyleBackColor = true;
+            // 
+            // btnPointsMoveSet
+            // 
+            this.btnPointsMoveSet.Location = new System.Drawing.Point(689, 144);
+            this.btnPointsMoveSet.Name = "btnPointsMoveSet";
+            this.btnPointsMoveSet.Size = new System.Drawing.Size(94, 50);
+            this.btnPointsMoveSet.TabIndex = 23;
+            this.btnPointsMoveSet.Text = "Set";
+            this.btnPointsMoveSet.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1255, 582);
+            this.ClientSize = new System.Drawing.Size(1231, 847);
+            this.Controls.Add(this.gbPointsMove);
             this.Controls.Add(this.gbSafeRange);
             this.Controls.Add(this.gbLine);
             this.Controls.Add(this.gbControl);
@@ -1568,6 +1705,8 @@
             this.gbLine.PerformLayout();
             this.gbSafeRange.ResumeLayout(false);
             this.gbSafeRange.PerformLayout();
+            this.gbPointsMove.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1699,6 +1838,20 @@
         private System.Windows.Forms.Label lblSafeRangePJ5;
         private System.Windows.Forms.ComboBox cboSafeRangeCoordinate;
         private System.Windows.Forms.Label lblSafeRangeCoordinate;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox gbPointsMove;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnY;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnZ;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnW;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnV;
+        private System.Windows.Forms.Button btnPointsMoveSet;
+        private System.Windows.Forms.Button btnPointsMoveLoad;
+        private System.Windows.Forms.Button btnPointsMoveCopy;
     }
 }
 

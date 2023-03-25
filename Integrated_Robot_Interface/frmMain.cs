@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Integrated_Robot_Interface
 {
@@ -15,6 +16,7 @@ namespace Integrated_Robot_Interface
         //變數宣告
         private Controller myController;
         private FrmInformation f;
+        private DataTable dataTable;
         private bool fgConnectionState { get; set; } = false;
         private bool fgRobotState { get; set; } = false;
         
@@ -24,6 +26,7 @@ namespace Integrated_Robot_Interface
             InitializeComponent();
             myController = new Controller();
             f = new FrmInformation();
+            dataTable = new DataTable();
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -101,6 +104,7 @@ namespace Integrated_Robot_Interface
             gbControl.Enabled = tf;
             gbLine.Enabled = tf;
             gbSafeRange.Enabled = tf;
+            gbPointsMove.Enabled = tf;
         }
         private void tbSafeRangeEnbleControl(bool tf)
         {
@@ -339,16 +343,16 @@ namespace Integrated_Robot_Interface
                     txtIP.Enabled = true;
                     lblLineVelocityUnit.Text = "mm/sec";
                     lblLineVelocityRange.Text = "V : 0 ~ 500(預設為100)";
-                    myController.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                    myController.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                    RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                    RobotAdapter.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
                     break;
                 case nameof(Controller.Robotnum.Nexcom):
                     myController.Robot = Controller.Robotnum.Nexcom;
                     txtIP.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
                     lblLineVelocityRange.Text = "V : 0 ~ 100 (預設為10)";
-                    myController.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
-                    myController.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                    RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
+                    RobotAdapter.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
                     break;
                 case nameof(Controller.Robotnum.Ourarm):
                     myController.Robot = Controller.Robotnum.Ourarm;
@@ -574,37 +578,34 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    float XJ1 = Convert.ToSingle(tbPTPXJ1Set.Text);
-                    float YJ2 = Convert.ToSingle(tbPTPYJ2Set.Text);
-                    float ZJ3 = Convert.ToSingle(tbPTPZJ3Set.Text);
-                    float WJ4 = Convert.ToSingle(tbPTPWJ4Set.Text);
-                    float PJ5 = Convert.ToSingle(tbPTPPJ5Set.Text);
-                    float RJ6 = Convert.ToSingle(tbPTPRJ6Set.Text);
-
-                    if (!SafeCheck(XJ1, YJ2, ZJ3, WJ4, PJ5, RJ6))
-                        return;
-
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPXJ1Set.Text), 0);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPYJ2Set.Text), 1);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPZJ3Set.Text), 2);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPWJ4Set.Text), 3);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPPJ5Set.Text), 4);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbPTPRJ6Set.Text), 5);
+                    
                     switch (myController.Coordinate)
                     {
                         case Controller.Coordinatenum.Cartesian:
-                            RobotAdapter.setcposition.SetValue(XJ1, 0);
-                            RobotAdapter.setcposition.SetValue(YJ2, 1);
-                            RobotAdapter.setcposition.SetValue(ZJ3, 2);
-                            RobotAdapter.setcposition.SetValue(WJ4, 3);
-                            RobotAdapter.setcposition.SetValue(PJ5, 4);
-                            RobotAdapter.setcposition.SetValue(RJ6, 5);
+                            if (!myController.SafeRangeCheckXYZ())
+                            {
+                                MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                                return;
+                            }
+                            RobotAdapter.setcposition = RobotAdapter.saferangecheck;
                             if (!myController.PTPC())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
                             }
                             break;
                         case Controller.Coordinatenum.Joint:
-                            RobotAdapter.setjposition.SetValue(XJ1, 0);
-                            RobotAdapter.setjposition.SetValue(YJ2, 1);
-                            RobotAdapter.setjposition.SetValue(ZJ3, 2);
-                            RobotAdapter.setjposition.SetValue(WJ4, 3);
-                            RobotAdapter.setjposition.SetValue(PJ5, 4);
-                            RobotAdapter.setjposition.SetValue(RJ6, 5);
+                            if (!myController.SafeRangeCheckJoint())
+                            {
+                                MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                                return;
+                            }
+                            RobotAdapter.setjposition = RobotAdapter.saferangecheck;
                             if (!myController.PTPJ())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -682,16 +683,19 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    float XJ1 = Convert.ToSingle(tbLineXJ1Set.Text);
-                    float YJ2 = Convert.ToSingle(tbLineYJ2Set.Text);
-                    float ZJ3 = Convert.ToSingle(tbLineZJ3Set.Text);
-                    float WJ4 = Convert.ToSingle(tbLineWJ4Set.Text);
-                    float PJ5 = Convert.ToSingle(tbLinePJ5Set.Text);
-                    float RJ6 = Convert.ToSingle(tbLineRJ6Set.Text);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLineXJ1Set.Text), 0);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLineYJ2Set.Text), 1);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLineZJ3Set.Text), 2);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLineWJ4Set.Text), 3);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLinePJ5Set.Text), 4);
+                    RobotAdapter.saferangecheck.SetValue(Convert.ToSingle(tbLineRJ6Set.Text), 5);
                     float V = Convert.ToSingle(tbLineVelocitySet.Text);
 
-                    if (!SafeCheck(XJ1, YJ2, ZJ3, WJ4, PJ5, RJ6))
+                    if (!myController.SafeRangeCheckXYZ())
+                    {
+                        MessageBox.Show("超出安全範圍", "安全範圍狀態");
                         return;
+                    }
 
                     switch (myController.Robot)
                     {
@@ -705,11 +709,9 @@ namespace Integrated_Robot_Interface
                         case Controller.Robotnum.Nexcom:
                             if (V < 0 || V > 100)
                             {
-                                MessageBox.Show("座標或速度超出安全範圍");
+                                MessageBox.Show("速度超出安全範圍");
                                 return;
                             }
-                            break;
-                        case Controller.Robotnum.Ourarm:
                             break;
                     }
                     RobotAdapter.setvelocity = V;
@@ -718,12 +720,7 @@ namespace Integrated_Robot_Interface
                         ShowMessage("設定速度失敗", "設定速度狀態");
                     }
 
-                    RobotAdapter.setcposition.SetValue(XJ1, 0);
-                    RobotAdapter.setcposition.SetValue(YJ2, 1);
-                    RobotAdapter.setcposition.SetValue(ZJ3, 2);
-                    RobotAdapter.setcposition.SetValue(WJ4, 3);
-                    RobotAdapter.setcposition.SetValue(PJ5, 4);
-                    RobotAdapter.setcposition.SetValue(RJ6, 5);
+                    RobotAdapter.setcposition = RobotAdapter.saferangecheck;
                     if (!myController.Line())
                     {
                         ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -969,18 +966,18 @@ namespace Integrated_Robot_Interface
                     lblSafeRangeWJ4.Text = "W:                 ~";
                     lblSafeRangePJ5.Text = "P :                  ~";
                     lblSafeRangeRJ6.Text = "R :                 ~";
-                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(0)).ToString("###0.000"))}";
-                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(1)).ToString("###0.000"))}";
-                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(2)).ToString("###0.000"))}";
-                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(3)).ToString("###0.000"))}";
-                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(4)).ToString("###0.000"))}";
-                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(5)).ToString("###0.000"))}";
-                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(6)).ToString("###0.000"))}";
-                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(7)).ToString("###0.000"))}";
-                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(8)).ToString("###0.000"))}";
-                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(9)).ToString("###0.000"))}";
-                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(10)).ToString("###0.000"))}";
-                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangexyz.GetValue(11)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(0)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(1)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(2)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(3)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(4)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(5)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(6)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(7)).ToString("###0.000"))}";
+                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(8)).ToString("###0.000"))}";
+                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(9)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(10)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(11)).ToString("###0.000"))}";
                     break;
                 case nameof(Controller.Coordinatenum.Joint):
                     myController.Coordinate = Controller.Coordinatenum.Joint;
@@ -990,18 +987,18 @@ namespace Integrated_Robot_Interface
                     lblSafeRangeWJ4.Text = "J4:                 ~";
                     lblSafeRangePJ5.Text = "J5:                 ~";
                     lblSafeRangeRJ6.Text = "J6:                 ~";
-                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(0)).ToString("###0.000"))}";
-                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(1)).ToString("###0.000"))}";
-                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(2)).ToString("###0.000"))}";
-                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(3)).ToString("###0.000"))}";
-                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(4)).ToString("###0.000"))}";
-                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(5)).ToString("###0.000"))}";
-                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(6)).ToString("###0.000"))}";
-                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(7)).ToString("###0.000"))}";
-                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(8)).ToString("###0.000"))}";
-                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(9)).ToString("###0.000"))}";
-                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(10)).ToString("###0.000"))}";
-                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(myController.saferangejoint.GetValue(11)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(0)).ToString("###0.000"))}";
+                    tbSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(1)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(2)).ToString("###0.000"))}";
+                    tbSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(3)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(4)).ToString("###0.000"))}";
+                    tbSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(5)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(6)).ToString("###0.000"))}";
+                    tbSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(7)).ToString("###0.000"))}";
+                    tbSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(8)).ToString("###0.000"))}";
+                    tbSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(9)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(10)).ToString("###0.000"))}";
+                    tbSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(11)).ToString("###0.000"))}";
                     break;
             }
             cboLineCoordinate.SelectedIndex = (int)myController.Coordinate;
@@ -1020,32 +1017,32 @@ namespace Integrated_Robot_Interface
                 switch (myController.Coordinate)
                 {
                     case Controller.Coordinatenum.Cartesian:
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
-                        myController.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
+                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
                         break;
                     case Controller.Coordinatenum.Joint:
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
-                        myController.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1min.Text), 0);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeXJ1max.Text), 1);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2min.Text), 2);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeYJ2max.Text), 3);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3min.Text), 4);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeZJ3max.Text), 5);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4min.Text), 6);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeWJ4max.Text), 7);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5min.Text), 8);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangePJ5max.Text), 9);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6min.Text), 10);
+                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(tbSafeRangeRJ6max.Text), 11);
                         break;
                 }
                 tbSafeRangeEnbleControl(false);
@@ -1055,50 +1052,47 @@ namespace Integrated_Robot_Interface
                 MessageBox.Show("請輸入有效數值");
             }
         }
-        private bool SafeCheck(float xj1, float yj2, float zj3, float wj4, float pj5, float rj6)
+
+        #endregion
+
+        #region <gbPointsMove>
+        private void btnPointsMoveCopy_Click(object sender, EventArgs e)
         {
-            switch (myController.Coordinate)
-            {
-                case Controller.Coordinatenum.Cartesian:
-                    if (xj1 < Convert.ToSingle(myController.saferangexyz.GetValue(0)) ||
-                        xj1 > Convert.ToSingle(myController.saferangexyz.GetValue(1)) ||
-                        yj2 < Convert.ToSingle(myController.saferangexyz.GetValue(2)) ||
-                        yj2 > Convert.ToSingle(myController.saferangexyz.GetValue(3)) ||
-                        zj3 < Convert.ToSingle(myController.saferangexyz.GetValue(4)) ||
-                        zj3 > Convert.ToSingle(myController.saferangexyz.GetValue(5)) ||
-                        wj4 < Convert.ToSingle(myController.saferangexyz.GetValue(6)) ||
-                        wj4 > Convert.ToSingle(myController.saferangexyz.GetValue(7)) ||
-                        pj5 < Convert.ToSingle(myController.saferangexyz.GetValue(8)) ||
-                        pj5 > Convert.ToSingle(myController.saferangexyz.GetValue(9)) ||
-                        rj6 < Convert.ToSingle(myController.saferangexyz.GetValue(10)) ||
-                        rj6 > Convert.ToSingle(myController.saferangexyz.GetValue(11)))
-                    {
-                        MessageBox.Show("座標超出安全範圍");
-                        return false;
-                    }
-                    break;
-                case Controller.Coordinatenum.Joint:
-                    if (xj1 < Convert.ToSingle(myController.saferangejoint.GetValue(0)) ||
-                        xj1 > Convert.ToSingle(myController.saferangejoint.GetValue(1)) ||
-                        yj2 < Convert.ToSingle(myController.saferangejoint.GetValue(2)) ||
-                        yj2 > Convert.ToSingle(myController.saferangejoint.GetValue(3)) ||
-                        zj3 < Convert.ToSingle(myController.saferangejoint.GetValue(4)) ||
-                        zj3 > Convert.ToSingle(myController.saferangejoint.GetValue(5)) ||
-                        wj4 < Convert.ToSingle(myController.saferangejoint.GetValue(6)) ||
-                        wj4 > Convert.ToSingle(myController.saferangejoint.GetValue(7)) ||
-                        pj5 < Convert.ToSingle(myController.saferangejoint.GetValue(8)) ||
-                        pj5 > Convert.ToSingle(myController.saferangejoint.GetValue(9)) ||
-                        rj6 < Convert.ToSingle(myController.saferangejoint.GetValue(10)) ||
-                        rj6 > Convert.ToSingle(myController.saferangejoint.GetValue(11)))
-                    {
-                        MessageBox.Show("座標超出安全範圍");
-                        return false;
-                    }
-                    break;
-            }
-            return true;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells["ColumnNumber"].Value = dataGridView1.RowCount;
+            dataGridView1.Rows.Add();
         }
         #endregion
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StreamWriter sw = new StreamWriter("C:/Users/shanbingchi/Documents/My Workcells/shibingchi/SavePoints/2023_03_24/Robot_1/JJJ.LS", false);
+            sw.WriteLine("/PROG  JJJ");
+            sw.WriteLine("/ATTR");
+            sw.WriteLine("OWNER		= MNEDITOR;");
+            sw.WriteLine("COMMENT		= \"\";");
+            sw.WriteLine("PROG_SIZE	= 0;");
+            sw.WriteLine("CREATE		= DATE 23-03-19  TIME 20:28:08;");
+            sw.WriteLine("MODIFIED	= DATE 23-03-19  TIME 20:28:08;");
+            sw.WriteLine("FILE_NAME	= ;");
+            sw.WriteLine("VERSION		= 0;");
+            sw.WriteLine("LINE_COUNT	= 0;");
+            sw.WriteLine("MEMORY_SIZE	= 0;");
+            sw.WriteLine("PROTECT		= READ_WRITE;");
+            sw.WriteLine("TCD:  STACK_SIZE	= 0,");
+            sw.WriteLine("      TASK_PRIORITY	= 50,");
+            sw.WriteLine("      TIME_SLICE	= 0,");
+            sw.WriteLine("      BUSY_LAMP_OFF	= 0,");
+            sw.WriteLine("      ABORT_REQUEST	= 0,");
+            sw.WriteLine("      PAUSE_REQUEST	= 0;");
+            sw.WriteLine("DEFAULT_GROUP	= 1,*,*,*,*;");
+            sw.WriteLine("CONTROL_CODE	= 00000000 00000000;");
+            sw.WriteLine("/MN");
+            sw.WriteLine("   1:  LBL[2] ;");
+            sw.WriteLine("/POS");
+            sw.WriteLine("/END");
+            sw.Close();
+        }
+
+        
     }
 }

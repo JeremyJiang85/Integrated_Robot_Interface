@@ -11,8 +11,6 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         private RobotAdapter myRobotAdapter = null;
-        public Array saferangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public Array saferangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         public Robotnum Robot { get; set; } = Robotnum.None;
         public enum Robotnum { None, Fanuc, Nexcom, Ourarm }
@@ -122,9 +120,13 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetInformation4();
         }
-        public bool SafeRangeCheck()
+        public bool SafeRangeCheckXYZ()
         {
-            return false;
+            return myRobotAdapter.SafeRangeCheckXYZ();
+        }
+        public bool SafeRangeCheckJoint()
+        {
+            return myRobotAdapter.SafeRangeCheckJoint();
         }
         #endregion
 

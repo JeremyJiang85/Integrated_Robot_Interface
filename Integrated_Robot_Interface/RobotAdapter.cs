@@ -34,6 +34,9 @@ namespace Integrated_Robot_Interface
         public static string information3text { get; set; } = "";
         public static string information4name { get; set; } = "";
         public static string information4text { get; set; } = "";
+        public static Array saferangecheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array saferangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public static Array saferangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         #endregion
 
         #region <Fanuc>
@@ -41,7 +44,7 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
-        
+
         #endregion
 
 
@@ -134,6 +137,48 @@ namespace Integrated_Robot_Interface
             information4name = "";
             information4text = "";
             return true;
+        }
+        public bool SafeRangeCheckXYZ()
+        {
+            if (Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(0)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(0)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(0)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(1)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(1)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(2)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(1)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(3)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(2)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(4)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(2)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(5)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(3)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(6)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(3)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(7)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(4)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(8)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(4)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(9)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(5)) < Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(10)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(5)) > Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(11)))
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool SafeRangeCheckJoint()
+        {
+            if (Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(0)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(0)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(0)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(1)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(1)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(2)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(1)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(3)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(2)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(4)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(2)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(5)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(3)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(6)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(3)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(7)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(4)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(8)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(4)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(9)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(5)) < Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(10)) ||
+                Convert.ToSingle(RobotAdapter.saferangecheck.GetValue(5)) > Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(11)))
+            {
+                return false;
+            }
+            return true;
+        }
+        public virtual bool Compile()
+        {
+            return false;
         }
         #endregion
 
