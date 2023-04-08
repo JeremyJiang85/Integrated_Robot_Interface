@@ -18,6 +18,8 @@ namespace Integrated_Robot_Interface
         public enum Coordinatenum { Cartesian, Joint }
         public Stepnum Step { get; set; } = Stepnum.One;
         public enum Stepnum : int { One = 1, Five = 5, Ten = 10, Cont = 20 }
+        public Instructionnum Instruction { get; set; } = Instructionnum.OVERRIDE;
+        public enum Instructionnum : int { OVERRIDE, MOVEC, MOVEJ, MOVEL, WAIT };
 
         #region <共用>
         public bool Connect()
@@ -64,17 +66,17 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetJPosition();
         }
-        public bool PTPC()
+        public bool PointMoveC()
         {
-            return myRobotAdapter.PTPC();
+            return myRobotAdapter.PointMoveC();
         }
-        public bool PTPJ()
+        public bool PointMoveJ()
         {
-            return myRobotAdapter.PTPJ();
+            return myRobotAdapter.PointMoveJ();
         }
-        public bool Line()
+        public bool LineMove()
         {
-            return myRobotAdapter.Line();
+            return myRobotAdapter.LineMove();
         }
         public bool Home()
         {
@@ -88,21 +90,21 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetVelocity();
         }
-        public bool JogC()
+        public bool JogMoveC()
         {
-            return myRobotAdapter.JogC();
+            return myRobotAdapter.JogMoveC();
         }
-        public bool JogJ()
+        public bool JogMoveJ()
         {
-            return myRobotAdapter.JogJ();
+            return myRobotAdapter.JogMoveJ();
         }
-        public bool IncC()
+        public bool IncMoveC()
         {
-            return myRobotAdapter.IncC();
+            return myRobotAdapter.IncMoveC();
         }
-        public bool IncJ()
+        public bool IncMoveJ()
         {
-            return myRobotAdapter.IncJ();
+            return myRobotAdapter.IncMoveJ();
         }
         public bool GetInformation1()
         {
@@ -127,6 +129,18 @@ namespace Integrated_Robot_Interface
         public bool SafeRangeCheckJoint()
         {
             return myRobotAdapter.SafeRangeCheckJoint();
+        }
+        public bool SafeRangeCheckVelocity()
+        {
+            return myRobotAdapter.SafeRangeCheckVelocity();
+        }
+        public bool SafeRangeCheckOverride()
+        {
+            return myRobotAdapter.SafeRangeCheckOverride();
+        }
+        public bool Compile()
+        {
+            return myRobotAdapter.Compile();
         }
         #endregion
 

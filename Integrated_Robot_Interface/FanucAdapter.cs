@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Integrated_Robot_Interface
 {
@@ -16,6 +17,9 @@ namespace Integrated_Robot_Interface
         private FRRJIf.DataSysVar mobjSysVarInt;
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
+        private StreamWriter sw;
+        private static int programlinecount = 0;
+        private static int programPRcount = 0;
 
         public FanucAdapter()
         {
@@ -23,7 +27,7 @@ namespace Integrated_Robot_Interface
             mobjDataTable = mobjCore.DataTable;
             mobjAlarmCurrent = mobjDataTable.AddAlarm(FRRJIf.FRIF_DATA_TYPE.ALARM_CURRENT, 1, 0);
             mobjCurPos = mobjDataTable.AddCurPos(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1);
-            mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 10);
+            mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 50);
             mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
         }
@@ -189,7 +193,7 @@ namespace Integrated_Robot_Interface
             getjposition = Joint;
             return ret;
         }
-        public override bool PTPC()
+        public override bool PointMoveC()
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -224,7 +228,7 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool PTPJ()
+        public override bool PointMoveJ()
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -248,7 +252,6 @@ namespace Integrated_Robot_Interface
             {
                 apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
-
             }
 
             ret = mobjPosReg.SetValueJoint(Index, setjposition, UF, UT);
@@ -259,7 +262,7 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool Line()
+        public override bool LineMove()
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -275,21 +278,21 @@ namespace Integrated_Robot_Interface
             ret = mobjNumReg.SetValue(6, 2);
             if (!ret)
             {
-                apierrtext = "mobjNumReg.SetValue Fail\r\n";
+                apierrtext = "mobjNumReg.SetValue Fail";
                 return ret;
             }
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                apierrtext = "mobjCurPos.GetValue Fail\r\n";
+                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
             ret = mobjPosReg.SetValueXyzwpr(Index, setcposition, config, UF, UT);
             if (!ret)
             {
-                apierrtext = "mobjPosReg.SetValueXyzwpr Fail\r\n";
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
             return ret;
@@ -380,7 +383,7 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool IncC()
+        public override bool IncMoveC()
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -466,7 +469,7 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool IncJ()
+        public override bool IncMoveJ()
         {
             bool ret = false;
             Array Xyzwpr = new float[9];
@@ -629,6 +632,146 @@ namespace Integrated_Robot_Interface
                 information3text += $"R[{i}] = {Convert.ToInt32(Value)}\r\n";
             }
             return ret;
+        }
+        public override bool Compile()
+        {
+            bool ret = false;
+            Array Xyzwpr = new float[9];
+            Array Config = new short[7];
+            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
+            Array Joint = new float[9];
+            short UF = 0;
+            short UT = 1;
+            short ValidC = 0;
+            short ValidJ = 0;
+
+            if (Convert.ToInt32(compile.GetValue(0)) == 1)
+            {
+                programlinecount = 0;
+                programPRcount = 0;
+                sw = new StreamWriter($"C:/Users/shanbingchi/Desktop/C#/Integrated_Robot_Interface/{programname}.LS", false);
+                sw.WriteLine($"/PROG  {programname}");
+                sw.WriteLine("/ATTR");
+                sw.WriteLine("OWNER		= MNEDITOR;");
+                sw.WriteLine("COMMENT		= \"\";");
+                sw.WriteLine("PROG_SIZE	= 0;");
+                sw.WriteLine("CREATE		= DATE 23-03-19  TIME 20:28:08;");
+                sw.WriteLine("MODIFIED	= DATE 23-03-19  TIME 20:28:08;");
+                sw.WriteLine("FILE_NAME	= ;");
+                sw.WriteLine("VERSION		= 0;");
+                sw.WriteLine("LINE_COUNT	= 0;");
+                sw.WriteLine("MEMORY_SIZE	= 0;");
+                sw.WriteLine("PROTECT		= READ_WRITE;");
+                sw.WriteLine("TCD:  STACK_SIZE	= 0,");
+                sw.WriteLine("      TASK_PRIORITY	= 50,");
+                sw.WriteLine("      TIME_SLICE	= 0,");
+                sw.WriteLine("      BUSY_LAMP_OFF	= 0,");
+                sw.WriteLine("      ABORT_REQUEST	= 0,");
+                sw.WriteLine("      PAUSE_REQUEST	= 0;");
+                sw.WriteLine("DEFAULT_GROUP	= 1,*,*,*,*;");
+                sw.WriteLine("CONTROL_CODE	= 00000000 00000000;");
+                sw.WriteLine("/MN");
+            }
+
+            if (Convert.ToInt32(compile.GetValue(0)) == -1)
+            {
+                sw.WriteLine("/POS");
+                sw.WriteLine("/END");
+                sw.Close();
+                return true;
+            }
+
+            switch (Convert.ToInt32(compile.GetValue(1)))
+            {
+                case 0:
+                    programlinecount++;
+                    sw.WriteLine($"   {programlinecount}:  OVERRIDE={Convert.ToInt32(compile.GetValue(2))}% ;");
+                    break;
+                case 1:
+                    programlinecount++;
+                    programPRcount++;
+                    sw.WriteLine($"   {programlinecount}:J PR[{programPRcount}] 100% FINE    ;");
+                    
+                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjCurPos.GetValue Fail";
+                        return ret;
+                    }
+
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(2)), 0);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(3)), 1);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(4)), 2);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(5)), 3);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(6)), 4);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(7)), 5);
+
+                    ret = mobjPosReg.SetValueXyzwpr(programPRcount, setcposition, config, UF, UT);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                        return ret;
+                    }
+                    break;
+                case 2:
+                    programlinecount++;
+                    programPRcount++;
+                    sw.WriteLine($"   {programlinecount}:J PR[{programPRcount}] 100% FINE    ;");
+
+                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjCurPos.GetValue Fail";
+                        return ret;
+                    }
+
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(2)), 0);
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(3)), 1);
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(4)), 2);
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(5)), 3);
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(6)), 4);
+                    setjposition.SetValue(Convert.ToSingle(compile.GetValue(7)), 5);
+
+                    ret = mobjPosReg.SetValueJoint(programPRcount, setjposition, UF, UT);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjPosReg.SetValueJoint Fail";
+                        return ret;
+                    }
+                    break;
+                case 3:
+                    programlinecount++;
+                    programPRcount++;
+                    sw.WriteLine($"   {programlinecount}:L PR[{programPRcount}] {Convert.ToSingle(compile.GetValue(8))}mm/sec FINE    ;");
+
+                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjCurPos.GetValue Fail";
+                        return ret;
+                    }
+
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(2)), 0);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(3)), 1);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(4)), 2);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(5)), 3);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(6)), 4);
+                    setcposition.SetValue(Convert.ToSingle(compile.GetValue(7)), 5);
+
+                    ret = mobjPosReg.SetValueXyzwpr(programPRcount, setcposition, config, UF, UT);
+                    if (!ret)
+                    {
+                        apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                        return ret;
+                    }
+                    break;
+                case 4:
+                    programlinecount++;
+                    sw.WriteLine($"   {programlinecount}:  WAIT   {Convert.ToSingle(compile.GetValue(2))}(sec) ;");
+                    break;
+            }
+            
+            return true;
         }
     }
 }

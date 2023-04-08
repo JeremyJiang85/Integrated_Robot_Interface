@@ -134,7 +134,7 @@ namespace Integrated_Robot_Interface
             getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(5)), 5);
             return true;
         }
-        public override bool PTPC()
+        public override bool PointMoveC()
         {
             PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(0)), 0);
             PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(1)), 1);
@@ -153,7 +153,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool PTPJ()
+        public override bool PointMoveJ()
         {
             PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(0)), 0);
             PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(1)), 1);
@@ -172,7 +172,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool Line()
+        public override bool LineMove()
         {
             PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(0)), 0);
             PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(1)), 1);
@@ -217,7 +217,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool JogC()
+        public override bool JogMoveC()
         {
             int CartAxis = 0;
             int Dir = 0;
@@ -283,7 +283,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool JogJ()
+        public override bool JogMoveJ()
         {
             int CartAxis = 0;
             int Dir = 0;
@@ -349,7 +349,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool IncC()
+        public override bool IncMoveC()
         {
             int ret = mobjGroupAdapter.NMC_GroupGetActualPosPcs(ref PosPcs);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
@@ -425,7 +425,7 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool IncJ()
+        public override bool IncMoveJ()
         {
             int ret = mobjGroupAdapter.NMC_GroupGetActualPosAcs(ref PosAcs);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
@@ -685,6 +685,40 @@ namespace Integrated_Robot_Interface
                 }
                 PRetStatusInBit >>= 1;
             }
+            return true;
+        }
+        public override bool Compile()
+        {
+
+            if (Convert.ToInt32(compile.GetValue(0)) == 1)
+            {
+                
+            }
+
+            if (Convert.ToInt32(compile.GetValue(0)) == -1)
+            {
+                return true;
+            }
+
+            switch (Convert.ToInt32(compile.GetValue(1)))
+            {
+                case 0:
+                    
+                    break;
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    
+                    break;
+                case 4:
+                    
+                    break;
+            }
+
             return true;
         }
         public string GetErrorMessage(string api, int errcode)
