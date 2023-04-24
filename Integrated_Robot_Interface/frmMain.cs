@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -15,17 +16,16 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         private Controller myController;
-        private FrmInformation f;
+        private FrmInformation information;
         private DataTable dataTable;
         private bool fgConnectionState { get; set; } = false;
-        private bool fgRobotState { get; set; } = false;
 
 
         public FrmMain()
         {
             InitializeComponent();
             myController = new Controller();
-            f = new FrmInformation();
+            information = new FrmInformation();
             dataTable = new DataTable();
         }
         private void FrmMain_Load(object sender, EventArgs e)
@@ -81,7 +81,7 @@ namespace Integrated_Robot_Interface
             cboProgramCoordinate.Items.Clear();
             cboProgramCoordinate.Items.AddRange(Coordinate);
             string[] Step = new string[] { Controller.Stepnum.One.ToString(), Controller.Stepnum.Five.ToString(),
-                                           Controller.Stepnum.Ten.ToString(), Controller.Stepnum.Cont.ToString() };
+                                           Controller.Stepnum.Ten.ToString() };
             cboJogStep.Items.Clear();
             cboJogStep.Items.AddRange(Step);
             string[] Instruction = new string[] {Controller.Instructionnum.OVERRIDE.ToString() + " = ? %",
@@ -97,11 +97,10 @@ namespace Integrated_Robot_Interface
             timer1.Enabled = false;
             txtIP.Enabled = false;
             fgConnectionState = false;
-            fgRobotState = false;
             cboRobot.Enabled = true;
             gbEnbleControl(false);
             tbSafeRangeEnbleControl(false);
-            f.Hide();
+            information.Hide();
         }
         private void gbEnbleControl(bool tf)
         {
@@ -109,7 +108,7 @@ namespace Integrated_Robot_Interface
             gbCurrentPosition.Enabled = tf;
             gbPointMove.Enabled = tf;
             gbRegister.Enabled = tf;
-            gbJogIncMove.Enabled = tf;
+            gbJogMove.Enabled = tf;
             gbControl.Enabled = tf;
             gbLineMove.Enabled = tf;
             gbSafeRange.Enabled = tf;
@@ -171,6 +170,8 @@ namespace Integrated_Robot_Interface
             txtSafeRangePJ5min.Text = "";
             txtSafeRangeRJ6max.Text = "";
             txtSafeRangeRJ6min.Text = "";
+            txtSafeRangeVelocitymax.Text = "";
+            txtSafeRangeVelocitymin.Text = "";
             txtProgramXJ1.Text = "";
             txtProgramYJ2.Text = "";
             txtProgramZJ3.Text = "";
@@ -205,13 +206,13 @@ namespace Integrated_Robot_Interface
         }
         private void btnInformation_Click(object sender, EventArgs e)
         {
-            if (f.Visible)
+            if (information.Visible)
             {
-                f.Hide();
+                information.Hide();
             }
             else
             {
-                f.Show();
+                information.Show();
             }
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -326,7 +327,6 @@ namespace Integrated_Robot_Interface
         private void ShowMessage(string content, string title)
         {
             DialogResult result;
-            fgRobotState = false;
             timer1.Enabled = false;
             richTextBox1.Text += $"{content}\r\n{RobotAdapter.apierrtext}\r\n";
             result = MessageBox.Show($"{content}\r\n{RobotAdapter.apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
@@ -344,9 +344,13 @@ namespace Integrated_Robot_Interface
                     RobotAdapter.apierrtext = "";
                 }
             }
-            else if (result == DialogResult.Ignore)
+            else if (result == DialogResult.Retry)
             {
-                fgRobotState = true;
+                if (!myController.Reset())
+                {
+                    ShowMessage("Reset失敗", "Reset狀態");
+                    return;
+                }
                 timer1.Enabled = true;
             }
         }
@@ -404,7 +408,6 @@ namespace Integrated_Robot_Interface
                 if (myController.Connect())
                 {
                     fgConnectionState = true;
-                    fgRobotState = true;
                     lblConnectionStatus.Text = "Connection Status : Connected";
                     btnConnection.Text = "Disconnect";
                     cboRobot.Enabled = false;
@@ -412,18 +415,14 @@ namespace Integrated_Robot_Interface
                     txtIP.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
-                    cboJogStep.SelectedIndex = 0;
-                    cboSafeRangeCoordinate.SelectedIndex = 0;
-                    cboProgramInstruction.SelectedIndex = 0;
 
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
                             RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.saferangejoint = new float[12] { -170, 150, -100, 140, -70, 50, -180, 180, -40, 125, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
-                            cboJogStep.Items.Remove(Controller.Stepnum.Cont.ToString());
                             RobotAdapter.setoverride = 20;
                             myController.SetOverride();
                             myController.GetCPosition();
@@ -432,7 +431,7 @@ namespace Integrated_Robot_Interface
                             break;
                         case Controller.Robotnum.Nexcom:
                             RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -180, 180, -180, 180, -180, 180, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.saferangejoint = new float[12] { -170, 150, 0, 20, -60, 145, -120, 170, -105, 105, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 100 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
                             gbRegister.Enabled = false;
@@ -443,6 +442,10 @@ namespace Integrated_Robot_Interface
                         case Controller.Robotnum.Ourarm:
                             break;
                     }
+
+                    cboJogStep.SelectedIndex = 0;
+                    cboSafeRangeCoordinate.SelectedIndex = 0;
+                    cboProgramInstruction.SelectedIndex = 0;
                 }
                 else
                 {
@@ -649,12 +652,6 @@ namespace Integrated_Robot_Interface
             switch (myController.Robot)
             {
                 case Controller.Robotnum.Fanuc:
-                    RobotAdapter.setvelocity = 100;
-                    if (!myController.SetVelocity())
-                    {
-                        ShowMessage("設定速度失敗", "設定速度狀態");
-                    }
-
                     RobotAdapter.homeposition.SetValue(180, 0);
                     RobotAdapter.homeposition.SetValue(0, 1);
                     RobotAdapter.homeposition.SetValue(280, 2);
@@ -667,6 +664,16 @@ namespace Integrated_Robot_Interface
                     }
                     break;
                 case Controller.Robotnum.Nexcom:
+                    RobotAdapter.homeposition.SetValue(0, 0);
+                    RobotAdapter.homeposition.SetValue(0, 1);
+                    RobotAdapter.homeposition.SetValue(0, 2);
+                    RobotAdapter.homeposition.SetValue(0, 3);
+                    RobotAdapter.homeposition.SetValue(0, 4);
+                    RobotAdapter.homeposition.SetValue(0, 5);
+                    if (!myController.Home())
+                    {
+                        ShowMessage("回到原點失敗", "回到原點狀態");
+                    }
                     break;
                 case Controller.Robotnum.Ourarm:
                     break;
@@ -811,7 +818,7 @@ namespace Integrated_Robot_Interface
         }
         #endregion
 
-        #region <gbJogIncMove>
+        #region <gbJogMove>
         private void cboJogCoordinate_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (cboJogCoordinate.Text)
@@ -864,75 +871,33 @@ namespace Integrated_Robot_Interface
                 case nameof(Controller.Stepnum.Ten):
                     myController.Step = Controller.Stepnum.Ten;
                     break;
-                case nameof(Controller.Stepnum.Cont):
-                    myController.Step = Controller.Stepnum.Cont;
-                    break;
             }
-            RobotAdapter.incmove.SetValue(myController.Step, 0);
+            RobotAdapter.jogmove.SetValue(myController.Step, 0);
         }
         private void btnJogXJ1Positive_Click(object sender, EventArgs e)
         {
-            if (myController.Step == Controller.Stepnum.Cont)
-            {
-                return;
-            }
-
             Button btn = (Button)sender;
 
-            RobotAdapter.incmove.SetValue(Convert.ToInt32(btn.Tag), 1);
+            RobotAdapter.jogmove.SetValue(Convert.ToInt32(btn.Tag), 1);
             switch (myController.Coordinate)
             {
                 case Controller.Coordinatenum.Cartesian:
-                    if (!myController.IncMoveC())
+                    if (!myController.JogMoveC())
                     {
-                        ShowMessage("單動移動失敗", "單動移動狀態");
+                        ShowMessage("寸動移動失敗", "單動移動狀態");
                     }
                     break;
                 case Controller.Coordinatenum.Joint:
-                    if (!myController.IncMoveJ())
+                    if (!myController.JogMoveJ())
                     {
-                        ShowMessage("單動移動失敗", "單動移動狀態");
+                        ShowMessage("寸動移動失敗", "單動移動狀態");
                     }
                     break;
-            }
-        }
-        private void btnJogXJ1Positive_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (myController.Step == Controller.Stepnum.Cont)
-            {
-                Button btn = (Button)sender;
-
-                RobotAdapter.jogmove = Convert.ToInt32(btn.Tag);
-                switch (myController.Coordinate)
-                {
-                    case Controller.Coordinatenum.Cartesian:
-                        if (!myController.JogMoveC())
-                        {
-                            ShowMessage("寸動移動失敗", "寸動移動狀態");
-                        }
-                        break;
-                    case Controller.Coordinatenum.Joint:
-                        if (!myController.JogMoveJ())
-                        {
-                            ShowMessage("寸動移動失敗", "寸動移動狀態");
-                        }
-                        break;
-                }
-            }
-        }
-        private void btnJogXJ1Positive_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (myController.Step == Controller.Stepnum.Cont)
-            {
-                if (!myController.Hold())
-                {
-                    ShowMessage("Hold失敗", "Hold狀態");
-                }
             }
         }
         #endregion
 
-        #region <gbEnable>
+        #region <gbControl>
 
         private void btnEnable_Click(object sender, EventArgs e)
         {
@@ -950,19 +915,25 @@ namespace Integrated_Robot_Interface
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
-            if (!fgRobotState)
+            if (!myController.Reset())
             {
-                if (!myController.Reset())
-                {
-                    ShowMessage("Reset失敗", "Reset狀態");
-                    return;
-                }
-                else
-                {
-                    fgRobotState = true;
-                    timer1.Enabled = true;
-                    richTextBox1.Text = "";
-                }
+                ShowMessage("Reset失敗", "Reset狀態");
+            }
+            timer1.Enabled = true;
+            richTextBox1.Text = "";
+        }
+        private void btnHold_Click(object sender, EventArgs e)
+        {
+            if (!myController.Hold())
+            {
+                ShowMessage("Hold失敗", "Hold狀態");
+            }
+        }
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            if (!myController.Stop())
+            {
+                ShowMessage("Stop失敗", "Stop狀態");
             }
         }
 
@@ -1437,6 +1408,11 @@ namespace Integrated_Robot_Interface
         }
         private void btnProgramCompile_Click(object sender, EventArgs e)
         {
+            Thread thread = new Thread(ProgramCompile);
+            thread.Start();
+        }
+        private void ProgramCompile()
+        {
             if (lstProgram.Items.Count == 0)
                 return;
             if (myController.Robot == Controller.Robotnum.Fanuc)
@@ -1456,6 +1432,7 @@ namespace Integrated_Robot_Interface
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                     MessageBox.Show("編譯完成");
                     return;
@@ -1465,13 +1442,14 @@ namespace Integrated_Robot_Interface
                 if (ins.Contains(Controller.Instructionnum.OVERRIDE.ToString()))
                 {
                     RobotAdapter.compile.SetValue((int)Controller.Instructionnum.OVERRIDE, 1);
-                    string[] str = ins.Split(new string[] { ". ", Controller.Instructionnum.OVERRIDE.ToString(), " = ", "%"},
+                    string[] str = ins.Split(new string[] { ". ", Controller.Instructionnum.OVERRIDE.ToString(), " = ", "%" },
                         StringSplitOptions.RemoveEmptyEntries);
                     RobotAdapter.compile.SetValue(Convert.ToSingle(str[0]), 0);
                     RobotAdapter.compile.SetValue(Convert.ToSingle(str[1]), 2);
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                 }
                 else if (ins.Contains(Controller.Instructionnum.MOVEC.ToString()))
@@ -1487,6 +1465,7 @@ namespace Integrated_Robot_Interface
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                 }
                 else if (ins.Contains(Controller.Instructionnum.MOVEJ.ToString()))
@@ -1502,6 +1481,7 @@ namespace Integrated_Robot_Interface
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                 }
                 else if (ins.Contains(Controller.Instructionnum.MOVEL.ToString()))
@@ -1517,6 +1497,7 @@ namespace Integrated_Robot_Interface
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                 }
                 else if (ins.Contains(Controller.Instructionnum.WAIT.ToString()))
@@ -1529,11 +1510,12 @@ namespace Integrated_Robot_Interface
                     if (!myController.Compile())
                     {
                         ShowMessage("編譯失敗", "編譯狀態");
+                        return;
                     }
                 }
             }
         }
         #endregion
-        
+
     }
 }

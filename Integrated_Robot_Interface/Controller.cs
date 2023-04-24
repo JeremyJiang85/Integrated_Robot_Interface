@@ -17,7 +17,7 @@ namespace Integrated_Robot_Interface
         public Coordinatenum Coordinate { get; set; } = Coordinatenum.Cartesian;
         public enum Coordinatenum { Cartesian, Joint }
         public Stepnum Step { get; set; } = Stepnum.One;
-        public enum Stepnum : int { One = 1, Five = 5, Ten = 10, Cont = 20 }
+        public enum Stepnum : int { One = 1, Five = 5, Ten = 10 }
         public Instructionnum Instruction { get; set; } = Instructionnum.OVERRIDE;
         public enum Instructionnum : int { OVERRIDE, MOVEC, MOVEJ, MOVEL, WAIT };
 
@@ -46,9 +46,25 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Alarm();
         }
+        public bool Enable()
+        {
+            return myRobotAdapter.Enable();
+        }
+        public bool Disable()
+        {
+            return myRobotAdapter.Disable();
+        }
         public bool Reset()
         {
             return myRobotAdapter.Reset();
+        }
+        public bool Hold()
+        {
+            return myRobotAdapter.Hold();
+        }
+        public bool Stop()
+        {
+            return myRobotAdapter.Stop();
         }
         public bool GetOverride()
         {
@@ -97,14 +113,6 @@ namespace Integrated_Robot_Interface
         public bool JogMoveJ()
         {
             return myRobotAdapter.JogMoveJ();
-        }
-        public bool IncMoveC()
-        {
-            return myRobotAdapter.IncMoveC();
-        }
-        public bool IncMoveJ()
-        {
-            return myRobotAdapter.IncMoveJ();
         }
         public bool GetInformation1()
         {
@@ -160,18 +168,7 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
-        public bool Enable()
-        {
-            return myRobotAdapter.Enable();
-        }
-        public bool Disable()
-        {
-            return myRobotAdapter.Disable();
-        }
-        public bool Hold()
-        {
-            return myRobotAdapter.Hold();
-        }
+        
         #endregion
     }
 }

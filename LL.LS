@@ -1,4 +1,4 @@
-/PROG  JJJ
+/PROG  LL
 /ATTR
 OWNER		= MNEDITOR;
 COMMENT		= "";
@@ -19,19 +19,7 @@ TCD:  STACK_SIZE	= 0,
 DEFAULT_GROUP	= 1,*,*,*,*;
 CONTROL_CODE	= 00000000 00000000;
 /MN
-   1:  OVERRIDE=30% ;
+   1:  OVERRIDE=50% ;
    2:J PR[1] 100% FINE    ;
-   3:J PR[2] 100% FINE    ;
-   4:J PR[3] 100% FINE    ;
-   5:J PR[4] 100% FINE    ;
-   6:J PR[5] 100% FINE    ;
-   7:  WAIT   3(sec) ;
-   8:L PR[6] 200mm/sec FINE    ;
-   9:L PR[7] 200mm/sec FINE    ;
-   10:L PR[8] 300mm/sec FINE    ;
-   11:  WAIT   3(sec) ;
-   12:J PR[9] 100% FINE    ;
-   13:  WAIT   3(sec) ;
-   14:J PR[10] 100% FINE    ;
 /POS
 /END

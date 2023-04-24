@@ -24,8 +24,7 @@ namespace Integrated_Robot_Interface
         public static float setvelocity { get; set; } = 0;
         public static Array getregister { get; set; } = new float[2] { 0, 0 };
         public static Array setregister { get; set; } = new float[2] { 0, 0 };
-        public static Array incmove { get; set; } = new int[2] { 0, 0 };
-        public static int jogmove { get; set; } = 0;
+        public static Array jogmove { get; set; } = new int[2] { 0, 0 };
         public static string information1name { get; set; } = "";
         public static string information1text { get; set; } = "";
         public static string information2name { get; set; } = "";
@@ -68,7 +67,23 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
+        public virtual bool Enable()
+        {
+            return false;
+        }
+        public virtual bool Disable()
+        {
+            return false;
+        }
         public virtual bool Reset()
+        {
+            return false;
+        }
+        public virtual bool Hold()
+        {
+            return false;
+        }
+        public virtual bool Stop()
         {
             return false;
         }
@@ -112,11 +127,11 @@ namespace Integrated_Robot_Interface
         {
             return false;
         }
-        public virtual bool IncMoveC()
+        public virtual bool JogMoveC()
         {
             return false;
         }
-        public virtual bool IncMoveJ()
+        public virtual bool JogMoveJ()
         {
             return false;
         }
@@ -222,26 +237,7 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <Nexcom>
-        public virtual bool JogMoveC()
-        {
-            return false;
-        }
-        public virtual bool JogMoveJ()
-        {
-            return false;
-        }
-        public virtual bool Enable()
-        {
-            return false;
-        }
-        public virtual bool Disable()
-        {
-            return false;
-        }
-        public virtual bool Hold()
-        {
-            return false;
-        }
+
         #endregion
     }
 }

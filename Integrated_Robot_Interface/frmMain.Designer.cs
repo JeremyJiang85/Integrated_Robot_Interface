@@ -84,7 +84,7 @@
             this.lblR3 = new System.Windows.Forms.Label();
             this.lblR1 = new System.Windows.Forms.Label();
             this.lblR2 = new System.Windows.Forms.Label();
-            this.gbJogIncMove = new System.Windows.Forms.GroupBox();
+            this.gbJogMove = new System.Windows.Forms.GroupBox();
             this.cboJogCoordinate = new System.Windows.Forms.ComboBox();
             this.lblLineCoordinate = new System.Windows.Forms.Label();
             this.cboJogStep = new System.Windows.Forms.ComboBox();
@@ -104,9 +104,9 @@
             this.btnDisable = new System.Windows.Forms.Button();
             this.btnEnable = new System.Windows.Forms.Button();
             this.gbControl = new System.Windows.Forms.GroupBox();
-            this.btnInformation = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnHold = new System.Windows.Forms.Button();
+            this.btnInformation = new System.Windows.Forms.Button();
             this.gbLineMove = new System.Windows.Forms.GroupBox();
             this.lblLineVelocityUnit = new System.Windows.Forms.Label();
             this.lblLineRJ6Unit = new System.Windows.Forms.Label();
@@ -132,6 +132,9 @@
             this.txtLineYJ2 = new System.Windows.Forms.TextBox();
             this.txtLineXJ1 = new System.Windows.Forms.TextBox();
             this.gbSafeRange = new System.Windows.Forms.GroupBox();
+            this.txtSafeRangeVelocitymax = new System.Windows.Forms.TextBox();
+            this.txtSafeRangeVelocitymin = new System.Windows.Forms.TextBox();
+            this.lblSafeRangeVelocity = new System.Windows.Forms.Label();
             this.cboSafeRangeCoordinate = new System.Windows.Forms.ComboBox();
             this.lblSafeRangeCoordinate = new System.Windows.Forms.Label();
             this.txtSafeRangeRJ6max = new System.Windows.Forms.TextBox();
@@ -167,6 +170,9 @@
             this.ColumnR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbProgram = new System.Windows.Forms.GroupBox();
+            this.lblProgramValue = new System.Windows.Forms.Label();
+            this.txtProgramValue = new System.Windows.Forms.TextBox();
+            this.lblProgramUnit = new System.Windows.Forms.Label();
             this.lblProgramInstruction = new System.Windows.Forms.Label();
             this.cboProgramCoordinate = new System.Windows.Forms.ComboBox();
             this.lblProgramCoordinate = new System.Windows.Forms.Label();
@@ -195,19 +201,13 @@
             this.txtProgramRJ6 = new System.Windows.Forms.TextBox();
             this.txtProgramWJ4 = new System.Windows.Forms.TextBox();
             this.txtProgramPJ5 = new System.Windows.Forms.TextBox();
-            this.txtProgramValue = new System.Windows.Forms.TextBox();
-            this.lblProgramUnit = new System.Windows.Forms.Label();
-            this.lblProgramValue = new System.Windows.Forms.Label();
-            this.txtSafeRangeVelocitymax = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeVelocitymin = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeVelocity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
             this.gbOverride.SuspendLayout();
             this.gbPointMove.SuspendLayout();
             this.gbRegister.SuspendLayout();
-            this.gbJogIncMove.SuspendLayout();
+            this.gbJogMove.SuspendLayout();
             this.gbControl.SuspendLayout();
             this.gbLineMove.SuspendLayout();
             this.gbSafeRange.SuspendLayout();
@@ -231,7 +231,7 @@
             this.btnEsc.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnEsc.Location = new System.Drawing.Point(926, 12);
             this.btnEsc.Name = "btnEsc";
-            this.btnEsc.Size = new System.Drawing.Size(96, 52);
+            this.btnEsc.Size = new System.Drawing.Size(100, 52);
             this.btnEsc.TabIndex = 1;
             this.btnEsc.Text = "ESC";
             this.btnEsc.UseVisualStyleBackColor = true;
@@ -523,7 +523,7 @@
             // btnPTPSet
             // 
             this.btnPTPSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPTPSet.Location = new System.Drawing.Point(111, 236);
+            this.btnPTPSet.Location = new System.Drawing.Point(111, 237);
             this.btnPTPSet.Name = "btnPTPSet";
             this.btnPTPSet.Size = new System.Drawing.Size(94, 50);
             this.btnPTPSet.TabIndex = 14;
@@ -536,7 +536,7 @@
             this.btnPTPCopy.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnPTPCopy.Location = new System.Drawing.Point(10, 236);
             this.btnPTPCopy.Name = "btnPTPCopy";
-            this.btnPTPCopy.Size = new System.Drawing.Size(94, 50);
+            this.btnPTPCopy.Size = new System.Drawing.Size(95, 50);
             this.btnPTPCopy.TabIndex = 13;
             this.btnPTPCopy.Text = "Copy";
             this.btnPTPCopy.UseVisualStyleBackColor = true;
@@ -794,31 +794,31 @@
             this.lblR2.TabIndex = 17;
             this.lblR2.Text = "R2 =";
             // 
-            // gbJogIncMove
+            // gbJogMove
             // 
-            this.gbJogIncMove.Controls.Add(this.cboJogCoordinate);
-            this.gbJogIncMove.Controls.Add(this.lblLineCoordinate);
-            this.gbJogIncMove.Controls.Add(this.cboJogStep);
-            this.gbJogIncMove.Controls.Add(this.lblJogStep);
-            this.gbJogIncMove.Controls.Add(this.btnJogRJ6Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogRJ6Negative);
-            this.gbJogIncMove.Controls.Add(this.btnJogPJ5Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogPJ5Negative);
-            this.gbJogIncMove.Controls.Add(this.btnJogWJ4Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogWJ4Negative);
-            this.gbJogIncMove.Controls.Add(this.btnJogZJ3Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogZJ3Negative);
-            this.gbJogIncMove.Controls.Add(this.btnJogYJ2Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogYJ2Negative);
-            this.gbJogIncMove.Controls.Add(this.btnJogXJ1Positive);
-            this.gbJogIncMove.Controls.Add(this.btnJogXJ1Negative);
-            this.gbJogIncMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbJogIncMove.Location = new System.Drawing.Point(642, 146);
-            this.gbJogIncMove.Name = "gbJogIncMove";
-            this.gbJogIncMove.Size = new System.Drawing.Size(216, 353);
-            this.gbJogIncMove.TabIndex = 8;
-            this.gbJogIncMove.TabStop = false;
-            this.gbJogIncMove.Text = "Jog / Inc Move";
+            this.gbJogMove.Controls.Add(this.cboJogCoordinate);
+            this.gbJogMove.Controls.Add(this.lblLineCoordinate);
+            this.gbJogMove.Controls.Add(this.cboJogStep);
+            this.gbJogMove.Controls.Add(this.lblJogStep);
+            this.gbJogMove.Controls.Add(this.btnJogRJ6Positive);
+            this.gbJogMove.Controls.Add(this.btnJogRJ6Negative);
+            this.gbJogMove.Controls.Add(this.btnJogPJ5Positive);
+            this.gbJogMove.Controls.Add(this.btnJogPJ5Negative);
+            this.gbJogMove.Controls.Add(this.btnJogWJ4Positive);
+            this.gbJogMove.Controls.Add(this.btnJogWJ4Negative);
+            this.gbJogMove.Controls.Add(this.btnJogZJ3Positive);
+            this.gbJogMove.Controls.Add(this.btnJogZJ3Negative);
+            this.gbJogMove.Controls.Add(this.btnJogYJ2Positive);
+            this.gbJogMove.Controls.Add(this.btnJogYJ2Negative);
+            this.gbJogMove.Controls.Add(this.btnJogXJ1Positive);
+            this.gbJogMove.Controls.Add(this.btnJogXJ1Negative);
+            this.gbJogMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbJogMove.Location = new System.Drawing.Point(642, 146);
+            this.gbJogMove.Name = "gbJogMove";
+            this.gbJogMove.Size = new System.Drawing.Size(216, 353);
+            this.gbJogMove.TabIndex = 8;
+            this.gbJogMove.TabStop = false;
+            this.gbJogMove.Text = "Jog Move";
             // 
             // cboJogCoordinate
             // 
@@ -870,8 +870,6 @@
             this.btnJogRJ6Positive.Text = "+R";
             this.btnJogRJ6Positive.UseVisualStyleBackColor = true;
             this.btnJogRJ6Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogRJ6Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogRJ6Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogRJ6Negative
             // 
@@ -883,8 +881,6 @@
             this.btnJogRJ6Negative.Text = "-R";
             this.btnJogRJ6Negative.UseVisualStyleBackColor = true;
             this.btnJogRJ6Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogRJ6Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogRJ6Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogPJ5Positive
             // 
@@ -896,8 +892,6 @@
             this.btnJogPJ5Positive.Text = "+P";
             this.btnJogPJ5Positive.UseVisualStyleBackColor = true;
             this.btnJogPJ5Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogPJ5Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogPJ5Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogPJ5Negative
             // 
@@ -909,8 +903,6 @@
             this.btnJogPJ5Negative.Text = "-P";
             this.btnJogPJ5Negative.UseVisualStyleBackColor = true;
             this.btnJogPJ5Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogPJ5Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogPJ5Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogWJ4Positive
             // 
@@ -922,8 +914,6 @@
             this.btnJogWJ4Positive.Text = "+W";
             this.btnJogWJ4Positive.UseVisualStyleBackColor = true;
             this.btnJogWJ4Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogWJ4Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogWJ4Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogWJ4Negative
             // 
@@ -935,8 +925,6 @@
             this.btnJogWJ4Negative.Text = "-W";
             this.btnJogWJ4Negative.UseVisualStyleBackColor = true;
             this.btnJogWJ4Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogWJ4Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogWJ4Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogZJ3Positive
             // 
@@ -948,8 +936,6 @@
             this.btnJogZJ3Positive.Text = "+Z";
             this.btnJogZJ3Positive.UseVisualStyleBackColor = true;
             this.btnJogZJ3Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogZJ3Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogZJ3Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogZJ3Negative
             // 
@@ -961,8 +947,6 @@
             this.btnJogZJ3Negative.Text = "-Z";
             this.btnJogZJ3Negative.UseVisualStyleBackColor = true;
             this.btnJogZJ3Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogZJ3Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogZJ3Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogYJ2Positive
             // 
@@ -974,8 +958,6 @@
             this.btnJogYJ2Positive.Text = "+Y";
             this.btnJogYJ2Positive.UseVisualStyleBackColor = true;
             this.btnJogYJ2Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogYJ2Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogYJ2Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogYJ2Negative
             // 
@@ -987,8 +969,6 @@
             this.btnJogYJ2Negative.Text = "-Y";
             this.btnJogYJ2Negative.UseVisualStyleBackColor = true;
             this.btnJogYJ2Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogYJ2Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogYJ2Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogXJ1Positive
             // 
@@ -1000,8 +980,6 @@
             this.btnJogXJ1Positive.Text = "+X";
             this.btnJogXJ1Positive.UseVisualStyleBackColor = true;
             this.btnJogXJ1Positive.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogXJ1Positive.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogXJ1Positive.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnJogXJ1Negative
             // 
@@ -1013,8 +991,6 @@
             this.btnJogXJ1Negative.Text = "-X";
             this.btnJogXJ1Negative.UseVisualStyleBackColor = true;
             this.btnJogXJ1Negative.Click += new System.EventHandler(this.btnJogXJ1Positive_Click);
-            this.btnJogXJ1Negative.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseDown);
-            this.btnJogXJ1Negative.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnJogXJ1Positive_MouseUp);
             // 
             // btnDisable
             // 
@@ -1038,31 +1014,19 @@
             // 
             // gbControl
             // 
-            this.gbControl.Controls.Add(this.btnInformation);
             this.gbControl.Controls.Add(this.btnStop);
             this.gbControl.Controls.Add(this.btnHold);
             this.gbControl.Controls.Add(this.btnReset);
             this.gbControl.Controls.Add(this.btnDisable);
-            this.gbControl.Controls.Add(this.btnPositionHome);
             this.gbControl.Controls.Add(this.btnEnable);
+            this.gbControl.Controls.Add(this.btnPositionHome);
             this.gbControl.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gbControl.Location = new System.Drawing.Point(12, 146);
             this.gbControl.Name = "gbControl";
-            this.gbControl.Size = new System.Drawing.Size(114, 383);
+            this.gbControl.Size = new System.Drawing.Size(114, 332);
             this.gbControl.TabIndex = 9;
             this.gbControl.TabStop = false;
             this.gbControl.Text = "Control";
-            // 
-            // btnInformation
-            // 
-            this.btnInformation.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnInformation.Location = new System.Drawing.Point(6, 333);
-            this.btnInformation.Name = "btnInformation";
-            this.btnInformation.Size = new System.Drawing.Size(100, 42);
-            this.btnInformation.TabIndex = 19;
-            this.btnInformation.Text = "Information";
-            this.btnInformation.UseVisualStyleBackColor = true;
-            this.btnInformation.Click += new System.EventHandler(this.btnInformation_Click);
             // 
             // btnStop
             // 
@@ -1072,6 +1036,7 @@
             this.btnStop.TabIndex = 17;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnHold
             // 
@@ -1081,6 +1046,18 @@
             this.btnHold.TabIndex = 16;
             this.btnHold.Text = "Hold";
             this.btnHold.UseVisualStyleBackColor = true;
+            this.btnHold.Click += new System.EventHandler(this.btnHold_Click);
+            // 
+            // btnInformation
+            // 
+            this.btnInformation.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnInformation.Location = new System.Drawing.Point(926, 84);
+            this.btnInformation.Name = "btnInformation";
+            this.btnInformation.Size = new System.Drawing.Size(100, 52);
+            this.btnInformation.TabIndex = 19;
+            this.btnInformation.Text = "Information";
+            this.btnInformation.UseVisualStyleBackColor = true;
+            this.btnInformation.Click += new System.EventHandler(this.btnInformation_Click);
             // 
             // gbLineMove
             // 
@@ -1366,6 +1343,35 @@
             this.gbSafeRange.TabIndex = 19;
             this.gbSafeRange.TabStop = false;
             this.gbSafeRange.Text = "Safe Range";
+            // 
+            // txtSafeRangeVelocitymax
+            // 
+            this.txtSafeRangeVelocitymax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSafeRangeVelocitymax.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtSafeRangeVelocitymax.Location = new System.Drawing.Point(144, 234);
+            this.txtSafeRangeVelocitymax.Name = "txtSafeRangeVelocitymax";
+            this.txtSafeRangeVelocitymax.Size = new System.Drawing.Size(60, 23);
+            this.txtSafeRangeVelocitymax.TabIndex = 40;
+            this.txtSafeRangeVelocitymax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtSafeRangeVelocitymin
+            // 
+            this.txtSafeRangeVelocitymin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSafeRangeVelocitymin.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtSafeRangeVelocitymin.Location = new System.Drawing.Point(46, 234);
+            this.txtSafeRangeVelocitymin.Name = "txtSafeRangeVelocitymin";
+            this.txtSafeRangeVelocitymin.Size = new System.Drawing.Size(60, 23);
+            this.txtSafeRangeVelocitymin.TabIndex = 38;
+            this.txtSafeRangeVelocitymin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblSafeRangeVelocity
+            // 
+            this.lblSafeRangeVelocity.AutoSize = true;
+            this.lblSafeRangeVelocity.Location = new System.Drawing.Point(6, 234);
+            this.lblSafeRangeVelocity.Name = "lblSafeRangeVelocity";
+            this.lblSafeRangeVelocity.Size = new System.Drawing.Size(130, 21);
+            this.lblSafeRangeVelocity.TabIndex = 39;
+            this.lblSafeRangeVelocity.Text = "V :                 ~";
             // 
             // cboSafeRangeCoordinate
             // 
@@ -1714,12 +1720,40 @@
             this.gbProgram.Controls.Add(this.txtProgramWJ4);
             this.gbProgram.Controls.Add(this.txtProgramPJ5);
             this.gbProgram.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbProgram.Location = new System.Drawing.Point(807, 513);
+            this.gbProgram.Location = new System.Drawing.Point(639, 349);
             this.gbProgram.Name = "gbProgram";
             this.gbProgram.Size = new System.Drawing.Size(694, 354);
             this.gbProgram.TabIndex = 21;
             this.gbProgram.TabStop = false;
             this.gbProgram.Text = "Program";
+            // 
+            // lblProgramValue
+            // 
+            this.lblProgramValue.AutoSize = true;
+            this.lblProgramValue.Location = new System.Drawing.Point(320, 128);
+            this.lblProgramValue.Name = "lblProgramValue";
+            this.lblProgramValue.Size = new System.Drawing.Size(67, 21);
+            this.lblProgramValue.TabIndex = 58;
+            this.lblProgramValue.Text = "Value :";
+            // 
+            // txtProgramValue
+            // 
+            this.txtProgramValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtProgramValue.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtProgramValue.Location = new System.Drawing.Point(393, 128);
+            this.txtProgramValue.Name = "txtProgramValue";
+            this.txtProgramValue.Size = new System.Drawing.Size(87, 23);
+            this.txtProgramValue.TabIndex = 55;
+            this.txtProgramValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblProgramUnit
+            // 
+            this.lblProgramUnit.AutoSize = true;
+            this.lblProgramUnit.Location = new System.Drawing.Point(486, 128);
+            this.lblProgramUnit.Name = "lblProgramUnit";
+            this.lblProgramUnit.Size = new System.Drawing.Size(40, 21);
+            this.lblProgramUnit.TabIndex = 56;
+            this.lblProgramUnit.Text = "(%)";
             // 
             // lblProgramInstruction
             // 
@@ -1991,74 +2025,18 @@
             this.txtProgramPJ5.TabIndex = 37;
             this.txtProgramPJ5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtProgramValue
-            // 
-            this.txtProgramValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProgramValue.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramValue.Location = new System.Drawing.Point(393, 128);
-            this.txtProgramValue.Name = "txtProgramValue";
-            this.txtProgramValue.Size = new System.Drawing.Size(87, 23);
-            this.txtProgramValue.TabIndex = 55;
-            this.txtProgramValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblProgramUnit
-            // 
-            this.lblProgramUnit.AutoSize = true;
-            this.lblProgramUnit.Location = new System.Drawing.Point(486, 128);
-            this.lblProgramUnit.Name = "lblProgramUnit";
-            this.lblProgramUnit.Size = new System.Drawing.Size(40, 21);
-            this.lblProgramUnit.TabIndex = 56;
-            this.lblProgramUnit.Text = "(%)";
-            // 
-            // lblProgramValue
-            // 
-            this.lblProgramValue.AutoSize = true;
-            this.lblProgramValue.Location = new System.Drawing.Point(320, 128);
-            this.lblProgramValue.Name = "lblProgramValue";
-            this.lblProgramValue.Size = new System.Drawing.Size(67, 21);
-            this.lblProgramValue.TabIndex = 58;
-            this.lblProgramValue.Text = "Value :";
-            // 
-            // txtSafeRangeVelocitymax
-            // 
-            this.txtSafeRangeVelocitymax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeVelocitymax.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeVelocitymax.Location = new System.Drawing.Point(144, 234);
-            this.txtSafeRangeVelocitymax.Name = "txtSafeRangeVelocitymax";
-            this.txtSafeRangeVelocitymax.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeVelocitymax.TabIndex = 40;
-            this.txtSafeRangeVelocitymax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtSafeRangeVelocitymin
-            // 
-            this.txtSafeRangeVelocitymin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeVelocitymin.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeVelocitymin.Location = new System.Drawing.Point(46, 234);
-            this.txtSafeRangeVelocitymin.Name = "txtSafeRangeVelocitymin";
-            this.txtSafeRangeVelocitymin.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeVelocitymin.TabIndex = 38;
-            this.txtSafeRangeVelocitymin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblSafeRangeVelocity
-            // 
-            this.lblSafeRangeVelocity.AutoSize = true;
-            this.lblSafeRangeVelocity.Location = new System.Drawing.Point(6, 234);
-            this.lblSafeRangeVelocity.Name = "lblSafeRangeVelocity";
-            this.lblSafeRangeVelocity.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeVelocity.TabIndex = 39;
-            this.lblSafeRangeVelocity.Text = "V :                 ~";
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1514, 879);
+            this.ClientSize = new System.Drawing.Size(1343, 705);
             this.Controls.Add(this.gbProgram);
+            this.Controls.Add(this.btnInformation);
             this.Controls.Add(this.gbPoints);
             this.Controls.Add(this.gbSafeRange);
             this.Controls.Add(this.gbLineMove);
             this.Controls.Add(this.gbControl);
-            this.Controls.Add(this.gbJogIncMove);
+            this.Controls.Add(this.gbJogMove);
             this.Controls.Add(this.btnEsc);
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbPointMove);
@@ -2083,8 +2061,8 @@
             this.gbPointMove.PerformLayout();
             this.gbRegister.ResumeLayout(false);
             this.gbRegister.PerformLayout();
-            this.gbJogIncMove.ResumeLayout(false);
-            this.gbJogIncMove.PerformLayout();
+            this.gbJogMove.ResumeLayout(false);
+            this.gbJogMove.PerformLayout();
             this.gbControl.ResumeLayout(false);
             this.gbLineMove.ResumeLayout(false);
             this.gbLineMove.PerformLayout();
@@ -2145,7 +2123,7 @@
         private System.Windows.Forms.Label lblR1;
         private System.Windows.Forms.Label lblR2;
         private System.Windows.Forms.Button btnRegisterSet;
-        private System.Windows.Forms.GroupBox gbJogIncMove;
+        private System.Windows.Forms.GroupBox gbJogMove;
         private System.Windows.Forms.Button btnJogRJ6Positive;
         private System.Windows.Forms.Button btnJogRJ6Negative;
         private System.Windows.Forms.Button btnJogPJ5Positive;

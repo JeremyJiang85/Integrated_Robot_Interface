@@ -18,8 +18,15 @@ namespace Integrated_Robot_Interface
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
         private StreamWriter sw;
-        private static int programlinecount = 0;
-        private static int programPRcount = 0;
+        private int programlinecount = 0;
+        private int programPRcount = 0;
+        private Array Xyzwpr = new float[9];
+        private Array Config = new short[7];
+        private Array Joint = new float[9];
+        private short UF = 0;
+        private short UT = 1;
+        private short ValidC = 0;
+        private short ValidJ = 0;
 
         public FanucAdapter()
         {
@@ -34,11 +41,20 @@ namespace Integrated_Robot_Interface
         public override bool Connect()
         {
             bool ret = false;
+            Array Buffer = new short[8] { 1,1,1,0,0,0,0,1 };
 
             ret = mobjCore.Connect(ip);
             if (!ret)
             {
                 apierrtext = "mobjCore.Connect Fail";
+                return ret;
+            }
+
+
+            ret = mobjCore.WriteSDI(1, ref Buffer, 8);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
                 return ret;
             }
             return ret;
@@ -115,14 +131,128 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
+        public override bool Enable()
+        {
+            bool ret = false;
+            Array Buffer = new short[1] { 1 };
+
+            ret = mobjCore.WriteSDI(8, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+            
+            ret = mobjCore.WriteSDI(6, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+
+            Buffer.SetValue((short)0, 0);
+            ret = mobjCore.WriteSDI(6, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+            return ret;
+        }
+        public override bool Disable()
+        {
+            bool ret = false;
+            Array Buffer = new short[1] { 0 };
+
+            ret = mobjCore.WriteSDI(8, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+            return ret;
+        }
         public override bool Reset()
         {
             bool ret = false;
-
-            ret = mobjCore.ClearAlarm();
+            Array Buffer = new short[1] { 1 };
+            
+            Buffer.SetValue((short)0, 0);
+            ret = mobjCore.WriteSDI(4, ref Buffer, 1);
             if (!ret)
             {
-                apierrtext = "mobjCore.ClearAlarm Fail";
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+
+            Buffer.SetValue((short)1, 0);
+            ret = mobjCore.WriteSDI(5, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+
+            Buffer.SetValue((short)0, 0);
+            ret = mobjCore.WriteSDI(5, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+
+            return ret;
+        }
+        public override bool Hold()
+        {
+            bool ret = false;
+            Array Buffer = new short[1] { 0 };
+
+            ret = mobjCore.WriteSDI(2, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+
+            Buffer.SetValue((short)1, 0);
+            ret = mobjCore.WriteSDI(2, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+            return ret;
+        }
+        public override bool Stop()
+        {
+            bool ret = false;
+            Array Buffer = new short[1] { 1 };
+
+            ret = mobjCore.WriteSDI(4, ref Buffer, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjCore.WriteDI Fail";
+                return ret;
+            }
+            return ret;
+        }
+        public override bool Home()
+        {
+            bool ret = false;
+            int Index = 1;
+
+            ret = mobjNumReg.SetValue(6, 1);
+            if (!ret)
+            {
+                apierrtext = "mobjNumReg.SetValue Fail";
+                return ret;
+            }
+
+            ret = mobjPosReg.SetValueXyzwpr(Index, homeposition, Config, UF, UT);
+            if (!ret)
+            {
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
                 return ret;
             }
             return ret;
@@ -156,13 +286,6 @@ namespace Integrated_Robot_Interface
         public override bool GetCPosition()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
@@ -176,13 +299,6 @@ namespace Integrated_Robot_Interface
         public override bool GetJPosition()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
 
             ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
@@ -196,27 +312,13 @@ namespace Integrated_Robot_Interface
         public override bool PointMoveC()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
             Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
                 apierrtext = "mobjNumReg.SetValue Fail";
-                return ret;
-            }
-
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
@@ -231,26 +333,12 @@ namespace Integrated_Robot_Interface
         public override bool PointMoveJ()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
             if (!ret)
             {
                 apierrtext = "mobjNumReg.SetValue Fail";
-                return ret;
-            }
-
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
                 return ret;
             }
 
@@ -265,14 +353,7 @@ namespace Integrated_Robot_Interface
         public override bool LineMove()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
             Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 2);
@@ -282,49 +363,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
-                return ret;
-            }
-
             ret = mobjPosReg.SetValueXyzwpr(Index, setcposition, config, UF, UT);
-            if (!ret)
-            {
-                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
-                return ret;
-            }
-            return ret;
-        }
-        public override bool Home()
-        {
-            bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
-            int Index = 1;
-
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
-                return ret;
-            }
-
-            Xyzwpr.SetValue(homeposition.GetValue(2), 2);
-            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
-            if (!ret)
-            {
-                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
-                return ret;
-            }
-
-            ret = mobjPosReg.SetValueXyzwpr(Index, homeposition, Config, UF, UT);
             if (!ret)
             {
                 apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
@@ -383,17 +422,10 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool IncMoveC()
+        public override bool JogMoveC()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
-            int Value = Convert.ToInt32(incmove.GetValue(0));
+            int Value = Convert.ToInt32(jogmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
@@ -403,15 +435,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
-                return ret;
-
-            }
-
-            switch (Convert.ToInt32(incmove.GetValue(1)))
+            switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + Value, 0);
@@ -469,17 +493,10 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool IncMoveJ()
+        public override bool JogMoveJ()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
-            int Value = Convert.ToInt32(incmove.GetValue(0));
+            int Value = Convert.ToInt32(jogmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
@@ -489,14 +506,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-            if (!ret)
-            {
-                apierrtext = "mobjCurPos.GetValue Fail";
-                return ret;
-            }
-
-            switch (Convert.ToInt32(incmove.GetValue(1)))
+            switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     Joint.SetValue(Convert.ToInt32(Joint.GetValue(0)) + Value, 0);
@@ -636,14 +646,7 @@ namespace Integrated_Robot_Interface
         public override bool Compile()
         {
             bool ret = false;
-            Array Xyzwpr = new float[9];
-            Array Config = new short[7];
             Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
-            Array Joint = new float[9];
-            short UF = 0;
-            short UT = 1;
-            short ValidC = 0;
-            short ValidJ = 0;
 
             if (Convert.ToInt32(compile.GetValue(0)) == 1)
             {
