@@ -26,7 +26,6 @@ namespace Integrated_Robot_Interface
             InitializeComponent();
             myController = new Controller();
             information = new FrmInformation();
-            dataTable = new DataTable();
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -101,6 +100,26 @@ namespace Integrated_Robot_Interface
             gbEnbleControl(false);
             tbSafeRangeEnbleControl(false);
             information.Hide();
+            dataTable = new DataTable();
+            dataGridView1.DataSource = dataTable;
+            dataTable.Columns.Add("Num", typeof(int));
+            dataTable.Columns.Add("Mov", typeof(string));
+            dataTable.Columns.Add("X/J1", typeof(float));
+            dataTable.Columns.Add("Y/J2", typeof(float));
+            dataTable.Columns.Add("Z/J3", typeof(float));
+            dataTable.Columns.Add("W/J4", typeof(float));
+            dataTable.Columns.Add("P/J5", typeof(float));
+            dataTable.Columns.Add("R/J6", typeof(float));
+            dataTable.Columns.Add("V", typeof(float));
+            dataGridView1.Columns[0].Width = 55;
+            dataGridView1.Columns[1].Width = 55;
+            dataGridView1.Columns[2].Width = 85;
+            dataGridView1.Columns[3].Width = 85;
+            dataGridView1.Columns[4].Width = 85;
+            dataGridView1.Columns[5].Width = 85;
+            dataGridView1.Columns[6].Width = 85;
+            dataGridView1.Columns[7].Width = 85;
+            dataGridView1.Columns[8].Width = 45;
         }
         private void gbEnbleControl(bool tf)
         {
@@ -178,7 +197,6 @@ namespace Integrated_Robot_Interface
             txtProgramWJ4.Text = "";
             txtProgramPJ5.Text = "";
             txtProgramRJ6.Text = "";
-            txtProgramVelocity.Text = "";
         }
         #endregion
 
@@ -351,7 +369,6 @@ namespace Integrated_Robot_Interface
                     ShowMessage("Reset失敗", "Reset狀態");
                     return;
                 }
-                timer1.Enabled = true;
             }
         }
         #endregion
@@ -420,14 +437,37 @@ namespace Integrated_Robot_Interface
                     {
                         case Controller.Robotnum.Fanuc:
                             RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -170, 150, -100, 140, -70, 50, -180, 180, -40, 125, -180, 180 };
+                            RobotAdapter.saferangejoint = new float[12] { -170, 150, -100, 140, -70, 50, -180, 180, -125, -40, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
                             RobotAdapter.setoverride = 20;
-                            myController.SetOverride();
-                            myController.GetCPosition();
+                            if (!myController.SetOverride())
+                            {
+                                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
+                                return;
+                            }
+                            RobotAdapter.setvelocity = 100;
+                            if (!myController.SetVelocity())
+                            {
+                                ShowMessage("設定速度失敗", "設定速度狀態");
+                                return;
+                            }
+                            if (!myController.Refresh())
+                            {
+                                ShowMessage("刷新失敗", "取得刷新狀態");
+                                return;
+                            }
+                            if (!myController.GetCPosition())
+                            {
+                                ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
+                                return;
+                            }
                             RobotAdapter.setcposition = RobotAdapter.getcposition;
-                            myController.PointMoveC();
+                            if (!myController.PointMoveC())
+                            {
+                                ShowMessage("設定座標失敗", "點到點移動狀態");
+                                return;
+                            }
                             break;
                         case Controller.Robotnum.Nexcom:
                             RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
@@ -435,9 +475,28 @@ namespace Integrated_Robot_Interface
                             RobotAdapter.saferangevelocity = new float[2] { 0, 100 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
                             gbRegister.Enabled = false;
-                            myController.GetCPosition();
+                            RobotAdapter.setoverride = 50;
+                            if (!myController.SetOverride())
+                            {
+                                ShowMessage("設定速度百分比失敗", "設定速度百分比狀態");
+                                return;
+                            }
+                            RobotAdapter.setvelocity = 20;
+                            if (!myController.SetVelocity())
+                            {
+                                ShowMessage("設定速度失敗", "設定速度狀態");
+                            }
+                            if (!myController.GetCPosition())
+                            {
+                                ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
+                                return;
+                            }
                             RobotAdapter.setcposition = RobotAdapter.getcposition;
-                            myController.PointMoveC();
+                            if (!myController.PointMoveC())
+                            {
+                                ShowMessage("設定座標失敗", "點到點移動狀態");
+                                return;
+                            }
                             break;
                         case Controller.Robotnum.Ourarm:
                             break;
@@ -452,21 +511,6 @@ namespace Integrated_Robot_Interface
                     richTextBox1.Text += $"手臂連線失敗\r\n{RobotAdapter.apierrtext}\r\n";
                     MessageBox.Show($"手臂連線失敗\r\n{RobotAdapter.apierrtext}");
                     RobotAdapter.apierrtext = "";
-                    if (!myController.Alarm())
-                    {
-                        richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
-                        MessageBox.Show("讀取警示失敗", "讀取警示狀態");
-                        return;
-                    }
-                    else
-                    {
-                        if (RobotAdapter.alarmtext != "")
-                        {
-                            richTextBox1.Text += RobotAdapter.alarmtext + "\r\n";
-                            MessageBox.Show(RobotAdapter.alarmtext, "讀取警示狀態");
-                            return;
-                        }
-                    }
                 }
             }
             else
@@ -645,38 +689,6 @@ namespace Integrated_Robot_Interface
             catch (Exception)
             {
                 MessageBox.Show("請輸入有效數值");
-            }
-        }
-        private void btnPositionHome_Click(object sender, EventArgs e)
-        {
-            switch (myController.Robot)
-            {
-                case Controller.Robotnum.Fanuc:
-                    RobotAdapter.homeposition.SetValue(180, 0);
-                    RobotAdapter.homeposition.SetValue(0, 1);
-                    RobotAdapter.homeposition.SetValue(280, 2);
-                    RobotAdapter.homeposition.SetValue(180, 3);
-                    RobotAdapter.homeposition.SetValue(0, 4);
-                    RobotAdapter.homeposition.SetValue(0, 5);
-                    if (!myController.Home())
-                    {
-                        ShowMessage("回到原點失敗", "回到原點狀態");
-                    }
-                    break;
-                case Controller.Robotnum.Nexcom:
-                    RobotAdapter.homeposition.SetValue(0, 0);
-                    RobotAdapter.homeposition.SetValue(0, 1);
-                    RobotAdapter.homeposition.SetValue(0, 2);
-                    RobotAdapter.homeposition.SetValue(0, 3);
-                    RobotAdapter.homeposition.SetValue(0, 4);
-                    RobotAdapter.homeposition.SetValue(0, 5);
-                    if (!myController.Home())
-                    {
-                        ShowMessage("回到原點失敗", "回到原點狀態");
-                    }
-                    break;
-                case Controller.Robotnum.Ourarm:
-                    break;
             }
         }
         #endregion
@@ -936,7 +948,38 @@ namespace Integrated_Robot_Interface
                 ShowMessage("Stop失敗", "Stop狀態");
             }
         }
-
+        private void btnPositionHome_Click(object sender, EventArgs e)
+        {
+            switch (myController.Robot)
+            {
+                case Controller.Robotnum.Fanuc:
+                    RobotAdapter.homeposition.SetValue(0, 0);
+                    RobotAdapter.homeposition.SetValue(0, 1);
+                    RobotAdapter.homeposition.SetValue(0, 2);
+                    RobotAdapter.homeposition.SetValue(0, 3);
+                    RobotAdapter.homeposition.SetValue(-90, 4);
+                    RobotAdapter.homeposition.SetValue(0, 5);
+                    if (!myController.Home())
+                    {
+                        ShowMessage("回到自訂原點失敗", "回到自訂原點狀態");
+                    }
+                    break;
+                case Controller.Robotnum.Nexcom:
+                    RobotAdapter.homeposition.SetValue(0, 0);
+                    RobotAdapter.homeposition.SetValue(90, 1);
+                    RobotAdapter.homeposition.SetValue(0, 2);
+                    RobotAdapter.homeposition.SetValue(0, 3);
+                    RobotAdapter.homeposition.SetValue(-90, 4);
+                    RobotAdapter.homeposition.SetValue(0, 5);
+                    if (!myController.Home())
+                    {
+                        ShowMessage("回到自訂原點失敗", "回到自訂原點狀態");
+                    }
+                    break;
+                case Controller.Robotnum.Ourarm:
+                    break;
+            }
+        }
         #endregion
 
         #region <gbSafeRange>
@@ -1051,9 +1094,112 @@ namespace Integrated_Robot_Interface
         #endregion
 
         #region <gbPoints>
-        private void btnPointsMoveCopy_Click(object sender, EventArgs e)
+        private void btnPointsLoad_Click(object sender, EventArgs e)
         {
 
+        }
+        private void btnPointsSave_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void btnPointsSet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.CurrentRow.Cells[1].Value.ToString() == "C")
+                {
+                    myController.Coordinate = Controller.Coordinatenum.Cartesian;
+                    cboProgramCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboJogCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboSafeRangeCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboProgramInstruction.SelectedIndex = (int)Controller.Instructionnum.MOVEC;
+                    txtProgramXJ1.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[2].Value).ToString("###0.000"))}";
+                    txtProgramYJ2.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[3].Value).ToString("###0.000"))}";
+                    txtProgramZJ3.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[4].Value).ToString("###0.000"))}";
+                    txtProgramWJ4.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[5].Value).ToString("###0.000"))}";
+                    txtProgramPJ5.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[6].Value).ToString("###0.000"))}";
+                    txtProgramRJ6.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[7].Value).ToString("###0.000"))}";
+                }
+                else if (dataGridView1.CurrentRow.Cells[1].Value.ToString() == "L")
+                {
+                    myController.Coordinate = Controller.Coordinatenum.Cartesian;
+                    cboProgramCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboJogCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboSafeRangeCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboProgramInstruction.SelectedIndex = (int)Controller.Instructionnum.MOVEL;
+                    txtProgramXJ1.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[2].Value).ToString("###0.000"))}";
+                    txtProgramYJ2.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[3].Value).ToString("###0.000"))}";
+                    txtProgramZJ3.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[4].Value).ToString("###0.000"))}";
+                    txtProgramWJ4.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[5].Value).ToString("###0.000"))}";
+                    txtProgramPJ5.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[6].Value).ToString("###0.000"))}";
+                    txtProgramRJ6.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[7].Value).ToString("###0.000"))}";
+                    txtProgramValue.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[8].Value).ToString("###0.000"))}";
+                }
+                else if (dataGridView1.CurrentRow.Cells[1].Value.ToString() == "J")
+                {
+                    myController.Coordinate = Controller.Coordinatenum.Joint;
+                    cboProgramCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboJogCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboSafeRangeCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboPTPCoordinate.SelectedIndex = (int)myController.Coordinate;
+                    cboProgramInstruction.SelectedIndex = (int)Controller.Instructionnum.MOVEJ;
+                    txtProgramXJ1.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[2].Value).ToString("###0.000"))}";
+                    txtProgramYJ2.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[3].Value).ToString("###0.000"))}";
+                    txtProgramZJ3.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[4].Value).ToString("###0.000"))}";
+                    txtProgramWJ4.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[5].Value).ToString("###0.000"))}";
+                    txtProgramPJ5.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[6].Value).ToString("###0.000"))}";
+                    txtProgramRJ6.Text = $"{string.Format("{0,10}", Convert.ToSingle(dataGridView1.CurrentRow.Cells[7].Value).ToString("###0.000"))}";
+                }
+                else
+                {
+                    MessageBox.Show($"請輸入有效值");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("請輸入有效數值");
+            }
+        }
+        private void btnPointsCopy_Click(object sender, EventArgs e)
+        {
+            DataRow row = dataTable.NewRow();
+            row[0] = dataTable.Rows.Count + 1;
+            switch (myController.Coordinate)
+            {
+                case Controller.Coordinatenum.Cartesian:
+                    row[1] = 'L';
+                    row[2] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}";
+                    row[3] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}";
+                    row[4] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}";
+                    row[5] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}";
+                    row[6] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}";
+                    row[7] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
+
+                    if (!myController.GetVelocity())
+                    {
+                        ShowMessage("讀取速度失敗", "讀取速度狀態");
+                        txtProgramValue.Text = "Erorr";
+                        return;
+                    }
+                    else
+                    {
+                        row[8] = $"{string.Format("{0,10}", RobotAdapter.getvelocity.ToString("###0.000"))}";
+                    }
+                    break;
+                case Controller.Coordinatenum.Joint:
+                    row[1] = 'J';
+                    row[2] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}";
+                    row[3] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}";
+                    row[4] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}";
+                    row[5] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}";
+                    row[6] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}";
+                    row[7] = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
+                    break;
+            }
+            dataTable.Rows.Add(row);
         }
         #endregion
 
@@ -1099,7 +1245,6 @@ namespace Integrated_Robot_Interface
                     txtProgramWJ4.Enabled = false;
                     txtProgramPJ5.Enabled = false;
                     txtProgramRJ6.Enabled = false;
-                    txtProgramVelocity.Enabled = false;
                     btnProgramCopy.Enabled = false;
                     break;
                 case (int)Controller.Instructionnum.MOVEC:
@@ -1113,7 +1258,6 @@ namespace Integrated_Robot_Interface
                     txtProgramWJ4.Enabled = true;
                     txtProgramPJ5.Enabled = true;
                     txtProgramRJ6.Enabled = true;
-                    txtProgramVelocity.Enabled = false;
                     btnProgramCopy.Enabled = true;
                     break;
                 case (int)Controller.Instructionnum.MOVEJ:
@@ -1127,21 +1271,19 @@ namespace Integrated_Robot_Interface
                     txtProgramWJ4.Enabled = true;
                     txtProgramPJ5.Enabled = true;
                     txtProgramRJ6.Enabled = true;
-                    txtProgramVelocity.Enabled = false;
                     btnProgramCopy.Enabled = true;
                     break;
                 case (int)Controller.Instructionnum.MOVEL:
                     myController.Instruction = Controller.Instructionnum.MOVEL;
                     myController.Coordinate = Controller.Coordinatenum.Cartesian;
-                    lblProgramUnit.Text = "";
-                    txtProgramValue.Enabled = false;
+                    lblProgramUnit.Text = "(unit/s)";
+                    txtProgramValue.Enabled = true;
                     txtProgramXJ1.Enabled = true;
                     txtProgramYJ2.Enabled = true;
                     txtProgramZJ3.Enabled = true;
                     txtProgramWJ4.Enabled = true;
                     txtProgramPJ5.Enabled = true;
                     txtProgramRJ6.Enabled = true;
-                    txtProgramVelocity.Enabled = true;
                     btnProgramCopy.Enabled = true;
                     break;
                 case (int)Controller.Instructionnum.WAIT:
@@ -1154,7 +1296,6 @@ namespace Integrated_Robot_Interface
                     txtProgramWJ4.Enabled = false;
                     txtProgramPJ5.Enabled = false;
                     txtProgramRJ6.Enabled = false;
-                    txtProgramVelocity.Enabled = false;
                     btnProgramCopy.Enabled = false;
                     break;
             }
@@ -1175,12 +1316,12 @@ namespace Integrated_Robot_Interface
                     if (!myController.GetVelocity())
                     {
                         ShowMessage("讀取速度失敗", "讀取速度狀態");
-                        txtProgramVelocity.Text = "Erorr";
+                        txtProgramValue.Text = "Erorr";
                         return;
                     }
                     else
                     {
-                        txtProgramVelocity.Text = $"{string.Format("{0,10}", RobotAdapter.getvelocity.ToString("###0.000"))}";
+                        txtProgramValue.Text = $"{string.Format("{0,10}", RobotAdapter.getvelocity.ToString("###0.000"))}";
                     }
                     break;
                 case Controller.Coordinatenum.Joint:
@@ -1345,7 +1486,7 @@ namespace Integrated_Robot_Interface
                         if (string.IsNullOrEmpty(txtProgramXJ1.Text) || string.IsNullOrEmpty(txtProgramYJ2.Text) ||
                             string.IsNullOrEmpty(txtProgramZJ3.Text) || string.IsNullOrEmpty(txtProgramWJ4.Text) ||
                             string.IsNullOrEmpty(txtProgramPJ5.Text) || string.IsNullOrEmpty(txtProgramRJ6.Text) ||
-                            string.IsNullOrEmpty(txtProgramVelocity.Text))
+                            string.IsNullOrEmpty(txtProgramValue.Text))
                         {
                             MessageBox.Show("座標值和速度值不可有空白");
                             return false;
@@ -1357,7 +1498,7 @@ namespace Integrated_Robot_Interface
                         RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
                         RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
                         RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
-                        RobotAdapter.safevelocity = Convert.ToSingle(txtProgramVelocity.Text);
+                        RobotAdapter.safevelocity = Convert.ToSingle(txtProgramValue.Text);
 
                         if (!myController.SafeRangeCheckXYZ())
                         {

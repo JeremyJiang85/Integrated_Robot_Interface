@@ -120,6 +120,25 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
+        public override bool Home()
+        {
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(1)), 1);
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(3)), 5);
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(5)), 3);
+
+            int mesk = (int)Math.Pow(2, 6) - 1;
+
+            int ret = mobjGroupAdapter.NMC_GroupPtpCartAll(mesk, ref PosPcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                apierrtext = GetErrorMessage("NMC_GroupPtpCartAll", ret);
+                return false;
+            }
+            return true;
+        }
         public override bool GetOverride()
         {
             double PRetPercentage = 0;
@@ -266,63 +285,59 @@ namespace Integrated_Robot_Interface
                 apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
                 return false;
             }
-            else
-            {
-                apierrtext = "";
-            }
 
             int CartAxis = 0;
             double CartPos = 0;
 
-            switch (jogmove.GetValue(1))
+            switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     CartAxis = 0;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(0)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(0)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 1:
                     CartAxis = 0;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(0)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(0)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 2:
                     CartAxis = 1;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(1)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(1)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 3:
                     CartAxis = 1;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(1)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(1)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 4:
                     CartAxis = 2;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(2)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(2)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 5:
                     CartAxis = 2;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(2)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(2)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 6:
                     CartAxis = 5;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(5)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(5)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 7:
                     CartAxis = 5;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(5)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(5)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 8:
                     CartAxis = 4;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(4)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(4)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 9:
                     CartAxis = 4;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(4)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(4)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 10:
                     CartAxis = 3;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(3)) + Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(3)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 11:
                     CartAxis = 3;
-                    CartPos = Convert.ToInt32(PosPcs.pos.GetValue(3)) - Convert.ToInt32(jogmove.GetValue(0));
+                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(3)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
             }
 
@@ -342,64 +357,60 @@ namespace Integrated_Robot_Interface
                 apierrtext = GetErrorMessage("NMC_GroupGetActualPosAcs Fail", ret);
                 return false;
             }
-            else
-            {
-                apierrtext = "";
-            }
 
             int GroupAxisIndex = 0;
             double AcsPos = 0;
             double PAcsMaxVel = 0;
 
-            switch (jogmove.GetValue(1))
+            switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(0)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(0)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 1:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(0)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(0)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 2:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(1)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(1)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 3:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(1)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(1)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 4:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(2)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(2)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 5:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(2)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(2)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 6:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(3)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(3)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 7:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(3)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(3)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 8:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(4)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(4)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 9:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(4)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(4)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 10:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(5)) + Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(5)) + Convert.ToSingle(jogmove.GetValue(0));
                     break;
                 case 11:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToInt32(PosAcs.pos.GetValue(5)) - Convert.ToInt32(jogmove.GetValue(0));
+                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(5)) - Convert.ToSingle(jogmove.GetValue(0));
                     break;
             }
             
@@ -457,7 +468,7 @@ namespace Integrated_Robot_Interface
                 apierrtext = GetErrorMessage("NMC_GroupGetStatus Fail", ret);
                 return false;
             }
-
+            information1text += PRetStatusInBit.ToString();
             for (int i = 0; i > 14; i++)
             {
                 if ((PRetStatusInBit | 1) == 1)

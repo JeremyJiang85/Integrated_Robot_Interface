@@ -249,7 +249,7 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
 
-            ret = mobjPosReg.SetValueXyzwpr(Index, homeposition, Config, UF, UT);
+            ret = mobjPosReg.SetValueJoint(Index, homeposition, UF, UT);
             if (!ret)
             {
                 apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
@@ -425,7 +425,7 @@ namespace Integrated_Robot_Interface
         public override bool JogMoveC()
         {
             bool ret = false;
-            int Value = Convert.ToInt32(jogmove.GetValue(0));
+            float Value = Convert.ToSingle(jogmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
@@ -438,54 +438,44 @@ namespace Integrated_Robot_Interface
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) + Value, 0);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(0)) + Value, 0);
                     break;
                 case 1:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(0)) - Value, 0);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(0)) - Value, 0);
                     break;
                 case 2:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(1)) + Value, 1);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(1)) + Value, 1);
                     break;
                 case 3:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(1)) - Value, 1);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(1)) - Value, 1);
                     break;
                 case 4:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(2)) + Value, 2);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(2)) + Value, 2);
                     break;
                 case 5:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(2)) - Value, 2);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(2)) - Value, 2);
                     break;
                 case 6:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(3)) + Value, 3);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(3)) + Value, 3);
                     break;
                 case 7:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(3)) - Value, 3);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(3)) - Value, 3);
                     break;
                 case 8:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(4)) + Value, 4);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(4)) + Value, 4);
                     break;
                 case 9:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(4)) - Value, 4);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(4)) - Value, 4);
                     break;
                 case 10:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(5)) + Value, 5);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(5)) + Value, 5);
                     break;
                 case 11:
-                    Xyzwpr.SetValue(Convert.ToInt32(Xyzwpr.GetValue(5)) - Value, 5);
-                    ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
+                    Xyzwpr.SetValue(Convert.ToSingle(Xyzwpr.GetValue(5)) - Value, 5);
                     break;
             }
+
+            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, Config, UF, UT);
             if (!ret)
             {
                 apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
@@ -496,7 +486,7 @@ namespace Integrated_Robot_Interface
         public override bool JogMoveJ()
         {
             bool ret = false;
-            int Value = Convert.ToInt32(jogmove.GetValue(0));
+            float Value = Convert.ToSingle(jogmove.GetValue(0));
             int Index = 1;
 
             ret = mobjNumReg.SetValue(6, 1);
@@ -509,54 +499,44 @@ namespace Integrated_Robot_Interface
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(0)) + Value, 0);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(0)) + Value, 0);
                     break;
                 case 1:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(0)) - Value, 0);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(0)) - Value, 0);
                     break;
                 case 2:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(1)) + Value, 1);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(1)) + Value, 1);
                     break;
                 case 3:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(1)) - Value, 1);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(1)) - Value, 1);
                     break;
                 case 4:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(2)) + Value, 2);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(2)) + Value, 2);
                     break;
                 case 5:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(2)) - Value, 2);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(2)) - Value, 2);
                     break;
                 case 6:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(3)) + Value, 3);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(3)) + Value, 3);
                     break;
                 case 7:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(3)) - Value, 3);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(3)) - Value, 3);
                     break;
                 case 8:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(4)) + Value, 4);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(4)) + Value, 4);
                     break;
                 case 9:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(4)) - Value, 4);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(4)) - Value, 4);
                     break;
                 case 10:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(5)) + Value, 5);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(5)) + Value, 5);
                     break;
                 case 11:
-                    Joint.SetValue(Convert.ToInt32(Joint.GetValue(5)) - Value, 5);
-                    ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
+                    Joint.SetValue(Convert.ToSingle(Joint.GetValue(5)) - Value, 5);
                     break;
             }
+
+            ret = mobjPosReg.SetValueJoint(Index, Joint, UF, UT);
             if (!ret)
             {
                 apierrtext = "mobjPosReg.SetValueJoint Fail";

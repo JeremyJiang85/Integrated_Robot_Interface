@@ -157,18 +157,10 @@
             this.lblSafeRangeYJ2 = new System.Windows.Forms.Label();
             this.btnSafeRangeSet = new System.Windows.Forms.Button();
             this.gbPoints = new System.Windows.Forms.GroupBox();
-            this.btnPointsMoveSet = new System.Windows.Forms.Button();
-            this.btnPointsMoveLoad = new System.Windows.Forms.Button();
-            this.btnPointsMoveCopy = new System.Windows.Forms.Button();
+            this.btnPointsSet = new System.Windows.Forms.Button();
+            this.btnPointsLoad = new System.Windows.Forms.Button();
+            this.btnPointsCopy = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ColumnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbProgram = new System.Windows.Forms.GroupBox();
             this.lblProgramValue = new System.Windows.Forms.Label();
             this.txtProgramValue = new System.Windows.Forms.TextBox();
@@ -183,8 +175,6 @@
             this.btnProgramEdit = new System.Windows.Forms.Button();
             this.btnProgramInsert = new System.Windows.Forms.Button();
             this.btnProgramAdd = new System.Windows.Forms.Button();
-            this.txtProgramVelocity = new System.Windows.Forms.TextBox();
-            this.lblProgramVelocity = new System.Windows.Forms.Label();
             this.cboProgramInstruction = new System.Windows.Forms.ComboBox();
             this.lblProgramYJ2 = new System.Windows.Forms.Label();
             this.txtProgramName = new System.Windows.Forms.TextBox();
@@ -201,6 +191,13 @@
             this.txtProgramRJ6 = new System.Windows.Forms.TextBox();
             this.txtProgramWJ4 = new System.Windows.Forms.TextBox();
             this.txtProgramPJ5 = new System.Windows.Forms.TextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lblFilePath = new System.Windows.Forms.Label();
+            this.txtFilePath = new System.Windows.Forms.TextBox();
+            this.btnPointsSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -214,6 +211,9 @@
             this.gbPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.gbProgram.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
@@ -450,7 +450,7 @@
             this.gbPointMove.Controls.Add(this.txtPTPXJ1);
             this.gbPointMove.Controls.Add(this.cboPTPCoordinate);
             this.gbPointMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbPointMove.Location = new System.Drawing.Point(417, 146);
+            this.gbPointMove.Location = new System.Drawing.Point(2, 2);
             this.gbPointMove.Name = "gbPointMove";
             this.gbPointMove.Size = new System.Drawing.Size(216, 353);
             this.gbPointMove.TabIndex = 6;
@@ -681,7 +681,7 @@
             this.gbRegister.Controls.Add(this.lblR1);
             this.gbRegister.Controls.Add(this.lblR2);
             this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbRegister.Location = new System.Drawing.Point(1087, 146);
+            this.gbRegister.Location = new System.Drawing.Point(667, 2);
             this.gbRegister.Name = "gbRegister";
             this.gbRegister.Size = new System.Drawing.Size(126, 353);
             this.gbRegister.TabIndex = 7;
@@ -813,7 +813,7 @@
             this.gbJogMove.Controls.Add(this.btnJogXJ1Positive);
             this.gbJogMove.Controls.Add(this.btnJogXJ1Negative);
             this.gbJogMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbJogMove.Location = new System.Drawing.Point(642, 146);
+            this.gbJogMove.Location = new System.Drawing.Point(224, 2);
             this.gbJogMove.Name = "gbJogMove";
             this.gbJogMove.Size = new System.Drawing.Size(216, 353);
             this.gbJogMove.TabIndex = 8;
@@ -1085,7 +1085,7 @@
             this.gbLineMove.Controls.Add(this.txtLineYJ2);
             this.gbLineMove.Controls.Add(this.txtLineXJ1);
             this.gbLineMove.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbLineMove.Location = new System.Drawing.Point(866, 146);
+            this.gbLineMove.Location = new System.Drawing.Point(446, 2);
             this.gbLineMove.Name = "gbLineMove";
             this.gbLineMove.Size = new System.Drawing.Size(215, 353);
             this.gbLineMove.TabIndex = 18;
@@ -1579,112 +1579,60 @@
             // 
             // gbPoints
             // 
-            this.gbPoints.Controls.Add(this.btnPointsMoveSet);
-            this.gbPoints.Controls.Add(this.btnPointsMoveLoad);
-            this.gbPoints.Controls.Add(this.btnPointsMoveCopy);
+            this.gbPoints.Controls.Add(this.btnPointsSave);
+            this.gbPoints.Controls.Add(this.txtFilePath);
+            this.gbPoints.Controls.Add(this.lblFilePath);
+            this.gbPoints.Controls.Add(this.btnPointsSet);
+            this.gbPoints.Controls.Add(this.btnPointsLoad);
+            this.gbPoints.Controls.Add(this.btnPointsCopy);
             this.gbPoints.Controls.Add(this.dataGridView1);
             this.gbPoints.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbPoints.Location = new System.Drawing.Point(5, 624);
+            this.gbPoints.Location = new System.Drawing.Point(3, 270);
             this.gbPoints.Name = "gbPoints";
-            this.gbPoints.Size = new System.Drawing.Size(796, 218);
+            this.gbPoints.Size = new System.Drawing.Size(875, 255);
             this.gbPoints.TabIndex = 20;
             this.gbPoints.TabStop = false;
             this.gbPoints.Text = "Points";
             // 
-            // btnPointsMoveSet
+            // btnPointsSet
             // 
-            this.btnPointsMoveSet.Location = new System.Drawing.Point(689, 144);
-            this.btnPointsMoveSet.Name = "btnPointsMoveSet";
-            this.btnPointsMoveSet.Size = new System.Drawing.Size(94, 50);
-            this.btnPointsMoveSet.TabIndex = 23;
-            this.btnPointsMoveSet.Text = "Set";
-            this.btnPointsMoveSet.UseVisualStyleBackColor = true;
+            this.btnPointsSet.Location = new System.Drawing.Point(715, 170);
+            this.btnPointsSet.Name = "btnPointsSet";
+            this.btnPointsSet.Size = new System.Drawing.Size(95, 30);
+            this.btnPointsSet.TabIndex = 23;
+            this.btnPointsSet.Text = "Set";
+            this.btnPointsSet.UseVisualStyleBackColor = true;
+            this.btnPointsSet.Click += new System.EventHandler(this.btnPointsSet_Click);
             // 
-            // btnPointsMoveLoad
+            // btnPointsLoad
             // 
-            this.btnPointsMoveLoad.Location = new System.Drawing.Point(689, 88);
-            this.btnPointsMoveLoad.Name = "btnPointsMoveLoad";
-            this.btnPointsMoveLoad.Size = new System.Drawing.Size(94, 50);
-            this.btnPointsMoveLoad.TabIndex = 22;
-            this.btnPointsMoveLoad.Text = "Load";
-            this.btnPointsMoveLoad.UseVisualStyleBackColor = true;
+            this.btnPointsLoad.Location = new System.Drawing.Point(715, 98);
+            this.btnPointsLoad.Name = "btnPointsLoad";
+            this.btnPointsLoad.Size = new System.Drawing.Size(95, 30);
+            this.btnPointsLoad.TabIndex = 22;
+            this.btnPointsLoad.Text = "Load";
+            this.btnPointsLoad.UseVisualStyleBackColor = true;
+            this.btnPointsLoad.Click += new System.EventHandler(this.btnPointsLoad_Click);
             // 
-            // btnPointsMoveCopy
+            // btnPointsCopy
             // 
-            this.btnPointsMoveCopy.Location = new System.Drawing.Point(689, 32);
-            this.btnPointsMoveCopy.Name = "btnPointsMoveCopy";
-            this.btnPointsMoveCopy.Size = new System.Drawing.Size(94, 50);
-            this.btnPointsMoveCopy.TabIndex = 21;
-            this.btnPointsMoveCopy.Text = "Copy";
-            this.btnPointsMoveCopy.UseVisualStyleBackColor = true;
-            this.btnPointsMoveCopy.Click += new System.EventHandler(this.btnPointsMoveCopy_Click);
+            this.btnPointsCopy.Location = new System.Drawing.Point(715, 206);
+            this.btnPointsCopy.Name = "btnPointsCopy";
+            this.btnPointsCopy.Size = new System.Drawing.Size(95, 30);
+            this.btnPointsCopy.TabIndex = 21;
+            this.btnPointsCopy.Text = "Copy";
+            this.btnPointsCopy.UseVisualStyleBackColor = true;
+            this.btnPointsCopy.Click += new System.EventHandler(this.btnPointsCopy_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnNumber,
-            this.ColumnX,
-            this.ColumnY,
-            this.ColumnZ,
-            this.ColumnW,
-            this.ColumnP,
-            this.ColumnR,
-            this.ColumnV});
             this.dataGridView1.Location = new System.Drawing.Point(6, 32);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 35;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(665, 218);
+            this.dataGridView1.Size = new System.Drawing.Size(703, 218);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // ColumnNumber
-            // 
-            this.ColumnNumber.HeaderText = "Num";
-            this.ColumnNumber.Name = "ColumnNumber";
-            this.ColumnNumber.Width = 55;
-            // 
-            // ColumnX
-            // 
-            this.ColumnX.HeaderText = "X";
-            this.ColumnX.Name = "ColumnX";
-            this.ColumnX.Width = 85;
-            // 
-            // ColumnY
-            // 
-            this.ColumnY.HeaderText = "Y";
-            this.ColumnY.Name = "ColumnY";
-            this.ColumnY.Width = 85;
-            // 
-            // ColumnZ
-            // 
-            this.ColumnZ.HeaderText = "Z";
-            this.ColumnZ.Name = "ColumnZ";
-            this.ColumnZ.Width = 85;
-            // 
-            // ColumnW
-            // 
-            this.ColumnW.HeaderText = "W";
-            this.ColumnW.Name = "ColumnW";
-            this.ColumnW.Width = 85;
-            // 
-            // ColumnP
-            // 
-            this.ColumnP.HeaderText = "P";
-            this.ColumnP.Name = "ColumnP";
-            this.ColumnP.Width = 85;
-            // 
-            // ColumnR
-            // 
-            this.ColumnR.HeaderText = "R";
-            this.ColumnR.Name = "ColumnR";
-            this.ColumnR.Width = 85;
-            // 
-            // ColumnV
-            // 
-            this.ColumnV.HeaderText = "V";
-            this.ColumnV.Name = "ColumnV";
-            this.ColumnV.Width = 45;
             // 
             // gbProgram
             // 
@@ -1701,8 +1649,6 @@
             this.gbProgram.Controls.Add(this.btnProgramEdit);
             this.gbProgram.Controls.Add(this.btnProgramInsert);
             this.gbProgram.Controls.Add(this.btnProgramAdd);
-            this.gbProgram.Controls.Add(this.txtProgramVelocity);
-            this.gbProgram.Controls.Add(this.lblProgramVelocity);
             this.gbProgram.Controls.Add(this.cboProgramInstruction);
             this.gbProgram.Controls.Add(this.lblProgramYJ2);
             this.gbProgram.Controls.Add(this.txtProgramName);
@@ -1720,9 +1666,9 @@
             this.gbProgram.Controls.Add(this.txtProgramWJ4);
             this.gbProgram.Controls.Add(this.txtProgramPJ5);
             this.gbProgram.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbProgram.Location = new System.Drawing.Point(639, 349);
+            this.gbProgram.Location = new System.Drawing.Point(3, 3);
             this.gbProgram.Name = "gbProgram";
-            this.gbProgram.Size = new System.Drawing.Size(694, 354);
+            this.gbProgram.Size = new System.Drawing.Size(875, 261);
             this.gbProgram.TabIndex = 21;
             this.gbProgram.TabStop = false;
             this.gbProgram.Text = "Program";
@@ -1730,7 +1676,7 @@
             // lblProgramValue
             // 
             this.lblProgramValue.AutoSize = true;
-            this.lblProgramValue.Location = new System.Drawing.Point(320, 128);
+            this.lblProgramValue.Location = new System.Drawing.Point(627, 32);
             this.lblProgramValue.Name = "lblProgramValue";
             this.lblProgramValue.Size = new System.Drawing.Size(67, 21);
             this.lblProgramValue.TabIndex = 58;
@@ -1740,7 +1686,7 @@
             // 
             this.txtProgramValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramValue.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramValue.Location = new System.Drawing.Point(393, 128);
+            this.txtProgramValue.Location = new System.Drawing.Point(700, 32);
             this.txtProgramValue.Name = "txtProgramValue";
             this.txtProgramValue.Size = new System.Drawing.Size(87, 23);
             this.txtProgramValue.TabIndex = 55;
@@ -1749,7 +1695,7 @@
             // lblProgramUnit
             // 
             this.lblProgramUnit.AutoSize = true;
-            this.lblProgramUnit.Location = new System.Drawing.Point(486, 128);
+            this.lblProgramUnit.Location = new System.Drawing.Point(793, 32);
             this.lblProgramUnit.Name = "lblProgramUnit";
             this.lblProgramUnit.Size = new System.Drawing.Size(40, 21);
             this.lblProgramUnit.TabIndex = 56;
@@ -1771,7 +1717,7 @@
             this.cboProgramCoordinate.FormattingEnabled = true;
             this.cboProgramCoordinate.Location = new System.Drawing.Point(433, 68);
             this.cboProgramCoordinate.Name = "cboProgramCoordinate";
-            this.cboProgramCoordinate.Size = new System.Drawing.Size(154, 24);
+            this.cboProgramCoordinate.Size = new System.Drawing.Size(188, 24);
             this.cboProgramCoordinate.TabIndex = 26;
             this.cboProgramCoordinate.SelectedIndexChanged += new System.EventHandler(this.cboProgramCoordinate_SelectedIndexChanged);
             // 
@@ -1786,9 +1732,9 @@
             // 
             // btnProgramCopy
             // 
-            this.btnProgramCopy.Location = new System.Drawing.Point(435, 244);
+            this.btnProgramCopy.Location = new System.Drawing.Point(526, 184);
             this.btnProgramCopy.Name = "btnProgramCopy";
-            this.btnProgramCopy.Size = new System.Drawing.Size(96, 56);
+            this.btnProgramCopy.Size = new System.Drawing.Size(95, 50);
             this.btnProgramCopy.TabIndex = 53;
             this.btnProgramCopy.Text = "Copy";
             this.btnProgramCopy.UseVisualStyleBackColor = true;
@@ -1796,9 +1742,9 @@
             // 
             // btnProgramCompile
             // 
-            this.btnProgramCompile.Location = new System.Drawing.Point(593, 29);
+            this.btnProgramCompile.Location = new System.Drawing.Point(693, 165);
             this.btnProgramCompile.Name = "btnProgramCompile";
-            this.btnProgramCompile.Size = new System.Drawing.Size(94, 29);
+            this.btnProgramCompile.Size = new System.Drawing.Size(94, 49);
             this.btnProgramCompile.TabIndex = 52;
             this.btnProgramCompile.Text = "Compile";
             this.btnProgramCompile.UseVisualStyleBackColor = true;
@@ -1806,9 +1752,9 @@
             // 
             // btnProgramClear
             // 
-            this.btnProgramClear.Location = new System.Drawing.Point(592, 272);
+            this.btnProgramClear.Location = new System.Drawing.Point(425, 184);
             this.btnProgramClear.Name = "btnProgramClear";
-            this.btnProgramClear.Size = new System.Drawing.Size(95, 30);
+            this.btnProgramClear.Size = new System.Drawing.Size(95, 50);
             this.btnProgramClear.TabIndex = 51;
             this.btnProgramClear.Text = "Clear";
             this.btnProgramClear.UseVisualStyleBackColor = true;
@@ -1816,9 +1762,9 @@
             // 
             // btnProgramDelete
             // 
-            this.btnProgramDelete.Location = new System.Drawing.Point(592, 236);
+            this.btnProgramDelete.Location = new System.Drawing.Point(324, 184);
             this.btnProgramDelete.Name = "btnProgramDelete";
-            this.btnProgramDelete.Size = new System.Drawing.Size(95, 30);
+            this.btnProgramDelete.Size = new System.Drawing.Size(95, 50);
             this.btnProgramDelete.TabIndex = 50;
             this.btnProgramDelete.Text = "Delete";
             this.btnProgramDelete.UseVisualStyleBackColor = true;
@@ -1826,9 +1772,9 @@
             // 
             // btnProgramEdit
             // 
-            this.btnProgramEdit.Location = new System.Drawing.Point(592, 200);
+            this.btnProgramEdit.Location = new System.Drawing.Point(526, 128);
             this.btnProgramEdit.Name = "btnProgramEdit";
-            this.btnProgramEdit.Size = new System.Drawing.Size(95, 30);
+            this.btnProgramEdit.Size = new System.Drawing.Size(95, 50);
             this.btnProgramEdit.TabIndex = 49;
             this.btnProgramEdit.Text = "Edit";
             this.btnProgramEdit.UseVisualStyleBackColor = true;
@@ -1836,9 +1782,9 @@
             // 
             // btnProgramInsert
             // 
-            this.btnProgramInsert.Location = new System.Drawing.Point(592, 164);
+            this.btnProgramInsert.Location = new System.Drawing.Point(425, 128);
             this.btnProgramInsert.Name = "btnProgramInsert";
-            this.btnProgramInsert.Size = new System.Drawing.Size(95, 30);
+            this.btnProgramInsert.Size = new System.Drawing.Size(95, 50);
             this.btnProgramInsert.TabIndex = 48;
             this.btnProgramInsert.Text = "Insert";
             this.btnProgramInsert.UseVisualStyleBackColor = true;
@@ -1846,32 +1792,13 @@
             // 
             // btnProgramAdd
             // 
-            this.btnProgramAdd.Location = new System.Drawing.Point(592, 128);
+            this.btnProgramAdd.Location = new System.Drawing.Point(324, 128);
             this.btnProgramAdd.Name = "btnProgramAdd";
-            this.btnProgramAdd.Size = new System.Drawing.Size(95, 30);
+            this.btnProgramAdd.Size = new System.Drawing.Size(95, 50);
             this.btnProgramAdd.TabIndex = 47;
             this.btnProgramAdd.Text = "Add";
             this.btnProgramAdd.UseVisualStyleBackColor = true;
             this.btnProgramAdd.Click += new System.EventHandler(this.btnProgramAdd_Click);
-            // 
-            // txtProgramVelocity
-            // 
-            this.txtProgramVelocity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProgramVelocity.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramVelocity.Location = new System.Drawing.Point(365, 245);
-            this.txtProgramVelocity.Name = "txtProgramVelocity";
-            this.txtProgramVelocity.Size = new System.Drawing.Size(60, 23);
-            this.txtProgramVelocity.TabIndex = 46;
-            this.txtProgramVelocity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblProgramVelocity
-            // 
-            this.lblProgramVelocity.AutoSize = true;
-            this.lblProgramVelocity.Location = new System.Drawing.Point(325, 245);
-            this.lblProgramVelocity.Name = "lblProgramVelocity";
-            this.lblProgramVelocity.Size = new System.Drawing.Size(34, 21);
-            this.lblProgramVelocity.TabIndex = 45;
-            this.lblProgramVelocity.Text = "V :";
             // 
             // cboProgramInstruction
             // 
@@ -1880,14 +1807,14 @@
             this.cboProgramInstruction.FormattingEnabled = true;
             this.cboProgramInstruction.Location = new System.Drawing.Point(431, 98);
             this.cboProgramInstruction.Name = "cboProgramInstruction";
-            this.cboProgramInstruction.Size = new System.Drawing.Size(198, 24);
+            this.cboProgramInstruction.Size = new System.Drawing.Size(190, 24);
             this.cboProgramInstruction.TabIndex = 3;
             this.cboProgramInstruction.SelectedIndexChanged += new System.EventHandler(this.cboProgramInstruction_SelectedIndexChanged);
             // 
             // lblProgramYJ2
             // 
             this.lblProgramYJ2.AutoSize = true;
-            this.lblProgramYJ2.Location = new System.Drawing.Point(325, 186);
+            this.lblProgramYJ2.Location = new System.Drawing.Point(632, 90);
             this.lblProgramYJ2.Name = "lblProgramYJ2";
             this.lblProgramYJ2.Size = new System.Drawing.Size(34, 21);
             this.lblProgramYJ2.TabIndex = 44;
@@ -1897,13 +1824,13 @@
             // 
             this.txtProgramName.Location = new System.Drawing.Point(466, 29);
             this.txtProgramName.Name = "txtProgramName";
-            this.txtProgramName.Size = new System.Drawing.Size(121, 33);
+            this.txtProgramName.Size = new System.Drawing.Size(155, 33);
             this.txtProgramName.TabIndex = 2;
             // 
             // lblProgramRJ6
             // 
             this.lblProgramRJ6.AutoSize = true;
-            this.lblProgramRJ6.Location = new System.Drawing.Point(431, 215);
+            this.lblProgramRJ6.Location = new System.Drawing.Point(738, 119);
             this.lblProgramRJ6.Name = "lblProgramRJ6";
             this.lblProgramRJ6.Size = new System.Drawing.Size(33, 21);
             this.lblProgramRJ6.TabIndex = 43;
@@ -1921,7 +1848,7 @@
             // lblProgramWJ4
             // 
             this.lblProgramWJ4.AutoSize = true;
-            this.lblProgramWJ4.Location = new System.Drawing.Point(431, 157);
+            this.lblProgramWJ4.Location = new System.Drawing.Point(738, 61);
             this.lblProgramWJ4.Name = "lblProgramWJ4";
             this.lblProgramWJ4.Size = new System.Drawing.Size(34, 21);
             this.lblProgramWJ4.TabIndex = 42;
@@ -1935,13 +1862,13 @@
             this.lstProgram.ItemHeight = 19;
             this.lstProgram.Location = new System.Drawing.Point(6, 32);
             this.lstProgram.Name = "lstProgram";
-            this.lstProgram.Size = new System.Drawing.Size(307, 289);
+            this.lstProgram.Size = new System.Drawing.Size(307, 213);
             this.lstProgram.TabIndex = 0;
             // 
             // lblProgramPJ5
             // 
             this.lblProgramPJ5.AutoSize = true;
-            this.lblProgramPJ5.Location = new System.Drawing.Point(431, 186);
+            this.lblProgramPJ5.Location = new System.Drawing.Point(738, 90);
             this.lblProgramPJ5.Name = "lblProgramPJ5";
             this.lblProgramPJ5.Size = new System.Drawing.Size(31, 21);
             this.lblProgramPJ5.TabIndex = 41;
@@ -1951,7 +1878,7 @@
             // 
             this.txtProgramXJ1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramXJ1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramXJ1.Location = new System.Drawing.Point(365, 157);
+            this.txtProgramXJ1.Location = new System.Drawing.Point(672, 61);
             this.txtProgramXJ1.Name = "txtProgramXJ1";
             this.txtProgramXJ1.Size = new System.Drawing.Size(60, 23);
             this.txtProgramXJ1.TabIndex = 33;
@@ -1960,7 +1887,7 @@
             // lblProgramZJ3
             // 
             this.lblProgramZJ3.AutoSize = true;
-            this.lblProgramZJ3.Location = new System.Drawing.Point(325, 215);
+            this.lblProgramZJ3.Location = new System.Drawing.Point(632, 119);
             this.lblProgramZJ3.Name = "lblProgramZJ3";
             this.lblProgramZJ3.Size = new System.Drawing.Size(32, 21);
             this.lblProgramZJ3.TabIndex = 40;
@@ -1970,7 +1897,7 @@
             // 
             this.txtProgramYJ2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramYJ2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramYJ2.Location = new System.Drawing.Point(365, 186);
+            this.txtProgramYJ2.Location = new System.Drawing.Point(672, 90);
             this.txtProgramYJ2.Name = "txtProgramYJ2";
             this.txtProgramYJ2.Size = new System.Drawing.Size(60, 23);
             this.txtProgramYJ2.TabIndex = 34;
@@ -1979,7 +1906,7 @@
             // lblProgramXJ1
             // 
             this.lblProgramXJ1.AutoSize = true;
-            this.lblProgramXJ1.Location = new System.Drawing.Point(325, 157);
+            this.lblProgramXJ1.Location = new System.Drawing.Point(632, 61);
             this.lblProgramXJ1.Name = "lblProgramXJ1";
             this.lblProgramXJ1.Size = new System.Drawing.Size(34, 21);
             this.lblProgramXJ1.TabIndex = 39;
@@ -1989,7 +1916,7 @@
             // 
             this.txtProgramZJ3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramZJ3.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramZJ3.Location = new System.Drawing.Point(365, 215);
+            this.txtProgramZJ3.Location = new System.Drawing.Point(672, 119);
             this.txtProgramZJ3.Name = "txtProgramZJ3";
             this.txtProgramZJ3.Size = new System.Drawing.Size(60, 23);
             this.txtProgramZJ3.TabIndex = 35;
@@ -1999,7 +1926,7 @@
             // 
             this.txtProgramRJ6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramRJ6.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramRJ6.Location = new System.Drawing.Point(471, 215);
+            this.txtProgramRJ6.Location = new System.Drawing.Point(778, 119);
             this.txtProgramRJ6.Name = "txtProgramRJ6";
             this.txtProgramRJ6.Size = new System.Drawing.Size(60, 23);
             this.txtProgramRJ6.TabIndex = 38;
@@ -2009,7 +1936,7 @@
             // 
             this.txtProgramWJ4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramWJ4.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramWJ4.Location = new System.Drawing.Point(471, 157);
+            this.txtProgramWJ4.Location = new System.Drawing.Point(778, 61);
             this.txtProgramWJ4.Name = "txtProgramWJ4";
             this.txtProgramWJ4.Size = new System.Drawing.Size(60, 23);
             this.txtProgramWJ4.TabIndex = 36;
@@ -2019,27 +1946,95 @@
             // 
             this.txtProgramPJ5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgramPJ5.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramPJ5.Location = new System.Drawing.Point(471, 186);
+            this.txtProgramPJ5.Location = new System.Drawing.Point(778, 90);
             this.txtProgramPJ5.Name = "txtProgramPJ5";
             this.txtProgramPJ5.Size = new System.Drawing.Size(60, 23);
             this.txtProgramPJ5.TabIndex = 37;
             this.txtProgramPJ5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tabControl1.Location = new System.Drawing.Point(417, 143);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(916, 563);
+            this.tabControl1.TabIndex = 22;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.gbPointMove);
+            this.tabPage1.Controls.Add(this.gbJogMove);
+            this.tabPage1.Controls.Add(this.gbLineMove);
+            this.tabPage1.Controls.Add(this.gbRegister);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(908, 528);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Location = new System.Drawing.Point(4, 31);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(908, 528);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.Controls.Add(this.gbProgram);
+            this.tabPage3.Controls.Add(this.gbPoints);
+            this.tabPage3.Location = new System.Drawing.Point(4, 31);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(908, 528);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            // 
+            // lblFilePath
+            // 
+            this.lblFilePath.AutoSize = true;
+            this.lblFilePath.Location = new System.Drawing.Point(715, 32);
+            this.lblFilePath.Name = "lblFilePath";
+            this.lblFilePath.Size = new System.Drawing.Size(90, 21);
+            this.lblFilePath.TabIndex = 59;
+            this.lblFilePath.Text = "File Path :";
+            // 
+            // txtFilePath
+            // 
+            this.txtFilePath.Location = new System.Drawing.Point(715, 56);
+            this.txtFilePath.Name = "txtFilePath";
+            this.txtFilePath.Size = new System.Drawing.Size(150, 33);
+            this.txtFilePath.TabIndex = 59;
+            // 
+            // btnPointsSave
+            // 
+            this.btnPointsSave.Location = new System.Drawing.Point(715, 134);
+            this.btnPointsSave.Name = "btnPointsSave";
+            this.btnPointsSave.Size = new System.Drawing.Size(95, 30);
+            this.btnPointsSave.TabIndex = 60;
+            this.btnPointsSave.Text = "Save";
+            this.btnPointsSave.UseVisualStyleBackColor = true;
+            this.btnPointsSave.Click += new System.EventHandler(this.btnPointsSave_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1343, 705);
-            this.Controls.Add(this.gbProgram);
+            this.ClientSize = new System.Drawing.Size(1345, 713);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnInformation);
-            this.Controls.Add(this.gbPoints);
             this.Controls.Add(this.gbSafeRange);
-            this.Controls.Add(this.gbLineMove);
             this.Controls.Add(this.gbControl);
-            this.Controls.Add(this.gbJogMove);
             this.Controls.Add(this.btnEsc);
-            this.Controls.Add(this.gbRegister);
-            this.Controls.Add(this.gbPointMove);
             this.Controls.Add(this.gbOverride);
             this.Controls.Add(this.gbCurrentPosition);
             this.Controls.Add(this.richTextBox1);
@@ -2069,9 +2064,13 @@
             this.gbSafeRange.ResumeLayout(false);
             this.gbSafeRange.PerformLayout();
             this.gbPoints.ResumeLayout(false);
+            this.gbPoints.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.gbProgram.ResumeLayout(false);
             this.gbProgram.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2204,23 +2203,13 @@
         private System.Windows.Forms.Label lblSafeRangeCoordinate;
         private System.Windows.Forms.GroupBox gbPoints;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnY;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnZ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnW;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnV;
-        private System.Windows.Forms.Button btnPointsMoveSet;
-        private System.Windows.Forms.Button btnPointsMoveLoad;
-        private System.Windows.Forms.Button btnPointsMoveCopy;
+        private System.Windows.Forms.Button btnPointsSet;
+        private System.Windows.Forms.Button btnPointsLoad;
+        private System.Windows.Forms.Button btnPointsCopy;
         private System.Windows.Forms.GroupBox gbProgram;
         private System.Windows.Forms.ListBox lstProgram;
         private System.Windows.Forms.TextBox txtProgramName;
         private System.Windows.Forms.Label lblProgramName;
-        private System.Windows.Forms.TextBox txtProgramVelocity;
-        private System.Windows.Forms.Label lblProgramVelocity;
         private System.Windows.Forms.ComboBox cboProgramInstruction;
         private System.Windows.Forms.Label lblProgramYJ2;
         private System.Windows.Forms.Label lblProgramRJ6;
@@ -2250,6 +2239,13 @@
         private System.Windows.Forms.TextBox txtSafeRangeVelocitymax;
         private System.Windows.Forms.TextBox txtSafeRangeVelocitymin;
         private System.Windows.Forms.Label lblSafeRangeVelocity;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox txtFilePath;
+        private System.Windows.Forms.Label lblFilePath;
+        private System.Windows.Forms.Button btnPointsSave;
     }
 }
 
