@@ -1,4 +1,4 @@
-/PROG  LL
+/PROG  JJ
 /ATTR
 OWNER		= MNEDITOR;
 COMMENT		= "";
@@ -20,9 +20,8 @@ DEFAULT_GROUP	= 1,*,*,*,*;
 CONTROL_CODE	= 00000000 00000000;
 /MN
    1:  OVERRIDE=50% ;
-   2:J PR[1] 100% FINE    ;
-   3:J PR[2] 100% FINE    ;
-   4:L PR[3] 100mm/sec FINE    ;
-   5:  WAIT   3(sec) ;
+   2:  UTOOL_NUM=2 ;
+   3:  UFRAME_NUM=3 ;
+   4:J PR[1] 100% FINE    ;
 /POS
 /END

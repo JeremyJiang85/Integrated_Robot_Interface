@@ -17,6 +17,7 @@ namespace Integrated_Robot_Interface
         private FRRJIf.DataSysVar mobjSysVarInt;
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
+        private FRRJIf.DataTask mobjTask;
         private StreamWriter sw;
         private int programlinecount = 0;
         private int programPRcount = 0;
@@ -37,6 +38,7 @@ namespace Integrated_Robot_Interface
             mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 50);
             mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
+            mobjTask = mobjDataTable.AddTask(FRRJIf.FRIF_DATA_TYPE.TASK, 1);
         }
         public override bool Connect()
         {
@@ -257,6 +259,61 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
+        public override bool GetState()
+        {
+            bool ret = false;
+            string ProgName = "";
+            short LineNumber = 0;
+            short State = 0;
+            string ParentProgName = "";
+
+            ret = mobjTask.GetValue(ref ProgName, ref LineNumber, ref State, ref ParentProgName);
+            if (!ret)
+            {
+                apierrtext = "mobjTask.GetValue Fail";
+                return ret;
+            }
+
+            switch (State)
+            {
+                case 0:
+                    getstate = "Stopped";
+                    break;
+                case 1:
+                    getstate = "Paused";
+                    break;
+                case 2:
+                    getstate = "Executing";
+                    break;
+            }
+            return ret;
+        }
+        public override bool GetTool()
+        {
+            bool ret = false;
+
+            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPos.GetValue Fail";
+                return ret;
+            }
+            gettool = UT;
+            return ret;
+        }
+        //public override bool GetUFrame()
+        //{
+        //    bool ret = false;
+
+        //    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+        //    if (!ret)
+        //    {
+        //        apierrtext = "mobjCurPos.GetValue Fail";
+        //        return ret;
+        //    }
+        //    getuframe = UF;
+        //    return ret;
+        //}
         public override bool GetOverride()
         {
             bool ret = false;
@@ -602,27 +659,6 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool GetInformation3()
-        {
-            bool ret = false;
-            short StartIndex = 1;
-            short Count = 20;
-            object Value = null;
-            information3name = "R";
-            information3text = "";
-
-            for (int i = StartIndex; i <= Count; i++)
-            {
-                ret = mobjNumReg.GetValue(i, ref Value);
-                if (!ret)
-                {
-                    apierrtext = $"mobjNumReg.GetValue Fail";
-                    return ret;
-                }
-                information3text += $"R[{i}] = {Convert.ToInt32(Value)}\r\n";
-            }
-            return ret;
-        }
         public override bool Compile()
         {
             bool ret = false;
@@ -751,6 +787,14 @@ namespace Integrated_Robot_Interface
                 case 4:
                     programlinecount++;
                     sw.WriteLine($"   {programlinecount}:  WAIT   {Convert.ToSingle(compile.GetValue(2))}(sec) ;");
+                    break;
+                case 5:
+                    programlinecount++;
+                    sw.WriteLine($"   {programlinecount}:  UTOOL_NUM={Convert.ToInt32(compile.GetValue(2))} ;");
+                    break;
+                case 6:
+                    programlinecount++;
+                    sw.WriteLine($"   {programlinecount}:  UFRAME_NUM={Convert.ToInt32(compile.GetValue(2))} ;");
                     break;
             }
             

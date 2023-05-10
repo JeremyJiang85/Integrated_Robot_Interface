@@ -139,6 +139,60 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
+        public override bool GetState()
+        {
+            int PRetState = 0;
+            
+            int ret = mobjGroupAdapter.NMC_GroupGetState(ref PRetState);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                apierrtext = GetErrorMessage("NMC_GroupGetState Fail", ret);
+                return false;
+            }
+
+            switch (PRetState)
+            {
+                case 0:
+                    getstate = "DISABLE";
+                    break;
+                case 1:
+                    getstate = "STAND_STILL";
+                    break;
+                case 2:
+                    getstate = "STOPPED";
+                    break;
+                case 3:
+                    getstate = "STOPPING";
+                    break;
+                case 4:
+                    getstate = "MOVING";
+                    break;
+                case 5:
+                    getstate = "HOMING";
+                    break;
+                case 6:
+                    getstate = "ERROR";
+                    break;
+            }
+            return true;
+        }
+        public override bool GetTool()
+        {
+            int PRetParaValueI32 = 0;
+
+            int ret = mobjGroupAdapter.NMC_GroupGetParamI32(0x100, 0, ref PRetParaValueI32);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                apierrtext = GetErrorMessage("NMC_GroupGetParamI32 Fail", ret);
+                return false;
+            }
+            gettool = Convert.ToInt16(PRetParaValueI32);
+            return false;
+        }
+        //public override bool GetUFrame()
+        //{
+        //    return false;
+        //}
         public override bool GetOverride()
         {
             double PRetPercentage = 0;
@@ -426,48 +480,19 @@ namespace Integrated_Robot_Interface
         {
             int PRetState = 0;
 
-            information1name = "State and Status";
+            information1name = "Status";
             information1text = "";
-            int ret = mobjGroupAdapter.NMC_GroupGetState(ref PRetState);
-            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-            {
-                apierrtext = GetErrorMessage("NMC_GroupGetState Fail", ret);
-                return false;
-            }
-
-            switch (PRetState)
-            {
-                case 0:
-                    information1text += "State : DISABLE";
-                    break;
-                case 1:
-                    information1text += "State : STAND_STILL";
-                    break;
-                case 2:
-                    information1text += "State : STOPPED";
-                    break;
-                case 3:
-                    information1text += "State : STOPPING";
-                    break;
-                case 4:
-                    information1text += "State : MOVING";
-                    break;
-                case 5:
-                    information1text += "State : HOMING";
-                    break;
-                case 6:
-                    information1text += "State : ERROR";
-                    break;
-            }
 
             int PRetStatusInBit = 0;
 
-            ret = mobjGroupAdapter.NMC_GroupGetStatus(ref PRetStatusInBit);
+            int ret = mobjGroupAdapter.NMC_GroupGetStatus(ref PRetStatusInBit);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 apierrtext = GetErrorMessage("NMC_GroupGetStatus Fail", ret);
                 return false;
             }
+
+
             information1text += PRetStatusInBit.ToString();
             for (int i = 0; i > 14; i++)
             {
@@ -687,6 +712,16 @@ namespace Integrated_Robot_Interface
                 case 4:
                     Thread.Sleep(Convert.ToInt32(compile.GetValue(2))*1000);
                     break;
+                case 5:
+                    int PRetParaValueI32 = Convert.ToInt32(compile.GetValue(2));
+
+                    ret = mobjGroupAdapter.NMC_GroupSetParamI32(0x100, 0, PRetParaValueI32);
+                    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                    {
+                        apierrtext = GetErrorMessage("NMC_GroupSetParamI32 Fail", ret);
+                        return false;
+                    }
+                    return false;
             }
 
             return true;

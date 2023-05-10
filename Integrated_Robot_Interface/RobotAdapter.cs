@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Integrated_Robot_Interface
 {
@@ -15,6 +16,11 @@ namespace Integrated_Robot_Interface
         public static string apierrtext { get; set; } = "";
         public static int getoverride { get; set; } = 0;
         public static int setoverride { get; set; } = 0;
+        public static string getstate { get; set; } = "";
+        public static short gettool { get; set; } = 0;
+        public static int settool { get; set; } = 0;
+        //public static short getuframe { get; set; } = 0;
+        //public static int setuframe { get; set; } = 0;
         public static Array getcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array getjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array setcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
@@ -57,82 +63,127 @@ namespace Integrated_Robot_Interface
         #region <共用>
         public virtual bool Connect()           //連線與開啟手臂
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Disconnect()        //離線與關閉手臂
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Alarm()             //警示檢查
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Enable()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Disable()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Reset()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Hold()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Stop()
         {
-            return false;
-        }
-        public virtual bool GetOverride()
-        {
-            return false;
-        }
-        public virtual bool SetOverride()
-        {
-            return false;
-        }
-        public virtual bool GetCPosition()
-        {
-            return false;
-        }
-        public virtual bool GetJPosition()
-        {
-            return false;
-        }
-        public virtual bool PointMoveC()
-        {
-            return false;
-        }
-        public virtual bool PointMoveJ()
-        {
-            return false;
-        }
-        public virtual bool LineMove()
-        {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool Home()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetState()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetTool ()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool SetTool()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetUFrame()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool SetUFrame()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetOverride()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool SetOverride()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetCPosition()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GetJPosition()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool PointMoveC()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool PointMoveJ()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool LineMove()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool GetVelocity()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool SetVelocity()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool JogMoveC()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool JogMoveJ()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool GetInformation1()
@@ -151,12 +202,6 @@ namespace Integrated_Robot_Interface
         {
             information3name = "";
             information3text = "";
-            return true;
-        }
-        public virtual bool GetInformation4()
-        {
-            information4name = "";
-            information4text = "";
             return true;
         }
         public bool SafeRangeCheckXYZ()
@@ -217,6 +262,7 @@ namespace Integrated_Robot_Interface
         }
         public virtual bool Compile()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         #endregion
@@ -224,14 +270,17 @@ namespace Integrated_Robot_Interface
         #region <Fanuc>
         public virtual bool Refresh()           //更新資料
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool GetRegister()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         public virtual bool SetRegister()
         {
+            MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
         #endregion
