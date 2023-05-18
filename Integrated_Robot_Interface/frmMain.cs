@@ -20,6 +20,8 @@ namespace Integrated_Robot_Interface
         private StreamWriter sw;
         private StreamReader sr;
         private bool fgConnectionState { get; set; } = false;
+        private bool fgGripperConnectionState { get; set; } = false;
+        private bool fgGripperState { get; set; } = false;
 
 
         public FrmMain()
@@ -82,8 +84,8 @@ namespace Integrated_Robot_Interface
                                                  Controller.Instructionnum.MOVEJ.ToString() + "(J1,J2,J3,J4,J5,J6)",
                                                  Controller.Instructionnum.MOVEL.ToString() + "(X,Y,Z,W,P,R,V)",
                                                  Controller.Instructionnum.WAIT.ToString() + " ? sec",
-                                                 Controller.Instructionnum.TOOL.ToString() + " = ?",};
-            //Controller.Instructionnum.FRAME.ToString() + " = ?"
+                                                 Controller.Instructionnum.TOOL.ToString() + " = ?",
+                                                 Controller.Instructionnum.FRAME.ToString() + " = ?"};
             cboProgramInstruction.Items.Clear();
             cboProgramInstruction.Items.AddRange(Instruction);
             txtInitialize();
@@ -128,6 +130,7 @@ namespace Integrated_Robot_Interface
             gbSafeRange.Enabled = tf;
             gbPoints.Enabled = tf;
             gbProgram.Enabled = tf;
+            gbGripper.Enabled = tf;
         }
         private void tbSafeRangeEnbleControl(bool tf)
         {
@@ -297,15 +300,56 @@ namespace Integrated_Robot_Interface
                 lblTool.Text = $"Tool : {RobotAdapter.gettool}";
             }
 
-            //if (!myController.GetUFrame())
+            if (!myController.GetUFrame())
+            {
+                ShowMessage("讀取用戶座標失敗", "讀取用戶座標狀態");
+                lblUFrame.Text = "Error";
+                return;
+            }
+            else
+            {
+                lblUFrame.Text = $"UFrame : {RobotAdapter.getuframe}";
+            }
+
+            //if (RobotAdapter.preuframe != RobotAdapter.getuframe)
             //{
-            //    ShowMessage("讀取用戶座標失敗", "讀取用戶座標狀態");
-            //    lblUFrame.Text = "Error";
-            //    return;
-            //}
-            //else
-            //{
-            //    lblUFrame.Text = $"UFrame : {RobotAdapter.getuframe}";
+            //    if (!myController.SafeRangeChangeXYZ())
+            //    {
+            //        ShowMessage("更新安全範圍失敗", "更新安全範圍狀態");
+            //        txtSafeRangeXJ1min.Text = "Error";
+            //        txtSafeRangeXJ1max.Text = "Error";
+            //        txtSafeRangeYJ2min.Text = "Error";
+            //        txtSafeRangeYJ2max.Text = "Error";
+            //        txtSafeRangeZJ3min.Text = "Error";
+            //        txtSafeRangeZJ3max.Text = "Error";
+            //        txtSafeRangeWJ4min.Text = "Error";
+            //        txtSafeRangeWJ4max.Text = "Error";
+            //        txtSafeRangePJ5min.Text = "Error";
+            //        txtSafeRangePJ5max.Text = "Error";
+            //        txtSafeRangeRJ6min.Text = "Error"; ;
+            //        txtSafeRangeRJ6max.Text = "Error";
+            //        txtSafeRangeVelocitymin.Text = "Error";
+            //        txtSafeRangeVelocitymax.Text = "Error";
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        txtSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(0)).ToString("###0.000"))}";
+            //        txtSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(1)).ToString("###0.000"))}";
+            //        txtSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(2)).ToString("###0.000"))}";
+            //        txtSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(3)).ToString("###0.000"))}";
+            //        txtSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(4)).ToString("###0.000"))}";
+            //        txtSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(5)).ToString("###0.000"))}";
+            //        txtSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(6)).ToString("###0.000"))}";
+            //        txtSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(7)).ToString("###0.000"))}";
+            //        txtSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(8)).ToString("###0.000"))}";
+            //        txtSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(9)).ToString("###0.000"))}";
+            //        txtSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(10)).ToString("###0.000"))}";
+            //        txtSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(11)).ToString("###0.000"))}";
+            //        txtSafeRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(0)).ToString("###0.000"))}";
+            //        txtSafeRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(1)).ToString("###0.000"))}";
+            //        RobotAdapter.preuframe = RobotAdapter.getuframe;
+            //    }
             //}
 
             if (!myController.GetCPosition())
@@ -368,6 +412,13 @@ namespace Integrated_Robot_Interface
             }
             gbInformation2.Text = RobotAdapter.information2name;
             lblInformation2.Text = RobotAdapter.information2text;
+            if (!myController.GetInformation3())
+            {
+                ShowMessage("取得資料3失敗", "取得資料狀態");
+                return;
+            }
+            gbInformation3.Text = RobotAdapter.information3name;
+            lblInformation3.Text = RobotAdapter.information3text;
         }
         private void ShowMessage(string content, string title)
         {
@@ -464,9 +515,13 @@ namespace Integrated_Robot_Interface
                     {
                         case Controller.Robotnum.Fanuc:
                             RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.preuframe = 0;
                             RobotAdapter.saferangejoint = new float[12] { -170, 150, -100, 140, -70, 50, -180, 180, -125, -40, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
+                            btnGrap.Enabled = false;
+                            btnOpen.Enabled = false;
                             RobotAdapter.setoverride = 20;
                             if (!myController.SetOverride())
                             {
@@ -498,7 +553,9 @@ namespace Integrated_Robot_Interface
                             break;
                         case Controller.Robotnum.Nexcom:
                             RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -170, 150, 0, 20, -60, 145, -120, 170, -105, 105, -180, 180 };
+                            RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.preuframe = 0;
+                            RobotAdapter.saferangejoint = new float[12] { -170, 150, 0, 200, -60, 145, -120, 170, -105, 105, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 100 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
                             gbRegister.Enabled = false;
@@ -512,17 +569,6 @@ namespace Integrated_Robot_Interface
                             if (!myController.SetVelocity())
                             {
                                 ShowMessage("設定速度失敗", "設定速度狀態");
-                            }
-                            if (!myController.GetCPosition())
-                            {
-                                ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
-                                return;
-                            }
-                            RobotAdapter.setcposition = RobotAdapter.getcposition;
-                            if (!myController.PointMoveC())
-                            {
-                                ShowMessage("設定座標失敗", "點到點移動狀態");
-                                return;
                             }
                             break;
                         case Controller.Robotnum.Ourarm:
@@ -1008,34 +1054,15 @@ namespace Integrated_Robot_Interface
         }
         private void btnPositionHome_Click(object sender, EventArgs e)
         {
-            switch (myController.Robot)
+            RobotAdapter.homeposition.SetValue(0, 0);
+            RobotAdapter.homeposition.SetValue(0, 1);
+            RobotAdapter.homeposition.SetValue(0, 2);
+            RobotAdapter.homeposition.SetValue(0, 3);
+            RobotAdapter.homeposition.SetValue(-90, 4);
+            RobotAdapter.homeposition.SetValue(0, 5);
+            if (!myController.Home())
             {
-                case Controller.Robotnum.Fanuc:
-                    RobotAdapter.homeposition.SetValue(0, 0);
-                    RobotAdapter.homeposition.SetValue(0, 1);
-                    RobotAdapter.homeposition.SetValue(0, 2);
-                    RobotAdapter.homeposition.SetValue(0, 3);
-                    RobotAdapter.homeposition.SetValue(-90, 4);
-                    RobotAdapter.homeposition.SetValue(0, 5);
-                    if (!myController.Home())
-                    {
-                        ShowMessage("回到自訂原點失敗", "回到自訂原點狀態");
-                    }
-                    break;
-                case Controller.Robotnum.Nexcom:
-                    RobotAdapter.homeposition.SetValue(0, 0);
-                    RobotAdapter.homeposition.SetValue(90, 1);
-                    RobotAdapter.homeposition.SetValue(0, 2);
-                    RobotAdapter.homeposition.SetValue(0, 3);
-                    RobotAdapter.homeposition.SetValue(-90, 4);
-                    RobotAdapter.homeposition.SetValue(0, 5);
-                    if (!myController.Home())
-                    {
-                        ShowMessage("回到自訂原點失敗", "回到自訂原點狀態");
-                    }
-                    break;
-                case Controller.Robotnum.Ourarm:
-                    break;
+                ShowMessage("回到自訂原點失敗", "回到自訂原點狀態");
             }
         }
         #endregion
@@ -1675,22 +1702,22 @@ namespace Integrated_Robot_Interface
 
                         ins = $"{myController.Instruction.ToString()} = {tool}";
                         return true;
-                    //case Controller.Instructionnum.FRAME:
-                    //    if (string.IsNullOrEmpty(txtProgramValue.Text))
-                    //    {
-                    //        MessageBox.Show("座標系值不可空白");
-                    //        return false;
-                    //    }
+                    case Controller.Instructionnum.FRAME:
+                        if (string.IsNullOrEmpty(txtProgramValue.Text))
+                        {
+                            MessageBox.Show("座標系值不可空白");
+                            return false;
+                        }
 
-                    //    int frame = Convert.ToInt32(txtProgramValue.Text);
-                    //    if (frame < 0 || frame > 10)
-                    //    {
-                    //        MessageBox.Show("座標系超出範圍", "座標系範圍狀態");
-                    //        return false;
-                    //    }
+                        int frame = Convert.ToInt32(txtProgramValue.Text);
+                        if (frame < 0 || frame > 10)
+                        {
+                            MessageBox.Show("座標系超出範圍", "座標系範圍狀態");
+                            return false;
+                        }
 
-                    //    ins = $"{myController.Instruction.ToString()} = {frame}";
-                    //    return true;
+                        ins = $"{myController.Instruction.ToString()} = {frame}";
+                        return true;
                     default:
                         return false;
                 }
@@ -1869,5 +1896,87 @@ namespace Integrated_Robot_Interface
             }
         }
         #endregion
+
+        #region <gbGripper>
+        private void btnGripperConnect_Click(object sender, EventArgs e)
+        {
+            if (fgGripperConnectionState == false)
+            {
+                if (!myController.GripperConnect())
+                {
+                    MessageBox.Show("夾爪連線失敗");
+                    return;
+                }
+                fgGripperConnectionState = true;
+                btnGripperConnect.Text = "Disconnect";
+                btnGrap.Enabled = true;
+                btnOpen.Enabled = true;
+            }
+            else
+            {
+                if (!myController.GripperDisconnect())
+                {
+                    MessageBox.Show("夾爪離線失敗");
+                    return;
+                }
+                fgGripperConnectionState = false;
+                btnGripperConnect.Text = "Connect";
+                btnGrap.Enabled = false;
+                btnOpen.Enabled = false;
+            }
+        }
+        private void btnGrap_Click(object sender, EventArgs e)
+        {
+            if (fgGripperState == false)
+            {
+                if (!myController.GripperGrap())
+                {
+                    MessageBox.Show("夾爪抓取失敗");
+                    return;
+                }
+                btnGrap.Text = "Stop";
+                btnOpen.Text = "Stop";
+                fgGripperState = true;
+            }
+            else
+            {
+                if (!myController.GripperStop())
+                {
+                    MessageBox.Show("夾爪抓取失敗");
+                    return;
+                }
+                btnGrap.Text = "Grap";
+                btnOpen.Text = "Open";
+                fgGripperState = false;
+            }
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if (fgGripperState == false)
+            {
+                if (!myController.GripperOpen())
+                {
+                    MessageBox.Show("夾爪打開失敗");
+                    return;
+                }
+                btnGrap.Text = "Stop";
+                btnOpen.Text = "Stop";
+                fgGripperState = true;
+            }
+            else
+            {
+                if (!myController.GripperStop())
+                {
+                    MessageBox.Show("夾爪抓取失敗");
+                    return;
+                }
+                btnGrap.Text = "Grap";
+                btnOpen.Text = "Open";
+                fgGripperState = false;
+            }
+        }
+        #endregion
+
     }
 }

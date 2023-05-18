@@ -41,6 +41,9 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.gbCurrentPosition = new System.Windows.Forms.GroupBox();
+            this.lblUFrame = new System.Windows.Forms.Label();
+            this.lblTool = new System.Windows.Forms.Label();
+            this.lblState = new System.Windows.Forms.Label();
             this.lblJoint = new System.Windows.Forms.Label();
             this.lblXyzwpr = new System.Windows.Forms.Label();
             this.btnPositionHome = new System.Windows.Forms.Button();
@@ -73,6 +76,7 @@
             this.lblCoordinate = new System.Windows.Forms.Label();
             this.cboCoordinate = new System.Windows.Forms.ComboBox();
             this.gbRegister = new System.Windows.Forms.GroupBox();
+            this.lblGetRegister = new System.Windows.Forms.Label();
             this.btnRegisterSet = new System.Windows.Forms.Button();
             this.txtR5 = new System.Windows.Forms.TextBox();
             this.txtR4 = new System.Windows.Forms.TextBox();
@@ -162,6 +166,7 @@
             this.gbProgram = new System.Windows.Forms.GroupBox();
             this.btnProgramCopy = new System.Windows.Forms.Button();
             this.lblProgramValue = new System.Windows.Forms.Label();
+            this.txtProgramRJ6 = new System.Windows.Forms.TextBox();
             this.txtProgramValue = new System.Windows.Forms.TextBox();
             this.lblProgramUnit = new System.Windows.Forms.Label();
             this.lblProgramInstruction = new System.Windows.Forms.Label();
@@ -185,7 +190,6 @@
             this.txtProgramYJ2 = new System.Windows.Forms.TextBox();
             this.lblProgramXJ1 = new System.Windows.Forms.Label();
             this.txtProgramZJ3 = new System.Windows.Forms.TextBox();
-            this.txtProgramRJ6 = new System.Windows.Forms.TextBox();
             this.txtProgramWJ4 = new System.Windows.Forms.TextBox();
             this.txtProgramPJ5 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -199,10 +203,10 @@
             this.lblInformation2 = new System.Windows.Forms.Label();
             this.tPProgram = new System.Windows.Forms.TabPage();
             this.tPOther = new System.Windows.Forms.TabPage();
-            this.lblState = new System.Windows.Forms.Label();
-            this.lblGetRegister = new System.Windows.Forms.Label();
-            this.lblTool = new System.Windows.Forms.Label();
-            this.lblUFrame = new System.Windows.Forms.Label();
+            this.gbGripper = new System.Windows.Forms.GroupBox();
+            this.btnGripperConnect = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnGrap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -224,6 +228,7 @@
             this.gbInformation2.SuspendLayout();
             this.tPProgram.SuspendLayout();
             this.tPOther.SuspendLayout();
+            this.gbGripper.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
@@ -355,6 +360,33 @@
             this.gbCurrentPosition.TabIndex = 4;
             this.gbCurrentPosition.TabStop = false;
             this.gbCurrentPosition.Text = "Current Position";
+            // 
+            // lblUFrame
+            // 
+            this.lblUFrame.AutoSize = true;
+            this.lblUFrame.Location = new System.Drawing.Point(141, 53);
+            this.lblUFrame.Name = "lblUFrame";
+            this.lblUFrame.Size = new System.Drawing.Size(85, 21);
+            this.lblUFrame.TabIndex = 4;
+            this.lblUFrame.Text = "UFrame :";
+            // 
+            // lblTool
+            // 
+            this.lblTool.AutoSize = true;
+            this.lblTool.Location = new System.Drawing.Point(6, 53);
+            this.lblTool.Name = "lblTool";
+            this.lblTool.Size = new System.Drawing.Size(57, 21);
+            this.lblTool.TabIndex = 3;
+            this.lblTool.Text = "Tool :";
+            // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Location = new System.Drawing.Point(6, 29);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(59, 21);
+            this.lblState.TabIndex = 2;
+            this.lblState.Text = "State :";
             // 
             // lblJoint
             // 
@@ -699,6 +731,15 @@
             this.gbRegister.TabIndex = 7;
             this.gbRegister.TabStop = false;
             this.gbRegister.Text = "Register";
+            // 
+            // lblGetRegister
+            // 
+            this.lblGetRegister.AutoSize = true;
+            this.lblGetRegister.Location = new System.Drawing.Point(6, 29);
+            this.lblGetRegister.Name = "lblGetRegister";
+            this.lblGetRegister.Size = new System.Drawing.Size(59, 210);
+            this.lblGetRegister.TabIndex = 26;
+            this.lblGetRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =\r\nR6 =\r\nR7 =\r\nR8 =\r\nR9 =\r\nR10 =";
             // 
             // btnRegisterSet
             // 
@@ -1677,6 +1718,16 @@
             this.lblProgramValue.TabIndex = 58;
             this.lblProgramValue.Text = "Value :";
             // 
+            // txtProgramRJ6
+            // 
+            this.txtProgramRJ6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtProgramRJ6.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtProgramRJ6.Location = new System.Drawing.Point(793, 119);
+            this.txtProgramRJ6.Name = "txtProgramRJ6";
+            this.txtProgramRJ6.Size = new System.Drawing.Size(64, 23);
+            this.txtProgramRJ6.TabIndex = 38;
+            this.txtProgramRJ6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // txtProgramValue
             // 
             this.txtProgramValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1898,16 +1949,6 @@
             this.txtProgramZJ3.TabIndex = 35;
             this.txtProgramZJ3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtProgramRJ6
-            // 
-            this.txtProgramRJ6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProgramRJ6.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramRJ6.Location = new System.Drawing.Point(793, 119);
-            this.txtProgramRJ6.Name = "txtProgramRJ6";
-            this.txtProgramRJ6.Size = new System.Drawing.Size(64, 23);
-            this.txtProgramRJ6.TabIndex = 38;
-            this.txtProgramRJ6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // txtProgramWJ4
             // 
             this.txtProgramWJ4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -2049,46 +2090,56 @@
             this.tPOther.TabIndex = 3;
             this.tPOther.Text = "Other";
             // 
-            // lblState
+            // gbGripper
             // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(6, 29);
-            this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(59, 21);
-            this.lblState.TabIndex = 2;
-            this.lblState.Text = "State :";
+            this.gbGripper.Controls.Add(this.btnGripperConnect);
+            this.gbGripper.Controls.Add(this.btnOpen);
+            this.gbGripper.Controls.Add(this.btnGrap);
+            this.gbGripper.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbGripper.Location = new System.Drawing.Point(12, 561);
+            this.gbGripper.Name = "gbGripper";
+            this.gbGripper.Size = new System.Drawing.Size(324, 106);
+            this.gbGripper.TabIndex = 23;
+            this.gbGripper.TabStop = false;
+            this.gbGripper.Text = "Gripper";
             // 
-            // lblGetRegister
+            // btnGripperConnect
             // 
-            this.lblGetRegister.AutoSize = true;
-            this.lblGetRegister.Location = new System.Drawing.Point(6, 29);
-            this.lblGetRegister.Name = "lblGetRegister";
-            this.lblGetRegister.Size = new System.Drawing.Size(59, 210);
-            this.lblGetRegister.TabIndex = 26;
-            this.lblGetRegister.Text = "R1 =\r\nR2 =\r\nR3 =\r\nR4 =\r\nR5 =\r\nR6 =\r\nR7 =\r\nR8 =\r\nR9 =\r\nR10 =";
+            this.btnGripperConnect.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnGripperConnect.Location = new System.Drawing.Point(6, 32);
+            this.btnGripperConnect.Name = "btnGripperConnect";
+            this.btnGripperConnect.Size = new System.Drawing.Size(100, 50);
+            this.btnGripperConnect.TabIndex = 2;
+            this.btnGripperConnect.Text = "Connect";
+            this.btnGripperConnect.UseVisualStyleBackColor = true;
+            this.btnGripperConnect.Click += new System.EventHandler(this.btnGripperConnect_Click);
             // 
-            // lblTool
+            // btnOpen
             // 
-            this.lblTool.AutoSize = true;
-            this.lblTool.Location = new System.Drawing.Point(6, 53);
-            this.lblTool.Name = "lblTool";
-            this.lblTool.Size = new System.Drawing.Size(57, 21);
-            this.lblTool.TabIndex = 3;
-            this.lblTool.Text = "Tool :";
+            this.btnOpen.Location = new System.Drawing.Point(218, 32);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(100, 50);
+            this.btnOpen.TabIndex = 1;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // lblUFrame
+            // btnGrap
             // 
-            this.lblUFrame.AutoSize = true;
-            this.lblUFrame.Location = new System.Drawing.Point(141, 53);
-            this.lblUFrame.Name = "lblUFrame";
-            this.lblUFrame.Size = new System.Drawing.Size(0, 21);
-            this.lblUFrame.TabIndex = 4;
+            this.btnGrap.Location = new System.Drawing.Point(112, 32);
+            this.btnGrap.Name = "btnGrap";
+            this.btnGrap.Size = new System.Drawing.Size(100, 50);
+            this.btnGrap.TabIndex = 0;
+            this.btnGrap.Text = "Grap";
+            this.btnGrap.UseVisualStyleBackColor = true;
+            this.btnGrap.Click += new System.EventHandler(this.btnGrap_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1220, 673);
+            this.Controls.Add(this.gbGripper);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.gbControl);
             this.Controls.Add(this.btnEsc);
@@ -2137,6 +2188,7 @@
             this.gbInformation2.PerformLayout();
             this.tPProgram.ResumeLayout(false);
             this.tPOther.ResumeLayout(false);
+            this.gbGripper.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2317,6 +2369,10 @@
         private System.Windows.Forms.Label lblGetRegister;
         private System.Windows.Forms.Label lblUFrame;
         private System.Windows.Forms.Label lblTool;
+        private System.Windows.Forms.GroupBox gbGripper;
+        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnGrap;
+        private System.Windows.Forms.Button btnGripperConnect;
     }
 }
 

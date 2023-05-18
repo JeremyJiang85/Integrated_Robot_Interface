@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
@@ -13,12 +15,14 @@ namespace Integrated_Robot_Interface
         private FRRJIf.Core mobjCore;
         private FRRJIf.DataTable mobjDataTable;
         private FRRJIf.DataCurPos mobjCurPos;
+        private FRRJIf.DataCurPos mobjCurPosUF;
         private FRRJIf.DataPosReg mobjPosReg;
         private FRRJIf.DataSysVar mobjSysVarInt;
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
         private FRRJIf.DataTask mobjTask;
         private StreamWriter sw;
+        private SerialPort serialPort1;
         private int programlinecount = 0;
         private int programPRcount = 0;
         private Array Xyzwpr = new float[9];
@@ -35,6 +39,7 @@ namespace Integrated_Robot_Interface
             mobjDataTable = mobjCore.DataTable;
             mobjAlarmCurrent = mobjDataTable.AddAlarm(FRRJIf.FRIF_DATA_TYPE.ALARM_CURRENT, 1, 0);
             mobjCurPos = mobjDataTable.AddCurPos(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1);
+            mobjCurPosUF = mobjDataTable.AddCurPosUF(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1, 15);
             mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 50);
             mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
@@ -292,28 +297,28 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPosUF.GetValue Fail";
                 return ret;
             }
             gettool = UT;
             return ret;
         }
-        //public override bool GetUFrame()
-        //{
-        //    bool ret = false;
-
-        //    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
-        //    if (!ret)
-        //    {
-        //        apierrtext = "mobjCurPos.GetValue Fail";
-        //        return ret;
-        //    }
-        //    getuframe = UF;
-        //    return ret;
-        //}
+        public override bool GetUFrame()
+        {
+            bool ret = false;
+            
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPosUF.GetValue Fail";
+                return ret;
+            }
+            getuframe = UF;
+            return ret;
+        }
         public override bool GetOverride()
         {
             bool ret = false;
@@ -344,10 +349,10 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPosUF.GetValue Fail";
                 return ret;
             }
             getcposition = Xyzwpr;
@@ -357,10 +362,10 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
-                apierrtext = "mobjCurPos.GetValue Fail";
+                apierrtext = "mobjCurPosUF.GetValue Fail";
                 return ret;
             }
             getjposition = Joint;
@@ -659,6 +664,61 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
+        public override bool SafeRangeChangeXYZ()
+        {
+            bool ret = false;
+            Array Xyzwprworld = new float[9];
+            Array Configworld = new short[7];
+            Array Jointworld = new float[9];
+            short UFworld = 0;
+            short UTworld = 1;
+            short ValidCworld = 0;
+            short ValidJworld = 0;
+            float Xerror = 0;
+            float Yerror = 0;
+            float Zerror = 0;
+            float Werror = 0;
+            float Perror = 0;
+            float Rerror = 0;
+
+            ret = mobjCurPos.GetValue(ref Xyzwprworld, ref Configworld, ref Jointworld, ref UFworld, ref UTworld, ref ValidCworld, ref ValidJworld);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPos.GetValue Fail";
+                return ret;
+            }
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPosUF.GetValue Fail";
+                return ret;
+            }
+
+            Xerror = Convert.ToSingle(Xyzwprworld.GetValue(0)) - Convert.ToSingle(Xyzwpr.GetValue(0));
+            Yerror = Convert.ToSingle(Xyzwprworld.GetValue(1)) - Convert.ToSingle(Xyzwpr.GetValue(1));
+            Zerror = Convert.ToSingle(Xyzwprworld.GetValue(2)) - Convert.ToSingle(Xyzwpr.GetValue(2));
+            Werror = Convert.ToSingle(Xyzwprworld.GetValue(3)) - Convert.ToSingle(Xyzwpr.GetValue(3));
+            Perror = Convert.ToSingle(Xyzwprworld.GetValue(4)) - Convert.ToSingle(Xyzwpr.GetValue(4));
+            Rerror = Convert.ToSingle(Xyzwprworld.GetValue(5)) - Convert.ToSingle(Xyzwpr.GetValue(5));
+
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(0)) - Xerror, 0);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(1)) - Xerror, 1);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(2)) - Yerror, 2);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(3)) - Yerror, 3);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(4)) - Zerror, 4);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(5)) - Zerror, 5);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(6)) - Werror, 6);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(7)) - Werror, 7);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(8)) - Perror, 8);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(9)) - Perror, 9);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(10)) - Rerror, 10);
+            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(11)) - Rerror, 11);
+            Console.WriteLine("1");
+            Console.WriteLine(Xerror);
+            Console.WriteLine(Convert.ToSingle(saferangexyzorginal.GetValue(0)));
+            Console.WriteLine(Convert.ToSingle(saferangexyz.GetValue(0)));
+            return ret;
+        }
         public override bool Compile()
         {
             bool ret = false;
@@ -711,7 +771,7 @@ namespace Integrated_Robot_Interface
                     programPRcount++;
                     sw.WriteLine($"   {programlinecount}:J PR[{programPRcount}] 100% FINE    ;");
                     
-                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
                     if (!ret)
                     {
                         apierrtext = "mobjCurPos.GetValue Fail";
@@ -737,7 +797,7 @@ namespace Integrated_Robot_Interface
                     programPRcount++;
                     sw.WriteLine($"   {programlinecount}:J PR[{programPRcount}] 100% FINE    ;");
 
-                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
                     if (!ret)
                     {
                         apierrtext = "mobjCurPos.GetValue Fail";
@@ -763,7 +823,7 @@ namespace Integrated_Robot_Interface
                     programPRcount++;
                     sw.WriteLine($"   {programlinecount}:L PR[{programPRcount}] {Convert.ToSingle(compile.GetValue(8))}mm/sec FINE    ;");
 
-                    ret = mobjCurPos.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+                    ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
                     if (!ret)
                     {
                         apierrtext = "mobjCurPos.GetValue Fail";
@@ -799,6 +859,57 @@ namespace Integrated_Robot_Interface
             }
             
             return true;
+        }
+        public override bool GripperConnect()
+        {
+            serialPort1 = new SerialPort();
+            serialPort1.BaudRate = 9600;
+            serialPort1.Parity = Parity.None;
+            serialPort1.DataBits = 8;
+            serialPort1.StopBits = StopBits.One;
+            serialPort1.PortName = "COM3";
+            serialPort1.Open();
+            return true;
+        }
+        public override bool GripperDisconnect()
+        {
+            serialPort1.Close();
+            return true;
+        }
+        public override bool GripperGrap()
+        {
+            GripperDirState = 1;
+            fgGripperState = true;
+            Thread thread = new Thread(grab);
+            thread.Start();
+            return true;
+        }
+        public override bool GripperOpen()
+        {
+            GripperDirState = 0;
+            fgGripperState = true;
+            Thread thread = new Thread(grab);
+            thread.Start();
+            return true;
+        }
+        public override bool GripperStop()
+        {
+            fgGripperState = false;
+            return true;
+        }
+        private void grab()
+        {
+            while (fgGripperState)
+            {
+                if (GripperDirState == 1)
+                {
+                    serialPort1.Write("1");
+                }
+                else
+                {
+                    serialPort1.Write("0");
+                }
+            }
         }
     }
 }

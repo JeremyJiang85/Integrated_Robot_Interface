@@ -19,8 +19,9 @@ namespace Integrated_Robot_Interface
         public static string getstate { get; set; } = "";
         public static short gettool { get; set; } = 0;
         public static int settool { get; set; } = 0;
-        //public static short getuframe { get; set; } = 0;
-        //public static int setuframe { get; set; } = 0;
+        public static short getuframe { get; set; } = 0;
+        public static int setuframe { get; set; } = 0;
+        public static short preuframe { get; set; } = 0;
         public static Array getcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array getjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array setcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
@@ -40,6 +41,7 @@ namespace Integrated_Robot_Interface
         public static string information4name { get; set; } = "";
         public static string information4text { get; set; } = "";
         public static Array safecheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array saferangexyzorginal { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static Array saferangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static Array saferangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static float safevelocity { get; set; } = 0;
@@ -48,6 +50,8 @@ namespace Integrated_Robot_Interface
         public static Array saferangeoverride { get; set; } = new int[2] { 0, 0 };
         public static Array compile { get; set; } = new float[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static string programname { get; set; } = "";
+        public static bool fgGripperState { get; set; } = false;
+        public static short GripperDirState { get; set; } = 0;
         #endregion
 
         #region <Fanuc>
@@ -204,6 +208,11 @@ namespace Integrated_Robot_Interface
             information3text = "";
             return true;
         }
+        public virtual bool SafeRangeChangeXYZ()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
         public bool SafeRangeCheckXYZ()
         {
             if (Convert.ToSingle(safecheck.GetValue(0)) < Convert.ToSingle(saferangexyz.GetValue(0)) ||
@@ -261,6 +270,31 @@ namespace Integrated_Robot_Interface
             return true;
         }
         public virtual bool Compile()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GripperConnect()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GripperDisconnect()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GripperGrap()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GripperOpen()
+        {
+            MessageBox.Show("此功能目前無法使用或無實作");
+            return false;
+        }
+        public virtual bool GripperStop()
         {
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;

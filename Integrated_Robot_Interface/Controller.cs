@@ -82,14 +82,14 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetTool();
         }
-        //public bool GetUFrame()
-        //{
-        //    return myRobotAdapter.GetUFrame();
-        //}
-        //public bool SetUFrame()
-        //{
-        //    return myRobotAdapter.GetUFrame();
-        //}
+        public bool GetUFrame()
+        {
+            return myRobotAdapter.GetUFrame();
+        }
+        public bool SetUFrame()
+        {
+            return myRobotAdapter.SetUFrame();
+        }
         public bool GetOverride()
         {
             return myRobotAdapter.GetOverride();
@@ -146,6 +146,10 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetInformation3();
         }
+        public virtual bool SafeRangeChangeXYZ()
+        {
+            return myRobotAdapter.SafeRangeChangeXYZ();
+        }
         public bool SafeRangeCheckXYZ()
         {
             return myRobotAdapter.SafeRangeCheckXYZ();
@@ -165,6 +169,26 @@ namespace Integrated_Robot_Interface
         public bool Compile()
         {
             return myRobotAdapter.Compile();
+        }
+        public bool GripperConnect()
+        {
+            return myRobotAdapter.GripperConnect();
+        }
+        public bool GripperDisconnect()
+        {
+            return myRobotAdapter.GripperDisconnect();
+        }
+        public bool GripperGrap()
+        {
+            return myRobotAdapter.GripperGrap();
+        }
+        public bool GripperOpen()
+        {
+            return myRobotAdapter.GripperOpen();
+        }
+        public bool GripperStop()
+        {
+            return myRobotAdapter.GripperStop();
         }
         #endregion
 

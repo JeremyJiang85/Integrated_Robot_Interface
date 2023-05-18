@@ -122,12 +122,12 @@ namespace Integrated_Robot_Interface
         }
         public override bool Home()
         {
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(0)), 0);
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(1)), 1);
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(2)), 2);
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(3)), 5);
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(4)), 4);
-            PosPcs.pos.SetValue(Convert.ToSingle(homeposition.GetValue(5)), 3);
+            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(1)) - 90, 1);
+            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(3)), 3);
+            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(5)), 5);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
 
@@ -180,19 +180,28 @@ namespace Integrated_Robot_Interface
         {
             int PRetParaValueI32 = 0;
 
-            int ret = mobjGroupAdapter.NMC_GroupGetParamI32(0x100, 0, ref PRetParaValueI32);
+            int ret = mobjGroupAdapter.NMC_GroupGetParamI32(0x80, 0, ref PRetParaValueI32);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 apierrtext = GetErrorMessage("NMC_GroupGetParamI32 Fail", ret);
                 return false;
             }
             gettool = Convert.ToInt16(PRetParaValueI32);
-            return false;
+            return true;
         }
-        //public override bool GetUFrame()
-        //{
-        //    return false;
-        //}
+        public override bool GetUFrame()
+        {
+            int PRetParaValueI32 = 0;
+
+            int ret = mobjGroupAdapter.NMC_GroupGetParamI32(0xC0, 0, ref PRetParaValueI32);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+            {
+                apierrtext = GetErrorMessage("NMC_GroupGetParamI32 Fail", ret);
+                return false;
+            }
+            getuframe = Convert.ToInt16(PRetParaValueI32);
+            return true;
+        }
         public override bool GetOverride()
         {
             double PRetPercentage = 0;
@@ -241,21 +250,21 @@ namespace Integrated_Robot_Interface
                 return false;
             }
             getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(0)), 0);
-            getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(1)), 1);
+            getjposition.SetValue(-Convert.ToSingle(PosAcs.pos.GetValue(1)) + 90, 1);
             getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(2)), 2);
-            getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(3)), 3);
+            getjposition.SetValue(-Convert.ToSingle(PosAcs.pos.GetValue(3)), 3);
             getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(4)), 4);
-            getjposition.SetValue(Convert.ToSingle(PosAcs.pos.GetValue(5)), 5);
+            getjposition.SetValue(-Convert.ToSingle(PosAcs.pos.GetValue(5)), 5);
             return true;
         }
         public override bool PointMoveC()
         {
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(0)), 0);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(1)), 1);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(2)), 2);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(3)), 5);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(4)), 4);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(5)), 3);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(1)), 1);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(3)), 5);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(5)), 3);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
 
@@ -269,12 +278,12 @@ namespace Integrated_Robot_Interface
         }
         public override bool PointMoveJ()
         {
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(0)), 0);
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(1)), 1);
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(2)), 2);
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(3)), 3);
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(4)), 4);
-            PosAcs.pos.SetValue(Convert.ToSingle(setjposition.GetValue(5)), 5);
+            PosAcs.pos.SetValue(Convert.ToDouble(setjposition.GetValue(0)), 0);
+            PosAcs.pos.SetValue(-Convert.ToDouble(setjposition.GetValue(1)) + 90, 1);
+            PosAcs.pos.SetValue(Convert.ToDouble(setjposition.GetValue(2)), 2);
+            PosAcs.pos.SetValue(-Convert.ToDouble(setjposition.GetValue(3)), 3);
+            PosAcs.pos.SetValue(Convert.ToDouble(setjposition.GetValue(4)), 4);
+            PosAcs.pos.SetValue(-Convert.ToDouble(setjposition.GetValue(5)), 5);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
 
@@ -288,12 +297,12 @@ namespace Integrated_Robot_Interface
         }
         public override bool LineMove()
         {
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(0)), 0);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(1)), 1);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(2)), 2);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(3)), 5);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(4)), 4);
-            PosPcs.pos.SetValue(Convert.ToSingle(setcposition.GetValue(5)), 3);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(0)), 0);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(1)), 1);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(2)), 2);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(3)), 5);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(4)), 4);
+            PosPcs.pos.SetValue(Convert.ToDouble(setcposition.GetValue(5)), 3);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
             double retMaxVel = setvelocity;
@@ -341,57 +350,57 @@ namespace Integrated_Robot_Interface
             }
 
             int CartAxis = 0;
-            double CartPos = 0;
+            double CartPos = Convert.ToDouble(jogmove.GetValue(0));
 
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     CartAxis = 0;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(0)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(0));
                     break;
                 case 1:
                     CartAxis = 0;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(0)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(0));
                     break;
                 case 2:
                     CartAxis = 1;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(1)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(1));
                     break;
                 case 3:
                     CartAxis = 1;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(1)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(1));
                     break;
                 case 4:
                     CartAxis = 2;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(2)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(2));
                     break;
                 case 5:
                     CartAxis = 2;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(2)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(2));
                     break;
                 case 6:
                     CartAxis = 5;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(5)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(5));
                     break;
                 case 7:
                     CartAxis = 5;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(5)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(5));
                     break;
                 case 8:
                     CartAxis = 4;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(4)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(4));
                     break;
                 case 9:
                     CartAxis = 4;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(4)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(4));
                     break;
                 case 10:
                     CartAxis = 3;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(3)) + Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos += Convert.ToDouble(PosPcs.pos.GetValue(3));
                     break;
                 case 11:
                     CartAxis = 3;
-                    CartPos = Convert.ToSingle(PosPcs.pos.GetValue(3)) - Convert.ToSingle(jogmove.GetValue(0));
+                    CartPos -= Convert.ToDouble(PosPcs.pos.GetValue(3));
                     break;
             }
 
@@ -413,58 +422,58 @@ namespace Integrated_Robot_Interface
             }
 
             int GroupAxisIndex = 0;
-            double AcsPos = 0;
-            double PAcsMaxVel = 0;
+            double AcsPos = Convert.ToDouble(jogmove.GetValue(0));
+            double PAcsMaxVel = 10;
 
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(0)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(0));
                     break;
                 case 1:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(0)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToDouble(PosAcs.pos.GetValue(0));
                     break;
                 case 2:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(1)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToDouble(PosAcs.pos.GetValue(1));
                     break;
                 case 3:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(1)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(1));
                     break;
                 case 4:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(2)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(2));
                     break;
                 case 5:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(2)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToDouble(PosAcs.pos.GetValue(2));
                     break;
                 case 6:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(3)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToDouble(PosAcs.pos.GetValue(3));
                     break;
                 case 7:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(3)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(3));
                     break;
                 case 8:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(4)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(4));
                     break;
                 case 9:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(4)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToDouble(PosAcs.pos.GetValue(4));
                     break;
                 case 10:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(5)) + Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos -= Convert.ToSingle(PosAcs.pos.GetValue(5));
                     break;
                 case 11:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToSingle(PosAcs.pos.GetValue(5)) - Convert.ToSingle(jogmove.GetValue(0));
+                    AcsPos += Convert.ToDouble(PosAcs.pos.GetValue(5));
                     break;
             }
             
@@ -478,8 +487,6 @@ namespace Integrated_Robot_Interface
         }
         public override bool GetInformation1()
         {
-            int PRetState = 0;
-
             information1name = "Status";
             information1text = "";
 
@@ -494,9 +501,10 @@ namespace Integrated_Robot_Interface
 
 
             information1text += PRetStatusInBit.ToString();
-            for (int i = 0; i > 14; i++)
+            information1text += Convert.ToUInt16(PRetStatusInBit).ToString();
+            for (int i = 0; i < 13; i++)
             {
-                if ((PRetStatusInBit | 1) == 1)
+                if ((PRetStatusInBit & 1) == 1)
                 {
                     switch (i)
                     {
@@ -524,26 +532,23 @@ namespace Integrated_Robot_Interface
                         case 7:
                             information1text += "7:ERR = ON/r/n";
                             break;
-                        case 8:
-                            information1text += "8:CSTP = ON/r/n";
-                            break;
                         case 9:
-                            information1text += "9:ACC = ON/r/n";
+                            information1text += "9:CSTP = ON/r/n";
                             break;
                         case 10:
-                            information1text += "10:DEC = ON/r/n";
+                            information1text += "10:ACC = ON/r/n";
                             break;
                         case 11:
-                            information1text += "11:MV = ON/r/n";
+                            information1text += "11:DEC = ON/r/n";
                             break;
                         case 12:
-                            information1text += "12:OP = ON/r/n";
+                            information1text += "12:MV = ON/r/n";
                             break;
                         case 13:
-                            information1text += "13:STOP = ON/r/n";
+                            information1text += "13:OP = ON/r/n";
                             break;
                         case 14:
-                            information1text += "14:INP = ON/r/n";
+                            information1text += "14:STOP = ON/r/n";
                             break;
                     }
                 }
@@ -575,26 +580,23 @@ namespace Integrated_Robot_Interface
                         case 7:
                             information1text += "7:ERR = OFF/r/n";
                             break;
-                        case 8:
-                            information1text += "8:CSTP = OFF/r/n";
-                            break;
                         case 9:
-                            information1text += "9:ACC = OFF/r/n";
+                            information1text += "9:CSTP = OFF/r/n";
                             break;
                         case 10:
-                            information1text += "10:DEC = OFF/r/n";
+                            information1text += "10:ACC = OFF/r/n";
                             break;
                         case 11:
-                            information1text += "11:MV = OFF/r/n";
+                            information1text += "11:DEC = OFF/r/n";
                             break;
                         case 12:
-                            information1text += "12:OP = OFF/r/n";
+                            information1text += "12:MV = OFF/r/n";
                             break;
                         case 13:
-                            information1text += "13:STOP = OFF/r/n";
+                            information1text += "13:OP = OFF/r/n";
                             break;
                         case 14:
-                            information1text += "14:INP = OFF/r/n";
+                            information1text += "14:STOP = OFF/r/n";
                             break;
                     }
                 }
@@ -679,11 +681,11 @@ namespace Integrated_Robot_Interface
                     break;
                 case 2:
                     PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(2)), 0);
-                    PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(3)), 1);
+                    PosAcs.pos.SetValue(-Convert.ToSingle(compile.GetValue(3)) + 90, 1);
                     PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(4)), 2);
-                    PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(5)), 3);
+                    PosAcs.pos.SetValue(-Convert.ToSingle(compile.GetValue(5)), 3);
                     PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(6)), 4);
-                    PosAcs.pos.SetValue(Convert.ToSingle(compile.GetValue(7)), 5);
+                    PosAcs.pos.SetValue(-Convert.ToSingle(compile.GetValue(7)), 5);
                     
                     ret = mobjGroupAdapter.NMC_GroupPtpAcsAll(mesk, ref PosAcs);
                     if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
@@ -716,6 +718,16 @@ namespace Integrated_Robot_Interface
                     int PRetParaValueI32 = Convert.ToInt32(compile.GetValue(2));
 
                     ret = mobjGroupAdapter.NMC_GroupSetParamI32(0x100, 0, PRetParaValueI32);
+                    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                    {
+                        apierrtext = GetErrorMessage("NMC_GroupSetParamI32 Fail", ret);
+                        return false;
+                    }
+                    return false;
+                case 6:
+                    PRetParaValueI32 = Convert.ToInt32(compile.GetValue(2));
+
+                    ret = mobjGroupAdapter.NMC_GroupSetParamI32(0x200, 0, PRetParaValueI32);
                     if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
                     {
                         apierrtext = GetErrorMessage("NMC_GroupSetParamI32 Fail", ret);
