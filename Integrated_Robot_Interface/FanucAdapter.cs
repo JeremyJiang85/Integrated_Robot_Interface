@@ -306,6 +306,27 @@ namespace Integrated_Robot_Interface
             gettool = UT;
             return ret;
         }
+        public override bool SetTool()
+        {
+            bool ret = false;
+            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
+            int Index = 1;
+
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPosUF.GetValue Fail";
+                return ret;
+            }
+            Console.WriteLine(settool);
+            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, config, UF, settool);
+            if (!ret)
+            {
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                return ret;
+            }
+            return ret;
+        }
         public override bool GetUFrame()
         {
             bool ret = false;
@@ -317,6 +338,27 @@ namespace Integrated_Robot_Interface
                 return ret;
             }
             getuframe = UF;
+            return ret;
+        }
+        public override bool SetUFrame()
+        {
+            bool ret = false;
+            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
+            int Index = 1;
+
+            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            if (!ret)
+            {
+                apierrtext = "mobjCurPosUF.GetValue Fail";
+                return ret;
+            }
+            Console.WriteLine(setuframe);
+            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, config, setuframe, UT);
+            if (!ret)
+            {
+                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                return ret;
+            }
             return ret;
         }
         public override bool GetOverride()

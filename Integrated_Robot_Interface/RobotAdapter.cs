@@ -18,9 +18,9 @@ namespace Integrated_Robot_Interface
         public static int setoverride { get; set; } = 0;
         public static string getstate { get; set; } = "";
         public static short gettool { get; set; } = 0;
-        public static int settool { get; set; } = 0;
+        public static short settool { get; set; } = 0;
         public static short getuframe { get; set; } = 0;
-        public static int setuframe { get; set; } = 0;
+        public static short setuframe { get; set; } = 0;
         public static short preuframe { get; set; } = 0;
         public static Array getcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array getjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };

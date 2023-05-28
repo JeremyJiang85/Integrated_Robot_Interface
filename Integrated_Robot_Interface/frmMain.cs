@@ -517,7 +517,7 @@ namespace Integrated_Robot_Interface
                             RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.preuframe = 0;
-                            RobotAdapter.saferangejoint = new float[12] { -170, 150, -100, 140, -70, 50, -180, 180, -125, -40, -180, 180 };
+                            RobotAdapter.saferangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
                             btnGrap.Enabled = false;
@@ -811,7 +811,6 @@ namespace Integrated_Robot_Interface
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R1失敗", "設定暫存器狀態");
-                        txtR1.Text = "";
                     }
                 }
                 if (!string.IsNullOrEmpty(txtR2.Text))
@@ -821,7 +820,6 @@ namespace Integrated_Robot_Interface
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R2失敗", "設定暫存器狀態");
-                        txtR2.Text = "";
                     }
                 }
                 if (!string.IsNullOrEmpty(txtR3.Text))
@@ -831,7 +829,6 @@ namespace Integrated_Robot_Interface
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R3失敗", "設定暫存器狀態");
-                        txtR3.Text = "";
                     }
                 }
                 if (!string.IsNullOrEmpty(txtR4.Text))
@@ -841,7 +838,6 @@ namespace Integrated_Robot_Interface
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R4失敗", "設定暫存器狀態");
-                        txtR4.Text = "";
                     }
                 }
                 if (!string.IsNullOrEmpty(txtR5.Text))
@@ -851,7 +847,6 @@ namespace Integrated_Robot_Interface
                     if (!myController.SetRegister())
                     {
                         ShowMessage("設定暫存器R5失敗", "設定暫存器狀態");
-                        txtR5.Text = "";
                     }
                 }
             }
@@ -1976,7 +1971,36 @@ namespace Integrated_Robot_Interface
                 fgGripperState = false;
             }
         }
+
         #endregion
 
+        #region <gbFrame>
+        private void btnFrameSet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtToolSet.Text))
+                {
+                    RobotAdapter.settool = Convert.ToInt16(txtToolSet.Text);
+                    if (!myController.SetTool())
+                    {
+                        ShowMessage("設定工具座標失敗", "設定工具座標狀態");
+                    }
+                }
+                if (!string.IsNullOrEmpty(txtUFrameSet.Text))
+                {
+                    RobotAdapter.setuframe = Convert.ToInt16(txtUFrameSet.Text);
+                    if (!myController.SetUFrame())
+                    {
+                        ShowMessage("設定用戶座標失敗", "設定用戶座標狀態");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("請輸入有效數值");
+            }
+        }
+        #endregion
     }
 }

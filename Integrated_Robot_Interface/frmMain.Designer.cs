@@ -203,6 +203,12 @@
             this.lblInformation2 = new System.Windows.Forms.Label();
             this.tPProgram = new System.Windows.Forms.TabPage();
             this.tPOther = new System.Windows.Forms.TabPage();
+            this.gbFrame = new System.Windows.Forms.GroupBox();
+            this.btnFrameSet = new System.Windows.Forms.Button();
+            this.txtUFrameSet = new System.Windows.Forms.TextBox();
+            this.txtToolSet = new System.Windows.Forms.TextBox();
+            this.lblUFrameSet = new System.Windows.Forms.Label();
+            this.lblToolSet = new System.Windows.Forms.Label();
             this.gbGripper = new System.Windows.Forms.GroupBox();
             this.btnGripperConnect = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
@@ -228,6 +234,7 @@
             this.gbInformation2.SuspendLayout();
             this.tPProgram.SuspendLayout();
             this.tPOther.SuspendLayout();
+            this.gbFrame.SuspendLayout();
             this.gbGripper.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -244,9 +251,9 @@
             // btnEsc
             // 
             this.btnEsc.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnEsc.Location = new System.Drawing.Point(1108, 58);
+            this.btnEsc.Location = new System.Drawing.Point(1108, 27);
             this.btnEsc.Name = "btnEsc";
-            this.btnEsc.Size = new System.Drawing.Size(100, 50);
+            this.btnEsc.Size = new System.Drawing.Size(100, 100);
             this.btnEsc.TabIndex = 1;
             this.btnEsc.Text = "ESC";
             this.btnEsc.UseVisualStyleBackColor = true;
@@ -336,9 +343,10 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(446, 12);
+            this.richTextBox1.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.richTextBox1.Location = new System.Drawing.Point(562, 12);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(360, 125);
+            this.richTextBox1.Size = new System.Drawing.Size(540, 125);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             // 
@@ -354,7 +362,7 @@
             this.gbCurrentPosition.Controls.Add(this.lblJoint);
             this.gbCurrentPosition.Controls.Add(this.lblXyzwpr);
             this.gbCurrentPosition.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbCurrentPosition.Location = new System.Drawing.Point(12, 324);
+            this.gbCurrentPosition.Location = new System.Drawing.Point(12, 143);
             this.gbCurrentPosition.Name = "gbCurrentPosition";
             this.gbCurrentPosition.Size = new System.Drawing.Size(324, 231);
             this.gbCurrentPosition.TabIndex = 4;
@@ -434,7 +442,7 @@
             this.gbOverride.Controls.Add(this.btnPercentup);
             this.gbOverride.Controls.Add(this.lblOverride);
             this.gbOverride.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbOverride.Location = new System.Drawing.Point(812, 12);
+            this.gbOverride.Location = new System.Drawing.Point(446, 12);
             this.gbOverride.Name = "gbOverride";
             this.gbOverride.Size = new System.Drawing.Size(110, 125);
             this.gbOverride.TabIndex = 5;
@@ -1054,7 +1062,7 @@
             this.gbControl.Controls.Add(this.lblCoordinate);
             this.gbControl.Controls.Add(this.cboCoordinate);
             this.gbControl.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbControl.Location = new System.Drawing.Point(12, 146);
+            this.gbControl.Location = new System.Drawing.Point(12, 380);
             this.gbControl.Name = "gbControl";
             this.gbControl.Size = new System.Drawing.Size(324, 172);
             this.gbControl.TabIndex = 9;
@@ -2082,6 +2090,7 @@
             // tPOther
             // 
             this.tPOther.BackColor = System.Drawing.SystemColors.Control;
+            this.tPOther.Controls.Add(this.gbFrame);
             this.tPOther.Controls.Add(this.gbSafeRange);
             this.tPOther.Controls.Add(this.gbRegister);
             this.tPOther.Location = new System.Drawing.Point(4, 31);
@@ -2090,15 +2099,78 @@
             this.tPOther.TabIndex = 3;
             this.tPOther.Text = "Other";
             // 
+            // gbFrame
+            // 
+            this.gbFrame.Controls.Add(this.btnFrameSet);
+            this.gbFrame.Controls.Add(this.txtUFrameSet);
+            this.gbFrame.Controls.Add(this.txtToolSet);
+            this.gbFrame.Controls.Add(this.lblUFrameSet);
+            this.gbFrame.Controls.Add(this.lblToolSet);
+            this.gbFrame.Location = new System.Drawing.Point(456, 3);
+            this.gbFrame.Name = "gbFrame";
+            this.gbFrame.Size = new System.Drawing.Size(157, 290);
+            this.gbFrame.TabIndex = 20;
+            this.gbFrame.TabStop = false;
+            this.gbFrame.Text = "Frame";
+            // 
+            // btnFrameSet
+            // 
+            this.btnFrameSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnFrameSet.Location = new System.Drawing.Point(23, 87);
+            this.btnFrameSet.Name = "btnFrameSet";
+            this.btnFrameSet.Size = new System.Drawing.Size(100, 50);
+            this.btnFrameSet.TabIndex = 27;
+            this.btnFrameSet.Text = "Set";
+            this.btnFrameSet.UseVisualStyleBackColor = true;
+            this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
+            // 
+            // txtUFrameSet
+            // 
+            this.txtUFrameSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUFrameSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtUFrameSet.Location = new System.Drawing.Point(97, 58);
+            this.txtUFrameSet.Name = "txtUFrameSet";
+            this.txtUFrameSet.Size = new System.Drawing.Size(49, 23);
+            this.txtUFrameSet.TabIndex = 28;
+            this.txtUFrameSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtToolSet
+            // 
+            this.txtToolSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtToolSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtToolSet.Location = new System.Drawing.Point(97, 29);
+            this.txtToolSet.Name = "txtToolSet";
+            this.txtToolSet.Size = new System.Drawing.Size(49, 23);
+            this.txtToolSet.TabIndex = 27;
+            this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblUFrameSet
+            // 
+            this.lblUFrameSet.AutoSize = true;
+            this.lblUFrameSet.Location = new System.Drawing.Point(6, 58);
+            this.lblUFrameSet.Name = "lblUFrameSet";
+            this.lblUFrameSet.Size = new System.Drawing.Size(85, 21);
+            this.lblUFrameSet.TabIndex = 22;
+            this.lblUFrameSet.Text = "UFrame :";
+            // 
+            // lblToolSet
+            // 
+            this.lblToolSet.AutoSize = true;
+            this.lblToolSet.Location = new System.Drawing.Point(6, 29);
+            this.lblToolSet.Name = "lblToolSet";
+            this.lblToolSet.Size = new System.Drawing.Size(57, 21);
+            this.lblToolSet.TabIndex = 21;
+            this.lblToolSet.Text = "Tool :";
+            // 
             // gbGripper
             // 
             this.gbGripper.Controls.Add(this.btnGripperConnect);
             this.gbGripper.Controls.Add(this.btnOpen);
             this.gbGripper.Controls.Add(this.btnGrap);
             this.gbGripper.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbGripper.Location = new System.Drawing.Point(12, 561);
+            this.gbGripper.Location = new System.Drawing.Point(12, 558);
             this.gbGripper.Name = "gbGripper";
-            this.gbGripper.Size = new System.Drawing.Size(324, 106);
+            this.gbGripper.Size = new System.Drawing.Size(324, 109);
             this.gbGripper.TabIndex = 23;
             this.gbGripper.TabStop = false;
             this.gbGripper.Text = "Gripper";
@@ -2188,6 +2260,8 @@
             this.gbInformation2.PerformLayout();
             this.tPProgram.ResumeLayout(false);
             this.tPOther.ResumeLayout(false);
+            this.gbFrame.ResumeLayout(false);
+            this.gbFrame.PerformLayout();
             this.gbGripper.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2373,6 +2447,12 @@
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnGrap;
         private System.Windows.Forms.Button btnGripperConnect;
+        private System.Windows.Forms.GroupBox gbFrame;
+        private System.Windows.Forms.Button btnFrameSet;
+        private System.Windows.Forms.TextBox txtUFrameSet;
+        private System.Windows.Forms.TextBox txtToolSet;
+        private System.Windows.Forms.Label lblUFrameSet;
+        private System.Windows.Forms.Label lblToolSet;
     }
 }
 
