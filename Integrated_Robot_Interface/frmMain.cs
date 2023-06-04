@@ -85,7 +85,7 @@ namespace Integrated_Robot_Interface
                                                  Controller.Instructionnum.MOVEL.ToString() + "(X,Y,Z,W,P,R,V)",
                                                  Controller.Instructionnum.WAIT.ToString() + " ? sec",
                                                  Controller.Instructionnum.TOOL.ToString() + " = ?",
-                                                 Controller.Instructionnum.FRAME.ToString() + " = ?"};
+                                                 Controller.Instructionnum.BASE.ToString() + " = ?"};
             cboProgramInstruction.Items.Clear();
             cboProgramInstruction.Items.AddRange(Instruction);
             txtInitialize();
@@ -300,15 +300,15 @@ namespace Integrated_Robot_Interface
                 lblTool.Text = $"Tool : {RobotAdapter.gettool}";
             }
 
-            if (!myController.GetUFrame())
+            if (!myController.GetBase())
             {
-                ShowMessage("讀取用戶座標失敗", "讀取用戶座標狀態");
-                lblUFrame.Text = "Error";
+                ShowMessage("讀取基底座標失敗", "讀取基底座標狀態");
+                lblBase.Text = "Error";
                 return;
             }
             else
             {
-                lblUFrame.Text = $"UFrame : {RobotAdapter.getuframe}";
+                lblBase.Text = $"Base : {RobotAdapter.getbase}";
             }
 
             //if (RobotAdapter.preuframe != RobotAdapter.getuframe)
@@ -516,10 +516,11 @@ namespace Integrated_Robot_Interface
                         case Controller.Robotnum.Fanuc:
                             RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.preuframe = 0;
                             RobotAdapter.saferangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
+                            RobotAdapter.saferangetool = new float[2] { 1, 10 };
+                            RobotAdapter.saferangebase = new float[2] { 0, 9 };
                             btnGrap.Enabled = false;
                             btnOpen.Enabled = false;
                             RobotAdapter.setoverride = 20;
@@ -550,14 +551,22 @@ namespace Integrated_Robot_Interface
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
                                 return;
                             }
+                            if (!myController.GetBase())
+                            {
+                                ShowMessage("讀取用戶座標失敗", "讀取用戶座標狀態");
+                                lblBase.Text = "Error";
+                                return;
+                            }
+                            RobotAdapter.prebase = RobotAdapter.getbase;
                             break;
                         case Controller.Robotnum.Nexcom:
                             RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.preuframe = 0;
                             RobotAdapter.saferangejoint = new float[12] { -170, 150, 0, 200, -60, 145, -120, 170, -105, 105, -180, 180 };
                             RobotAdapter.saferangevelocity = new float[2] { 0, 100 };
                             RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
+                            RobotAdapter.saferangetool = new float[2] { -1, 15 };
+                            RobotAdapter.saferangebase = new float[2] { -1, 31 };
                             gbRegister.Enabled = false;
                             RobotAdapter.setoverride = 50;
                             if (!myController.SetOverride())
@@ -570,6 +579,13 @@ namespace Integrated_Robot_Interface
                             {
                                 ShowMessage("設定速度失敗", "設定速度狀態");
                             }
+                            if (!myController.GetBase())
+                            {
+                                ShowMessage("讀取基底座標失敗", "讀取基底座標狀態");
+                                lblBase.Text = "Error";
+                                return;
+                            }
+                            RobotAdapter.prebase = RobotAdapter.getbase;
                             break;
                         case Controller.Robotnum.Ourarm:
                             break;
@@ -1400,8 +1416,8 @@ namespace Integrated_Robot_Interface
                     txtProgramRJ6.Enabled = false;
                     btnProgramGet.Enabled = false;
                     break;
-                case (int)Controller.Instructionnum.FRAME:
-                    myController.Instruction = Controller.Instructionnum.FRAME;
+                case (int)Controller.Instructionnum.BASE:
+                    myController.Instruction = Controller.Instructionnum.BASE;
                     lblProgramUnit.Text = "";
                     txtProgramValue.Enabled = true;
                     txtProgramXJ1.Enabled = false;
@@ -1697,7 +1713,7 @@ namespace Integrated_Robot_Interface
 
                         ins = $"{myController.Instruction.ToString()} = {tool}";
                         return true;
-                    case Controller.Instructionnum.FRAME:
+                    case Controller.Instructionnum.BASE:
                         if (string.IsNullOrEmpty(txtProgramValue.Text))
                         {
                             MessageBox.Show("座標系值不可空白");
@@ -1875,9 +1891,9 @@ namespace Integrated_Robot_Interface
                             return;
                         }
                         break;
-                    case nameof(Controller.Instructionnum.FRAME):
-                        RobotAdapter.compile.SetValue((int)Controller.Instructionnum.FRAME, 1);
-                        str2 = ins.Split(new string[] { ". ", Controller.Instructionnum.FRAME.ToString(), " = " },
+                    case nameof(Controller.Instructionnum.BASE):
+                        RobotAdapter.compile.SetValue((int)Controller.Instructionnum.BASE, 1);
+                        str2 = ins.Split(new string[] { ". ", Controller.Instructionnum.BASE.ToString(), " = " },
                             StringSplitOptions.RemoveEmptyEntries);
                         RobotAdapter.compile.SetValue(Convert.ToSingle(str2[0]), 0);
                         RobotAdapter.compile.SetValue(Convert.ToSingle(str2[1]), 2);
@@ -1981,18 +1997,30 @@ namespace Integrated_Robot_Interface
             {
                 if (!string.IsNullOrEmpty(txtToolSet.Text))
                 {
-                    RobotAdapter.settool = Convert.ToInt16(txtToolSet.Text);
+                    RobotAdapter.safetool = Convert.ToInt16(txtToolSet.Text);
+                    if (!myController.SafeRangeCheckTool())
+                    {
+                        MessageBox.Show("工具座標超出安全範圍", "工具座標安全範圍狀態");
+                        return;
+                    }
+                    RobotAdapter.settool = RobotAdapter.safetool;
                     if (!myController.SetTool())
                     {
                         ShowMessage("設定工具座標失敗", "設定工具座標狀態");
                     }
                 }
-                if (!string.IsNullOrEmpty(txtUFrameSet.Text))
+                if (!string.IsNullOrEmpty(txtBaseSet.Text))
                 {
-                    RobotAdapter.setuframe = Convert.ToInt16(txtUFrameSet.Text);
-                    if (!myController.SetUFrame())
+                    RobotAdapter.safebase = Convert.ToInt16(txtBaseSet.Text);
+                    if (!myController.SafeRangeCheckBase())
                     {
-                        ShowMessage("設定用戶座標失敗", "設定用戶座標狀態");
+                        MessageBox.Show("基底座標超出安全範圍", "基底座標安全範圍狀態");
+                        return;
+                    }
+                    RobotAdapter.setbase = RobotAdapter.safebase;
+                    if (!myController.SetBase())
+                    {
+                        ShowMessage("設定基底座標失敗", "設定基底座標狀態");
                     }
                 }
             }

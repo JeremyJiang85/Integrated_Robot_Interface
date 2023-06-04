@@ -41,7 +41,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.gbCurrentPosition = new System.Windows.Forms.GroupBox();
-            this.lblUFrame = new System.Windows.Forms.Label();
+            this.lblBase = new System.Windows.Forms.Label();
             this.lblTool = new System.Windows.Forms.Label();
             this.lblState = new System.Windows.Forms.Label();
             this.lblJoint = new System.Windows.Forms.Label();
@@ -205,9 +205,9 @@
             this.tPOther = new System.Windows.Forms.TabPage();
             this.gbFrame = new System.Windows.Forms.GroupBox();
             this.btnFrameSet = new System.Windows.Forms.Button();
-            this.txtUFrameSet = new System.Windows.Forms.TextBox();
+            this.txtBaseSet = new System.Windows.Forms.TextBox();
             this.txtToolSet = new System.Windows.Forms.TextBox();
-            this.lblUFrameSet = new System.Windows.Forms.Label();
+            this.lblBaseSet = new System.Windows.Forms.Label();
             this.lblToolSet = new System.Windows.Forms.Label();
             this.gbGripper = new System.Windows.Forms.GroupBox();
             this.btnGripperConnect = new System.Windows.Forms.Button();
@@ -356,7 +356,7 @@
             // 
             // gbCurrentPosition
             // 
-            this.gbCurrentPosition.Controls.Add(this.lblUFrame);
+            this.gbCurrentPosition.Controls.Add(this.lblBase);
             this.gbCurrentPosition.Controls.Add(this.lblTool);
             this.gbCurrentPosition.Controls.Add(this.lblState);
             this.gbCurrentPosition.Controls.Add(this.lblJoint);
@@ -369,14 +369,14 @@
             this.gbCurrentPosition.TabStop = false;
             this.gbCurrentPosition.Text = "Current Position";
             // 
-            // lblUFrame
+            // lblBase
             // 
-            this.lblUFrame.AutoSize = true;
-            this.lblUFrame.Location = new System.Drawing.Point(141, 53);
-            this.lblUFrame.Name = "lblUFrame";
-            this.lblUFrame.Size = new System.Drawing.Size(85, 21);
-            this.lblUFrame.TabIndex = 4;
-            this.lblUFrame.Text = "UFrame :";
+            this.lblBase.AutoSize = true;
+            this.lblBase.Location = new System.Drawing.Point(141, 53);
+            this.lblBase.Name = "lblBase";
+            this.lblBase.Size = new System.Drawing.Size(59, 21);
+            this.lblBase.TabIndex = 4;
+            this.lblBase.Text = "Base :";
             // 
             // lblTool
             // 
@@ -2102,9 +2102,9 @@
             // gbFrame
             // 
             this.gbFrame.Controls.Add(this.btnFrameSet);
-            this.gbFrame.Controls.Add(this.txtUFrameSet);
+            this.gbFrame.Controls.Add(this.txtBaseSet);
             this.gbFrame.Controls.Add(this.txtToolSet);
-            this.gbFrame.Controls.Add(this.lblUFrameSet);
+            this.gbFrame.Controls.Add(this.lblBaseSet);
             this.gbFrame.Controls.Add(this.lblToolSet);
             this.gbFrame.Location = new System.Drawing.Point(456, 3);
             this.gbFrame.Name = "gbFrame";
@@ -2124,15 +2124,15 @@
             this.btnFrameSet.UseVisualStyleBackColor = true;
             this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
             // 
-            // txtUFrameSet
+            // txtBaseSet
             // 
-            this.txtUFrameSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUFrameSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtUFrameSet.Location = new System.Drawing.Point(97, 58);
-            this.txtUFrameSet.Name = "txtUFrameSet";
-            this.txtUFrameSet.Size = new System.Drawing.Size(49, 23);
-            this.txtUFrameSet.TabIndex = 28;
-            this.txtUFrameSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBaseSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBaseSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtBaseSet.Location = new System.Drawing.Point(97, 58);
+            this.txtBaseSet.Name = "txtBaseSet";
+            this.txtBaseSet.Size = new System.Drawing.Size(49, 23);
+            this.txtBaseSet.TabIndex = 28;
+            this.txtBaseSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtToolSet
             // 
@@ -2144,14 +2144,14 @@
             this.txtToolSet.TabIndex = 27;
             this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblUFrameSet
+            // lblBaseSet
             // 
-            this.lblUFrameSet.AutoSize = true;
-            this.lblUFrameSet.Location = new System.Drawing.Point(6, 58);
-            this.lblUFrameSet.Name = "lblUFrameSet";
-            this.lblUFrameSet.Size = new System.Drawing.Size(85, 21);
-            this.lblUFrameSet.TabIndex = 22;
-            this.lblUFrameSet.Text = "UFrame :";
+            this.lblBaseSet.AutoSize = true;
+            this.lblBaseSet.Location = new System.Drawing.Point(6, 58);
+            this.lblBaseSet.Name = "lblBaseSet";
+            this.lblBaseSet.Size = new System.Drawing.Size(59, 21);
+            this.lblBaseSet.TabIndex = 22;
+            this.lblBaseSet.Text = "Base :";
             // 
             // lblToolSet
             // 
@@ -2441,7 +2441,7 @@
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.TabPage tPOther;
         private System.Windows.Forms.Label lblGetRegister;
-        private System.Windows.Forms.Label lblUFrame;
+        private System.Windows.Forms.Label lblBase;
         private System.Windows.Forms.Label lblTool;
         private System.Windows.Forms.GroupBox gbGripper;
         private System.Windows.Forms.Button btnOpen;
@@ -2449,9 +2449,9 @@
         private System.Windows.Forms.Button btnGripperConnect;
         private System.Windows.Forms.GroupBox gbFrame;
         private System.Windows.Forms.Button btnFrameSet;
-        private System.Windows.Forms.TextBox txtUFrameSet;
+        private System.Windows.Forms.TextBox txtBaseSet;
         private System.Windows.Forms.TextBox txtToolSet;
-        private System.Windows.Forms.Label lblUFrameSet;
+        private System.Windows.Forms.Label lblBaseSet;
         private System.Windows.Forms.Label lblToolSet;
     }
 }

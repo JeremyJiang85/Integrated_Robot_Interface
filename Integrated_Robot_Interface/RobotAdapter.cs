@@ -19,9 +19,9 @@ namespace Integrated_Robot_Interface
         public static string getstate { get; set; } = "";
         public static short gettool { get; set; } = 0;
         public static short settool { get; set; } = 0;
-        public static short getuframe { get; set; } = 0;
-        public static short setuframe { get; set; } = 0;
-        public static short preuframe { get; set; } = 0;
+        public static short getbase { get; set; } = 0;
+        public static short setbase { get; set; } = 0;
+        public static short prebase { get; set; } = 0;
         public static Array getcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array getjposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array setcposition { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
@@ -48,6 +48,10 @@ namespace Integrated_Robot_Interface
         public static Array saferangevelocity { get; set; } = new float[2] { 0, 0 }; 
         public static int safeoverride { get; set; } = 0;
         public static Array saferangeoverride { get; set; } = new int[2] { 0, 0 };
+        public static short safetool { get; set; } = 0;
+        public static Array saferangetool { get; set; } = new int[2] { 0, 0 };
+        public static short safebase { get; set; } = 0;
+        public static Array saferangebase { get; set; } = new int[2] { 0, 0 };
         public static Array compile { get; set; } = new float[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static string programname { get; set; } = "";
         public static bool fgGripperState { get; set; } = false;
@@ -125,12 +129,12 @@ namespace Integrated_Robot_Interface
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
-        public virtual bool GetUFrame()
+        public virtual bool GetBase()
         {
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
-        public virtual bool SetUFrame()
+        public virtual bool SetBase()
         {
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;
@@ -264,6 +268,24 @@ namespace Integrated_Robot_Interface
         {
             if (safeoverride < Convert.ToSingle(saferangeoverride.GetValue(0)) ||
                 safeoverride > Convert.ToSingle(saferangeoverride.GetValue(1)))
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool SafeRangeCheckTool()
+        {
+            if (safetool < Convert.ToSingle(saferangetool.GetValue(0)) ||
+                safetool > Convert.ToSingle(saferangetool.GetValue(1)))
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool SafeRangeCheckBase()
+        {
+            if (safebase < Convert.ToSingle(saferangebase.GetValue(0)) ||
+                safebase > Convert.ToSingle(saferangebase.GetValue(1)))
             {
                 return false;
             }

@@ -19,7 +19,7 @@ namespace Integrated_Robot_Interface
         public Stepnum Step { get; set; } = Stepnum.One;
         public enum Stepnum : int { One = 1, Five = 5, Ten = 10 }
         public Instructionnum Instruction { get; set; } = Instructionnum.OVERRIDE;
-        public enum Instructionnum : int { OVERRIDE, MOVEC, MOVEJ, MOVEL, WAIT, TOOL, FRAME };
+        public enum Instructionnum : int { OVERRIDE, MOVEC, MOVEJ, MOVEL, WAIT, TOOL, BASE };
 
         #region <共用>
         public bool Connect()
@@ -82,13 +82,13 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.SetTool();
         }
-        public bool GetUFrame()
+        public bool GetBase()
         {
-            return myRobotAdapter.GetUFrame();
+            return myRobotAdapter.GetBase();
         }
-        public bool SetUFrame()
+        public bool SetBase()
         {
-            return myRobotAdapter.SetUFrame();
+            return myRobotAdapter.SetBase();
         }
         public bool GetOverride()
         {
@@ -146,7 +146,7 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetInformation3();
         }
-        public virtual bool SafeRangeChangeXYZ()
+        public bool SafeRangeChangeXYZ()
         {
             return myRobotAdapter.SafeRangeChangeXYZ();
         }
@@ -165,6 +165,14 @@ namespace Integrated_Robot_Interface
         public bool SafeRangeCheckOverride()
         {
             return myRobotAdapter.SafeRangeCheckOverride();
+        }
+        public bool SafeRangeCheckTool()
+        {
+            return myRobotAdapter.SafeRangeCheckTool();
+        }
+        public bool SafeRangeCheckBase()
+        {
+            return myRobotAdapter.SafeRangeCheckBase();
         }
         public bool Compile()
         {

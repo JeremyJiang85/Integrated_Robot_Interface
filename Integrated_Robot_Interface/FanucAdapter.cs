@@ -18,6 +18,8 @@ namespace Integrated_Robot_Interface
         private FRRJIf.DataCurPos mobjCurPosUF;
         private FRRJIf.DataPosReg mobjPosReg;
         private FRRJIf.DataSysVar mobjSysVarInt;
+        private FRRJIf.DataSysVar mobjSysVarInt1;
+        private FRRJIf.DataSysVar mobjSysVarInt2;
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
         private FRRJIf.DataTask mobjTask;
@@ -42,6 +44,8 @@ namespace Integrated_Robot_Interface
             mobjCurPosUF = mobjDataTable.AddCurPosUF(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1, 15);
             mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 50);
             mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
+            mobjSysVarInt1 = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUTOOLNUM[1]");
+            mobjSysVarInt2 = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUFRAMENUM[1]");
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
             mobjTask = mobjDataTable.AddTask(FRRJIf.FRIF_DATA_TYPE.TASK, 1);
         }
@@ -309,25 +313,16 @@ namespace Integrated_Robot_Interface
         public override bool SetTool()
         {
             bool ret = false;
-            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
-            int Index = 1;
 
-            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            ret = mobjSysVarInt1.SetValue(settool);
             if (!ret)
             {
-                apierrtext = "mobjCurPosUF.GetValue Fail";
-                return ret;
-            }
-            Console.WriteLine(settool);
-            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, config, UF, settool);
-            if (!ret)
-            {
-                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjSysVarInt1.SetValue Fail";
                 return ret;
             }
             return ret;
         }
-        public override bool GetUFrame()
+        public override bool GetBase()
         {
             bool ret = false;
             
@@ -337,26 +332,17 @@ namespace Integrated_Robot_Interface
                 apierrtext = "mobjCurPosUF.GetValue Fail";
                 return ret;
             }
-            getuframe = UF;
+            getbase = UF;
             return ret;
         }
-        public override bool SetUFrame()
+        public override bool SetBase()
         {
             bool ret = false;
-            Array config = new short[7] { 0, 1, 1, 1, 0, 0, 0 };
-            int Index = 1;
 
-            ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
+            ret = mobjSysVarInt2.SetValue(setbase);
             if (!ret)
             {
-                apierrtext = "mobjCurPosUF.GetValue Fail";
-                return ret;
-            }
-            Console.WriteLine(setuframe);
-            ret = mobjPosReg.SetValueXyzwpr(Index, Xyzwpr, config, setuframe, UT);
-            if (!ret)
-            {
-                apierrtext = "mobjPosReg.SetValueXyzwpr Fail";
+                apierrtext = "mobjSysVarInt2.SetValue Fail";
                 return ret;
             }
             return ret;
