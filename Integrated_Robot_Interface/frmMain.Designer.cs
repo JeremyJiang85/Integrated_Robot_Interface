@@ -157,8 +157,8 @@
             this.btnSafeRangeSet = new System.Windows.Forms.Button();
             this.gbPoints = new System.Windows.Forms.GroupBox();
             this.btnPointsSave = new System.Windows.Forms.Button();
-            this.txtFilePath = new System.Windows.Forms.TextBox();
-            this.lblFilePath = new System.Windows.Forms.Label();
+            this.txtFileName = new System.Windows.Forms.TextBox();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.btnPointsSet = new System.Windows.Forms.Button();
             this.btnPointsLoad = new System.Windows.Forms.Button();
             this.btnPointsGet = new System.Windows.Forms.Button();
@@ -213,6 +213,8 @@
             this.btnGripperConnect = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnGrap = new System.Windows.Forms.Button();
+            this.btnProgramLoad = new System.Windows.Forms.Button();
+            this.btnProgramSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -1588,8 +1590,8 @@
             // gbPoints
             // 
             this.gbPoints.Controls.Add(this.btnPointsSave);
-            this.gbPoints.Controls.Add(this.txtFilePath);
-            this.gbPoints.Controls.Add(this.lblFilePath);
+            this.gbPoints.Controls.Add(this.txtFileName);
+            this.gbPoints.Controls.Add(this.lblFileName);
             this.gbPoints.Controls.Add(this.btnPointsSet);
             this.gbPoints.Controls.Add(this.btnPointsLoad);
             this.gbPoints.Controls.Add(this.btnPointsGet);
@@ -1604,7 +1606,7 @@
             // 
             // btnPointsSave
             // 
-            this.btnPointsSave.Location = new System.Drawing.Point(545, 24);
+            this.btnPointsSave.Location = new System.Drawing.Point(541, 24);
             this.btnPointsSave.Name = "btnPointsSave";
             this.btnPointsSave.Size = new System.Drawing.Size(100, 30);
             this.btnPointsSave.TabIndex = 60;
@@ -1612,26 +1614,26 @@
             this.btnPointsSave.UseVisualStyleBackColor = true;
             this.btnPointsSave.Click += new System.EventHandler(this.btnPointsSave_Click);
             // 
-            // txtFilePath
+            // txtFileName
             // 
-            this.txtFilePath.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtFilePath.Location = new System.Drawing.Point(102, 24);
-            this.txtFilePath.Name = "txtFilePath";
-            this.txtFilePath.Size = new System.Drawing.Size(331, 27);
-            this.txtFilePath.TabIndex = 59;
+            this.txtFileName.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtFileName.Location = new System.Drawing.Point(114, 24);
+            this.txtFileName.Name = "txtFileName";
+            this.txtFileName.Size = new System.Drawing.Size(315, 27);
+            this.txtFileName.TabIndex = 59;
             // 
-            // lblFilePath
+            // lblFileName
             // 
-            this.lblFilePath.AutoSize = true;
-            this.lblFilePath.Location = new System.Drawing.Point(6, 29);
-            this.lblFilePath.Name = "lblFilePath";
-            this.lblFilePath.Size = new System.Drawing.Size(90, 21);
-            this.lblFilePath.TabIndex = 59;
-            this.lblFilePath.Text = "File Path :";
+            this.lblFileName.AutoSize = true;
+            this.lblFileName.Location = new System.Drawing.Point(6, 29);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(102, 21);
+            this.lblFileName.TabIndex = 59;
+            this.lblFileName.Text = "File Name :";
             // 
             // btnPointsSet
             // 
-            this.btnPointsSet.Location = new System.Drawing.Point(757, 24);
+            this.btnPointsSet.Location = new System.Drawing.Point(753, 24);
             this.btnPointsSet.Name = "btnPointsSet";
             this.btnPointsSet.Size = new System.Drawing.Size(100, 30);
             this.btnPointsSet.TabIndex = 23;
@@ -1641,7 +1643,7 @@
             // 
             // btnPointsLoad
             // 
-            this.btnPointsLoad.Location = new System.Drawing.Point(439, 24);
+            this.btnPointsLoad.Location = new System.Drawing.Point(435, 24);
             this.btnPointsLoad.Name = "btnPointsLoad";
             this.btnPointsLoad.Size = new System.Drawing.Size(100, 30);
             this.btnPointsLoad.TabIndex = 22;
@@ -1651,7 +1653,7 @@
             // 
             // btnPointsGet
             // 
-            this.btnPointsGet.Location = new System.Drawing.Point(651, 24);
+            this.btnPointsGet.Location = new System.Drawing.Point(647, 24);
             this.btnPointsGet.Name = "btnPointsGet";
             this.btnPointsGet.Size = new System.Drawing.Size(100, 30);
             this.btnPointsGet.TabIndex = 21;
@@ -1671,6 +1673,8 @@
             // 
             // gbProgram
             // 
+            this.gbProgram.Controls.Add(this.btnProgramSave);
+            this.gbProgram.Controls.Add(this.btnProgramLoad);
             this.gbProgram.Controls.Add(this.btnProgramCopy);
             this.gbProgram.Controls.Add(this.lblProgramValue);
             this.gbProgram.Controls.Add(this.txtProgramRJ6);
@@ -1857,9 +1861,9 @@
             // txtProgramName
             // 
             this.txtProgramName.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtProgramName.Location = new System.Drawing.Point(466, 28);
+            this.txtProgramName.Location = new System.Drawing.Point(153, 28);
             this.txtProgramName.Name = "txtProgramName";
-            this.txtProgramName.Size = new System.Drawing.Size(171, 27);
+            this.txtProgramName.Size = new System.Drawing.Size(271, 27);
             this.txtProgramName.TabIndex = 2;
             // 
             // lblProgramRJ6
@@ -1874,7 +1878,7 @@
             // lblProgramName
             // 
             this.lblProgramName.AutoSize = true;
-            this.lblProgramName.Location = new System.Drawing.Point(319, 32);
+            this.lblProgramName.Location = new System.Drawing.Point(6, 32);
             this.lblProgramName.Name = "lblProgramName";
             this.lblProgramName.Size = new System.Drawing.Size(141, 21);
             this.lblProgramName.TabIndex = 1;
@@ -1895,9 +1899,9 @@
             this.lstProgram.FormattingEnabled = true;
             this.lstProgram.HorizontalScrollbar = true;
             this.lstProgram.ItemHeight = 19;
-            this.lstProgram.Location = new System.Drawing.Point(6, 32);
+            this.lstProgram.Location = new System.Drawing.Point(6, 70);
             this.lstProgram.Name = "lstProgram";
-            this.lstProgram.Size = new System.Drawing.Size(307, 175);
+            this.lstProgram.Size = new System.Drawing.Size(307, 137);
             this.lstProgram.TabIndex = 0;
             // 
             // lblProgramPJ5
@@ -1993,6 +1997,7 @@
             // tPMove
             // 
             this.tPMove.BackColor = System.Drawing.SystemColors.Control;
+            this.tPMove.Controls.Add(this.gbFrame);
             this.tPMove.Controls.Add(this.gbPointMove);
             this.tPMove.Controls.Add(this.gbJogMove);
             this.tPMove.Controls.Add(this.gbLineMove);
@@ -2090,7 +2095,6 @@
             // tPOther
             // 
             this.tPOther.BackColor = System.Drawing.SystemColors.Control;
-            this.tPOther.Controls.Add(this.gbFrame);
             this.tPOther.Controls.Add(this.gbSafeRange);
             this.tPOther.Controls.Add(this.gbRegister);
             this.tPOther.Location = new System.Drawing.Point(4, 31);
@@ -2106,7 +2110,7 @@
             this.gbFrame.Controls.Add(this.txtToolSet);
             this.gbFrame.Controls.Add(this.lblBaseSet);
             this.gbFrame.Controls.Add(this.lblToolSet);
-            this.gbFrame.Location = new System.Drawing.Point(456, 3);
+            this.gbFrame.Location = new System.Drawing.Point(701, 3);
             this.gbFrame.Name = "gbFrame";
             this.gbFrame.Size = new System.Drawing.Size(157, 290);
             this.gbFrame.TabIndex = 20;
@@ -2205,6 +2209,26 @@
             this.btnGrap.Text = "Grap";
             this.btnGrap.UseVisualStyleBackColor = true;
             this.btnGrap.Click += new System.EventHandler(this.btnGrap_Click);
+            // 
+            // btnProgramLoad
+            // 
+            this.btnProgramLoad.Location = new System.Drawing.Point(431, 27);
+            this.btnProgramLoad.Name = "btnProgramLoad";
+            this.btnProgramLoad.Size = new System.Drawing.Size(100, 30);
+            this.btnProgramLoad.TabIndex = 61;
+            this.btnProgramLoad.Text = "Load";
+            this.btnProgramLoad.UseVisualStyleBackColor = true;
+            this.btnProgramLoad.Click += new System.EventHandler(this.btnProgramLoad_Click);
+            // 
+            // btnProgramSave
+            // 
+            this.btnProgramSave.Location = new System.Drawing.Point(537, 27);
+            this.btnProgramSave.Name = "btnProgramSave";
+            this.btnProgramSave.Size = new System.Drawing.Size(100, 30);
+            this.btnProgramSave.TabIndex = 61;
+            this.btnProgramSave.Text = "Save";
+            this.btnProgramSave.UseVisualStyleBackColor = true;
+            this.btnProgramSave.Click += new System.EventHandler(this.btnProgramSave_Click);
             // 
             // FrmMain
             // 
@@ -2428,8 +2452,8 @@
         private System.Windows.Forms.TabPage tPMove;
         private System.Windows.Forms.TabPage tPInformation;
         private System.Windows.Forms.TabPage tPProgram;
-        private System.Windows.Forms.TextBox txtFilePath;
-        private System.Windows.Forms.Label lblFilePath;
+        private System.Windows.Forms.TextBox txtFileName;
+        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnPointsSave;
         private System.Windows.Forms.Button btnProgramCopy;
         private System.Windows.Forms.GroupBox gbInformation1;
@@ -2453,6 +2477,8 @@
         private System.Windows.Forms.TextBox txtToolSet;
         private System.Windows.Forms.Label lblBaseSet;
         private System.Windows.Forms.Label lblToolSet;
+        private System.Windows.Forms.Button btnProgramSave;
+        private System.Windows.Forms.Button btnProgramLoad;
     }
 }
 

@@ -756,7 +756,7 @@ namespace Integrated_Robot_Interface
             {
                 programlinecount = 0;
                 programPRcount = 0;
-                sw = new StreamWriter($"C:/Users/shanbingchi/Desktop/C#/Integrated_Robot_Interface/{programname}.LS", false);
+                sw = new StreamWriter($"{programname}.LS", false);
                 sw.WriteLine($"/PROG  {programname}");
                 sw.WriteLine("/ATTR");
                 sw.WriteLine("OWNER		= MNEDITOR;");

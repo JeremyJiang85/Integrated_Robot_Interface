@@ -1137,10 +1137,10 @@ namespace Integrated_Robot_Interface
         #region <gbPoints>
         private void btnPointsLoad_Click(object sender, EventArgs e)
         {
-            if (File.Exists(txtFilePath.Text))
+            if (File.Exists(txtFileName.Text))
             {
                 dataTable.Clear();
-                sr = new StreamReader(txtFilePath.Text);
+                sr = new StreamReader(txtFileName.Text);
                 string line = "";
                 string[] str1;
                 string[] str2;
@@ -1195,10 +1195,11 @@ namespace Integrated_Robot_Interface
                     dataTable.Rows.Add(row);
                 }
                 sr.Close();
+                MessageBox.Show("檔案載入成功");
             }
             else
             {
-                MessageBox.Show("此路徑不存在");
+                MessageBox.Show("此檔案不存在");
                 return;
             }
         }
@@ -1210,13 +1211,13 @@ namespace Integrated_Robot_Interface
                 return;
             }
 
-            if (txtFilePath.Text == "")
+            if (txtFileName.Text == "")
             {
-                MessageBox.Show("檔案路徑不可空白");
+                MessageBox.Show("檔案名稱不可空白");
                 return;
             }
 
-            sw = new StreamWriter(txtFilePath.Text, false);
+            sw = new StreamWriter(txtFileName.Text, false);
             sw.WriteLine($"{myController.Robot.ToString()}");
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
@@ -1243,6 +1244,7 @@ namespace Integrated_Robot_Interface
                 }
             }
             sw.Close();
+            MessageBox.Show("檔案存檔成功");
         }
         private void btnPointsSet_Click(object sender, EventArgs e)
         {
@@ -1430,6 +1432,49 @@ namespace Integrated_Robot_Interface
                     break;
             }
             cboCoordinate.SelectedIndex = (int)myController.Coordinate;
+        }
+        private void btnProgramLoad_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(txtProgramName.Text))
+            {
+                lstProgram.Items.Clear();
+                sr = new StreamReader(txtProgramName.Text);
+                string line = "";
+                while ((line = sr.ReadLine()) != null)
+                {
+                    lstProgram.Items.Add(line);
+                }
+                sr.Close();
+                MessageBox.Show("程式載入成功");
+            }
+            else
+            {
+                MessageBox.Show("此程式不存在");
+                return;
+            }
+        }
+
+        private void btnProgramSave_Click(object sender, EventArgs e)
+        {
+            if (lstProgram.Items.Count == 0)
+            {
+                MessageBox.Show("程式無程式碼");
+                return;
+            }
+
+            if (txtProgramName.Text == "")
+            {
+                MessageBox.Show("程式名稱不可空白");
+                return;
+            }
+
+            sw = new StreamWriter(txtProgramName.Text, false);
+            for (int i = 0; i < lstProgram.Items.Count; i++)
+            {
+                sw.WriteLine(lstProgram.Items[i]);
+            }
+            sw.Close();
+            MessageBox.Show("程式存檔成功");
         }
         private void btnProgramAdd_Click(object sender, EventArgs e)
         {
@@ -1739,11 +1784,6 @@ namespace Integrated_Robot_Interface
                 return false;
             }
         }
-        private void btnProgramCompile_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(ProgramCompile);
-            thread.Start();
-        }
         private void btnProgramGet_Click(object sender, EventArgs e)
         {
             switch (myController.Coordinate)
@@ -1776,6 +1816,11 @@ namespace Integrated_Robot_Interface
                     txtProgramRJ6.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
                     break;
             }
+        }
+        private void btnProgramCompile_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(ProgramCompile);
+            thread.Start();
         }
         private void ProgramCompile()
         {
@@ -2030,5 +2075,6 @@ namespace Integrated_Robot_Interface
             }
         }
         #endregion
+
     }
 }
