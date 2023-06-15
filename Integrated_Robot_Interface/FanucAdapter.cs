@@ -17,9 +17,9 @@ namespace Integrated_Robot_Interface
         private FRRJIf.DataCurPos mobjCurPos;
         private FRRJIf.DataCurPos mobjCurPosUF;
         private FRRJIf.DataPosReg mobjPosReg;
-        private FRRJIf.DataSysVar mobjSysVarInt;
-        private FRRJIf.DataSysVar mobjSysVarInt1;
-        private FRRJIf.DataSysVar mobjSysVarInt2;
+        private FRRJIf.DataSysVar mobjSysVarIntOverride;
+        private FRRJIf.DataSysVar mobjSysVarIntUToolNum;
+        private FRRJIf.DataSysVar mobjSysVarIntUFrameNum;
         private FRRJIf.DataNumReg mobjNumReg;
         private FRRJIf.DataAlarm mobjAlarmCurrent;
         private FRRJIf.DataTask mobjTask;
@@ -39,13 +39,13 @@ namespace Integrated_Robot_Interface
         {
             mobjCore = new FRRJIf.Core();
             mobjDataTable = mobjCore.DataTable;
-            mobjAlarmCurrent = mobjDataTable.AddAlarm(FRRJIf.FRIF_DATA_TYPE.ALARM_CURRENT, 1, 0);
+            mobjAlarmCurrent = mobjDataTable.AddAlarm(FRRJIf.FRIF_DATA_TYPE.ALARM_LIST, 1);
             mobjCurPos = mobjDataTable.AddCurPos(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1);
             mobjCurPosUF = mobjDataTable.AddCurPosUF(FRRJIf.FRIF_DATA_TYPE.CURPOS, 1, 15);
             mobjPosReg = mobjDataTable.AddPosReg(FRRJIf.FRIF_DATA_TYPE.POSREG, 1, 1, 50);
-            mobjSysVarInt = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
-            mobjSysVarInt1 = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUTOOLNUM[1]");
-            mobjSysVarInt2 = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUFRAMENUM[1]");
+            mobjSysVarIntOverride = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MCR.$GENOVERRIDE");
+            mobjSysVarIntUToolNum = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUTOOLNUM[1]");
+            mobjSysVarIntUFrameNum = mobjDataTable.AddSysVar(FRRJIf.FRIF_DATA_TYPE.SYSVAR_INT, "$MNUFRAMENUM[1]");
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
             mobjTask = mobjDataTable.AddTask(FRRJIf.FRIF_DATA_TYPE.TASK, 1);
         }
@@ -314,7 +314,7 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjSysVarInt1.SetValue(settool);
+            ret = mobjSysVarIntUToolNum.SetValue(settool);
             if (!ret)
             {
                 apierrtext = "mobjSysVarInt1.SetValue Fail";
@@ -339,7 +339,7 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjSysVarInt2.SetValue(setbase);
+            ret = mobjSysVarIntUFrameNum.SetValue(setbase);
             if (!ret)
             {
                 apierrtext = "mobjSysVarInt2.SetValue Fail";
@@ -352,7 +352,7 @@ namespace Integrated_Robot_Interface
             bool ret = false;
             object Value = null;
 
-            ret = mobjSysVarInt.GetValue(ref Value);
+            ret = mobjSysVarIntOverride.GetValue(ref Value);
             if (!ret)
             {
                 apierrtext = "mobjSysVarInt.GetValue Fail";
@@ -365,7 +365,7 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
 
-            ret = mobjSysVarInt.SetValue(setoverride);
+            ret = mobjSysVarIntOverride.SetValue(setoverride);
             if (!ret)
             {
                 apierrtext = "mobjSysVarInt.SetValue Fail";
@@ -692,7 +692,7 @@ namespace Integrated_Robot_Interface
             }
             return ret;
         }
-        public override bool SafeRangeChangeXYZ()
+        public override bool LimitRangeChangeXYZ()
         {
             bool ret = false;
             Array Xyzwprworld = new float[9];
@@ -729,22 +729,18 @@ namespace Integrated_Robot_Interface
             Perror = Convert.ToSingle(Xyzwprworld.GetValue(4)) - Convert.ToSingle(Xyzwpr.GetValue(4));
             Rerror = Convert.ToSingle(Xyzwprworld.GetValue(5)) - Convert.ToSingle(Xyzwpr.GetValue(5));
 
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(0)) - Xerror, 0);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(1)) - Xerror, 1);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(2)) - Yerror, 2);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(3)) - Yerror, 3);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(4)) - Zerror, 4);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(5)) - Zerror, 5);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(6)) - Werror, 6);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(7)) - Werror, 7);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(8)) - Perror, 8);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(9)) - Perror, 9);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(10)) - Rerror, 10);
-            saferangexyz.SetValue(Convert.ToSingle(saferangexyzorginal.GetValue(11)) - Rerror, 11);
-            Console.WriteLine("1");
-            Console.WriteLine(Xerror);
-            Console.WriteLine(Convert.ToSingle(saferangexyzorginal.GetValue(0)));
-            Console.WriteLine(Convert.ToSingle(saferangexyz.GetValue(0)));
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - Xerror, 0);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - Xerror, 1);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - Yerror, 2);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - Yerror, 3);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - Zerror, 4);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - Zerror, 5);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - Werror, 6);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - Werror, 7);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - Perror, 8);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - Perror, 9);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - Rerror, 10);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - Rerror, 11);
             return ret;
         }
         public override bool Compile()

@@ -14,6 +14,7 @@ namespace Integrated_Robot_Interface
         private NexMotion_GroupAdapter mobjGroupAdapter;
         private Pos_T PosAcs;
         private Pos_T PosPcs;
+        private Pos_T PosMcs;
         private int DeviceId = 0;
         
 
@@ -24,12 +25,14 @@ namespace Integrated_Robot_Interface
             PosAcs.initializ();
             PosPcs = new Pos_T();
             PosPcs.initializ();
+            PosMcs = new Pos_T();
+            PosMcs.initializ();
         }
         public override bool Connect()
         {
             int ret = 0;
 
-            ret = mobjDeviceAdapter.NMC_SetIniPath("C:\\NEXCOM\\NexMotionLibConfig.ini");
+            ret = mobjDeviceAdapter.NMC_SetIniPath("C:\\NEXCOBOT\\NexMotionLibConfig.ini");
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
                 apierrtext = "NMC_SetIniPath Fail";
@@ -64,10 +67,6 @@ namespace Integrated_Robot_Interface
                 apierrtext = GetErrorMessage("NMC_DeviceShutdown Fail", ret);
                 return false;
             }
-            return true;
-        }
-        public override bool Alarm()
-        {
             return true;
         }
         public override bool Enable()
@@ -122,19 +121,19 @@ namespace Integrated_Robot_Interface
         }
         public override bool Home()
         {
-            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(0)), 0);
-            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(1)) + 90, 1);
-            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(2)), 2);
-            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(3)), 3);
-            PosPcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(4)), 4);
-            PosPcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(5)), 5);
+            PosAcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(0)), 0);
+            PosAcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(1)) + 90, 1);
+            PosAcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(2)), 2);
+            PosAcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(3)), 3);
+            PosAcs.pos.SetValue(Convert.ToDouble(homeposition.GetValue(4)), 4);
+            PosAcs.pos.SetValue(-Convert.ToDouble(homeposition.GetValue(5)), 5);
 
             int mesk = (int)Math.Pow(2, 6) - 1;
 
-            int ret = mobjGroupAdapter.NMC_GroupPtpCartAll(mesk, ref PosPcs);
+            int ret = mobjGroupAdapter.NMC_GroupPtpAcsAll(mesk, ref PosAcs);
             if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                apierrtext = GetErrorMessage("NMC_GroupPtpCartAll", ret);
+                apierrtext = GetErrorMessage("NMC_GroupPtpAcsAll", ret);
                 return false;
             }
             return true;
@@ -461,11 +460,11 @@ namespace Integrated_Robot_Interface
                     break;
                 case 2:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) - Convert.ToDouble(jogmove.GetValue(0));
                     break;
                 case 3:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) + Convert.ToDouble(jogmove.GetValue(0));
                     break;
                 case 4:
                     GroupAxisIndex = 2;
@@ -477,11 +476,11 @@ namespace Integrated_Robot_Interface
                     break;
                 case 6:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) - Convert.ToDouble(jogmove.GetValue(0));
                     break;
                 case 7:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) + Convert.ToDouble(jogmove.GetValue(0));
                     break;
                 case 8:
                     GroupAxisIndex = 4;
@@ -493,11 +492,11 @@ namespace Integrated_Robot_Interface
                     break;
                 case 10:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) - Convert.ToDouble(jogmove.GetValue(0));
                     break;
                 case 11:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) + Convert.ToDouble(jogmove.GetValue(0));
                     break;
             }
             
@@ -530,46 +529,46 @@ namespace Integrated_Robot_Interface
                     switch (i)
                     {
                         case 0:
-                            information1text += "0:EMG = ON\r\n";
+                            information1text += "EMG = ON\r\n";
                             break;
                         case 1:
-                            information1text += "1:ALM = ON\r\n";
+                            information1text += "ALM = ON\r\n";
                             break;
                         case 2:
-                            information1text += "2:PEL = ON\r\n";
+                            information1text += "PEL = ON\r\n";
                             break;
                         case 3:
-                            information1text += "3:NEL = ON\r\n";
+                            information1text += "NEL = ON\r\n";
                             break;
                         case 4:
-                            information1text += "4:PSEL = ON\r\n";
+                            information1text += "PSEL = ON\r\n";
                             break;
                         case 5:
-                            information1text += "5:NSEL = ON\r\n";
+                            information1text += "NSEL = ON\r\n";
                             break;
                         case 6:
-                            information1text += "6:ENA = ON\r\n";
+                            information1text += "ENA = ON\r\n";
                             break;
                         case 7:
-                            information1text += "7:ERR = ON\r\n";
+                            information1text += "ERR = ON\r\n";
                             break;
                         case 9:
-                            information1text += "9:CSTP = ON\r\n";
+                            information1text += "CSTP = ON\r\n";
                             break;
                         case 10:
-                            information1text += "10:ACC = ON\r\n";
+                            information1text += "ACC = ON\r\n";
                             break;
                         case 11:
-                            information1text += "11:DEC = ON\r\n";
+                            information1text += "DEC = ON\r\n";
                             break;
                         case 12:
-                            information1text += "12:MV = ON\r\n";
+                            information1text += "MV = ON\r\n";
                             break;
                         case 13:
-                            information1text += "13:OP = ON\r\n";
+                            information1text += "OP = ON\r\n";
                             break;
                         case 14:
-                            information1text += "14:STOP = ON\r\n";
+                            information1text += "STOP = ON\r\n";
                             break;
                     }
                 }
@@ -578,46 +577,46 @@ namespace Integrated_Robot_Interface
                     switch (i)
                     {
                         case 0:
-                            information1text += "0:EMG = OFF\r\n";
+                            information1text += "EMG = OFF\r\n";
                             break;
                         case 1:
-                            information1text += "1:ALM = OFF\r\n";
+                            information1text += "ALM = OFF\r\n";
                             break;
                         case 2:
-                            information1text += "2:PEL = OFF\r\n";
+                            information1text += "PEL = OFF\r\n";
                             break;
                         case 3:
-                            information1text += "3:NEL = OFF\r\n";
+                            information1text += "NEL = OFF\r\n";
                             break;
                         case 4:
-                            information1text += "4:PSEL = OFF\r\n";
+                            information1text += "PSEL = OFF\r\n";
                             break;
                         case 5:
-                            information1text += "5:NSEL = OFF\r\n";
+                            information1text += "NSEL = OFF\r\n";
                             break;
                         case 6:
-                            information1text += "6:ENA = OFF\r\n";
+                            information1text += "ENA = OFF\r\n";
                             break;
                         case 7:
-                            information1text += "7:ERR = OFF\r\n";
+                            information1text += "ERR = OFF\r\n";
                             break;
                         case 9:
-                            information1text += "9:CSTP = OFF\r\n";
+                            information1text += "CSTP = OFF\r\n";
                             break;
                         case 10:
-                            information1text += "10:ACC = OFF\r\n";
+                            information1text += "ACC = OFF\r\n";
                             break;
                         case 11:
-                            information1text += "11:DEC = OFF\r\n";
+                            information1text += "DEC = OFF\r\n";
                             break;
                         case 12:
-                            information1text += "12:MV = OFF\r\n";
+                            information1text += "MV = OFF\r\n";
                             break;
                         case 13:
-                            information1text += "13:OP = OFF\r\n";
+                            information1text += "OP = OFF\r\n";
                             break;
                         case 14:
-                            information1text += "14:STOP = OFF\r\n";
+                            information1text += "STOP = OFF\r\n";
                             break;
                     }
                 }
@@ -625,6 +624,128 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
+        public override bool LimitRangeChangeXYZ()
+        {
+            if (getbase == -1)
+            {
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)), 0);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)), 1);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)), 2);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)), 3);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)), 4);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)), 5);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)), 6);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)), 7);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)), 8);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)), 9);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)), 10);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)), 11);
+                return true;
+            }
+            else
+            {
+                double PRetParaValueF64 = 0;
+                int Index = 0xC0 + getbase;
+
+                int ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 0, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - PRetParaValueF64, 0);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - PRetParaValueF64, 1);
+
+                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 1, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - PRetParaValueF64, 2);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - PRetParaValueF64, 3);
+
+                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 2, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - PRetParaValueF64, 4);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - PRetParaValueF64, 5);
+
+                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 5, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - PRetParaValueF64, 6);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - PRetParaValueF64, 7);
+
+                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 4, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - PRetParaValueF64, 8);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - PRetParaValueF64, 9);
+
+                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 3, ref PRetParaValueF64);
+                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+                {
+                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
+                    return false;
+                }
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - PRetParaValueF64, 10);
+                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - PRetParaValueF64, 11);
+                return true;
+            }
+        }
+        //public override bool LimitRangeChangeXYZ()
+        //{
+        //    float Xerror = 0;
+        //    float Yerror = 0;
+        //    float Zerror = 0;
+        //    float Werror = 0;
+        //    float Perror = 0;
+        //    float Rerror = 0;
+
+        //    int ret = mobjGroupAdapter.NMC_GroupGetActualPosPcs(ref PosPcs);
+        //    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+        //    {
+        //        apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
+        //        return false;
+        //    }
+        //    ret = mobjGroupAdapter.NMC_GroupGetActualPos(0,ref PosMcs);
+        //    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
+        //    {
+        //        apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
+        //        return false;
+        //    }
+
+        //    Xerror = Convert.ToSingle(PosMcs.pos.GetValue(0)) - Convert.ToSingle(PosPcs.pos.GetValue(0));
+        //    Yerror = Convert.ToSingle(PosMcs.pos.GetValue(1)) - Convert.ToSingle(PosPcs.pos.GetValue(1));
+        //    Zerror = Convert.ToSingle(PosMcs.pos.GetValue(2)) - Convert.ToSingle(PosPcs.pos.GetValue(2));
+        //    Werror = Convert.ToSingle(PosMcs.pos.GetValue(5)) - Convert.ToSingle(PosPcs.pos.GetValue(5));
+        //    Perror = Convert.ToSingle(PosMcs.pos.GetValue(4)) - Convert.ToSingle(PosPcs.pos.GetValue(4));
+        //    Rerror = Convert.ToSingle(PosMcs.pos.GetValue(3)) - Convert.ToSingle(PosPcs.pos.GetValue(3));
+
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - Xerror, 0);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - Xerror, 1);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - Yerror, 2);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - Yerror, 3);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - Zerror, 4);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - Zerror, 5);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - Werror, 6);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - Werror, 7);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - Perror, 8);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - Perror, 9);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - Rerror, 10);
+        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - Rerror, 11);
+        //    return true;
+        //}
         public override bool Compile()
         {
             int ret = 0;

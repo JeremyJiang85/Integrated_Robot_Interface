@@ -40,18 +40,18 @@ namespace Integrated_Robot_Interface
         public static string information3text { get; set; } = "";
         public static string information4name { get; set; } = "";
         public static string information4text { get; set; } = "";
-        public static Array safecheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
-        public static Array saferangexyzorginal { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public static Array saferangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public static Array saferangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public static float safevelocity { get; set; } = 0;
-        public static Array saferangevelocity { get; set; } = new float[2] { 0, 0 }; 
-        public static int safeoverride { get; set; } = 0;
-        public static Array saferangeoverride { get; set; } = new int[2] { 0, 0 };
-        public static short safetool { get; set; } = 0;
-        public static Array saferangetool { get; set; } = new int[2] { 0, 0 };
-        public static short safebase { get; set; } = 0;
-        public static Array saferangebase { get; set; } = new int[2] { 0, 0 };
+        public static Array limitcheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
+        public static Array limitrangexyzorginal { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public static Array limitrangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public static Array limitrangejoint { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public static float limitvelocity { get; set; } = 0;
+        public static Array limitrangevelocity { get; set; } = new float[2] { 0, 0 }; 
+        public static int limitoverride { get; set; } = 0;
+        public static Array limitrangeoverride { get; set; } = new int[2] { 0, 0 };
+        public static short limittool { get; set; } = 0;
+        public static Array limitrangetool { get; set; } = new int[2] { 0, 0 };
+        public static short limitbase { get; set; } = 0;
+        public static Array limitrangebase { get; set; } = new int[2] { 0, 0 };
         public static Array compile { get; set; } = new float[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static string programname { get; set; } = "";
         public static bool fgGripperState { get; set; } = false;
@@ -212,80 +212,80 @@ namespace Integrated_Robot_Interface
             information3text = "";
             return true;
         }
-        public virtual bool SafeRangeChangeXYZ()
+        public virtual bool LimitRangeChangeXYZ()
         {
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
-        public bool SafeRangeCheckXYZ()
+        public bool LimitRangeCheckXYZ()
         {
-            if (Convert.ToSingle(safecheck.GetValue(0)) < Convert.ToSingle(saferangexyz.GetValue(0)) ||
-                Convert.ToSingle(safecheck.GetValue(0)) > Convert.ToSingle(saferangexyz.GetValue(1)) ||
-                Convert.ToSingle(safecheck.GetValue(1)) < Convert.ToSingle(saferangexyz.GetValue(2)) ||
-                Convert.ToSingle(safecheck.GetValue(1)) > Convert.ToSingle(saferangexyz.GetValue(3)) ||
-                Convert.ToSingle(safecheck.GetValue(2)) < Convert.ToSingle(saferangexyz.GetValue(4)) ||
-                Convert.ToSingle(safecheck.GetValue(2)) > Convert.ToSingle(saferangexyz.GetValue(5)) ||
-                Convert.ToSingle(safecheck.GetValue(3)) < Convert.ToSingle(saferangexyz.GetValue(6)) ||
-                Convert.ToSingle(safecheck.GetValue(3)) > Convert.ToSingle(saferangexyz.GetValue(7)) ||
-                Convert.ToSingle(safecheck.GetValue(4)) < Convert.ToSingle(saferangexyz.GetValue(8)) ||
-                Convert.ToSingle(safecheck.GetValue(4)) > Convert.ToSingle(saferangexyz.GetValue(9)) ||
-                Convert.ToSingle(safecheck.GetValue(5)) < Convert.ToSingle(saferangexyz.GetValue(10)) ||
-                Convert.ToSingle(safecheck.GetValue(5)) > Convert.ToSingle(saferangexyz.GetValue(11)))
+            if (Convert.ToSingle(limitcheck.GetValue(0)) < Convert.ToSingle(limitrangexyz.GetValue(0)) ||
+                Convert.ToSingle(limitcheck.GetValue(0)) > Convert.ToSingle(limitrangexyz.GetValue(1)) ||
+                Convert.ToSingle(limitcheck.GetValue(1)) < Convert.ToSingle(limitrangexyz.GetValue(2)) ||
+                Convert.ToSingle(limitcheck.GetValue(1)) > Convert.ToSingle(limitrangexyz.GetValue(3)) ||
+                Convert.ToSingle(limitcheck.GetValue(2)) < Convert.ToSingle(limitrangexyz.GetValue(4)) ||
+                Convert.ToSingle(limitcheck.GetValue(2)) > Convert.ToSingle(limitrangexyz.GetValue(5)) ||
+                Convert.ToSingle(limitcheck.GetValue(3)) < Convert.ToSingle(limitrangexyz.GetValue(6)) ||
+                Convert.ToSingle(limitcheck.GetValue(3)) > Convert.ToSingle(limitrangexyz.GetValue(7)) ||
+                Convert.ToSingle(limitcheck.GetValue(4)) < Convert.ToSingle(limitrangexyz.GetValue(8)) ||
+                Convert.ToSingle(limitcheck.GetValue(4)) > Convert.ToSingle(limitrangexyz.GetValue(9)) ||
+                Convert.ToSingle(limitcheck.GetValue(5)) < Convert.ToSingle(limitrangexyz.GetValue(10)) ||
+                Convert.ToSingle(limitcheck.GetValue(5)) > Convert.ToSingle(limitrangexyz.GetValue(11)))
             {
                 return false;
             }
             return true;
         }
-        public bool SafeRangeCheckJoint()
+        public bool LimitRangeCheckJoint()
         {
-            if (Convert.ToSingle(safecheck.GetValue(0)) < Convert.ToSingle(saferangejoint.GetValue(0)) ||
-                Convert.ToSingle(safecheck.GetValue(0)) > Convert.ToSingle(saferangejoint.GetValue(1)) ||
-                Convert.ToSingle(safecheck.GetValue(1)) < Convert.ToSingle(saferangejoint.GetValue(2)) ||
-                Convert.ToSingle(safecheck.GetValue(1)) > Convert.ToSingle(saferangejoint.GetValue(3)) ||
-                Convert.ToSingle(safecheck.GetValue(2)) < Convert.ToSingle(saferangejoint.GetValue(4)) ||
-                Convert.ToSingle(safecheck.GetValue(2)) > Convert.ToSingle(saferangejoint.GetValue(5)) ||
-                Convert.ToSingle(safecheck.GetValue(3)) < Convert.ToSingle(saferangejoint.GetValue(6)) ||
-                Convert.ToSingle(safecheck.GetValue(3)) > Convert.ToSingle(saferangejoint.GetValue(7)) ||
-                Convert.ToSingle(safecheck.GetValue(4)) < Convert.ToSingle(saferangejoint.GetValue(8)) ||
-                Convert.ToSingle(safecheck.GetValue(4)) > Convert.ToSingle(saferangejoint.GetValue(9)) ||
-                Convert.ToSingle(safecheck.GetValue(5)) < Convert.ToSingle(saferangejoint.GetValue(10)) ||
-                Convert.ToSingle(safecheck.GetValue(5)) > Convert.ToSingle(saferangejoint.GetValue(11)))
+            if (Convert.ToSingle(limitcheck.GetValue(0)) < Convert.ToSingle(limitrangejoint.GetValue(0)) ||
+                Convert.ToSingle(limitcheck.GetValue(0)) > Convert.ToSingle(limitrangejoint.GetValue(1)) ||
+                Convert.ToSingle(limitcheck.GetValue(1)) < Convert.ToSingle(limitrangejoint.GetValue(2)) ||
+                Convert.ToSingle(limitcheck.GetValue(1)) > Convert.ToSingle(limitrangejoint.GetValue(3)) ||
+                Convert.ToSingle(limitcheck.GetValue(2)) < Convert.ToSingle(limitrangejoint.GetValue(4)) ||
+                Convert.ToSingle(limitcheck.GetValue(2)) > Convert.ToSingle(limitrangejoint.GetValue(5)) ||
+                Convert.ToSingle(limitcheck.GetValue(3)) < Convert.ToSingle(limitrangejoint.GetValue(6)) ||
+                Convert.ToSingle(limitcheck.GetValue(3)) > Convert.ToSingle(limitrangejoint.GetValue(7)) ||
+                Convert.ToSingle(limitcheck.GetValue(4)) < Convert.ToSingle(limitrangejoint.GetValue(8)) ||
+                Convert.ToSingle(limitcheck.GetValue(4)) > Convert.ToSingle(limitrangejoint.GetValue(9)) ||
+                Convert.ToSingle(limitcheck.GetValue(5)) < Convert.ToSingle(limitrangejoint.GetValue(10)) ||
+                Convert.ToSingle(limitcheck.GetValue(5)) > Convert.ToSingle(limitrangejoint.GetValue(11)))
             {
                 return false;
             }
             return true;
         }
-        public bool SafeRangeCheckVelocity()
+        public bool LimitRangeCheckVelocity()
         {
-            if (safevelocity < Convert.ToSingle(saferangevelocity.GetValue(0)) ||
-                safevelocity > Convert.ToSingle(saferangevelocity.GetValue(1)))
+            if (limitvelocity < Convert.ToSingle(limitrangevelocity.GetValue(0)) ||
+                limitvelocity > Convert.ToSingle(limitrangevelocity.GetValue(1)))
             {
                 return false;
             }
             return true;
         }
-        public bool SafeRangeCheckOverride()
+        public bool LimitRangeCheckOverride()
         {
-            if (safeoverride < Convert.ToSingle(saferangeoverride.GetValue(0)) ||
-                safeoverride > Convert.ToSingle(saferangeoverride.GetValue(1)))
+            if (limitoverride < Convert.ToSingle(limitrangeoverride.GetValue(0)) ||
+                limitoverride > Convert.ToSingle(limitrangeoverride.GetValue(1)))
             {
                 return false;
             }
             return true;
         }
-        public bool SafeRangeCheckTool()
+        public bool LimitRangeCheckTool()
         {
-            if (safetool < Convert.ToSingle(saferangetool.GetValue(0)) ||
-                safetool > Convert.ToSingle(saferangetool.GetValue(1)))
+            if (limittool < Convert.ToSingle(limitrangetool.GetValue(0)) ||
+                limittool > Convert.ToSingle(limitrangetool.GetValue(1)))
             {
                 return false;
             }
             return true;
         }
-        public bool SafeRangeCheckBase()
+        public bool LimitRangeCheckBase()
         {
-            if (safebase < Convert.ToSingle(saferangebase.GetValue(0)) ||
-                safebase > Convert.ToSingle(saferangebase.GetValue(1)))
+            if (limitbase < Convert.ToSingle(limitrangebase.GetValue(0)) ||
+                limitbase > Convert.ToSingle(limitrangebase.GetValue(1)))
             {
                 return false;
             }

@@ -146,33 +146,33 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.GetInformation3();
         }
-        public bool SafeRangeChangeXYZ()
+        public bool LimitRangeChangeXYZ()
         {
-            return myRobotAdapter.SafeRangeChangeXYZ();
+            return myRobotAdapter.LimitRangeChangeXYZ();
         }
-        public bool SafeRangeCheckXYZ()
+        public bool LimitRangeCheckXYZ()
         {
-            return myRobotAdapter.SafeRangeCheckXYZ();
+            return myRobotAdapter.LimitRangeCheckXYZ();
         }
-        public bool SafeRangeCheckJoint()
+        public bool LimitRangeCheckJoint()
         {
-            return myRobotAdapter.SafeRangeCheckJoint();
+            return myRobotAdapter.LimitRangeCheckJoint();
         }
-        public bool SafeRangeCheckVelocity()
+        public bool LimitRangeCheckVelocity()
         {
-            return myRobotAdapter.SafeRangeCheckVelocity();
+            return myRobotAdapter.LimitRangeCheckVelocity();
         }
-        public bool SafeRangeCheckOverride()
+        public bool LimitRangeCheckOverride()
         {
-            return myRobotAdapter.SafeRangeCheckOverride();
+            return myRobotAdapter.LimitRangeCheckOverride();
         }
-        public bool SafeRangeCheckTool()
+        public bool LimitRangeCheckTool()
         {
-            return myRobotAdapter.SafeRangeCheckTool();
+            return myRobotAdapter.LimitRangeCheckTool();
         }
-        public bool SafeRangeCheckBase()
+        public bool LimitRangeCheckBase()
         {
-            return myRobotAdapter.SafeRangeCheckBase();
+            return myRobotAdapter.LimitRangeCheckBase();
         }
         public bool Compile()
         {

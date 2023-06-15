@@ -52,14 +52,14 @@ namespace NEXCOMROBOT.MCAT
             return NexMotion_API.NMC_GroupGetParamI32(mDeviceId, mGroupIndex, ParamNum, SubIndex, ref PRetParaValueI32);
         }
 
-        public Int32 NMC_GroupSetParamF64(Int32 ParamNum, Int32 SubIndex, Double ParaValueI32)
+        public Int32 NMC_GroupSetParamF64(Int32 ParamNum, Int32 SubIndex, Double ParaValueF64)
         {
-            return NexMotion_API.NMC_GroupSetParamF64(mDeviceId, mGroupIndex, ParamNum, SubIndex, ParaValueI32);
+            return NexMotion_API.NMC_GroupSetParamF64(mDeviceId, mGroupIndex, ParamNum, SubIndex, ParaValueF64);
         }
 
-        public Int32 NMC_GroupGetParamF64(Int32 ParamNum, Int32 SubIndex, ref Double PRetParaValueI32)
+        public Int32 NMC_GroupGetParamF64(Int32 ParamNum, Int32 SubIndex, ref Double PRetParaValueF64)
         {
-            return NexMotion_API.NMC_GroupGetParamF64(mDeviceId, mGroupIndex, ParamNum, SubIndex, ref PRetParaValueI32);
+            return NexMotion_API.NMC_GroupGetParamF64(mDeviceId, mGroupIndex, ParamNum, SubIndex, ref PRetParaValueF64);
         }
 
         public Int32 NMC_GroupGetState( ref Int32 PRetState )
@@ -90,6 +90,11 @@ namespace NEXCOMROBOT.MCAT
         public Int32 NMC_GroupGetActualPosPcs( ref Pos_T PRetActPosPCS )
         {
             return NexMotion_API.NMC_GroupGetActualPosPcs( mDeviceId, mGroupIndex, ref PRetActPosPCS );
+        }
+
+        public Int32 NMC_GroupGetActualPos( int mCoordSys,ref Pos_T PRetActPosPCS)
+        {
+            return NexMotion_API.NMC_GroupGetActualPos(mDeviceId, mGroupIndex, mCoordSys, ref PRetActPosPCS);
         }
 
         public Int32 NMC_DeviceGetGroupAxisCount( ref Int32 PRetGroupCount )

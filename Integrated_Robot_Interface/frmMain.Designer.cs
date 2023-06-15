@@ -132,29 +132,29 @@
             this.txtLineZJ3 = new System.Windows.Forms.TextBox();
             this.txtLineYJ2 = new System.Windows.Forms.TextBox();
             this.txtLineXJ1 = new System.Windows.Forms.TextBox();
-            this.gbSafeRange = new System.Windows.Forms.GroupBox();
-            this.txtSafeRangeVelocitymax = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeVelocitymin = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeVelocity = new System.Windows.Forms.Label();
-            this.txtSafeRangeRJ6max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangePJ5max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeWJ4max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeRJ6min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeRJ6 = new System.Windows.Forms.Label();
-            this.txtSafeRangeWJ4min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeWJ4 = new System.Windows.Forms.Label();
-            this.txtSafeRangePJ5min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangePJ5 = new System.Windows.Forms.Label();
-            this.txtSafeRangeZJ3max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeYJ2max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeXJ1max = new System.Windows.Forms.TextBox();
-            this.txtSafeRangeZJ3min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeZJ3 = new System.Windows.Forms.Label();
-            this.txtSafeRangeXJ1min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeXJ1 = new System.Windows.Forms.Label();
-            this.txtSafeRangeYJ2min = new System.Windows.Forms.TextBox();
-            this.lblSafeRangeYJ2 = new System.Windows.Forms.Label();
-            this.btnSafeRangeSet = new System.Windows.Forms.Button();
+            this.gbLimitRange = new System.Windows.Forms.GroupBox();
+            this.txtLimitRangeVelocitymax = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeVelocitymin = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeVelocity = new System.Windows.Forms.Label();
+            this.txtLimitRangeRJ6max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangePJ5max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeWJ4max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeRJ6min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeRJ6 = new System.Windows.Forms.Label();
+            this.txtLimitRangeWJ4min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeWJ4 = new System.Windows.Forms.Label();
+            this.txtLimitRangePJ5min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangePJ5 = new System.Windows.Forms.Label();
+            this.txtLimitRangeZJ3max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeYJ2max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeXJ1max = new System.Windows.Forms.TextBox();
+            this.txtLimitRangeZJ3min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeZJ3 = new System.Windows.Forms.Label();
+            this.txtLimitRangeXJ1min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeXJ1 = new System.Windows.Forms.Label();
+            this.txtLimitRangeYJ2min = new System.Windows.Forms.TextBox();
+            this.lblLimitRangeYJ2 = new System.Windows.Forms.Label();
+            this.btnLimitRangeSet = new System.Windows.Forms.Button();
             this.gbPoints = new System.Windows.Forms.GroupBox();
             this.btnPointsSave = new System.Windows.Forms.Button();
             this.txtFileName = new System.Windows.Forms.TextBox();
@@ -164,6 +164,8 @@
             this.btnPointsGet = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.gbProgram = new System.Windows.Forms.GroupBox();
+            this.btnProgramSave = new System.Windows.Forms.Button();
+            this.btnProgramLoad = new System.Windows.Forms.Button();
             this.btnProgramCopy = new System.Windows.Forms.Button();
             this.lblProgramValue = new System.Windows.Forms.Label();
             this.txtProgramRJ6 = new System.Windows.Forms.TextBox();
@@ -194,6 +196,12 @@
             this.txtProgramPJ5 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tPMove = new System.Windows.Forms.TabPage();
+            this.gbFrame = new System.Windows.Forms.GroupBox();
+            this.btnFrameSet = new System.Windows.Forms.Button();
+            this.txtBaseSet = new System.Windows.Forms.TextBox();
+            this.txtToolSet = new System.Windows.Forms.TextBox();
+            this.lblBaseSet = new System.Windows.Forms.Label();
+            this.lblToolSet = new System.Windows.Forms.Label();
             this.tPInformation = new System.Windows.Forms.TabPage();
             this.gbInformation1 = new System.Windows.Forms.GroupBox();
             this.lblInformation1 = new System.Windows.Forms.Label();
@@ -203,18 +211,10 @@
             this.lblInformation2 = new System.Windows.Forms.Label();
             this.tPProgram = new System.Windows.Forms.TabPage();
             this.tPOther = new System.Windows.Forms.TabPage();
-            this.gbFrame = new System.Windows.Forms.GroupBox();
-            this.btnFrameSet = new System.Windows.Forms.Button();
-            this.txtBaseSet = new System.Windows.Forms.TextBox();
-            this.txtToolSet = new System.Windows.Forms.TextBox();
-            this.lblBaseSet = new System.Windows.Forms.Label();
-            this.lblToolSet = new System.Windows.Forms.Label();
             this.gbGripper = new System.Windows.Forms.GroupBox();
             this.btnGripperConnect = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnGrap = new System.Windows.Forms.Button();
-            this.btnProgramLoad = new System.Windows.Forms.Button();
-            this.btnProgramSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pblogo)).BeginInit();
             this.gbConnection.SuspendLayout();
             this.gbCurrentPosition.SuspendLayout();
@@ -224,19 +224,19 @@
             this.gbJogMove.SuspendLayout();
             this.gbControl.SuspendLayout();
             this.gbLineMove.SuspendLayout();
-            this.gbSafeRange.SuspendLayout();
+            this.gbLimitRange.SuspendLayout();
             this.gbPoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.gbProgram.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tPMove.SuspendLayout();
+            this.gbFrame.SuspendLayout();
             this.tPInformation.SuspendLayout();
             this.gbInformation1.SuspendLayout();
             this.gbInformation3.SuspendLayout();
             this.gbInformation2.SuspendLayout();
             this.tPProgram.SuspendLayout();
             this.tPOther.SuspendLayout();
-            this.gbFrame.SuspendLayout();
             this.gbGripper.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1342,250 +1342,250 @@
             this.txtLineXJ1.TabIndex = 1;
             this.txtLineXJ1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // gbSafeRange
+            // gbLimitRange
             // 
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeVelocitymax);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeVelocitymin);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeVelocity);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeRJ6max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangePJ5max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeWJ4max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeRJ6min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeRJ6);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeWJ4min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeWJ4);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangePJ5min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangePJ5);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeZJ3max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeYJ2max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeXJ1max);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeZJ3min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeZJ3);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeXJ1min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeXJ1);
-            this.gbSafeRange.Controls.Add(this.txtSafeRangeYJ2min);
-            this.gbSafeRange.Controls.Add(this.lblSafeRangeYJ2);
-            this.gbSafeRange.Controls.Add(this.btnSafeRangeSet);
-            this.gbSafeRange.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbSafeRange.Location = new System.Drawing.Point(3, 3);
-            this.gbSafeRange.Name = "gbSafeRange";
-            this.gbSafeRange.Size = new System.Drawing.Size(215, 290);
-            this.gbSafeRange.TabIndex = 19;
-            this.gbSafeRange.TabStop = false;
-            this.gbSafeRange.Text = "Safe Range";
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeVelocitymax);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeVelocitymin);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeVelocity);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeRJ6max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangePJ5max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeWJ4max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeRJ6min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeRJ6);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeWJ4min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeWJ4);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangePJ5min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangePJ5);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeZJ3max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeYJ2max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeXJ1max);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeZJ3min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeZJ3);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeXJ1min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeXJ1);
+            this.gbLimitRange.Controls.Add(this.txtLimitRangeYJ2min);
+            this.gbLimitRange.Controls.Add(this.lblLimitRangeYJ2);
+            this.gbLimitRange.Controls.Add(this.btnLimitRangeSet);
+            this.gbLimitRange.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.gbLimitRange.Location = new System.Drawing.Point(3, 3);
+            this.gbLimitRange.Name = "gbLimitRange";
+            this.gbLimitRange.Size = new System.Drawing.Size(215, 290);
+            this.gbLimitRange.TabIndex = 19;
+            this.gbLimitRange.TabStop = false;
+            this.gbLimitRange.Text = "Limit Range";
             // 
-            // txtSafeRangeVelocitymax
+            // txtLimitRangeVelocitymax
             // 
-            this.txtSafeRangeVelocitymax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeVelocitymax.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeVelocitymax.Location = new System.Drawing.Point(144, 203);
-            this.txtSafeRangeVelocitymax.Name = "txtSafeRangeVelocitymax";
-            this.txtSafeRangeVelocitymax.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeVelocitymax.TabIndex = 40;
-            this.txtSafeRangeVelocitymax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeVelocitymax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeVelocitymax.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeVelocitymax.Location = new System.Drawing.Point(144, 203);
+            this.txtLimitRangeVelocitymax.Name = "txtLimitRangeVelocitymax";
+            this.txtLimitRangeVelocitymax.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeVelocitymax.TabIndex = 40;
+            this.txtLimitRangeVelocitymax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeVelocitymin
+            // txtLimitRangeVelocitymin
             // 
-            this.txtSafeRangeVelocitymin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeVelocitymin.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeVelocitymin.Location = new System.Drawing.Point(46, 203);
-            this.txtSafeRangeVelocitymin.Name = "txtSafeRangeVelocitymin";
-            this.txtSafeRangeVelocitymin.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeVelocitymin.TabIndex = 38;
-            this.txtSafeRangeVelocitymin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeVelocitymin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeVelocitymin.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeVelocitymin.Location = new System.Drawing.Point(46, 203);
+            this.txtLimitRangeVelocitymin.Name = "txtLimitRangeVelocitymin";
+            this.txtLimitRangeVelocitymin.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeVelocitymin.TabIndex = 38;
+            this.txtLimitRangeVelocitymin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeVelocity
+            // lblLimitRangeVelocity
             // 
-            this.lblSafeRangeVelocity.AutoSize = true;
-            this.lblSafeRangeVelocity.Location = new System.Drawing.Point(6, 203);
-            this.lblSafeRangeVelocity.Name = "lblSafeRangeVelocity";
-            this.lblSafeRangeVelocity.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeVelocity.TabIndex = 39;
-            this.lblSafeRangeVelocity.Text = "V :                 ~";
+            this.lblLimitRangeVelocity.AutoSize = true;
+            this.lblLimitRangeVelocity.Location = new System.Drawing.Point(6, 203);
+            this.lblLimitRangeVelocity.Name = "lblLimitRangeVelocity";
+            this.lblLimitRangeVelocity.Size = new System.Drawing.Size(130, 21);
+            this.lblLimitRangeVelocity.TabIndex = 39;
+            this.lblLimitRangeVelocity.Text = "V :                 ~";
             // 
-            // txtSafeRangeRJ6max
+            // txtLimitRangeRJ6max
             // 
-            this.txtSafeRangeRJ6max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeRJ6max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeRJ6max.Location = new System.Drawing.Point(144, 174);
-            this.txtSafeRangeRJ6max.Name = "txtSafeRangeRJ6max";
-            this.txtSafeRangeRJ6max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeRJ6max.TabIndex = 37;
-            this.txtSafeRangeRJ6max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeRJ6max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeRJ6max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeRJ6max.Location = new System.Drawing.Point(144, 174);
+            this.txtLimitRangeRJ6max.Name = "txtLimitRangeRJ6max";
+            this.txtLimitRangeRJ6max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeRJ6max.TabIndex = 37;
+            this.txtLimitRangeRJ6max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangePJ5max
+            // txtLimitRangePJ5max
             // 
-            this.txtSafeRangePJ5max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangePJ5max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangePJ5max.Location = new System.Drawing.Point(144, 145);
-            this.txtSafeRangePJ5max.Name = "txtSafeRangePJ5max";
-            this.txtSafeRangePJ5max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangePJ5max.TabIndex = 36;
-            this.txtSafeRangePJ5max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangePJ5max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangePJ5max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangePJ5max.Location = new System.Drawing.Point(144, 145);
+            this.txtLimitRangePJ5max.Name = "txtLimitRangePJ5max";
+            this.txtLimitRangePJ5max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangePJ5max.TabIndex = 36;
+            this.txtLimitRangePJ5max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeWJ4max
+            // txtLimitRangeWJ4max
             // 
-            this.txtSafeRangeWJ4max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeWJ4max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeWJ4max.Location = new System.Drawing.Point(144, 116);
-            this.txtSafeRangeWJ4max.Name = "txtSafeRangeWJ4max";
-            this.txtSafeRangeWJ4max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeWJ4max.TabIndex = 35;
-            this.txtSafeRangeWJ4max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeWJ4max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeWJ4max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeWJ4max.Location = new System.Drawing.Point(144, 116);
+            this.txtLimitRangeWJ4max.Name = "txtLimitRangeWJ4max";
+            this.txtLimitRangeWJ4max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeWJ4max.TabIndex = 35;
+            this.txtLimitRangeWJ4max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeRJ6min
+            // txtLimitRangeRJ6min
             // 
-            this.txtSafeRangeRJ6min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeRJ6min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeRJ6min.Location = new System.Drawing.Point(46, 174);
-            this.txtSafeRangeRJ6min.Name = "txtSafeRangeRJ6min";
-            this.txtSafeRangeRJ6min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeRJ6min.TabIndex = 33;
-            this.txtSafeRangeRJ6min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeRJ6min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeRJ6min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeRJ6min.Location = new System.Drawing.Point(46, 174);
+            this.txtLimitRangeRJ6min.Name = "txtLimitRangeRJ6min";
+            this.txtLimitRangeRJ6min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeRJ6min.TabIndex = 33;
+            this.txtLimitRangeRJ6min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeRJ6
+            // lblLimitRangeRJ6
             // 
-            this.lblSafeRangeRJ6.AutoSize = true;
-            this.lblSafeRangeRJ6.Location = new System.Drawing.Point(6, 174);
-            this.lblSafeRangeRJ6.Name = "lblSafeRangeRJ6";
-            this.lblSafeRangeRJ6.Size = new System.Drawing.Size(129, 21);
-            this.lblSafeRangeRJ6.TabIndex = 34;
-            this.lblSafeRangeRJ6.Text = "R :                 ~";
+            this.lblLimitRangeRJ6.AutoSize = true;
+            this.lblLimitRangeRJ6.Location = new System.Drawing.Point(6, 174);
+            this.lblLimitRangeRJ6.Name = "lblLimitRangeRJ6";
+            this.lblLimitRangeRJ6.Size = new System.Drawing.Size(129, 21);
+            this.lblLimitRangeRJ6.TabIndex = 34;
+            this.lblLimitRangeRJ6.Text = "R :                 ~";
             // 
-            // txtSafeRangeWJ4min
+            // txtLimitRangeWJ4min
             // 
-            this.txtSafeRangeWJ4min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeWJ4min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeWJ4min.Location = new System.Drawing.Point(46, 116);
-            this.txtSafeRangeWJ4min.Name = "txtSafeRangeWJ4min";
-            this.txtSafeRangeWJ4min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeWJ4min.TabIndex = 29;
-            this.txtSafeRangeWJ4min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeWJ4min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeWJ4min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeWJ4min.Location = new System.Drawing.Point(46, 116);
+            this.txtLimitRangeWJ4min.Name = "txtLimitRangeWJ4min";
+            this.txtLimitRangeWJ4min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeWJ4min.TabIndex = 29;
+            this.txtLimitRangeWJ4min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeWJ4
+            // lblLimitRangeWJ4
             // 
-            this.lblSafeRangeWJ4.AutoSize = true;
-            this.lblSafeRangeWJ4.Location = new System.Drawing.Point(6, 116);
-            this.lblSafeRangeWJ4.Name = "lblSafeRangeWJ4";
-            this.lblSafeRangeWJ4.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeWJ4.TabIndex = 30;
-            this.lblSafeRangeWJ4.Text = "W:                 ~";
+            this.lblLimitRangeWJ4.AutoSize = true;
+            this.lblLimitRangeWJ4.Location = new System.Drawing.Point(6, 116);
+            this.lblLimitRangeWJ4.Name = "lblLimitRangeWJ4";
+            this.lblLimitRangeWJ4.Size = new System.Drawing.Size(130, 21);
+            this.lblLimitRangeWJ4.TabIndex = 30;
+            this.lblLimitRangeWJ4.Text = "W:                 ~";
             // 
-            // txtSafeRangePJ5min
+            // txtLimitRangePJ5min
             // 
-            this.txtSafeRangePJ5min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangePJ5min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangePJ5min.Location = new System.Drawing.Point(46, 145);
-            this.txtSafeRangePJ5min.Name = "txtSafeRangePJ5min";
-            this.txtSafeRangePJ5min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangePJ5min.TabIndex = 32;
-            this.txtSafeRangePJ5min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangePJ5min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangePJ5min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangePJ5min.Location = new System.Drawing.Point(46, 145);
+            this.txtLimitRangePJ5min.Name = "txtLimitRangePJ5min";
+            this.txtLimitRangePJ5min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangePJ5min.TabIndex = 32;
+            this.txtLimitRangePJ5min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangePJ5
+            // lblLimitRangePJ5
             // 
-            this.lblSafeRangePJ5.AutoSize = true;
-            this.lblSafeRangePJ5.Location = new System.Drawing.Point(6, 145);
-            this.lblSafeRangePJ5.Name = "lblSafeRangePJ5";
-            this.lblSafeRangePJ5.Size = new System.Drawing.Size(132, 21);
-            this.lblSafeRangePJ5.TabIndex = 31;
-            this.lblSafeRangePJ5.Text = "P :                  ~";
+            this.lblLimitRangePJ5.AutoSize = true;
+            this.lblLimitRangePJ5.Location = new System.Drawing.Point(6, 145);
+            this.lblLimitRangePJ5.Name = "lblLimitRangePJ5";
+            this.lblLimitRangePJ5.Size = new System.Drawing.Size(132, 21);
+            this.lblLimitRangePJ5.TabIndex = 31;
+            this.lblLimitRangePJ5.Text = "P :                  ~";
             // 
-            // txtSafeRangeZJ3max
+            // txtLimitRangeZJ3max
             // 
-            this.txtSafeRangeZJ3max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeZJ3max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeZJ3max.Location = new System.Drawing.Point(144, 87);
-            this.txtSafeRangeZJ3max.Name = "txtSafeRangeZJ3max";
-            this.txtSafeRangeZJ3max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeZJ3max.TabIndex = 28;
-            this.txtSafeRangeZJ3max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeZJ3max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeZJ3max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeZJ3max.Location = new System.Drawing.Point(144, 87);
+            this.txtLimitRangeZJ3max.Name = "txtLimitRangeZJ3max";
+            this.txtLimitRangeZJ3max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeZJ3max.TabIndex = 28;
+            this.txtLimitRangeZJ3max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeYJ2max
+            // txtLimitRangeYJ2max
             // 
-            this.txtSafeRangeYJ2max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeYJ2max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeYJ2max.Location = new System.Drawing.Point(144, 58);
-            this.txtSafeRangeYJ2max.Name = "txtSafeRangeYJ2max";
-            this.txtSafeRangeYJ2max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeYJ2max.TabIndex = 27;
-            this.txtSafeRangeYJ2max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeYJ2max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeYJ2max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeYJ2max.Location = new System.Drawing.Point(144, 58);
+            this.txtLimitRangeYJ2max.Name = "txtLimitRangeYJ2max";
+            this.txtLimitRangeYJ2max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeYJ2max.TabIndex = 27;
+            this.txtLimitRangeYJ2max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeXJ1max
+            // txtLimitRangeXJ1max
             // 
-            this.txtSafeRangeXJ1max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeXJ1max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeXJ1max.Location = new System.Drawing.Point(144, 29);
-            this.txtSafeRangeXJ1max.Name = "txtSafeRangeXJ1max";
-            this.txtSafeRangeXJ1max.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeXJ1max.TabIndex = 26;
-            this.txtSafeRangeXJ1max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeXJ1max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeXJ1max.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeXJ1max.Location = new System.Drawing.Point(144, 29);
+            this.txtLimitRangeXJ1max.Name = "txtLimitRangeXJ1max";
+            this.txtLimitRangeXJ1max.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeXJ1max.TabIndex = 26;
+            this.txtLimitRangeXJ1max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSafeRangeZJ3min
+            // txtLimitRangeZJ3min
             // 
-            this.txtSafeRangeZJ3min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeZJ3min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeZJ3min.Location = new System.Drawing.Point(46, 87);
-            this.txtSafeRangeZJ3min.Name = "txtSafeRangeZJ3min";
-            this.txtSafeRangeZJ3min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeZJ3min.TabIndex = 24;
-            this.txtSafeRangeZJ3min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeZJ3min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeZJ3min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeZJ3min.Location = new System.Drawing.Point(46, 87);
+            this.txtLimitRangeZJ3min.Name = "txtLimitRangeZJ3min";
+            this.txtLimitRangeZJ3min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeZJ3min.TabIndex = 24;
+            this.txtLimitRangeZJ3min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeZJ3
+            // lblLimitRangeZJ3
             // 
-            this.lblSafeRangeZJ3.AutoSize = true;
-            this.lblSafeRangeZJ3.Location = new System.Drawing.Point(6, 87);
-            this.lblSafeRangeZJ3.Name = "lblSafeRangeZJ3";
-            this.lblSafeRangeZJ3.Size = new System.Drawing.Size(128, 21);
-            this.lblSafeRangeZJ3.TabIndex = 25;
-            this.lblSafeRangeZJ3.Text = "Z :                 ~";
+            this.lblLimitRangeZJ3.AutoSize = true;
+            this.lblLimitRangeZJ3.Location = new System.Drawing.Point(6, 87);
+            this.lblLimitRangeZJ3.Name = "lblLimitRangeZJ3";
+            this.lblLimitRangeZJ3.Size = new System.Drawing.Size(128, 21);
+            this.lblLimitRangeZJ3.TabIndex = 25;
+            this.lblLimitRangeZJ3.Text = "Z :                 ~";
             // 
-            // txtSafeRangeXJ1min
+            // txtLimitRangeXJ1min
             // 
-            this.txtSafeRangeXJ1min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeXJ1min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeXJ1min.Location = new System.Drawing.Point(46, 29);
-            this.txtSafeRangeXJ1min.Name = "txtSafeRangeXJ1min";
-            this.txtSafeRangeXJ1min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeXJ1min.TabIndex = 20;
-            this.txtSafeRangeXJ1min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeXJ1min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeXJ1min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeXJ1min.Location = new System.Drawing.Point(46, 29);
+            this.txtLimitRangeXJ1min.Name = "txtLimitRangeXJ1min";
+            this.txtLimitRangeXJ1min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeXJ1min.TabIndex = 20;
+            this.txtLimitRangeXJ1min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeXJ1
+            // lblLimitRangeXJ1
             // 
-            this.lblSafeRangeXJ1.AutoSize = true;
-            this.lblSafeRangeXJ1.Location = new System.Drawing.Point(6, 29);
-            this.lblSafeRangeXJ1.Name = "lblSafeRangeXJ1";
-            this.lblSafeRangeXJ1.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeXJ1.TabIndex = 21;
-            this.lblSafeRangeXJ1.Text = "X :                 ~";
+            this.lblLimitRangeXJ1.AutoSize = true;
+            this.lblLimitRangeXJ1.Location = new System.Drawing.Point(6, 29);
+            this.lblLimitRangeXJ1.Name = "lblLimitRangeXJ1";
+            this.lblLimitRangeXJ1.Size = new System.Drawing.Size(130, 21);
+            this.lblLimitRangeXJ1.TabIndex = 21;
+            this.lblLimitRangeXJ1.Text = "X :                 ~";
             // 
-            // txtSafeRangeYJ2min
+            // txtLimitRangeYJ2min
             // 
-            this.txtSafeRangeYJ2min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSafeRangeYJ2min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtSafeRangeYJ2min.Location = new System.Drawing.Point(46, 58);
-            this.txtSafeRangeYJ2min.Name = "txtSafeRangeYJ2min";
-            this.txtSafeRangeYJ2min.Size = new System.Drawing.Size(60, 23);
-            this.txtSafeRangeYJ2min.TabIndex = 23;
-            this.txtSafeRangeYJ2min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimitRangeYJ2min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLimitRangeYJ2min.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtLimitRangeYJ2min.Location = new System.Drawing.Point(46, 58);
+            this.txtLimitRangeYJ2min.Name = "txtLimitRangeYJ2min";
+            this.txtLimitRangeYJ2min.Size = new System.Drawing.Size(60, 23);
+            this.txtLimitRangeYJ2min.TabIndex = 23;
+            this.txtLimitRangeYJ2min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblSafeRangeYJ2
+            // lblLimitRangeYJ2
             // 
-            this.lblSafeRangeYJ2.AutoSize = true;
-            this.lblSafeRangeYJ2.Location = new System.Drawing.Point(6, 58);
-            this.lblSafeRangeYJ2.Name = "lblSafeRangeYJ2";
-            this.lblSafeRangeYJ2.Size = new System.Drawing.Size(130, 21);
-            this.lblSafeRangeYJ2.TabIndex = 22;
-            this.lblSafeRangeYJ2.Text = "Y :                 ~";
+            this.lblLimitRangeYJ2.AutoSize = true;
+            this.lblLimitRangeYJ2.Location = new System.Drawing.Point(6, 58);
+            this.lblLimitRangeYJ2.Name = "lblLimitRangeYJ2";
+            this.lblLimitRangeYJ2.Size = new System.Drawing.Size(130, 21);
+            this.lblLimitRangeYJ2.TabIndex = 22;
+            this.lblLimitRangeYJ2.Text = "Y :                 ~";
             // 
-            // btnSafeRangeSet
+            // btnLimitRangeSet
             // 
-            this.btnSafeRangeSet.Location = new System.Drawing.Point(56, 232);
-            this.btnSafeRangeSet.Name = "btnSafeRangeSet";
-            this.btnSafeRangeSet.Size = new System.Drawing.Size(100, 50);
-            this.btnSafeRangeSet.TabIndex = 19;
-            this.btnSafeRangeSet.Text = "Set";
-            this.btnSafeRangeSet.UseVisualStyleBackColor = true;
-            this.btnSafeRangeSet.Click += new System.EventHandler(this.btnSafeRangeSet_Click);
+            this.btnLimitRangeSet.Location = new System.Drawing.Point(56, 232);
+            this.btnLimitRangeSet.Name = "btnLimitRangeSet";
+            this.btnLimitRangeSet.Size = new System.Drawing.Size(100, 50);
+            this.btnLimitRangeSet.TabIndex = 19;
+            this.btnLimitRangeSet.Text = "Set";
+            this.btnLimitRangeSet.UseVisualStyleBackColor = true;
+            this.btnLimitRangeSet.Click += new System.EventHandler(this.btnSafeRangeSet_Click);
             // 
             // gbPoints
             // 
@@ -1711,6 +1711,26 @@
             this.gbProgram.TabStop = false;
             this.gbProgram.Text = "Program";
             // 
+            // btnProgramSave
+            // 
+            this.btnProgramSave.Location = new System.Drawing.Point(537, 27);
+            this.btnProgramSave.Name = "btnProgramSave";
+            this.btnProgramSave.Size = new System.Drawing.Size(100, 30);
+            this.btnProgramSave.TabIndex = 61;
+            this.btnProgramSave.Text = "Save";
+            this.btnProgramSave.UseVisualStyleBackColor = true;
+            this.btnProgramSave.Click += new System.EventHandler(this.btnProgramSave_Click);
+            // 
+            // btnProgramLoad
+            // 
+            this.btnProgramLoad.Location = new System.Drawing.Point(431, 27);
+            this.btnProgramLoad.Name = "btnProgramLoad";
+            this.btnProgramLoad.Size = new System.Drawing.Size(100, 30);
+            this.btnProgramLoad.TabIndex = 61;
+            this.btnProgramLoad.Text = "Load";
+            this.btnProgramLoad.UseVisualStyleBackColor = true;
+            this.btnProgramLoad.Click += new System.EventHandler(this.btnProgramLoad_Click);
+            // 
             // btnProgramCopy
             // 
             this.btnProgramCopy.Location = new System.Drawing.Point(324, 154);
@@ -1746,14 +1766,14 @@
             this.txtProgramValue.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtProgramValue.Location = new System.Drawing.Point(716, 32);
             this.txtProgramValue.Name = "txtProgramValue";
-            this.txtProgramValue.Size = new System.Drawing.Size(91, 23);
+            this.txtProgramValue.Size = new System.Drawing.Size(71, 23);
             this.txtProgramValue.TabIndex = 55;
             this.txtProgramValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblProgramUnit
             // 
             this.lblProgramUnit.AutoSize = true;
-            this.lblProgramUnit.Location = new System.Drawing.Point(813, 32);
+            this.lblProgramUnit.Location = new System.Drawing.Point(792, 32);
             this.lblProgramUnit.Name = "lblProgramUnit";
             this.lblProgramUnit.Size = new System.Drawing.Size(40, 21);
             this.lblProgramUnit.TabIndex = 56;
@@ -2008,6 +2028,69 @@
             this.tPMove.TabIndex = 0;
             this.tPMove.Text = "Move";
             // 
+            // gbFrame
+            // 
+            this.gbFrame.Controls.Add(this.btnFrameSet);
+            this.gbFrame.Controls.Add(this.txtBaseSet);
+            this.gbFrame.Controls.Add(this.txtToolSet);
+            this.gbFrame.Controls.Add(this.lblBaseSet);
+            this.gbFrame.Controls.Add(this.lblToolSet);
+            this.gbFrame.Location = new System.Drawing.Point(701, 3);
+            this.gbFrame.Name = "gbFrame";
+            this.gbFrame.Size = new System.Drawing.Size(157, 290);
+            this.gbFrame.TabIndex = 20;
+            this.gbFrame.TabStop = false;
+            this.gbFrame.Text = "Frame";
+            // 
+            // btnFrameSet
+            // 
+            this.btnFrameSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnFrameSet.Location = new System.Drawing.Point(23, 87);
+            this.btnFrameSet.Name = "btnFrameSet";
+            this.btnFrameSet.Size = new System.Drawing.Size(100, 50);
+            this.btnFrameSet.TabIndex = 27;
+            this.btnFrameSet.Text = "Set";
+            this.btnFrameSet.UseVisualStyleBackColor = true;
+            this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
+            // 
+            // txtBaseSet
+            // 
+            this.txtBaseSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBaseSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtBaseSet.Location = new System.Drawing.Point(97, 58);
+            this.txtBaseSet.Name = "txtBaseSet";
+            this.txtBaseSet.Size = new System.Drawing.Size(49, 23);
+            this.txtBaseSet.TabIndex = 28;
+            this.txtBaseSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtToolSet
+            // 
+            this.txtToolSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtToolSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtToolSet.Location = new System.Drawing.Point(97, 29);
+            this.txtToolSet.Name = "txtToolSet";
+            this.txtToolSet.Size = new System.Drawing.Size(49, 23);
+            this.txtToolSet.TabIndex = 27;
+            this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblBaseSet
+            // 
+            this.lblBaseSet.AutoSize = true;
+            this.lblBaseSet.Location = new System.Drawing.Point(6, 58);
+            this.lblBaseSet.Name = "lblBaseSet";
+            this.lblBaseSet.Size = new System.Drawing.Size(59, 21);
+            this.lblBaseSet.TabIndex = 22;
+            this.lblBaseSet.Text = "Base :";
+            // 
+            // lblToolSet
+            // 
+            this.lblToolSet.AutoSize = true;
+            this.lblToolSet.Location = new System.Drawing.Point(6, 29);
+            this.lblToolSet.Name = "lblToolSet";
+            this.lblToolSet.Size = new System.Drawing.Size(57, 21);
+            this.lblToolSet.TabIndex = 21;
+            this.lblToolSet.Text = "Tool :";
+            // 
             // tPInformation
             // 
             this.tPInformation.BackColor = System.Drawing.SystemColors.Control;
@@ -2095,76 +2178,13 @@
             // tPOther
             // 
             this.tPOther.BackColor = System.Drawing.SystemColors.Control;
-            this.tPOther.Controls.Add(this.gbSafeRange);
+            this.tPOther.Controls.Add(this.gbLimitRange);
             this.tPOther.Controls.Add(this.gbRegister);
             this.tPOther.Location = new System.Drawing.Point(4, 31);
             this.tPOther.Name = "tPOther";
             this.tPOther.Size = new System.Drawing.Size(870, 493);
             this.tPOther.TabIndex = 3;
             this.tPOther.Text = "Other";
-            // 
-            // gbFrame
-            // 
-            this.gbFrame.Controls.Add(this.btnFrameSet);
-            this.gbFrame.Controls.Add(this.txtBaseSet);
-            this.gbFrame.Controls.Add(this.txtToolSet);
-            this.gbFrame.Controls.Add(this.lblBaseSet);
-            this.gbFrame.Controls.Add(this.lblToolSet);
-            this.gbFrame.Location = new System.Drawing.Point(701, 3);
-            this.gbFrame.Name = "gbFrame";
-            this.gbFrame.Size = new System.Drawing.Size(157, 290);
-            this.gbFrame.TabIndex = 20;
-            this.gbFrame.TabStop = false;
-            this.gbFrame.Text = "Frame";
-            // 
-            // btnFrameSet
-            // 
-            this.btnFrameSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnFrameSet.Location = new System.Drawing.Point(23, 87);
-            this.btnFrameSet.Name = "btnFrameSet";
-            this.btnFrameSet.Size = new System.Drawing.Size(100, 50);
-            this.btnFrameSet.TabIndex = 27;
-            this.btnFrameSet.Text = "Set";
-            this.btnFrameSet.UseVisualStyleBackColor = true;
-            this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
-            // 
-            // txtBaseSet
-            // 
-            this.txtBaseSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBaseSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtBaseSet.Location = new System.Drawing.Point(97, 58);
-            this.txtBaseSet.Name = "txtBaseSet";
-            this.txtBaseSet.Size = new System.Drawing.Size(49, 23);
-            this.txtBaseSet.TabIndex = 28;
-            this.txtBaseSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtToolSet
-            // 
-            this.txtToolSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtToolSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtToolSet.Location = new System.Drawing.Point(97, 29);
-            this.txtToolSet.Name = "txtToolSet";
-            this.txtToolSet.Size = new System.Drawing.Size(49, 23);
-            this.txtToolSet.TabIndex = 27;
-            this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblBaseSet
-            // 
-            this.lblBaseSet.AutoSize = true;
-            this.lblBaseSet.Location = new System.Drawing.Point(6, 58);
-            this.lblBaseSet.Name = "lblBaseSet";
-            this.lblBaseSet.Size = new System.Drawing.Size(59, 21);
-            this.lblBaseSet.TabIndex = 22;
-            this.lblBaseSet.Text = "Base :";
-            // 
-            // lblToolSet
-            // 
-            this.lblToolSet.AutoSize = true;
-            this.lblToolSet.Location = new System.Drawing.Point(6, 29);
-            this.lblToolSet.Name = "lblToolSet";
-            this.lblToolSet.Size = new System.Drawing.Size(57, 21);
-            this.lblToolSet.TabIndex = 21;
-            this.lblToolSet.Text = "Tool :";
             // 
             // gbGripper
             // 
@@ -2210,26 +2230,6 @@
             this.btnGrap.UseVisualStyleBackColor = true;
             this.btnGrap.Click += new System.EventHandler(this.btnGrap_Click);
             // 
-            // btnProgramLoad
-            // 
-            this.btnProgramLoad.Location = new System.Drawing.Point(431, 27);
-            this.btnProgramLoad.Name = "btnProgramLoad";
-            this.btnProgramLoad.Size = new System.Drawing.Size(100, 30);
-            this.btnProgramLoad.TabIndex = 61;
-            this.btnProgramLoad.Text = "Load";
-            this.btnProgramLoad.UseVisualStyleBackColor = true;
-            this.btnProgramLoad.Click += new System.EventHandler(this.btnProgramLoad_Click);
-            // 
-            // btnProgramSave
-            // 
-            this.btnProgramSave.Location = new System.Drawing.Point(537, 27);
-            this.btnProgramSave.Name = "btnProgramSave";
-            this.btnProgramSave.Size = new System.Drawing.Size(100, 30);
-            this.btnProgramSave.TabIndex = 61;
-            this.btnProgramSave.Text = "Save";
-            this.btnProgramSave.UseVisualStyleBackColor = true;
-            this.btnProgramSave.Click += new System.EventHandler(this.btnProgramSave_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2266,8 +2266,8 @@
             this.gbControl.PerformLayout();
             this.gbLineMove.ResumeLayout(false);
             this.gbLineMove.PerformLayout();
-            this.gbSafeRange.ResumeLayout(false);
-            this.gbSafeRange.PerformLayout();
+            this.gbLimitRange.ResumeLayout(false);
+            this.gbLimitRange.PerformLayout();
             this.gbPoints.ResumeLayout(false);
             this.gbPoints.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -2275,6 +2275,8 @@
             this.gbProgram.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tPMove.ResumeLayout(false);
+            this.gbFrame.ResumeLayout(false);
+            this.gbFrame.PerformLayout();
             this.tPInformation.ResumeLayout(false);
             this.gbInformation1.ResumeLayout(false);
             this.gbInformation1.PerformLayout();
@@ -2284,8 +2286,6 @@
             this.gbInformation2.PerformLayout();
             this.tPProgram.ResumeLayout(false);
             this.tPOther.ResumeLayout(false);
-            this.gbFrame.ResumeLayout(false);
-            this.gbFrame.PerformLayout();
             this.gbGripper.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2392,26 +2392,26 @@
         private System.Windows.Forms.Label lblLineXJ1Unit;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnHold;
-        private System.Windows.Forms.GroupBox gbSafeRange;
-        private System.Windows.Forms.Label lblSafeRangeYJ2;
-        private System.Windows.Forms.Label lblSafeRangeXJ1;
-        private System.Windows.Forms.TextBox txtSafeRangeXJ1min;
-        private System.Windows.Forms.Button btnSafeRangeSet;
-        private System.Windows.Forms.TextBox txtSafeRangeZJ3max;
-        private System.Windows.Forms.TextBox txtSafeRangeYJ2max;
-        private System.Windows.Forms.TextBox txtSafeRangeXJ1max;
-        private System.Windows.Forms.TextBox txtSafeRangeZJ3min;
-        private System.Windows.Forms.Label lblSafeRangeZJ3;
-        private System.Windows.Forms.TextBox txtSafeRangeYJ2min;
-        private System.Windows.Forms.TextBox txtSafeRangeRJ6max;
-        private System.Windows.Forms.TextBox txtSafeRangePJ5max;
-        private System.Windows.Forms.TextBox txtSafeRangeWJ4max;
-        private System.Windows.Forms.TextBox txtSafeRangeRJ6min;
-        private System.Windows.Forms.Label lblSafeRangeRJ6;
-        private System.Windows.Forms.TextBox txtSafeRangeWJ4min;
-        private System.Windows.Forms.Label lblSafeRangeWJ4;
-        private System.Windows.Forms.TextBox txtSafeRangePJ5min;
-        private System.Windows.Forms.Label lblSafeRangePJ5;
+        private System.Windows.Forms.GroupBox gbLimitRange;
+        private System.Windows.Forms.Label lblLimitRangeYJ2;
+        private System.Windows.Forms.Label lblLimitRangeXJ1;
+        private System.Windows.Forms.TextBox txtLimitRangeXJ1min;
+        private System.Windows.Forms.Button btnLimitRangeSet;
+        private System.Windows.Forms.TextBox txtLimitRangeZJ3max;
+        private System.Windows.Forms.TextBox txtLimitRangeYJ2max;
+        private System.Windows.Forms.TextBox txtLimitRangeXJ1max;
+        private System.Windows.Forms.TextBox txtLimitRangeZJ3min;
+        private System.Windows.Forms.Label lblLimitRangeZJ3;
+        private System.Windows.Forms.TextBox txtLimitRangeYJ2min;
+        private System.Windows.Forms.TextBox txtLimitRangeRJ6max;
+        private System.Windows.Forms.TextBox txtLimitRangePJ5max;
+        private System.Windows.Forms.TextBox txtLimitRangeWJ4max;
+        private System.Windows.Forms.TextBox txtLimitRangeRJ6min;
+        private System.Windows.Forms.Label lblLimitRangeRJ6;
+        private System.Windows.Forms.TextBox txtLimitRangeWJ4min;
+        private System.Windows.Forms.Label lblLimitRangeWJ4;
+        private System.Windows.Forms.TextBox txtLimitRangePJ5min;
+        private System.Windows.Forms.Label lblLimitRangePJ5;
         private System.Windows.Forms.GroupBox gbPoints;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnPointsSet;
@@ -2445,9 +2445,9 @@
         private System.Windows.Forms.TextBox txtProgramValue;
         private System.Windows.Forms.Label lblProgramUnit;
         private System.Windows.Forms.Label lblProgramValue;
-        private System.Windows.Forms.TextBox txtSafeRangeVelocitymax;
-        private System.Windows.Forms.TextBox txtSafeRangeVelocitymin;
-        private System.Windows.Forms.Label lblSafeRangeVelocity;
+        private System.Windows.Forms.TextBox txtLimitRangeVelocitymax;
+        private System.Windows.Forms.TextBox txtLimitRangeVelocitymin;
+        private System.Windows.Forms.Label lblLimitRangeVelocity;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tPMove;
         private System.Windows.Forms.TabPage tPInformation;

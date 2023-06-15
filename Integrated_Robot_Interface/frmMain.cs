@@ -96,7 +96,7 @@ namespace Integrated_Robot_Interface
             fgConnectionState = false;
             cboRobot.Enabled = true;
             gbEnbleControl(false);
-            tbSafeRangeEnbleControl(false);
+            tbLimitRangeEnbleControl(false);
             dataTable = new DataTable();
             dataGridView1.DataSource = dataTable;
             dataTable.Columns.Add("Num", typeof(int));
@@ -127,27 +127,28 @@ namespace Integrated_Robot_Interface
             gbJogMove.Enabled = tf;
             gbControl.Enabled = tf;
             gbLineMove.Enabled = tf;
-            gbSafeRange.Enabled = tf;
+            gbLimitRange.Enabled = tf;
             gbPoints.Enabled = tf;
             gbProgram.Enabled = tf;
             gbGripper.Enabled = tf;
+            gbFrame.Enabled = tf;
         }
-        private void tbSafeRangeEnbleControl(bool tf)
+        private void tbLimitRangeEnbleControl(bool tf)
         {
-            txtSafeRangeXJ1min.Enabled = tf;
-            txtSafeRangeXJ1max.Enabled = tf;
-            txtSafeRangeYJ2min.Enabled = tf;
-            txtSafeRangeYJ2max.Enabled = tf;
-            txtSafeRangeZJ3min.Enabled = tf;
-            txtSafeRangeZJ3max.Enabled = tf;
-            txtSafeRangeWJ4min.Enabled = tf;
-            txtSafeRangeWJ4max.Enabled = tf;
-            txtSafeRangePJ5min.Enabled = tf;
-            txtSafeRangePJ5max.Enabled = tf;
-            txtSafeRangeRJ6min.Enabled = tf;
-            txtSafeRangeRJ6max.Enabled = tf;
-            txtSafeRangeVelocitymin.Enabled = tf;
-            txtSafeRangeVelocitymax.Enabled = tf;
+            txtLimitRangeXJ1min.Enabled = tf;
+            txtLimitRangeXJ1max.Enabled = tf;
+            txtLimitRangeYJ2min.Enabled = tf;
+            txtLimitRangeYJ2max.Enabled = tf;
+            txtLimitRangeZJ3min.Enabled = tf;
+            txtLimitRangeZJ3max.Enabled = tf;
+            txtLimitRangeWJ4min.Enabled = tf;
+            txtLimitRangeWJ4max.Enabled = tf;
+            txtLimitRangePJ5min.Enabled = tf;
+            txtLimitRangePJ5max.Enabled = tf;
+            txtLimitRangeRJ6min.Enabled = tf;
+            txtLimitRangeRJ6max.Enabled = tf;
+            txtLimitRangeVelocitymin.Enabled = tf;
+            txtLimitRangeVelocitymax.Enabled = tf;
         }
         private void txtInitialize()
         {
@@ -175,20 +176,20 @@ namespace Integrated_Robot_Interface
             txtR3.Text = "";
             txtR4.Text = "";
             txtR5.Text = "";
-            txtSafeRangeXJ1max.Text = "";
-            txtSafeRangeXJ1min.Text = "";
-            txtSafeRangeYJ2max.Text = "";
-            txtSafeRangeYJ2min.Text = "";
-            txtSafeRangeZJ3max.Text = "";
-            txtSafeRangeZJ3min.Text = "";
-            txtSafeRangeWJ4max.Text = "";
-            txtSafeRangeWJ4min.Text = "";
-            txtSafeRangePJ5max.Text = "";
-            txtSafeRangePJ5min.Text = "";
-            txtSafeRangeRJ6max.Text = "";
-            txtSafeRangeRJ6min.Text = "";
-            txtSafeRangeVelocitymax.Text = "";
-            txtSafeRangeVelocitymin.Text = "";
+            txtLimitRangeXJ1max.Text = "";
+            txtLimitRangeXJ1min.Text = "";
+            txtLimitRangeYJ2max.Text = "";
+            txtLimitRangeYJ2min.Text = "";
+            txtLimitRangeZJ3max.Text = "";
+            txtLimitRangeZJ3min.Text = "";
+            txtLimitRangeWJ4max.Text = "";
+            txtLimitRangeWJ4min.Text = "";
+            txtLimitRangePJ5max.Text = "";
+            txtLimitRangePJ5min.Text = "";
+            txtLimitRangeRJ6max.Text = "";
+            txtLimitRangeRJ6min.Text = "";
+            txtLimitRangeVelocitymax.Text = "";
+            txtLimitRangeVelocitymin.Text = "";
             txtProgramXJ1.Text = "";
             txtProgramYJ2.Text = "";
             txtProgramZJ3.Text = "";
@@ -246,25 +247,25 @@ namespace Integrated_Robot_Interface
                         lblGetRegister.Text += $"R{i} = {Convert.ToSingle(RobotAdapter.getregister.GetValue(0))}\r\n";
                     }
 
+                    if (!myController.Alarm())
+                    {
+                        ShowMessage("讀取警示失敗", "讀取警示狀態");
+                        return;
+                    }
+                    else
+                    {
+                        if (RobotAdapter.alarmtext != "")
+                        {
+                            ShowMessage($"{RobotAdapter.alarmtext}", "讀取警示狀態");
+                            return;
+                        }
+                    }
+
                     break;
                 case Controller.Robotnum.Nexcom:
                     break;
                 case Controller.Robotnum.Ourarm:
                     break;
-            }
-
-            if (!myController.Alarm())
-            {
-                ShowMessage("讀取警示失敗", "讀取警示狀態");
-                return;
-            }
-            else
-            {
-                if (RobotAdapter.alarmtext != "")
-                {
-                    ShowMessage($"{RobotAdapter.alarmtext}", "讀取警示狀態");
-                    return;
-                }
             }
 
             if (!myController.GetOverride())
@@ -311,46 +312,46 @@ namespace Integrated_Robot_Interface
                 lblBase.Text = $"Base : {RobotAdapter.getbase}";
             }
 
-            //if (RobotAdapter.preuframe != RobotAdapter.getuframe)
-            //{
-            //    if (!myController.SafeRangeChangeXYZ())
-            //    {
-            //        ShowMessage("更新安全範圍失敗", "更新安全範圍狀態");
-            //        txtSafeRangeXJ1min.Text = "Error";
-            //        txtSafeRangeXJ1max.Text = "Error";
-            //        txtSafeRangeYJ2min.Text = "Error";
-            //        txtSafeRangeYJ2max.Text = "Error";
-            //        txtSafeRangeZJ3min.Text = "Error";
-            //        txtSafeRangeZJ3max.Text = "Error";
-            //        txtSafeRangeWJ4min.Text = "Error";
-            //        txtSafeRangeWJ4max.Text = "Error";
-            //        txtSafeRangePJ5min.Text = "Error";
-            //        txtSafeRangePJ5max.Text = "Error";
-            //        txtSafeRangeRJ6min.Text = "Error"; ;
-            //        txtSafeRangeRJ6max.Text = "Error";
-            //        txtSafeRangeVelocitymin.Text = "Error";
-            //        txtSafeRangeVelocitymax.Text = "Error";
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        txtSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(0)).ToString("###0.000"))}";
-            //        txtSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(1)).ToString("###0.000"))}";
-            //        txtSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(2)).ToString("###0.000"))}";
-            //        txtSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(3)).ToString("###0.000"))}";
-            //        txtSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(4)).ToString("###0.000"))}";
-            //        txtSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(5)).ToString("###0.000"))}";
-            //        txtSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(6)).ToString("###0.000"))}";
-            //        txtSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(7)).ToString("###0.000"))}";
-            //        txtSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(8)).ToString("###0.000"))}";
-            //        txtSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(9)).ToString("###0.000"))}";
-            //        txtSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(10)).ToString("###0.000"))}";
-            //        txtSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(11)).ToString("###0.000"))}";
-            //        txtSafeRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(0)).ToString("###0.000"))}";
-            //        txtSafeRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(1)).ToString("###0.000"))}";
-            //        RobotAdapter.preuframe = RobotAdapter.getuframe;
-            //    }
-            //}
+            if (RobotAdapter.prebase != RobotAdapter.getbase)
+            {
+                if (!myController.LimitRangeChangeXYZ())
+                {
+                    ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
+                    txtLimitRangeXJ1min.Text = "Error";
+                    txtLimitRangeXJ1max.Text = "Error";
+                    txtLimitRangeYJ2min.Text = "Error";
+                    txtLimitRangeYJ2max.Text = "Error";
+                    txtLimitRangeZJ3min.Text = "Error";
+                    txtLimitRangeZJ3max.Text = "Error";
+                    txtLimitRangeWJ4min.Text = "Error";
+                    txtLimitRangeWJ4max.Text = "Error";
+                    txtLimitRangePJ5min.Text = "Error";
+                    txtLimitRangePJ5max.Text = "Error";
+                    txtLimitRangeRJ6min.Text = "Error"; ;
+                    txtLimitRangeRJ6max.Text = "Error";
+                    txtLimitRangeVelocitymin.Text = "Error";
+                    txtLimitRangeVelocitymax.Text = "Error";
+                    return;
+                }
+                else
+                {
+                    txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                    txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                    txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
+                    RobotAdapter.prebase = RobotAdapter.getbase;
+                }
+            }
 
             if (!myController.GetCPosition())
             {
@@ -447,6 +448,8 @@ namespace Integrated_Robot_Interface
                     ShowMessage("Reset失敗", "Reset狀態");
                     return;
                 }
+                timer1.Enabled = true;
+                richTextBox1.Text = "";
             }
         }
         #endregion
@@ -459,25 +462,21 @@ namespace Integrated_Robot_Interface
                 case nameof(Controller.Robotnum.Fanuc):
                     myController.Robot = Controller.Robotnum.Fanuc;
                     txtIP.Enabled = true;
-                    txtProgramName.Enabled = true;
                     lblLineVelocityUnit.Text = "mm/sec";
                     break;
                 case nameof(Controller.Robotnum.Nexcom):
                     myController.Robot = Controller.Robotnum.Nexcom;
                     txtIP.Enabled = false;
-                    txtProgramName.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
                     break;
                 case nameof(Controller.Robotnum.Ourarm):
                     myController.Robot = Controller.Robotnum.Ourarm;
                     txtIP.Enabled = false;
-                    txtProgramName.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
                     break;
                 default:
                     myController.Robot = Controller.Robotnum.None;
                     txtIP.Enabled = false;
-                    txtProgramName.Enabled = true;
                     lblLineVelocityUnit.Text = "unit/sec";
                     break;
             }
@@ -514,13 +513,13 @@ namespace Integrated_Robot_Interface
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
-                            RobotAdapter.saferangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
-                            RobotAdapter.saferangevelocity = new float[2] { 0, 500 };
-                            RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
-                            RobotAdapter.saferangetool = new float[2] { 1, 10 };
-                            RobotAdapter.saferangebase = new float[2] { 0, 9 };
+                            RobotAdapter.limitrangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
+                            RobotAdapter.limitrangevelocity = new float[2] { 0, 500 };
+                            RobotAdapter.limitrangeoverride = new float[2] { 1, 100 };
+                            RobotAdapter.limitrangetool = new float[2] { 1, 10 };
+                            RobotAdapter.limitrangebase = new float[2] { 0, 9 };
                             btnGrap.Enabled = false;
                             btnOpen.Enabled = false;
                             RobotAdapter.setoverride = 20;
@@ -558,15 +557,51 @@ namespace Integrated_Robot_Interface
                                 return;
                             }
                             RobotAdapter.prebase = RobotAdapter.getbase;
+                            if (!myController.LimitRangeChangeXYZ())
+                            {
+                                ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
+                                txtLimitRangeXJ1min.Text = "Error";
+                                txtLimitRangeXJ1max.Text = "Error";
+                                txtLimitRangeYJ2min.Text = "Error";
+                                txtLimitRangeYJ2max.Text = "Error";
+                                txtLimitRangeZJ3min.Text = "Error";
+                                txtLimitRangeZJ3max.Text = "Error";
+                                txtLimitRangeWJ4min.Text = "Error";
+                                txtLimitRangeWJ4max.Text = "Error";
+                                txtLimitRangePJ5min.Text = "Error";
+                                txtLimitRangePJ5max.Text = "Error";
+                                txtLimitRangeRJ6min.Text = "Error"; ;
+                                txtLimitRangeRJ6max.Text = "Error";
+                                txtLimitRangeVelocitymin.Text = "Error";
+                                txtLimitRangeVelocitymax.Text = "Error";
+                                return;
+                            }
+                            else
+                            {
+                                txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                                txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                                txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                                txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                                txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                                txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                                txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                                txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                                txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                                txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                                txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                                txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                                txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                                txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
+                            }
                             break;
                         case Controller.Robotnum.Nexcom:
-                            RobotAdapter.saferangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
-                            RobotAdapter.saferangejoint = new float[12] { -170, 150, 0, 200, -60, 145, -120, 170, -105, 105, -180, 180 };
-                            RobotAdapter.saferangevelocity = new float[2] { 0, 100 };
-                            RobotAdapter.saferangeoverride = new float[2] { 1, 100 };
-                            RobotAdapter.saferangetool = new float[2] { -1, 15 };
-                            RobotAdapter.saferangebase = new float[2] { -1, 31 };
+                            RobotAdapter.limitrangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangejoint = new float[12] { -170, 150, 0, 200, -60, 145, -120, 170, -105, 105, -180, 180 };
+                            RobotAdapter.limitrangevelocity = new float[2] { 0, 100 };
+                            RobotAdapter.limitrangeoverride = new float[2] { 1, 100 };
+                            RobotAdapter.limitrangetool = new float[2] { -1, 15 };
+                            RobotAdapter.limitrangebase = new float[2] { -1, 31 };
                             gbRegister.Enabled = false;
                             RobotAdapter.setoverride = 50;
                             if (!myController.SetOverride())
@@ -586,6 +621,42 @@ namespace Integrated_Robot_Interface
                                 return;
                             }
                             RobotAdapter.prebase = RobotAdapter.getbase;
+                            if (!myController.LimitRangeChangeXYZ())
+                            {
+                                ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
+                                txtLimitRangeXJ1min.Text = "Error";
+                                txtLimitRangeXJ1max.Text = "Error";
+                                txtLimitRangeYJ2min.Text = "Error";
+                                txtLimitRangeYJ2max.Text = "Error";
+                                txtLimitRangeZJ3min.Text = "Error";
+                                txtLimitRangeZJ3max.Text = "Error";
+                                txtLimitRangeWJ4min.Text = "Error";
+                                txtLimitRangeWJ4max.Text = "Error";
+                                txtLimitRangePJ5min.Text = "Error";
+                                txtLimitRangePJ5max.Text = "Error";
+                                txtLimitRangeRJ6min.Text = "Error"; ;
+                                txtLimitRangeRJ6max.Text = "Error";
+                                txtLimitRangeVelocitymin.Text = "Error";
+                                txtLimitRangeVelocitymax.Text = "Error";
+                                return;
+                            }
+                            else
+                            {
+                                txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                                txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                                txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                                txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                                txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                                txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                                txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                                txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                                txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                                txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                                txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                                txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                                txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                                txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
+                            }
                             break;
                         case Controller.Robotnum.Ourarm:
                             break;
@@ -626,12 +697,12 @@ namespace Integrated_Robot_Interface
                 return;
             }
 
-            RobotAdapter.safeoverride = RobotAdapter.getoverride + 5;
-            if (RobotAdapter.safeoverride > Convert.ToInt32(RobotAdapter.saferangeoverride.GetValue(1)))
+            RobotAdapter.limitoverride = RobotAdapter.getoverride + 5;
+            if (RobotAdapter.limitoverride > Convert.ToInt32(RobotAdapter.limitrangeoverride.GetValue(1)))
             {
-                RobotAdapter.safeoverride = 100;
+                RobotAdapter.limitoverride = 100;
             }
-            RobotAdapter.setoverride = RobotAdapter.safeoverride;
+            RobotAdapter.setoverride = RobotAdapter.limitoverride;
 
             if (!myController.SetOverride())
             {
@@ -648,12 +719,12 @@ namespace Integrated_Robot_Interface
                 return;
             }
 
-            RobotAdapter.safeoverride = RobotAdapter.getoverride - 5;
-            if (RobotAdapter.safeoverride < Convert.ToInt32(RobotAdapter.saferangeoverride.GetValue(0)))
+            RobotAdapter.limitoverride = RobotAdapter.getoverride - 5;
+            if (RobotAdapter.limitoverride < Convert.ToInt32(RobotAdapter.limitrangeoverride.GetValue(0)))
             {
-                RobotAdapter.safeoverride = 1;
+                RobotAdapter.limitoverride = 1;
             }
-            RobotAdapter.setoverride = RobotAdapter.safeoverride;
+            RobotAdapter.setoverride = RobotAdapter.limitoverride;
 
             if (!myController.SetOverride())
             {
@@ -698,34 +769,34 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPXJ1.Text), 0);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPYJ2.Text), 1);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPZJ3.Text), 2);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPWJ4.Text), 3);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPPJ5.Text), 4);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtPTPRJ6.Text), 5);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPXJ1.Text), 0);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPYJ2.Text), 1);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPZJ3.Text), 2);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPWJ4.Text), 3);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPPJ5.Text), 4);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtPTPRJ6.Text), 5);
 
                     switch (myController.Coordinate)
                     {
                         case Controller.Coordinatenum.Cartesian:
-                            if (!myController.SafeRangeCheckXYZ())
+                            if (!myController.LimitRangeCheckXYZ())
                             {
-                                MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                                MessageBox.Show("超出極限範圍", "極限範圍狀態");
                                 return;
                             }
-                            RobotAdapter.setcposition = RobotAdapter.safecheck;
+                            RobotAdapter.setcposition = RobotAdapter.limitcheck;
                             if (!myController.PointMoveC())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
                             }
                             break;
                         case Controller.Coordinatenum.Joint:
-                            if (!myController.SafeRangeCheckJoint())
+                            if (!myController.LimitRangeCheckJoint())
                             {
-                                MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                                MessageBox.Show("超出極限範圍", "極限範圍狀態");
                                 return;
                             }
-                            RobotAdapter.setjposition = RobotAdapter.safecheck;
+                            RobotAdapter.setjposition = RobotAdapter.limitcheck;
                             if (!myController.PointMoveJ())
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -775,33 +846,33 @@ namespace Integrated_Robot_Interface
                 }
                 else
                 {
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLineXJ1.Text), 0);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLineYJ2.Text), 1);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLineZJ3.Text), 2);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLineWJ4.Text), 3);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLinePJ5.Text), 4);
-                    RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtLineRJ6.Text), 5);
-                    RobotAdapter.safevelocity = Convert.ToSingle(txtLineVelocity.Text);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLineXJ1.Text), 0);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLineYJ2.Text), 1);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLineZJ3.Text), 2);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLineWJ4.Text), 3);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLinePJ5.Text), 4);
+                    RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtLineRJ6.Text), 5);
+                    RobotAdapter.limitvelocity = Convert.ToSingle(txtLineVelocity.Text);
 
-                    if (!myController.SafeRangeCheckXYZ())
+                    if (!myController.LimitRangeCheckXYZ())
                     {
-                        MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                        MessageBox.Show("超出極限範圍", "極限範圍狀態");
                         return;
                     }
 
-                    if (!myController.SafeRangeCheckVelocity())
+                    if (!myController.LimitRangeCheckVelocity())
                     {
-                        MessageBox.Show("速度超出安全範圍");
+                        MessageBox.Show("速度超出極限範圍");
                         return;
                     }
 
-                    RobotAdapter.setvelocity = RobotAdapter.safevelocity;
+                    RobotAdapter.setvelocity = RobotAdapter.limitvelocity;
                     if (!myController.SetVelocity())
                     {
                         ShowMessage("設定速度失敗", "設定速度狀態");
                     }
 
-                    RobotAdapter.setcposition = RobotAdapter.safecheck;
+                    RobotAdapter.setcposition = RobotAdapter.limitcheck;
                     if (!myController.LineMove())
                     {
                         ShowMessage("設定座標失敗", "點到點移動狀態");
@@ -944,26 +1015,26 @@ namespace Integrated_Robot_Interface
                     btnJogPJ5Negative.Text = "-P";
                     btnJogRJ6Positive.Text = "+R";
                     btnJogRJ6Negative.Text = "-R";
-                    lblSafeRangeXJ1.Text = "X :                 ~";
-                    lblSafeRangeYJ2.Text = "Y :                 ~";
-                    lblSafeRangeZJ3.Text = "Z :                 ~";
-                    lblSafeRangeWJ4.Text = "W:                 ~";
-                    lblSafeRangePJ5.Text = "P :                  ~";
-                    lblSafeRangeRJ6.Text = "R :                 ~";
-                    txtSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(0)).ToString("###0.000"))}";
-                    txtSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(1)).ToString("###0.000"))}";
-                    txtSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(2)).ToString("###0.000"))}";
-                    txtSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(3)).ToString("###0.000"))}";
-                    txtSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(4)).ToString("###0.000"))}";
-                    txtSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(5)).ToString("###0.000"))}";
-                    txtSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(6)).ToString("###0.000"))}";
-                    txtSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(7)).ToString("###0.000"))}";
-                    txtSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(8)).ToString("###0.000"))}";
-                    txtSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(9)).ToString("###0.000"))}";
-                    txtSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(10)).ToString("###0.000"))}";
-                    txtSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangexyz.GetValue(11)).ToString("###0.000"))}";
-                    txtSafeRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(0)).ToString("###0.000"))}";
-                    txtSafeRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(1)).ToString("###0.000"))}";
+                    lblLimitRangeXJ1.Text = "X :                 ~";
+                    lblLimitRangeYJ2.Text = "Y :                 ~";
+                    lblLimitRangeZJ3.Text = "Z :                 ~";
+                    lblLimitRangeWJ4.Text = "W:                 ~";
+                    lblLimitRangePJ5.Text = "P :                  ~";
+                    lblLimitRangeRJ6.Text = "R :                 ~";
+                    txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                    txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                    txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
                     lblProgramXJ1.Text = "X :";
                     lblProgramYJ2.Text = "Y :";
                     lblProgramZJ3.Text = "Z :";
@@ -997,26 +1068,26 @@ namespace Integrated_Robot_Interface
                     btnJogPJ5Negative.Text = "-J5";
                     btnJogRJ6Positive.Text = "+J6";
                     btnJogRJ6Negative.Text = "-J6";
-                    lblSafeRangeXJ1.Text = "J1:                 ~";
-                    lblSafeRangeYJ2.Text = "J2:                 ~";
-                    lblSafeRangeZJ3.Text = "J3:                 ~";
-                    lblSafeRangeWJ4.Text = "J4:                 ~";
-                    lblSafeRangePJ5.Text = "J5:                 ~";
-                    lblSafeRangeRJ6.Text = "J6:                 ~";
-                    txtSafeRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(0)).ToString("###0.000"))}";
-                    txtSafeRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(1)).ToString("###0.000"))}";
-                    txtSafeRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(2)).ToString("###0.000"))}";
-                    txtSafeRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(3)).ToString("###0.000"))}";
-                    txtSafeRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(4)).ToString("###0.000"))}";
-                    txtSafeRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(5)).ToString("###0.000"))}";
-                    txtSafeRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(6)).ToString("###0.000"))}";
-                    txtSafeRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(7)).ToString("###0.000"))}";
-                    txtSafeRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(8)).ToString("###0.000"))}";
-                    txtSafeRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(9)).ToString("###0.000"))}";
-                    txtSafeRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(10)).ToString("###0.000"))}";
-                    txtSafeRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangejoint.GetValue(11)).ToString("###0.000"))}";
-                    txtSafeRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(0)).ToString("###0.000"))}";
-                    txtSafeRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.saferangevelocity.GetValue(1)).ToString("###0.000"))}";
+                    lblLimitRangeXJ1.Text = "J1:                 ~";
+                    lblLimitRangeYJ2.Text = "J2:                 ~";
+                    lblLimitRangeZJ3.Text = "J3:                 ~";
+                    lblLimitRangeWJ4.Text = "J4:                 ~";
+                    lblLimitRangePJ5.Text = "J5:                 ~";
+                    lblLimitRangeRJ6.Text = "J6:                 ~";
+                    txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(1)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(2)).ToString("###0.000"))}";
+                    txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(3)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(4)).ToString("###0.000"))}";
+                    txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(5)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(6)).ToString("###0.000"))}";
+                    txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(7)).ToString("###0.000"))}";
+                    txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(8)).ToString("###0.000"))}";
+                    txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(9)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(10)).ToString("###0.000"))}";
+                    txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangejoint.GetValue(11)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                    txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
                     lblProgramXJ1.Text = "J1 :";
                     lblProgramYJ2.Text = "J2 :";
                     lblProgramZJ3.Text = "J3 :";
@@ -1078,12 +1149,12 @@ namespace Integrated_Robot_Interface
         }
         #endregion
 
-        #region <gbSafeRange>
+        #region <gbLimitRange>
         private void btnSafeRangeSet_Click(object sender, EventArgs e)
         {
-            if (!txtSafeRangeXJ1min.Enabled)
+            if (!txtLimitRangeXJ1min.Enabled)
             {
-                tbSafeRangeEnbleControl(true);
+                tbLimitRangeEnbleControl(true);
                 return;
             }
 
@@ -1092,39 +1163,39 @@ namespace Integrated_Robot_Interface
                 switch (myController.Coordinate)
                 {
                     case Controller.Coordinatenum.Cartesian:
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeXJ1min.Text), 0);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeXJ1max.Text), 1);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeYJ2min.Text), 2);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeYJ2max.Text), 3);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeZJ3min.Text), 4);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeZJ3max.Text), 5);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeWJ4min.Text), 6);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeWJ4max.Text), 7);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangePJ5min.Text), 8);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangePJ5max.Text), 9);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeRJ6min.Text), 10);
-                        RobotAdapter.saferangexyz.SetValue(Convert.ToSingle(txtSafeRangeRJ6max.Text), 11);
-                        RobotAdapter.saferangevelocity.SetValue(Convert.ToSingle(txtSafeRangeVelocitymin.Text), 0);
-                        RobotAdapter.saferangevelocity.SetValue(Convert.ToSingle(txtSafeRangeVelocitymax.Text), 1);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeXJ1min.Text), 0);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeXJ1max.Text), 1);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeYJ2min.Text), 2);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeYJ2max.Text), 3);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeZJ3min.Text), 4);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeZJ3max.Text), 5);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeWJ4min.Text), 6);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeWJ4max.Text), 7);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangePJ5min.Text), 8);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangePJ5max.Text), 9);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeRJ6min.Text), 10);
+                        RobotAdapter.limitrangexyz.SetValue(Convert.ToSingle(txtLimitRangeRJ6max.Text), 11);
+                        RobotAdapter.limitrangevelocity.SetValue(Convert.ToSingle(txtLimitRangeVelocitymin.Text), 0);
+                        RobotAdapter.limitrangevelocity.SetValue(Convert.ToSingle(txtLimitRangeVelocitymax.Text), 1);
                         break;
                     case Controller.Coordinatenum.Joint:
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeXJ1min.Text), 0);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeXJ1max.Text), 1);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeYJ2min.Text), 2);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeYJ2max.Text), 3);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeZJ3min.Text), 4);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeZJ3max.Text), 5);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeWJ4min.Text), 6);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeWJ4max.Text), 7);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangePJ5min.Text), 8);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangePJ5max.Text), 9);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeRJ6min.Text), 10);
-                        RobotAdapter.saferangejoint.SetValue(Convert.ToSingle(txtSafeRangeRJ6max.Text), 11);
-                        RobotAdapter.saferangevelocity.SetValue(Convert.ToSingle(txtSafeRangeVelocitymin.Text), 0);
-                        RobotAdapter.saferangevelocity.SetValue(Convert.ToSingle(txtSafeRangeVelocitymax.Text), 1);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeXJ1min.Text), 0);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeXJ1max.Text), 1);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeYJ2min.Text), 2);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeYJ2max.Text), 3);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeZJ3min.Text), 4);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeZJ3max.Text), 5);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeWJ4min.Text), 6);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeWJ4max.Text), 7);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangePJ5min.Text), 8);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangePJ5max.Text), 9);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeRJ6min.Text), 10);
+                        RobotAdapter.limitrangejoint.SetValue(Convert.ToSingle(txtLimitRangeRJ6max.Text), 11);
+                        RobotAdapter.limitrangevelocity.SetValue(Convert.ToSingle(txtLimitRangeVelocitymin.Text), 0);
+                        RobotAdapter.limitrangevelocity.SetValue(Convert.ToSingle(txtLimitRangeVelocitymax.Text), 1);
                         break;
                 }
-                tbSafeRangeEnbleControl(false);
+                tbLimitRangeEnbleControl(false);
             }
             catch (Exception)
             {
@@ -1620,14 +1691,14 @@ namespace Integrated_Robot_Interface
                             return false;
                         }
 
-                        RobotAdapter.safeoverride = Convert.ToInt32(txtProgramValue.Text);
-                        if (!myController.SafeRangeCheckOverride())
+                        RobotAdapter.limitoverride = Convert.ToInt32(txtProgramValue.Text);
+                        if (!myController.LimitRangeCheckOverride())
                         {
-                            MessageBox.Show("速度百分比超出安全範圍", "速度百分比安全範圍狀態");
+                            MessageBox.Show("速度百分比超出極限範圍", "速度百分比極限範圍狀態");
                             return false;
                         }
 
-                        ins = $"{myController.Instruction.ToString()} = {RobotAdapter.safeoverride}%";
+                        ins = $"{myController.Instruction.ToString()} = {RobotAdapter.limitoverride}%";
                         return true;
                     case Controller.Instructionnum.MOVEC:
                         if (string.IsNullOrEmpty(txtProgramXJ1.Text) || string.IsNullOrEmpty(txtProgramYJ2.Text) ||
@@ -1638,25 +1709,25 @@ namespace Integrated_Robot_Interface
                             return false;
                         }
 
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
-                        if (!myController.SafeRangeCheckXYZ())
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
+                        if (!myController.LimitRangeCheckXYZ())
                         {
-                            MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                            MessageBox.Show("超出極限範圍", "極限範圍狀態");
                             return false;
                         }
 
                         ins = $"{myController.Instruction.ToString()}" +
-                              $" ({Convert.ToSingle(RobotAdapter.safecheck.GetValue(0))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(1))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(2))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(3))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(4))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(5))})";
+                              $" ({Convert.ToSingle(RobotAdapter.limitcheck.GetValue(0))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(1))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(2))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(3))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(4))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(5))})";
                         return true;
                     case Controller.Instructionnum.MOVEJ:
                         if (string.IsNullOrEmpty(txtProgramXJ1.Text) || string.IsNullOrEmpty(txtProgramYJ2.Text) ||
@@ -1667,25 +1738,25 @@ namespace Integrated_Robot_Interface
                             return false;
                         }
 
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
-                        if (!myController.SafeRangeCheckJoint())
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
+                        if (!myController.LimitRangeCheckJoint())
                         {
-                            MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                            MessageBox.Show("超出極限範圍", "極限範圍狀態");
                             return false;
                         }
 
                         ins = $"{myController.Instruction.ToString()}" +
-                              $" ({Convert.ToSingle(RobotAdapter.safecheck.GetValue(0))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(1))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(2))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(3))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(4))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(5))})";
+                              $" ({Convert.ToSingle(RobotAdapter.limitcheck.GetValue(0))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(1))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(2))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(3))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(4))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(5))})";
                         return true;
                     case Controller.Instructionnum.MOVEL:
                         if (string.IsNullOrEmpty(txtProgramXJ1.Text) || string.IsNullOrEmpty(txtProgramYJ2.Text) ||
@@ -1697,34 +1768,34 @@ namespace Integrated_Robot_Interface
                             return false;
                         }
 
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
-                        RobotAdapter.safecheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
-                        RobotAdapter.safevelocity = Convert.ToSingle(txtProgramValue.Text);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramXJ1.Text), 0);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramYJ2.Text), 1);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramZJ3.Text), 2);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramWJ4.Text), 3);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramPJ5.Text), 4);
+                        RobotAdapter.limitcheck.SetValue(Convert.ToSingle(txtProgramRJ6.Text), 5);
+                        RobotAdapter.limitvelocity = Convert.ToSingle(txtProgramValue.Text);
 
-                        if (!myController.SafeRangeCheckXYZ())
+                        if (!myController.LimitRangeCheckXYZ())
                         {
-                            MessageBox.Show("超出安全範圍", "安全範圍狀態");
+                            MessageBox.Show("超出極限範圍", "極限範圍狀態");
                             return false;
                         }
 
-                        if (!myController.SafeRangeCheckVelocity())
+                        if (!myController.LimitRangeCheckVelocity())
                         {
-                            MessageBox.Show("速度超出安全範圍");
+                            MessageBox.Show("速度超出極限範圍");
                             return false;
                         }
 
                         ins = $"{myController.Instruction.ToString()}" +
-                              $" ({Convert.ToSingle(RobotAdapter.safecheck.GetValue(0))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(1))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(2))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(3))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(4))}," +
-                              $" {Convert.ToSingle(RobotAdapter.safecheck.GetValue(5))}," +
-                              $" {RobotAdapter.safevelocity})";
+                              $" ({Convert.ToSingle(RobotAdapter.limitcheck.GetValue(0))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(1))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(2))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(3))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(4))}," +
+                              $" {Convert.ToSingle(RobotAdapter.limitcheck.GetValue(5))}," +
+                              $" {RobotAdapter.limitvelocity})";
                         return true;
                     case Controller.Instructionnum.WAIT:
                         if (string.IsNullOrEmpty(txtProgramValue.Text))
@@ -2042,13 +2113,13 @@ namespace Integrated_Robot_Interface
             {
                 if (!string.IsNullOrEmpty(txtToolSet.Text))
                 {
-                    RobotAdapter.safetool = Convert.ToInt16(txtToolSet.Text);
-                    if (!myController.SafeRangeCheckTool())
+                    RobotAdapter.limittool = Convert.ToInt16(txtToolSet.Text);
+                    if (!myController.LimitRangeCheckTool())
                     {
-                        MessageBox.Show("工具座標超出安全範圍", "工具座標安全範圍狀態");
+                        MessageBox.Show("工具座標超出極限範圍", "工具座標極限範圍狀態");
                         return;
                     }
-                    RobotAdapter.settool = RobotAdapter.safetool;
+                    RobotAdapter.settool = RobotAdapter.limittool;
                     if (!myController.SetTool())
                     {
                         ShowMessage("設定工具座標失敗", "設定工具座標狀態");
@@ -2056,13 +2127,13 @@ namespace Integrated_Robot_Interface
                 }
                 if (!string.IsNullOrEmpty(txtBaseSet.Text))
                 {
-                    RobotAdapter.safebase = Convert.ToInt16(txtBaseSet.Text);
-                    if (!myController.SafeRangeCheckBase())
+                    RobotAdapter.limitbase = Convert.ToInt16(txtBaseSet.Text);
+                    if (!myController.LimitRangeCheckBase())
                     {
-                        MessageBox.Show("基底座標超出安全範圍", "基底座標安全範圍狀態");
+                        MessageBox.Show("基底座標超出極限範圍", "基底座標極限範圍狀態");
                         return;
                     }
-                    RobotAdapter.setbase = RobotAdapter.safebase;
+                    RobotAdapter.setbase = RobotAdapter.limitbase;
                     if (!myController.SetBase())
                     {
                         ShowMessage("設定基底座標失敗", "設定基底座標狀態");
