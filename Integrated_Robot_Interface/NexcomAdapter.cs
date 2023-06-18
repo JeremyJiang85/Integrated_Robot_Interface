@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NEXCOMROBOT.MCAT;
+using System.IO;
+using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
@@ -16,7 +18,8 @@ namespace Integrated_Robot_Interface
         private Pos_T PosPcs;
         private Pos_T PosMcs;
         private int DeviceId = 0;
-        
+        private SerialPort serialPort1;
+
 
         public NexcomAdapter()
         {
@@ -374,56 +377,57 @@ namespace Integrated_Robot_Interface
 
             int CartAxis = 0;
             double CartPos = 0;
+            double Value = Convert.ToDouble(jogmove.GetValue(0));
 
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     CartAxis = 0;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(0)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(0)) + Value;
                     break;
                 case 1:
                     CartAxis = 0;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(0)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(0)) - Value;
                     break;
                 case 2:
                     CartAxis = 1;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(1)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(1)) + Value;
                     break;
                 case 3:
                     CartAxis = 1;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(1)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(1)) - Value;
                     break;
                 case 4:
                     CartAxis = 2;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(2)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(2)) + Value;
                     break;
                 case 5:
                     CartAxis = 2;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(2)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(2)) - Value;
                     break;
                 case 6:
                     CartAxis = 5;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(5)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(5)) + Value;
                     break;
                 case 7:
                     CartAxis = 5;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(5)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(5)) - Value;
                     break;
                 case 8:
                     CartAxis = 4;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(4)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(4)) + Value;
                     break;
                 case 9:
                     CartAxis = 4;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(4)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(4)) - Value;
                     break;
                 case 10:
                     CartAxis = 3;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(3)) + Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(3)) + Value;
                     break;
                 case 11:
                     CartAxis = 3;
-                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(3)) - Convert.ToDouble(jogmove.GetValue(0));
+                    CartPos = Convert.ToDouble(PosPcs.pos.GetValue(3)) - Value;
                     break;
             }
 
@@ -447,56 +451,57 @@ namespace Integrated_Robot_Interface
             int GroupAxisIndex = 0;
             double AcsPos = 0;
             double PAcsMaxVel = 10;
+            double Value = Convert.ToDouble(jogmove.GetValue(0));
 
             switch (Convert.ToInt32(jogmove.GetValue(1)))
             {
                 case 0:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(0)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(0)) + Value;
                     break;
                 case 1:
                     GroupAxisIndex = 0;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(0)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(0)) - Value;
                     break;
                 case 2:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) - Value;
                     break;
                 case 3:
                     GroupAxisIndex = 1;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(1)) + Value;
                     break;
                 case 4:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(2)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(2)) + Value;
                     break;
                 case 5:
                     GroupAxisIndex = 2;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(2)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(2)) - Value;
                     break;
                 case 6:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) - Value;
                     break;
                 case 7:
                     GroupAxisIndex = 3;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(3)) + Value;
                     break;
                 case 8:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(4)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(4)) + Value;
                     break;
                 case 9:
                     GroupAxisIndex = 4;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(4)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(4)) - Value;
                     break;
                 case 10:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) - Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) - Value;
                     break;
                 case 11:
                     GroupAxisIndex = 5;
-                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) + Convert.ToDouble(jogmove.GetValue(0));
+                    AcsPos = Convert.ToDouble(PosAcs.pos.GetValue(5)) + Value;
                     break;
             }
             
@@ -626,126 +631,47 @@ namespace Integrated_Robot_Interface
         }
         public override bool LimitRangeChangeXYZ()
         {
-            if (getbase == -1)
+            float Xerror = 0;
+            float Yerror = 0;
+            float Zerror = 0;
+            float Werror = 0;
+            float Perror = 0;
+            float Rerror = 0;
+
+            int ret = mobjGroupAdapter.NMC_GroupGetActualPosPcs(ref PosPcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)), 0);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)), 1);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)), 2);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)), 3);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)), 4);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)), 5);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)), 6);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)), 7);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)), 8);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)), 9);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)), 10);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)), 11);
-                return true;
+                apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
+                return false;
             }
-            else
+            ret = mobjGroupAdapter.NMC_GroupGetActualPos(0, ref PosMcs);
+            if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
             {
-                double PRetParaValueF64 = 0;
-                int Index = 0xC0 + getbase;
-
-                int ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 0, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - PRetParaValueF64, 0);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - PRetParaValueF64, 1);
-
-                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 1, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - PRetParaValueF64, 2);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - PRetParaValueF64, 3);
-
-                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 2, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - PRetParaValueF64, 4);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - PRetParaValueF64, 5);
-
-                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 5, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - PRetParaValueF64, 6);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - PRetParaValueF64, 7);
-
-                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 4, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - PRetParaValueF64, 8);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - PRetParaValueF64, 9);
-
-                ret = mobjGroupAdapter.NMC_GroupGetParamF64(Index, 3, ref PRetParaValueF64);
-                if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-                {
-                    apierrtext = GetErrorMessage("NMC_GroupGetParamF64 Fail", ret);
-                    return false;
-                }
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - PRetParaValueF64, 10);
-                limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - PRetParaValueF64, 11);
-                return true;
+                apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
+                return false;
             }
+
+            Xerror = Convert.ToSingle(PosMcs.pos.GetValue(0)) - Convert.ToSingle(PosPcs.pos.GetValue(0));
+            Yerror = Convert.ToSingle(PosMcs.pos.GetValue(1)) - Convert.ToSingle(PosPcs.pos.GetValue(1));
+            Zerror = Convert.ToSingle(PosMcs.pos.GetValue(2)) - Convert.ToSingle(PosPcs.pos.GetValue(2));
+            Werror = Convert.ToSingle(PosMcs.pos.GetValue(5)) - Convert.ToSingle(PosPcs.pos.GetValue(5));
+            Perror = Convert.ToSingle(PosMcs.pos.GetValue(4)) - Convert.ToSingle(PosPcs.pos.GetValue(4));
+            Rerror = Convert.ToSingle(PosMcs.pos.GetValue(3)) - Convert.ToSingle(PosPcs.pos.GetValue(3));
+
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - Xerror, 0);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - Xerror, 1);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - Yerror, 2);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - Yerror, 3);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - Zerror, 4);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - Zerror, 5);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - Werror, 6);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - Werror, 7);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - Perror, 8);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - Perror, 9);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - Rerror, 10);
+            limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - Rerror, 11);
+            return true;
         }
-        //public override bool LimitRangeChangeXYZ()
-        //{
-        //    float Xerror = 0;
-        //    float Yerror = 0;
-        //    float Zerror = 0;
-        //    float Werror = 0;
-        //    float Perror = 0;
-        //    float Rerror = 0;
-
-        //    int ret = mobjGroupAdapter.NMC_GroupGetActualPosPcs(ref PosPcs);
-        //    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-        //    {
-        //        apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
-        //        return false;
-        //    }
-        //    ret = mobjGroupAdapter.NMC_GroupGetActualPos(0,ref PosMcs);
-        //    if (ret != NexMotion_ErrCode.NMCERR_SUCCESS)
-        //    {
-        //        apierrtext = GetErrorMessage("NMC_GroupGetActualPosPcs Fail", ret);
-        //        return false;
-        //    }
-
-        //    Xerror = Convert.ToSingle(PosMcs.pos.GetValue(0)) - Convert.ToSingle(PosPcs.pos.GetValue(0));
-        //    Yerror = Convert.ToSingle(PosMcs.pos.GetValue(1)) - Convert.ToSingle(PosPcs.pos.GetValue(1));
-        //    Zerror = Convert.ToSingle(PosMcs.pos.GetValue(2)) - Convert.ToSingle(PosPcs.pos.GetValue(2));
-        //    Werror = Convert.ToSingle(PosMcs.pos.GetValue(5)) - Convert.ToSingle(PosPcs.pos.GetValue(5));
-        //    Perror = Convert.ToSingle(PosMcs.pos.GetValue(4)) - Convert.ToSingle(PosPcs.pos.GetValue(4));
-        //    Rerror = Convert.ToSingle(PosMcs.pos.GetValue(3)) - Convert.ToSingle(PosPcs.pos.GetValue(3));
-
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(0)) - Xerror, 0);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(1)) - Xerror, 1);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(2)) - Yerror, 2);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(3)) - Yerror, 3);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(4)) - Zerror, 4);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(5)) - Zerror, 5);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(6)) - Werror, 6);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(7)) - Werror, 7);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(8)) - Perror, 8);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(9)) - Perror, 9);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(10)) - Rerror, 10);
-        //    limitrangexyz.SetValue(Convert.ToSingle(limitrangexyzorginal.GetValue(11)) - Rerror, 11);
-        //    return true;
-        //}
         public override bool Compile()
         {
             int ret = 0;
@@ -878,6 +804,57 @@ namespace Integrated_Robot_Interface
                     break;
             }
             return true;
+        }
+        public override bool GripperConnect()
+        {
+            serialPort1 = new SerialPort();
+            serialPort1.BaudRate = 9600;
+            serialPort1.Parity = Parity.None;
+            serialPort1.DataBits = 8;
+            serialPort1.StopBits = StopBits.One;
+            serialPort1.PortName = "COM3";
+            serialPort1.Open();
+            return true;
+        }
+        public override bool GripperDisconnect()
+        {
+            serialPort1.Close();
+            return true;
+        }
+        public override bool GripperGrap()
+        {
+            GripperDirState = 1;
+            fgGripperState = true;
+            Thread thread = new Thread(grab);
+            thread.Start();
+            return true;
+        }
+        public override bool GripperOpen()
+        {
+            GripperDirState = 0;
+            fgGripperState = true;
+            Thread thread = new Thread(grab);
+            thread.Start();
+            return true;
+        }
+        public override bool GripperStop()
+        {
+            fgGripperState = false;
+            return true;
+        }
+        private void grab()
+        {
+            while (fgGripperState)
+            {
+                if (GripperDirState == 1)
+                {
+                    serialPort1.Write("1");
+                }
+                else
+                {
+                    serialPort1.Write("0");
+                }
+            }
         }
         public string GetErrorMessage(string api, int errcode)
         {

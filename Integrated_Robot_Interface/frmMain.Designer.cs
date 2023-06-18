@@ -46,7 +46,7 @@
             this.lblState = new System.Windows.Forms.Label();
             this.lblJoint = new System.Windows.Forms.Label();
             this.lblXyzwpr = new System.Windows.Forms.Label();
-            this.btnPositionHome = new System.Windows.Forms.Button();
+            this.btnHome = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.gbOverride = new System.Windows.Forms.GroupBox();
             this.btnPercentdown = new System.Windows.Forms.Button();
@@ -416,16 +416,16 @@
             this.lblXyzwpr.TabIndex = 0;
             this.lblXyzwpr.Text = "Cartesian\r\nX :\r\nY :\r\nZ :\r\nW:\r\nP :\r\nR :";
             // 
-            // btnPositionHome
+            // btnHome
             // 
-            this.btnPositionHome.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnPositionHome.Location = new System.Drawing.Point(218, 116);
-            this.btnPositionHome.Name = "btnPositionHome";
-            this.btnPositionHome.Size = new System.Drawing.Size(100, 50);
-            this.btnPositionHome.TabIndex = 15;
-            this.btnPositionHome.Text = "Home";
-            this.btnPositionHome.UseVisualStyleBackColor = true;
-            this.btnPositionHome.Click += new System.EventHandler(this.btnPositionHome_Click);
+            this.btnHome.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnHome.Location = new System.Drawing.Point(218, 116);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(100, 50);
+            this.btnHome.TabIndex = 15;
+            this.btnHome.Text = "Home";
+            this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnReset
             // 
@@ -1060,7 +1060,7 @@
             this.gbControl.Controls.Add(this.btnReset);
             this.gbControl.Controls.Add(this.btnDisable);
             this.gbControl.Controls.Add(this.btnEnable);
-            this.gbControl.Controls.Add(this.btnPositionHome);
+            this.gbControl.Controls.Add(this.btnHome);
             this.gbControl.Controls.Add(this.lblCoordinate);
             this.gbControl.Controls.Add(this.cboCoordinate);
             this.gbControl.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -2325,7 +2325,7 @@
         private System.Windows.Forms.TextBox txtPTPXJ1;
         private System.Windows.Forms.Button btnPTPGet;
         private System.Windows.Forms.Button btnPTPSet;
-        private System.Windows.Forms.Button btnPositionHome;
+        private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.GroupBox gbRegister;
         private System.Windows.Forms.TextBox txtR1;
         private System.Windows.Forms.TextBox txtR5;

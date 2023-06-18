@@ -33,7 +33,8 @@ namespace Integrated_Robot_Interface
                     myRobotAdapter = new NexcomAdapter();
                     return myRobotAdapter.Connect();
                 case Robotnum.Ourarm:
-                    return false;
+                    myRobotAdapter = new OurarmAdapter();
+                    return myRobotAdapter.Connect();
                 default:
                     return false;
             }

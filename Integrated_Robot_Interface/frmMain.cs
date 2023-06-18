@@ -260,166 +260,361 @@ namespace Integrated_Robot_Interface
                             return;
                         }
                     }
+                    if (!myController.GetOverride())
+                    {
+                        ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
+                        lblOverride.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblOverride.Text = RobotAdapter.getoverride + "%";
+                    }
 
+                    if (!myController.GetState())
+                    {
+                        ShowMessage("讀取程式狀態失敗", "讀取程式狀態狀態");
+                        lblState.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblState.Text = $"State : {RobotAdapter.getstate}";
+                    }
+
+                    if (!myController.GetTool())
+                    {
+                        ShowMessage("讀取工具座標失敗", "讀取工具座標狀態");
+                        lblTool.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblTool.Text = $"Tool : {RobotAdapter.gettool}";
+                    }
+
+                    if (!myController.GetBase())
+                    {
+                        ShowMessage("讀取基底座標失敗", "讀取基底座標狀態");
+                        lblBase.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblBase.Text = $"Base : {RobotAdapter.getbase}";
+                    }
+
+                    if (RobotAdapter.prebase != RobotAdapter.getbase)
+                    {
+                        if (!myController.LimitRangeChangeXYZ())
+                        {
+                            ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
+                            txtLimitRangeXJ1min.Text = "Error";
+                            txtLimitRangeXJ1max.Text = "Error";
+                            txtLimitRangeYJ2min.Text = "Error";
+                            txtLimitRangeYJ2max.Text = "Error";
+                            txtLimitRangeZJ3min.Text = "Error";
+                            txtLimitRangeZJ3max.Text = "Error";
+                            txtLimitRangeWJ4min.Text = "Error";
+                            txtLimitRangeWJ4max.Text = "Error";
+                            txtLimitRangePJ5min.Text = "Error";
+                            txtLimitRangePJ5max.Text = "Error";
+                            txtLimitRangeRJ6min.Text = "Error"; ;
+                            txtLimitRangeRJ6max.Text = "Error";
+                            txtLimitRangeVelocitymin.Text = "Error";
+                            txtLimitRangeVelocitymax.Text = "Error";
+                            return;
+                        }
+                        else
+                        {
+                            txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                            txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                            txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                            txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                            txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                            txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                            txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                            txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                            txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                            txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                            txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                            txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                            txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                            txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
+                            RobotAdapter.prebase = RobotAdapter.getbase;
+                        }
+                    }
+
+                    if (!myController.GetCPosition())
+                    {
+                        ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : Error\r\n";
+                        lblXyzwpr.Text += $"Y : Error\r\n";
+                        lblXyzwpr.Text += $"Z : Error\r\n";
+                        lblXyzwpr.Text += $"W: Error\r\n";
+                        lblXyzwpr.Text += $"P : Error\r\n";
+                        lblXyzwpr.Text += $"R : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
+                    }
+
+                    if (!myController.GetJPosition())
+                    {
+                        ShowMessage("讀取軸座標失敗", "讀取軸座標狀態");
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : Error\r\n";
+                        lblJoint.Text += $"J2 : Error\r\n";
+                        lblJoint.Text += $"J3 : Error\r\n";
+                        lblJoint.Text += $"J4 : Error\r\n";
+                        lblJoint.Text += $"J5 : Error\r\n";
+                        lblJoint.Text += $"J6 : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
+                    }
+
+                    if (!myController.GetInformation1())
+                    {
+                        ShowMessage("取得資料1失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation1.Text = RobotAdapter.information1name;
+                    lblInformation1.Text = RobotAdapter.information1text;
+                    if (!myController.GetInformation2())
+                    {
+                        ShowMessage("取得資料2失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation2.Text = RobotAdapter.information2name;
+                    lblInformation2.Text = RobotAdapter.information2text;
+                    if (!myController.GetInformation3())
+                    {
+                        ShowMessage("取得資料3失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation3.Text = RobotAdapter.information3name;
+                    lblInformation3.Text = RobotAdapter.information3text;
                     break;
                 case Controller.Robotnum.Nexcom:
+                    if (!myController.GetOverride())
+                    {
+                        ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
+                        lblOverride.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblOverride.Text = RobotAdapter.getoverride + "%";
+                    }
+
+                    if (!myController.GetState())
+                    {
+                        ShowMessage("讀取程式狀態失敗", "讀取程式狀態狀態");
+                        lblState.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblState.Text = $"State : {RobotAdapter.getstate}";
+                    }
+
+                    if (!myController.GetTool())
+                    {
+                        ShowMessage("讀取工具座標失敗", "讀取工具座標狀態");
+                        lblTool.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblTool.Text = $"Tool : {RobotAdapter.gettool}";
+                    }
+
+                    if (!myController.GetBase())
+                    {
+                        ShowMessage("讀取基底座標失敗", "讀取基底座標狀態");
+                        lblBase.Text = "Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblBase.Text = $"Base : {RobotAdapter.getbase}";
+                    }
+
+                    if (RobotAdapter.prebase != RobotAdapter.getbase)
+                    {
+                        if (!myController.LimitRangeChangeXYZ())
+                        {
+                            ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
+                            txtLimitRangeXJ1min.Text = "Error";
+                            txtLimitRangeXJ1max.Text = "Error";
+                            txtLimitRangeYJ2min.Text = "Error";
+                            txtLimitRangeYJ2max.Text = "Error";
+                            txtLimitRangeZJ3min.Text = "Error";
+                            txtLimitRangeZJ3max.Text = "Error";
+                            txtLimitRangeWJ4min.Text = "Error";
+                            txtLimitRangeWJ4max.Text = "Error";
+                            txtLimitRangePJ5min.Text = "Error";
+                            txtLimitRangePJ5max.Text = "Error";
+                            txtLimitRangeRJ6min.Text = "Error"; ;
+                            txtLimitRangeRJ6max.Text = "Error";
+                            txtLimitRangeVelocitymin.Text = "Error";
+                            txtLimitRangeVelocitymax.Text = "Error";
+                            return;
+                        }
+                        else
+                        {
+                            txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
+                            txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
+                            txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
+                            txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
+                            txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
+                            txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
+                            txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
+                            txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
+                            txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
+                            txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
+                            txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
+                            txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
+                            txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
+                            txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
+                            RobotAdapter.prebase = RobotAdapter.getbase;
+                        }
+                    }
+
+                    if (!myController.GetCPosition())
+                    {
+                        ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : Error\r\n";
+                        lblXyzwpr.Text += $"Y : Error\r\n";
+                        lblXyzwpr.Text += $"Z : Error\r\n";
+                        lblXyzwpr.Text += $"W: Error\r\n";
+                        lblXyzwpr.Text += $"P : Error\r\n";
+                        lblXyzwpr.Text += $"R : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
+                    }
+
+                    if (!myController.GetJPosition())
+                    {
+                        ShowMessage("讀取軸座標失敗", "讀取軸座標狀態");
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : Error\r\n";
+                        lblJoint.Text += $"J2 : Error\r\n";
+                        lblJoint.Text += $"J3 : Error\r\n";
+                        lblJoint.Text += $"J4 : Error\r\n";
+                        lblJoint.Text += $"J5 : Error\r\n";
+                        lblJoint.Text += $"J6 : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
+                    }
+
+                    if (!myController.GetInformation1())
+                    {
+                        ShowMessage("取得資料1失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation1.Text = RobotAdapter.information1name;
+                    lblInformation1.Text = RobotAdapter.information1text;
+                    if (!myController.GetInformation2())
+                    {
+                        ShowMessage("取得資料2失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation2.Text = RobotAdapter.information2name;
+                    lblInformation2.Text = RobotAdapter.information2text;
+                    if (!myController.GetInformation3())
+                    {
+                        ShowMessage("取得資料3失敗", "取得資料狀態");
+                        return;
+                    }
+                    gbInformation3.Text = RobotAdapter.information3name;
+                    lblInformation3.Text = RobotAdapter.information3text;
                     break;
                 case Controller.Robotnum.Ourarm:
+                    if (!myController.GetCPosition())
+                    {
+                        ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : Error\r\n";
+                        lblXyzwpr.Text += $"Y : Error\r\n";
+                        lblXyzwpr.Text += $"Z : Error\r\n";
+                        lblXyzwpr.Text += $"W: Error\r\n";
+                        lblXyzwpr.Text += $"P : Error\r\n";
+                        lblXyzwpr.Text += $"R : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblXyzwpr.Text = "Cartesian\r\n";
+                        lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
+                    }
+
+                    if (!myController.GetJPosition())
+                    {
+                        ShowMessage("讀取軸座標失敗", "讀取軸座標狀態");
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : Error\r\n";
+                        lblJoint.Text += $"J2 : Error\r\n";
+                        lblJoint.Text += $"J3 : Error\r\n";
+                        lblJoint.Text += $"J4 : Error\r\n";
+                        lblJoint.Text += $"J5 : Error\r\n";
+                        lblJoint.Text += $"J6 : Error";
+                        return;
+                    }
+                    else
+                    {
+                        lblJoint.Text = "Joint\r\n";
+                        lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}\r\n";
+                        lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
+                    }
                     break;
             }
-
-            if (!myController.GetOverride())
-            {
-                ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
-                lblOverride.Text = "Error";
-                return;
-            }
-            else
-            {
-                lblOverride.Text = RobotAdapter.getoverride + "%";
-            }
-
-            if (!myController.GetState())
-            {
-                ShowMessage("讀取程式狀態失敗", "讀取程式狀態狀態");
-                lblState.Text = "Error";
-                return;
-            }
-            else
-            {
-                lblState.Text = $"State : {RobotAdapter.getstate}";
-            }
-
-            if (!myController.GetTool())
-            {
-                ShowMessage("讀取工具座標失敗", "讀取工具座標狀態");
-                lblTool.Text = "Error";
-                return;
-            }
-            else
-            {
-                lblTool.Text = $"Tool : {RobotAdapter.gettool}";
-            }
-
-            if (!myController.GetBase())
-            {
-                ShowMessage("讀取基底座標失敗", "讀取基底座標狀態");
-                lblBase.Text = "Error";
-                return;
-            }
-            else
-            {
-                lblBase.Text = $"Base : {RobotAdapter.getbase}";
-            }
-
-            if (RobotAdapter.prebase != RobotAdapter.getbase)
-            {
-                if (!myController.LimitRangeChangeXYZ())
-                {
-                    ShowMessage("更新極限範圍失敗", "更新極限範圍狀態");
-                    txtLimitRangeXJ1min.Text = "Error";
-                    txtLimitRangeXJ1max.Text = "Error";
-                    txtLimitRangeYJ2min.Text = "Error";
-                    txtLimitRangeYJ2max.Text = "Error";
-                    txtLimitRangeZJ3min.Text = "Error";
-                    txtLimitRangeZJ3max.Text = "Error";
-                    txtLimitRangeWJ4min.Text = "Error";
-                    txtLimitRangeWJ4max.Text = "Error";
-                    txtLimitRangePJ5min.Text = "Error";
-                    txtLimitRangePJ5max.Text = "Error";
-                    txtLimitRangeRJ6min.Text = "Error"; ;
-                    txtLimitRangeRJ6max.Text = "Error";
-                    txtLimitRangeVelocitymin.Text = "Error";
-                    txtLimitRangeVelocitymax.Text = "Error";
-                    return;
-                }
-                else
-                {
-                    txtLimitRangeXJ1min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(0)).ToString("###0.000"))}";
-                    txtLimitRangeXJ1max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(1)).ToString("###0.000"))}";
-                    txtLimitRangeYJ2min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(2)).ToString("###0.000"))}";
-                    txtLimitRangeYJ2max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(3)).ToString("###0.000"))}";
-                    txtLimitRangeZJ3min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(4)).ToString("###0.000"))}";
-                    txtLimitRangeZJ3max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(5)).ToString("###0.000"))}";
-                    txtLimitRangeWJ4min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(6)).ToString("###0.000"))}";
-                    txtLimitRangeWJ4max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(7)).ToString("###0.000"))}";
-                    txtLimitRangePJ5min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(8)).ToString("###0.000"))}";
-                    txtLimitRangePJ5max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(9)).ToString("###0.000"))}";
-                    txtLimitRangeRJ6min.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(10)).ToString("###0.000"))}";
-                    txtLimitRangeRJ6max.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangexyz.GetValue(11)).ToString("###0.000"))}";
-                    txtLimitRangeVelocitymin.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(0)).ToString("###0.000"))}";
-                    txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
-                    RobotAdapter.prebase = RobotAdapter.getbase;
-                }
-            }
-
-            if (!myController.GetCPosition())
-            {
-                ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
-                lblXyzwpr.Text = "Cartesian\r\n";
-                lblXyzwpr.Text += $"X : Error\r\n";
-                lblXyzwpr.Text += $"Y : Error\r\n";
-                lblXyzwpr.Text += $"Z : Error\r\n";
-                lblXyzwpr.Text += $"W: Error\r\n";
-                lblXyzwpr.Text += $"P : Error\r\n";
-                lblXyzwpr.Text += $"R : Error";
-                return;
-            }
-            else
-            {
-                lblXyzwpr.Text = "Cartesian\r\n";
-                lblXyzwpr.Text += $"X : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(0)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"Y : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(1)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"Z : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(2)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"W: {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(3)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"P : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(4)).ToString("###0.000"))}\r\n";
-                lblXyzwpr.Text += $"R : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getcposition.GetValue(5)).ToString("###0.000"))}";
-            }
-
-            if (!myController.GetJPosition())
-            {
-                ShowMessage("讀取軸座標失敗", "讀取軸座標狀態");
-                lblJoint.Text = "Joint\r\n";
-                lblJoint.Text += $"J1 : Error\r\n";
-                lblJoint.Text += $"J2 : Error\r\n";
-                lblJoint.Text += $"J3 : Error\r\n";
-                lblJoint.Text += $"J4 : Error\r\n";
-                lblJoint.Text += $"J5 : Error\r\n";
-                lblJoint.Text += $"J6 : Error";
-                return;
-            }
-            else
-            {
-                lblJoint.Text = "Joint\r\n";
-                lblJoint.Text += $"J1 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(0)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J2 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(1)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J3 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(2)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J4 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(3)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J5 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(4)).ToString("###0.000"))}\r\n";
-                lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
-            }
-
-            if (!myController.GetInformation1())
-            {
-                ShowMessage("取得資料1失敗", "取得資料狀態");
-                return;
-            }
-            gbInformation1.Text = RobotAdapter.information1name;
-            lblInformation1.Text = RobotAdapter.information1text;
-            if (!myController.GetInformation2())
-            {
-                ShowMessage("取得資料2失敗", "取得資料狀態");
-                return;
-            }
-            gbInformation2.Text = RobotAdapter.information2name;
-            lblInformation2.Text = RobotAdapter.information2text;
-            if (!myController.GetInformation3())
-            {
-                ShowMessage("取得資料3失敗", "取得資料狀態");
-                return;
-            }
-            gbInformation3.Text = RobotAdapter.information3name;
-            lblInformation3.Text = RobotAdapter.information3text;
         }
         private void ShowMessage(string content, string title)
         {
@@ -507,6 +702,8 @@ namespace Integrated_Robot_Interface
                     cboRobot.Enabled = false;
                     timer1.Enabled = true;
                     txtIP.Enabled = false;
+                    btnGrap.Enabled = false;
+                    btnOpen.Enabled = false;
                     gbEnbleControl(true);
                     richTextBox1.Clear();
 
@@ -520,8 +717,6 @@ namespace Integrated_Robot_Interface
                             RobotAdapter.limitrangeoverride = new float[2] { 1, 100 };
                             RobotAdapter.limitrangetool = new float[2] { 1, 10 };
                             RobotAdapter.limitrangebase = new float[2] { 0, 9 };
-                            btnGrap.Enabled = false;
-                            btnOpen.Enabled = false;
                             RobotAdapter.setoverride = 20;
                             if (!myController.SetOverride())
                             {
@@ -659,8 +854,34 @@ namespace Integrated_Robot_Interface
                             }
                             break;
                         case Controller.Robotnum.Ourarm:
+                            RobotAdapter.limitrangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
+                            RobotAdapter.limitrangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
+                            gbEnbleControl(false);
+                            gbCurrentPosition.Enabled = true;
+                            gbPointMove.Enabled = true;
+                            gbJogMove.Enabled = true;
+                            gbLimitRange.Enabled = true;
+                            gbControl.Enabled = true;
+                            gbGripper.Enabled = true;
+                            btnEnable.Enabled = false;
+                            btnDisable.Enabled = false;
+                            btnHold.Enabled = false;
+                            btnStop.Enabled = false;
+                            btnReset.Enabled = false;
+                            btnHome.Enabled = false;
+                            lblState.Enabled = false;
+                            lblTool.Enabled = false;
+                            lblBase.Enabled = false;
+                            btnGripperConnect.Enabled = false;
+                            btnGrap.Enabled = true;
+                            btnOpen.Enabled = true;
+                            string[] Step = new string[] { Controller.Stepnum.Five.ToString() };
+                            cboJogStep.Items.Clear();
+                            cboJogStep.Items.AddRange(Step);
                             break;
                     }
+
                     cboJogStep.SelectedIndex = 0;
                     cboProgramInstruction.SelectedIndex = 0;
                 }
@@ -1134,7 +1355,7 @@ namespace Integrated_Robot_Interface
                 ShowMessage("Stop失敗", "Stop狀態");
             }
         }
-        private void btnPositionHome_Click(object sender, EventArgs e)
+        private void btnHome_Click(object sender, EventArgs e)
         {
             RobotAdapter.homeposition.SetValue(0, 0);
             RobotAdapter.homeposition.SetValue(0, 1);
