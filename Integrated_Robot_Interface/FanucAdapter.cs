@@ -9,7 +9,7 @@ using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
-    public class FanucAdapter : RobotAdapter
+    public class FanucAdapter : RobotAdapter, IFanucNative, IGripper
     {
         //變數宣告
         private FRRJIf.Core mobjCore;
@@ -49,10 +49,12 @@ namespace Integrated_Robot_Interface
             mobjNumReg = mobjDataTable.AddNumReg(FRRJIf.FRIF_DATA_TYPE.NUMREG_REAL, 1, 20);
             mobjTask = mobjDataTable.AddTask(FRRJIf.FRIF_DATA_TYPE.TASK, 1);
         }
+
+        #region <RobotAdapter>
         public override bool Connect()
         {
             bool ret = false;
-            Array Buffer = new short[8] { 1,1,1,0,0,0,0,1 };
+            Array Buffer = new short[8] { 1, 1, 1, 0, 0, 0, 0, 1 };
 
             ret = mobjCore.Connect(ip);
             if (!ret)
@@ -60,8 +62,7 @@ namespace Integrated_Robot_Interface
                 apierrtext = "mobjCore.Connect Fail";
                 return ret;
             }
-
-
+            
             ret = mobjCore.WriteSDI(1, ref Buffer, 8);
             if (!ret)
             {
@@ -78,18 +79,6 @@ namespace Integrated_Robot_Interface
             if (!ret)
             {
                 apierrtext = "mobjCore.Disconnect Fail";
-                return ret;
-            }
-            return ret;
-        }
-        public override bool Refresh()
-        {
-            bool ret = false;
-
-            ret = mobjDataTable.Refresh();
-            if (!ret)
-            {
-                apierrtext = "mobjDataTable.Refresh Fail";
                 return ret;
             }
             return ret;
@@ -153,7 +142,7 @@ namespace Integrated_Robot_Interface
                 apierrtext = "mobjCore.WriteDI Fail";
                 return ret;
             }
-            
+
             ret = mobjCore.WriteSDI(6, ref Buffer, 1);
             if (!ret)
             {
@@ -187,7 +176,7 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
             Array Buffer = new short[1] { 1 };
-            
+
             Buffer.SetValue((short)0, 0);
             ret = mobjCore.WriteSDI(4, ref Buffer, 1);
             if (!ret)
@@ -325,7 +314,7 @@ namespace Integrated_Robot_Interface
         public override bool GetBase()
         {
             bool ret = false;
-            
+
             ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
             if (!ret)
             {
@@ -479,32 +468,6 @@ namespace Integrated_Robot_Interface
         {
             bool ret = false;
             ret = mobjNumReg.SetValue(7, setvelocity);
-            if (!ret)
-            {
-                apierrtext = "mobjNumReg.SetValue Fail";
-                return ret;
-            }
-            return ret;
-        }
-        public override bool GetRegister()
-        {
-            bool ret = false;
-            object Value = null;
-
-            ret = mobjNumReg.GetValue(Convert.ToInt32(getregister.GetValue(1)), ref Value);
-            if (!ret)
-            {
-                apierrtext = "mobjNumReg.GetValue Fail";
-                return ret;
-            }
-            getregister.SetValue(Value, 0);
-            return ret;
-        }
-        public override bool SetRegister()
-        {
-            bool ret = false;
-
-            ret = mobjNumReg.SetValue(Convert.ToInt32(setregister.GetValue(1)), Convert.ToSingle(setregister.GetValue(0)));
             if (!ret)
             {
                 apierrtext = "mobjNumReg.SetValue Fail";
@@ -794,7 +757,7 @@ namespace Integrated_Robot_Interface
                     programlinecount++;
                     programPRcount++;
                     sw.WriteLine($"   {programlinecount}:J PR[{programPRcount}] 100% FINE    ;");
-                    
+
                     ret = mobjCurPosUF.GetValue(ref Xyzwpr, ref Config, ref Joint, ref UF, ref UT, ref ValidC, ref ValidJ);
                     if (!ret)
                     {
@@ -881,10 +844,55 @@ namespace Integrated_Robot_Interface
                     sw.WriteLine($"   {programlinecount}:  UFRAME_NUM={Convert.ToInt32(compile.GetValue(2))} ;");
                     break;
             }
-            
+
             return true;
         }
-        public override bool GripperConnect()
+        #endregion
+
+        #region <FanucNative>
+        public bool Refresh()
+        {
+            bool ret = false;
+
+            ret = mobjDataTable.Refresh();
+            if (!ret)
+            {
+                apierrtext = "mobjDataTable.Refresh Fail";
+                Console.WriteLine("00");
+                return ret;
+            }
+            return ret;
+        }
+        public bool GetRegister()
+        {
+            bool ret = false;
+            object Value = null;
+
+            ret = mobjNumReg.GetValue(Convert.ToInt32(getregister.GetValue(1)), ref Value);
+            if (!ret)
+            {
+                apierrtext = "mobjNumReg.GetValue Fail";
+                return ret;
+            }
+            getregister.SetValue(Value, 0);
+            return ret;
+        }
+        public bool SetRegister()
+        {
+            bool ret = false;
+
+            ret = mobjNumReg.SetValue(Convert.ToInt32(setregister.GetValue(1)), Convert.ToSingle(setregister.GetValue(0)));
+            if (!ret)
+            {
+                apierrtext = "mobjNumReg.SetValue Fail";
+                return ret;
+            }
+            return ret;
+        }
+        #endregion
+
+        #region <Gripper>
+        public bool GripperConnect()
         {
             serialPort1 = new SerialPort();
             serialPort1.BaudRate = 9600;
@@ -895,12 +903,12 @@ namespace Integrated_Robot_Interface
             serialPort1.Open();
             return true;
         }
-        public override bool GripperDisconnect()
+        public bool GripperDisconnect()
         {
             serialPort1.Close();
             return true;
         }
-        public override bool GripperGrap()
+        public bool GripperGrap()
         {
             GripperDirState = 1;
             fgGripperState = true;
@@ -908,7 +916,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperOpen()
+        public bool GripperOpen()
         {
             GripperDirState = 0;
             fgGripperState = true;
@@ -916,7 +924,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperStop()
+        public bool GripperStop()
         {
             fgGripperState = false;
             return true;
@@ -935,5 +943,9 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
+        #endregion
     }
+    
+
+
 }

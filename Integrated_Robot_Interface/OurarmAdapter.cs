@@ -66,7 +66,6 @@ namespace Integrated_Robot_Interface
                 return false;
             }
         }
-
         public override bool Disconnect()
         {
             message = "close"; //Set message variable to input

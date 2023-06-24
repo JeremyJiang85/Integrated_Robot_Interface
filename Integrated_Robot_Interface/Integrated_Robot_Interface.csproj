@@ -54,6 +54,9 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="IFanucNative.cs" />
+    <Compile Include="IGripper.cs" />
+    <Compile Include="INexcomNative.cs" />
     <Compile Include="NexcomAdapter.cs" />
     <Compile Include="NexMotionSDK\Adapter\NexMotion_AxisAdapter.cs" />
     <Compile Include="NexMotionSDK\Adapter\NexMotion_DeviceAdapter.cs" />

@@ -16,6 +16,9 @@ namespace Integrated_Robot_Interface
     {
         //變數宣告
         private Controller myController;
+        private IFanucNative fanucNative;
+        private INexcomNative nexcomNative;
+        private IGripper gripper;
         private DataTable dataTable;
         private StreamWriter sw;
         private StreamReader sr;
@@ -226,7 +229,8 @@ namespace Integrated_Robot_Interface
             switch (myController.Robot)
             {
                 case Controller.Robotnum.Fanuc:
-                    if (!myController.Refresh())
+                    #region <Fanuc>
+                    if (!fanucNative.Refresh())
                     {
                         ShowMessage("刷新失敗", "取得刷新狀態");
                         return;
@@ -239,7 +243,7 @@ namespace Integrated_Robot_Interface
                     for (int i = StartIndex; i <= Count; i++)
                     {
                         RobotAdapter.getregister.SetValue(i, 1);
-                        if (!myController.GetRegister())
+                        if (!fanucNative.GetRegister())
                         {
                             ShowMessage("讀取暫存器值失敗", "讀取暫存器狀態");
                             return;
@@ -413,7 +417,9 @@ namespace Integrated_Robot_Interface
                     gbInformation3.Text = RobotAdapter.information3name;
                     lblInformation3.Text = RobotAdapter.information3text;
                     break;
+                #endregion
                 case Controller.Robotnum.Nexcom:
+                    #region <Nexcom>
                     if (!myController.GetOverride())
                     {
                         ShowMessage("讀取速度百分比失敗", "讀取速度百分比狀態");
@@ -567,7 +573,9 @@ namespace Integrated_Robot_Interface
                     gbInformation3.Text = RobotAdapter.information3name;
                     lblInformation3.Text = RobotAdapter.information3text;
                     break;
+                #endregion
                 case Controller.Robotnum.Ourarm:
+                    #region <Ourarm>
                     if (!myController.GetCPosition())
                     {
                         ShowMessage("讀取卡氏座標失敗", "讀取卡氏座標狀態");
@@ -614,6 +622,7 @@ namespace Integrated_Robot_Interface
                         lblJoint.Text += $"J6 : {string.Format("{0,10}", Convert.ToSingle(RobotAdapter.getjposition.GetValue(5)).ToString("###0.000"))}";
                     }
                     break;
+                    #endregion
             }
         }
         private void ShowMessage(string content, string title)
@@ -700,16 +709,19 @@ namespace Integrated_Robot_Interface
                     lblConnectionStatus.Text = "Connection Status : Connected";
                     btnConnection.Text = "Disconnect";
                     cboRobot.Enabled = false;
-                    timer1.Enabled = true;
                     txtIP.Enabled = false;
                     btnGrap.Enabled = false;
                     btnOpen.Enabled = false;
                     gbEnbleControl(true);
+                    timer1.Enabled = true;
                     richTextBox1.Clear();
 
                     switch (myController.Robot)
                     {
                         case Controller.Robotnum.Fanuc:
+                            #region <Fanuc>
+                            fanucNative = (IFanucNative)myController.myRobotAdapter;
+                            gripper = (IGripper)myController.myRobotAdapter;
                             RobotAdapter.limitrangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
@@ -729,7 +741,7 @@ namespace Integrated_Robot_Interface
                                 ShowMessage("設定速度失敗", "設定速度狀態");
                                 return;
                             }
-                            if (!myController.Refresh())
+                            if (!fanucNative.Refresh())
                             {
                                 ShowMessage("刷新失敗", "取得刷新狀態");
                                 return;
@@ -789,7 +801,11 @@ namespace Integrated_Robot_Interface
                                 txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
                             }
                             break;
+                        #endregion
                         case Controller.Robotnum.Nexcom:
+                            #region <Nexcom>
+                            nexcomNative = (INexcomNative)myController.myRobotAdapter;
+                            gripper = (IGripper)myController.myRobotAdapter;
                             RobotAdapter.limitrangexyz = new float[12] { 0, 500, -450, 450, 50, 600, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangejoint = new float[12] { -170, 150, 0, 200, -60, 145, -120, 170, -105, 105, -180, 180 };
@@ -853,7 +869,9 @@ namespace Integrated_Robot_Interface
                                 txtLimitRangeVelocitymax.Text = $"{string.Format("{0,10}", Convert.ToSingle(RobotAdapter.limitrangevelocity.GetValue(1)).ToString("###0.000"))}";
                             }
                             break;
+                        #endregion
                         case Controller.Robotnum.Ourarm:
+                            #region <Ourarm>
                             RobotAdapter.limitrangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
@@ -880,6 +898,7 @@ namespace Integrated_Robot_Interface
                             cboJogStep.Items.Clear();
                             cboJogStep.Items.AddRange(Step);
                             break;
+                            #endregion
                     }
 
                     cboJogStep.SelectedIndex = 0;
@@ -1116,7 +1135,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(1, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR1.Text), 0);
-                    if (!myController.SetRegister())
+                    if (!fanucNative.SetRegister())
                     {
                         ShowMessage("設定暫存器R1失敗", "設定暫存器狀態");
                     }
@@ -1125,7 +1144,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(2, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR2.Text), 0);
-                    if (!myController.SetRegister())
+                    if (!fanucNative.SetRegister())
                     {
                         ShowMessage("設定暫存器R2失敗", "設定暫存器狀態");
                     }
@@ -1134,7 +1153,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(3, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR3.Text), 0);
-                    if (!myController.SetRegister())
+                    if (!fanucNative.SetRegister())
                     {
                         ShowMessage("設定暫存器R3失敗", "設定暫存器狀態");
                     }
@@ -1143,7 +1162,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(4, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR4.Text), 0);
-                    if (!myController.SetRegister())
+                    if (!fanucNative.SetRegister())
                     {
                         ShowMessage("設定暫存器R4失敗", "設定暫存器狀態");
                     }
@@ -1152,7 +1171,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(5, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR5.Text), 0);
-                    if (!myController.SetRegister())
+                    if (!fanucNative.SetRegister())
                     {
                         ShowMessage("設定暫存器R5失敗", "設定暫存器狀態");
                     }
@@ -2250,7 +2269,7 @@ namespace Integrated_Robot_Interface
         {
             if (fgGripperConnectionState == false)
             {
-                if (!myController.GripperConnect())
+                if (!gripper.GripperConnect())
                 {
                     MessageBox.Show("夾爪連線失敗");
                     return;
@@ -2262,7 +2281,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (!myController.GripperDisconnect())
+                if (!gripper.GripperDisconnect())
                 {
                     MessageBox.Show("夾爪離線失敗");
                     return;
@@ -2277,7 +2296,7 @@ namespace Integrated_Robot_Interface
         {
             if (fgGripperState == false)
             {
-                if (!myController.GripperGrap())
+                if (!gripper.GripperGrap())
                 {
                     MessageBox.Show("夾爪抓取失敗");
                     return;
@@ -2288,7 +2307,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (!myController.GripperStop())
+                if (!gripper.GripperStop())
                 {
                     MessageBox.Show("夾爪抓取失敗");
                     return;
@@ -2303,7 +2322,7 @@ namespace Integrated_Robot_Interface
         {
             if (fgGripperState == false)
             {
-                if (!myController.GripperOpen())
+                if (!gripper.GripperOpen())
                 {
                     MessageBox.Show("夾爪打開失敗");
                     return;
@@ -2314,7 +2333,7 @@ namespace Integrated_Robot_Interface
             }
             else
             {
-                if (!myController.GripperStop())
+                if (!gripper.GripperStop())
                 {
                     MessageBox.Show("夾爪抓取失敗");
                     return;

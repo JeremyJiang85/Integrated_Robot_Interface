@@ -38,8 +38,6 @@ namespace Integrated_Robot_Interface
         public static string information2text { get; set; } = "";
         public static string information3name { get; set; } = "";
         public static string information3text { get; set; } = "";
-        public static string information4name { get; set; } = "";
-        public static string information4text { get; set; } = "";
         public static Array limitcheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array limitrangexyzorginal { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static Array limitrangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -57,18 +55,8 @@ namespace Integrated_Robot_Interface
         public static bool fgGripperState { get; set; } = false;
         public static short GripperDirState { get; set; } = 0;
         #endregion
-
-        #region <Fanuc>
-
-        #endregion
-
-        #region <Nexcom>
-
-        #endregion
-
-
+        
         //功能介面
-        #region <共用>
         public virtual bool Connect()           //連線與開啟手臂
         {
             MessageBox.Show("此功能目前無法使用或無實作");
@@ -296,53 +284,5 @@ namespace Integrated_Robot_Interface
             MessageBox.Show("此功能目前無法使用或無實作");
             return false;
         }
-        public virtual bool GripperConnect()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool GripperDisconnect()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool GripperGrap()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool GripperOpen()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool GripperStop()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        #endregion
-
-        #region <Fanuc>
-        public virtual bool Refresh()           //更新資料
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool GetRegister()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        public virtual bool SetRegister()
-        {
-            MessageBox.Show("此功能目前無法使用或無實作");
-            return false;
-        }
-        #endregion
-
-        #region <Nexcom>
-
-        #endregion
     }
 }

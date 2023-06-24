@@ -10,7 +10,7 @@ using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
-    public class NexcomAdapter : RobotAdapter
+    public class NexcomAdapter : RobotAdapter, IGripper
     {
         private NexMotion_DeviceAdapter mobjDeviceAdapter;
         private NexMotion_GroupAdapter mobjGroupAdapter;
@@ -31,6 +31,8 @@ namespace Integrated_Robot_Interface
             PosMcs = new Pos_T();
             PosMcs.initializ();
         }
+
+        #region <RobotAdapter>
         public override bool Connect()
         {
             int ret = 0;
@@ -805,7 +807,34 @@ namespace Integrated_Robot_Interface
             }
             return true;
         }
-        public override bool GripperConnect()
+        private string GetErrorMessage(string api, int errcode)
+        {
+            string ret = "Error Code : " + errcode.ToString() + "\n";
+            string errmsg = GetNexMotionErrorMessage(errcode);
+            if (errmsg != "")
+            {
+                ret += errmsg;
+            }
+            return ret;
+        }
+        private string GetNexMotionErrorMessage(int err_code)
+        {
+            int err_desc_length = 256;
+            StringBuilder err_des = new StringBuilder(err_desc_length);
+            IntPtr int_ptr = NexMotion_API.NMC_GetErrorDescription(err_code, err_des, (UInt32)err_desc_length);
+            if (int_ptr != null)
+            {
+                return err_des.ToString();
+            }
+            return "";
+        }
+        #endregion
+
+        #region <NexcomNative>
+        #endregion
+
+        #region <Gripper>
+        public bool GripperConnect()
         {
             serialPort1 = new SerialPort();
             serialPort1.BaudRate = 9600;
@@ -816,12 +845,12 @@ namespace Integrated_Robot_Interface
             serialPort1.Open();
             return true;
         }
-        public override bool GripperDisconnect()
+        public bool GripperDisconnect()
         {
             serialPort1.Close();
             return true;
         }
-        public override bool GripperGrap()
+        public bool GripperGrap()
         {
             GripperDirState = 1;
             fgGripperState = true;
@@ -829,7 +858,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperOpen()
+        public bool GripperOpen()
         {
             GripperDirState = 0;
             fgGripperState = true;
@@ -837,7 +866,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperStop()
+        public bool GripperStop()
         {
             fgGripperState = false;
             return true;
@@ -856,26 +885,6 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
-        public string GetErrorMessage(string api, int errcode)
-        {
-            string ret = "Error Code : " + errcode.ToString() + "\n";
-            string errmsg = GetNexMotionErrorMessage(errcode);
-            if (errmsg != "")
-            {
-                ret += errmsg;
-            }
-            return ret;
-        }
-        public string GetNexMotionErrorMessage(int err_code)
-        {
-            int err_desc_length = 256;
-            StringBuilder err_des = new StringBuilder(err_desc_length);
-            IntPtr int_ptr = NexMotion_API.NMC_GetErrorDescription(err_code, err_des, (UInt32)err_desc_length);
-            if (int_ptr != null)
-            {
-                return err_des.ToString();
-            }
-            return "";
-        }
+        #endregion
     }
 }

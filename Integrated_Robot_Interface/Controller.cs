@@ -10,7 +10,7 @@ namespace Integrated_Robot_Interface
     public class Controller
     {
         //變數宣告
-        private RobotAdapter myRobotAdapter = null;
+        public RobotAdapter myRobotAdapter = null;
 
         public Robotnum Robot { get; set; } = Robotnum.None;
         public enum Robotnum { None, Fanuc, Nexcom, Ourarm }
@@ -20,8 +20,7 @@ namespace Integrated_Robot_Interface
         public enum Stepnum : int { One = 1, Five = 5, Ten = 10 }
         public Instructionnum Instruction { get; set; } = Instructionnum.OVERRIDE;
         public enum Instructionnum : int { OVERRIDE, MOVEC, MOVEJ, MOVEL, WAIT, TOOL, BASE };
-
-        #region <共用>
+        
         public bool Connect()
         {
             switch (Robot)
@@ -179,45 +178,5 @@ namespace Integrated_Robot_Interface
         {
             return myRobotAdapter.Compile();
         }
-        public bool GripperConnect()
-        {
-            return myRobotAdapter.GripperConnect();
-        }
-        public bool GripperDisconnect()
-        {
-            return myRobotAdapter.GripperDisconnect();
-        }
-        public bool GripperGrap()
-        {
-            return myRobotAdapter.GripperGrap();
-        }
-        public bool GripperOpen()
-        {
-            return myRobotAdapter.GripperOpen();
-        }
-        public bool GripperStop()
-        {
-            return myRobotAdapter.GripperStop();
-        }
-        #endregion
-
-        #region <Fanuc>
-        public bool Refresh()
-        {
-            return myRobotAdapter.Refresh();
-        }
-        public bool GetRegister()
-        {
-            return myRobotAdapter.GetRegister();
-        }
-        public bool SetRegister()
-        {
-            return myRobotAdapter.SetRegister();
-        }
-        #endregion
-
-        #region <Nexcom>
-        
-        #endregion
     }
 }
