@@ -400,22 +400,22 @@ namespace Integrated_Robot_Interface
                         ShowMessage("取得資料1失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation1.Text = RobotAdapter.information1name;
-                    lblInformation1.Text = RobotAdapter.information1text;
+                    gbInformation1.Text = RobotAdapter.informationname1;
+                    lblInformation1.Text = RobotAdapter.informationtext1;
                     if (!myController.GetInformation2())
                     {
                         ShowMessage("取得資料2失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation2.Text = RobotAdapter.information2name;
-                    lblInformation2.Text = RobotAdapter.information2text;
+                    gbInformation2.Text = RobotAdapter.informationname2;
+                    lblInformation2.Text = RobotAdapter.informationtext2;
                     if (!myController.GetInformation3())
                     {
                         ShowMessage("取得資料3失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation3.Text = RobotAdapter.information3name;
-                    lblInformation3.Text = RobotAdapter.information3text;
+                    gbInformation3.Text = RobotAdapter.informationname3;
+                    lblInformation3.Text = RobotAdapter.informationtext3;
                     break;
                 #endregion
                 case Controller.Robotnum.Nexcom:
@@ -556,22 +556,22 @@ namespace Integrated_Robot_Interface
                         ShowMessage("取得資料1失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation1.Text = RobotAdapter.information1name;
-                    lblInformation1.Text = RobotAdapter.information1text;
+                    gbInformation1.Text = RobotAdapter.informationname1;
+                    lblInformation1.Text = RobotAdapter.informationtext1;
                     if (!myController.GetInformation2())
                     {
                         ShowMessage("取得資料2失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation2.Text = RobotAdapter.information2name;
-                    lblInformation2.Text = RobotAdapter.information2text;
+                    gbInformation2.Text = RobotAdapter.informationname2;
+                    lblInformation2.Text = RobotAdapter.informationtext2;
                     if (!myController.GetInformation3())
                     {
                         ShowMessage("取得資料3失敗", "取得資料狀態");
                         return;
                     }
-                    gbInformation3.Text = RobotAdapter.information3name;
-                    lblInformation3.Text = RobotAdapter.information3text;
+                    gbInformation3.Text = RobotAdapter.informationname3;
+                    lblInformation3.Text = RobotAdapter.informationtext3;
                     break;
                 #endregion
                 case Controller.Robotnum.Ourarm:
@@ -625,12 +625,14 @@ namespace Integrated_Robot_Interface
                     #endregion
             }
         }
+
         private void ShowMessage(string content, string title)
         {
             DialogResult result;
             timer1.Enabled = false;
             richTextBox1.Text += $"{content}\r\n{RobotAdapter.apierrtext}\r\n";
-            result = MessageBox.Show($"{content}\r\n{RobotAdapter.apierrtext}", $"{title}", MessageBoxButtons.AbortRetryIgnore);
+            result = MessageBox.Show($"{content}\r\n{RobotAdapter.apierrtext}",
+                     $"{title}", MessageBoxButtons.AbortRetryIgnore);
             RobotAdapter.apierrtext = "";
             if (result == DialogResult.Abort)
             {

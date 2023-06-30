@@ -735,7 +735,7 @@
             this.gbRegister.Controls.Add(this.lblSetR1);
             this.gbRegister.Controls.Add(this.lblSetR2);
             this.gbRegister.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbRegister.Location = new System.Drawing.Point(224, 3);
+            this.gbRegister.Location = new System.Drawing.Point(387, 3);
             this.gbRegister.Name = "gbRegister";
             this.gbRegister.Size = new System.Drawing.Size(226, 290);
             this.gbRegister.TabIndex = 7;
@@ -1367,7 +1367,7 @@
             this.gbLimitRange.Controls.Add(this.lblLimitRangeYJ2);
             this.gbLimitRange.Controls.Add(this.btnLimitRangeSet);
             this.gbLimitRange.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gbLimitRange.Location = new System.Drawing.Point(3, 3);
+            this.gbLimitRange.Location = new System.Drawing.Point(166, 3);
             this.gbLimitRange.Name = "gbLimitRange";
             this.gbLimitRange.Size = new System.Drawing.Size(215, 290);
             this.gbLimitRange.TabIndex = 19;
@@ -2017,7 +2017,6 @@
             // tPMove
             // 
             this.tPMove.BackColor = System.Drawing.SystemColors.Control;
-            this.tPMove.Controls.Add(this.gbFrame);
             this.tPMove.Controls.Add(this.gbPointMove);
             this.tPMove.Controls.Add(this.gbJogMove);
             this.tPMove.Controls.Add(this.gbLineMove);
@@ -2035,7 +2034,7 @@
             this.gbFrame.Controls.Add(this.txtToolSet);
             this.gbFrame.Controls.Add(this.lblBaseSet);
             this.gbFrame.Controls.Add(this.lblToolSet);
-            this.gbFrame.Location = new System.Drawing.Point(701, 3);
+            this.gbFrame.Location = new System.Drawing.Point(3, 3);
             this.gbFrame.Name = "gbFrame";
             this.gbFrame.Size = new System.Drawing.Size(157, 290);
             this.gbFrame.TabIndex = 20;
@@ -2178,6 +2177,7 @@
             // tPOther
             // 
             this.tPOther.BackColor = System.Drawing.SystemColors.Control;
+            this.tPOther.Controls.Add(this.gbFrame);
             this.tPOther.Controls.Add(this.gbLimitRange);
             this.tPOther.Controls.Add(this.gbRegister);
             this.tPOther.Location = new System.Drawing.Point(4, 31);

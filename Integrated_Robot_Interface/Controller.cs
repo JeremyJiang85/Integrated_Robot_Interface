@@ -32,7 +32,7 @@ namespace Integrated_Robot_Interface
                     myRobotAdapter = new NexcomAdapter();
                     return myRobotAdapter.Connect();
                 case Robotnum.Ourarm:
-                    myRobotAdapter = new OurarmAdapter();
+                    myRobotAdapter = new MiniABBAdapter();
                     return myRobotAdapter.Connect();
                 default:
                     return false;

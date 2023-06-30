@@ -14,7 +14,7 @@ using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
-    public class OurarmAdapter : RobotAdapter
+    public class MiniABBAdapter : RobotAdapter, IGripper
     {
         int port = 8000;
         string message; //Message to send
@@ -33,7 +33,8 @@ namespace Integrated_Robot_Interface
         double[] x_y_z_point_array = new double[6];
         String joint_point_string;
         String x_y_z_point_string;
-        
+
+        #region <RobotAdapter>
         public override bool Connect()
         {
             if (port == 8000)
@@ -423,7 +424,18 @@ namespace Integrated_Robot_Interface
                 return false;
             }
         }
-        public override bool GripperGrap()
+        #endregion
+
+        #region <Gripper>
+        public bool GripperConnect()
+        {
+            return false;
+        }
+        public bool GripperDisconnect()
+        {
+            return false;
+        }
+        public bool GripperGrap()
         {
             GripperDirState = 1;
             fgGripperState = true;
@@ -431,7 +443,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperOpen()
+        public bool GripperOpen()
         {
             GripperDirState = 0;
             fgGripperState = true;
@@ -439,7 +451,7 @@ namespace Integrated_Robot_Interface
             thread.Start();
             return true;
         }
-        public override bool GripperStop()
+        public bool GripperStop()
         {
             fgGripperState = false;
             return true;
@@ -474,6 +486,7 @@ namespace Integrated_Robot_Interface
                 }
             }
         }
+        #endregion
         public static double[] ExtractDoubleArray(string str)
         {
             string[] values = str.Trim('[', ']').Split(',');

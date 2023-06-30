@@ -32,12 +32,12 @@ namespace Integrated_Robot_Interface
         public static Array getregister { get; set; } = new float[2] { 0, 0 };
         public static Array setregister { get; set; } = new float[2] { 0, 0 };
         public static Array jogmove { get; set; } = new int[2] { 0, 0 };
-        public static string information1name { get; set; } = "";
-        public static string information1text { get; set; } = "";
-        public static string information2name { get; set; } = "";
-        public static string information2text { get; set; } = "";
-        public static string information3name { get; set; } = "";
-        public static string information3text { get; set; } = "";
+        public static string informationname1 { get; set; } = "";
+        public static string informationtext1 { get; set; } = "";
+        public static string informationname2 { get; set; } = "";
+        public static string informationtext2 { get; set; } = "";
+        public static string informationname3 { get; set; } = "";
+        public static string informationtext3 { get; set; } = "";
         public static Array limitcheck { get; set; } = new float[6] { 0, 0, 0, 0, 0, 0 };
         public static Array limitrangexyzorginal { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public static Array limitrangexyz { get; set; } = new float[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -184,20 +184,20 @@ namespace Integrated_Robot_Interface
         }
         public virtual bool GetInformation1()
         {
-            information1name = "";
-            information1text = "";
+            informationname1 = "";
+            informationtext1 = "";
             return true;
         }
         public virtual bool GetInformation2()
         {
-            information2name = "";
-            information2text = "";
+            informationname2 = "";
+            informationtext2 = "";
             return true;
         }
         public virtual bool GetInformation3()
         {
-            information3name = "";
-            information3text = "";
+            informationname3 = "";
+            informationtext3 = "";
             return true;
         }
         public virtual bool LimitRangeChangeXYZ()

@@ -517,8 +517,8 @@ namespace Integrated_Robot_Interface
         }
         public override bool GetInformation1()
         {
-            information1name = "Status";
-            information1text = "";
+            informationname1 = "Status";
+            informationtext1 = "";
 
             int PRetStatusInBit = 0;
 
@@ -536,46 +536,46 @@ namespace Integrated_Robot_Interface
                     switch (i)
                     {
                         case 0:
-                            information1text += "EMG = ON\r\n";
+                            informationtext1 += "EMG = ON\r\n";
                             break;
                         case 1:
-                            information1text += "ALM = ON\r\n";
+                            informationtext1 += "ALM = ON\r\n";
                             break;
                         case 2:
-                            information1text += "PEL = ON\r\n";
+                            informationtext1 += "PEL = ON\r\n";
                             break;
                         case 3:
-                            information1text += "NEL = ON\r\n";
+                            informationtext1 += "NEL = ON\r\n";
                             break;
                         case 4:
-                            information1text += "PSEL = ON\r\n";
+                            informationtext1 += "PSEL = ON\r\n";
                             break;
                         case 5:
-                            information1text += "NSEL = ON\r\n";
+                            informationtext1 += "NSEL = ON\r\n";
                             break;
                         case 6:
-                            information1text += "ENA = ON\r\n";
+                            informationtext1 += "ENA = ON\r\n";
                             break;
                         case 7:
-                            information1text += "ERR = ON\r\n";
+                            informationtext1 += "ERR = ON\r\n";
                             break;
                         case 9:
-                            information1text += "CSTP = ON\r\n";
+                            informationtext1 += "CSTP = ON\r\n";
                             break;
                         case 10:
-                            information1text += "ACC = ON\r\n";
+                            informationtext1 += "ACC = ON\r\n";
                             break;
                         case 11:
-                            information1text += "DEC = ON\r\n";
+                            informationtext1 += "DEC = ON\r\n";
                             break;
                         case 12:
-                            information1text += "MV = ON\r\n";
+                            informationtext1 += "MV = ON\r\n";
                             break;
                         case 13:
-                            information1text += "OP = ON\r\n";
+                            informationtext1 += "OP = ON\r\n";
                             break;
                         case 14:
-                            information1text += "STOP = ON\r\n";
+                            informationtext1 += "STOP = ON\r\n";
                             break;
                     }
                 }
@@ -584,46 +584,46 @@ namespace Integrated_Robot_Interface
                     switch (i)
                     {
                         case 0:
-                            information1text += "EMG = OFF\r\n";
+                            informationtext1 += "EMG = OFF\r\n";
                             break;
                         case 1:
-                            information1text += "ALM = OFF\r\n";
+                            informationtext1 += "ALM = OFF\r\n";
                             break;
                         case 2:
-                            information1text += "PEL = OFF\r\n";
+                            informationtext1 += "PEL = OFF\r\n";
                             break;
                         case 3:
-                            information1text += "NEL = OFF\r\n";
+                            informationtext1 += "NEL = OFF\r\n";
                             break;
                         case 4:
-                            information1text += "PSEL = OFF\r\n";
+                            informationtext1 += "PSEL = OFF\r\n";
                             break;
                         case 5:
-                            information1text += "NSEL = OFF\r\n";
+                            informationtext1 += "NSEL = OFF\r\n";
                             break;
                         case 6:
-                            information1text += "ENA = OFF\r\n";
+                            informationtext1 += "ENA = OFF\r\n";
                             break;
                         case 7:
-                            information1text += "ERR = OFF\r\n";
+                            informationtext1 += "ERR = OFF\r\n";
                             break;
                         case 9:
-                            information1text += "CSTP = OFF\r\n";
+                            informationtext1 += "CSTP = OFF\r\n";
                             break;
                         case 10:
-                            information1text += "ACC = OFF\r\n";
+                            informationtext1 += "ACC = OFF\r\n";
                             break;
                         case 11:
-                            information1text += "DEC = OFF\r\n";
+                            informationtext1 += "DEC = OFF\r\n";
                             break;
                         case 12:
-                            information1text += "MV = OFF\r\n";
+                            informationtext1 += "MV = OFF\r\n";
                             break;
                         case 13:
-                            information1text += "OP = OFF\r\n";
+                            informationtext1 += "OP = OFF\r\n";
                             break;
                         case 14:
-                            information1text += "STOP = OFF\r\n";
+                            informationtext1 += "STOP = OFF\r\n";
                             break;
                     }
                 }

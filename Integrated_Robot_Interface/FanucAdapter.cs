@@ -603,8 +603,8 @@ namespace Integrated_Robot_Interface
             short StartIndex = 1;
             short Count = 18;
             Array Buffer = new short[Count];
-            information1name = "UI";
-            information1text = "";
+            informationname1 = "UI";
+            informationtext1 = "";
 
             ret = mobjCore.ReadUI(StartIndex, ref Buffer, Count);
             if (!ret)
@@ -617,11 +617,11 @@ namespace Integrated_Robot_Interface
             {
                 if (Convert.ToInt16(Buffer.GetValue(i - 1)) == 1)
                 {
-                    information1text += $"UI[{i}] = ON\r\n";
+                    informationtext1 += $"UI[{i}] = ON\r\n";
                 }
                 else
                 {
-                    information1text += $"UI[{i}] = OFF\r\n";
+                    informationtext1 += $"UI[{i}] = OFF\r\n";
                 }
             }
             return ret;
@@ -632,8 +632,8 @@ namespace Integrated_Robot_Interface
             short StartIndex = 1;
             short Count = 20;
             Array Buffer = new short[Count];
-            information2name = "UO";
-            information2text = "";
+            informationname2 = "UO";
+            informationtext2 = "";
 
             ret = mobjCore.ReadUO(StartIndex, ref Buffer, Count);
             if (!ret)
@@ -646,11 +646,11 @@ namespace Integrated_Robot_Interface
             {
                 if (Convert.ToInt16(Buffer.GetValue(i - 1)) == 1)
                 {
-                    information2text += $"UO[{i}] = ON\r\n";
+                    informationtext2 += $"UO[{i}] = ON\r\n";
                 }
                 else
                 {
-                    information2text += $"UO[{i}] = OFF\r\n";
+                    informationtext2 += $"UO[{i}] = OFF\r\n";
                 }
             }
             return ret;
