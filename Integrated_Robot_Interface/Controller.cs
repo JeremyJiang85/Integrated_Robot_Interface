@@ -13,7 +13,7 @@ namespace Integrated_Robot_Interface
         public RobotAdapter myRobotAdapter = null;
 
         public Robotnum Robot { get; set; } = Robotnum.None;
-        public enum Robotnum { None, Fanuc, Nexcom, Ourarm }
+        public enum Robotnum { None, Fanuc, Nexcom, YZRobot }
         public Coordinatenum Coordinate { get; set; } = Coordinatenum.Cartesian;
         public enum Coordinatenum { Cartesian, Joint }
         public Stepnum Step { get; set; } = Stepnum.One;
@@ -31,8 +31,8 @@ namespace Integrated_Robot_Interface
                 case Robotnum.Nexcom:
                     myRobotAdapter = new NexcomAdapter();
                     return myRobotAdapter.Connect();
-                case Robotnum.Ourarm:
-                    myRobotAdapter = new MiniABBAdapter();
+                case Robotnum.YZRobot:
+                    myRobotAdapter = new YZRobotAdapter();
                     return myRobotAdapter.Connect();
                 default:
                     return false;

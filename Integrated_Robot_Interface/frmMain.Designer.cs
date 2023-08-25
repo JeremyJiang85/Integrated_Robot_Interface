@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.pblogo = new System.Windows.Forms.PictureBox();
             this.btnEsc = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
@@ -196,12 +197,6 @@
             this.txtProgramPJ5 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tPMove = new System.Windows.Forms.TabPage();
-            this.gbFrame = new System.Windows.Forms.GroupBox();
-            this.btnFrameSet = new System.Windows.Forms.Button();
-            this.txtBaseSet = new System.Windows.Forms.TextBox();
-            this.txtToolSet = new System.Windows.Forms.TextBox();
-            this.lblBaseSet = new System.Windows.Forms.Label();
-            this.lblToolSet = new System.Windows.Forms.Label();
             this.tPInformation = new System.Windows.Forms.TabPage();
             this.gbInformation1 = new System.Windows.Forms.GroupBox();
             this.lblInformation1 = new System.Windows.Forms.Label();
@@ -211,6 +206,12 @@
             this.lblInformation2 = new System.Windows.Forms.Label();
             this.tPProgram = new System.Windows.Forms.TabPage();
             this.tPOther = new System.Windows.Forms.TabPage();
+            this.gbFrame = new System.Windows.Forms.GroupBox();
+            this.btnFrameSet = new System.Windows.Forms.Button();
+            this.txtBaseSet = new System.Windows.Forms.TextBox();
+            this.txtToolSet = new System.Windows.Forms.TextBox();
+            this.lblBaseSet = new System.Windows.Forms.Label();
+            this.lblToolSet = new System.Windows.Forms.Label();
             this.gbGripper = new System.Windows.Forms.GroupBox();
             this.btnGripperConnect = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
@@ -230,19 +231,19 @@
             this.gbProgram.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tPMove.SuspendLayout();
-            this.gbFrame.SuspendLayout();
             this.tPInformation.SuspendLayout();
             this.gbInformation1.SuspendLayout();
             this.gbInformation3.SuspendLayout();
             this.gbInformation2.SuspendLayout();
             this.tPProgram.SuspendLayout();
             this.tPOther.SuspendLayout();
+            this.gbFrame.SuspendLayout();
             this.gbGripper.SuspendLayout();
             this.SuspendLayout();
             // 
             // pblogo
             // 
-            this.pblogo.Image = global::Integrated_Robot_Interface.Properties.Resources.lion;
+            this.pblogo.Image = ((System.Drawing.Image)(resources.GetObject("pblogo.Image")));
             this.pblogo.Location = new System.Drawing.Point(12, 12);
             this.pblogo.Name = "pblogo";
             this.pblogo.Size = new System.Drawing.Size(125, 125);
@@ -2027,69 +2028,6 @@
             this.tPMove.TabIndex = 0;
             this.tPMove.Text = "Move";
             // 
-            // gbFrame
-            // 
-            this.gbFrame.Controls.Add(this.btnFrameSet);
-            this.gbFrame.Controls.Add(this.txtBaseSet);
-            this.gbFrame.Controls.Add(this.txtToolSet);
-            this.gbFrame.Controls.Add(this.lblBaseSet);
-            this.gbFrame.Controls.Add(this.lblToolSet);
-            this.gbFrame.Location = new System.Drawing.Point(3, 3);
-            this.gbFrame.Name = "gbFrame";
-            this.gbFrame.Size = new System.Drawing.Size(157, 290);
-            this.gbFrame.TabIndex = 20;
-            this.gbFrame.TabStop = false;
-            this.gbFrame.Text = "Frame";
-            // 
-            // btnFrameSet
-            // 
-            this.btnFrameSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnFrameSet.Location = new System.Drawing.Point(23, 87);
-            this.btnFrameSet.Name = "btnFrameSet";
-            this.btnFrameSet.Size = new System.Drawing.Size(100, 50);
-            this.btnFrameSet.TabIndex = 27;
-            this.btnFrameSet.Text = "Set";
-            this.btnFrameSet.UseVisualStyleBackColor = true;
-            this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
-            // 
-            // txtBaseSet
-            // 
-            this.txtBaseSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBaseSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtBaseSet.Location = new System.Drawing.Point(97, 58);
-            this.txtBaseSet.Name = "txtBaseSet";
-            this.txtBaseSet.Size = new System.Drawing.Size(49, 23);
-            this.txtBaseSet.TabIndex = 28;
-            this.txtBaseSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtToolSet
-            // 
-            this.txtToolSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtToolSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtToolSet.Location = new System.Drawing.Point(97, 29);
-            this.txtToolSet.Name = "txtToolSet";
-            this.txtToolSet.Size = new System.Drawing.Size(49, 23);
-            this.txtToolSet.TabIndex = 27;
-            this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblBaseSet
-            // 
-            this.lblBaseSet.AutoSize = true;
-            this.lblBaseSet.Location = new System.Drawing.Point(6, 58);
-            this.lblBaseSet.Name = "lblBaseSet";
-            this.lblBaseSet.Size = new System.Drawing.Size(59, 21);
-            this.lblBaseSet.TabIndex = 22;
-            this.lblBaseSet.Text = "Base :";
-            // 
-            // lblToolSet
-            // 
-            this.lblToolSet.AutoSize = true;
-            this.lblToolSet.Location = new System.Drawing.Point(6, 29);
-            this.lblToolSet.Name = "lblToolSet";
-            this.lblToolSet.Size = new System.Drawing.Size(57, 21);
-            this.lblToolSet.TabIndex = 21;
-            this.lblToolSet.Text = "Tool :";
-            // 
             // tPInformation
             // 
             this.tPInformation.BackColor = System.Drawing.SystemColors.Control;
@@ -2186,6 +2124,69 @@
             this.tPOther.TabIndex = 3;
             this.tPOther.Text = "Other";
             // 
+            // gbFrame
+            // 
+            this.gbFrame.Controls.Add(this.btnFrameSet);
+            this.gbFrame.Controls.Add(this.txtBaseSet);
+            this.gbFrame.Controls.Add(this.txtToolSet);
+            this.gbFrame.Controls.Add(this.lblBaseSet);
+            this.gbFrame.Controls.Add(this.lblToolSet);
+            this.gbFrame.Location = new System.Drawing.Point(3, 3);
+            this.gbFrame.Name = "gbFrame";
+            this.gbFrame.Size = new System.Drawing.Size(157, 290);
+            this.gbFrame.TabIndex = 20;
+            this.gbFrame.TabStop = false;
+            this.gbFrame.Text = "Frame";
+            // 
+            // btnFrameSet
+            // 
+            this.btnFrameSet.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnFrameSet.Location = new System.Drawing.Point(23, 87);
+            this.btnFrameSet.Name = "btnFrameSet";
+            this.btnFrameSet.Size = new System.Drawing.Size(100, 50);
+            this.btnFrameSet.TabIndex = 27;
+            this.btnFrameSet.Text = "Set";
+            this.btnFrameSet.UseVisualStyleBackColor = true;
+            this.btnFrameSet.Click += new System.EventHandler(this.btnFrameSet_Click);
+            // 
+            // txtBaseSet
+            // 
+            this.txtBaseSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBaseSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtBaseSet.Location = new System.Drawing.Point(97, 58);
+            this.txtBaseSet.Name = "txtBaseSet";
+            this.txtBaseSet.Size = new System.Drawing.Size(49, 23);
+            this.txtBaseSet.TabIndex = 28;
+            this.txtBaseSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtToolSet
+            // 
+            this.txtToolSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtToolSet.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtToolSet.Location = new System.Drawing.Point(97, 29);
+            this.txtToolSet.Name = "txtToolSet";
+            this.txtToolSet.Size = new System.Drawing.Size(49, 23);
+            this.txtToolSet.TabIndex = 27;
+            this.txtToolSet.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblBaseSet
+            // 
+            this.lblBaseSet.AutoSize = true;
+            this.lblBaseSet.Location = new System.Drawing.Point(6, 58);
+            this.lblBaseSet.Name = "lblBaseSet";
+            this.lblBaseSet.Size = new System.Drawing.Size(59, 21);
+            this.lblBaseSet.TabIndex = 22;
+            this.lblBaseSet.Text = "Base :";
+            // 
+            // lblToolSet
+            // 
+            this.lblToolSet.AutoSize = true;
+            this.lblToolSet.Location = new System.Drawing.Point(6, 29);
+            this.lblToolSet.Name = "lblToolSet";
+            this.lblToolSet.Size = new System.Drawing.Size(57, 21);
+            this.lblToolSet.TabIndex = 21;
+            this.lblToolSet.Text = "Tool :";
+            // 
             // gbGripper
             // 
             this.gbGripper.Controls.Add(this.btnGripperConnect);
@@ -2275,8 +2276,6 @@
             this.gbProgram.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tPMove.ResumeLayout(false);
-            this.gbFrame.ResumeLayout(false);
-            this.gbFrame.PerformLayout();
             this.tPInformation.ResumeLayout(false);
             this.gbInformation1.ResumeLayout(false);
             this.gbInformation1.PerformLayout();
@@ -2286,6 +2285,8 @@
             this.gbInformation2.PerformLayout();
             this.tPProgram.ResumeLayout(false);
             this.tPOther.ResumeLayout(false);
+            this.gbFrame.ResumeLayout(false);
+            this.gbFrame.PerformLayout();
             this.gbGripper.ResumeLayout(false);
             this.ResumeLayout(false);
 

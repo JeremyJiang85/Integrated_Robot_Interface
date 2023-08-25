@@ -72,7 +72,7 @@ namespace Integrated_Robot_Interface
         private void Initialize()
         {
             string[] Robot = new string[] { Controller.Robotnum.None.ToString(), Controller.Robotnum.Fanuc.ToString(),
-                                            Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.Ourarm.ToString() };
+                                            Controller.Robotnum.Nexcom.ToString(), Controller.Robotnum.YZRobot.ToString() };
             cboRobot.Items.Clear();
             cboRobot.Items.AddRange(Robot);
             string[] Coordinate = new string[] { Controller.Coordinatenum.Cartesian.ToString(), Controller.Coordinatenum.Joint.ToString() };
@@ -574,7 +574,7 @@ namespace Integrated_Robot_Interface
                     lblInformation3.Text = RobotAdapter.informationtext3;
                     break;
                 #endregion
-                case Controller.Robotnum.Ourarm:
+                case Controller.Robotnum.YZRobot:
                     #region <Ourarm>
                     if (!myController.GetCPosition())
                     {
@@ -675,8 +675,8 @@ namespace Integrated_Robot_Interface
                     txtIP.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
                     break;
-                case nameof(Controller.Robotnum.Ourarm):
-                    myController.Robot = Controller.Robotnum.Ourarm;
+                case nameof(Controller.Robotnum.YZRobot):
+                    myController.Robot = Controller.Robotnum.YZRobot;
                     txtIP.Enabled = false;
                     lblLineVelocityUnit.Text = "unit/sec";
                     break;
@@ -689,16 +689,16 @@ namespace Integrated_Robot_Interface
         }
         private void btnConnection_Click(object sender, EventArgs e)
         {
-            if (!fgConnectionState)
+            if (!fgConnectionState)     //判斷是否已連線
             {
-                switch (myController.Robot)
+                switch (myController.Robot)     //判斷選擇哪一台機械手臂
                 {
                     case Controller.Robotnum.Fanuc:
-                        RobotAdapter.ip = txtIP.Text;
+                        RobotAdapter.ip = txtIP.Text;       //設定IP位置
                         break;
                     case Controller.Robotnum.Nexcom:
                         break;
-                    case Controller.Robotnum.Ourarm:
+                    case Controller.Robotnum.YZRobot:
                         break;
                     default:
                         richTextBox1.Text += "請選擇手臂型號\r\n";
@@ -872,8 +872,9 @@ namespace Integrated_Robot_Interface
                             }
                             break;
                         #endregion
-                        case Controller.Robotnum.Ourarm:
-                            #region <Ourarm>
+                        case Controller.Robotnum.YZRobot:
+                            #region <YZRobot>
+                            gripper = (IGripper)myController.myRobotAdapter;
                             RobotAdapter.limitrangexyz = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangexyzorginal = new float[12] { 0, 650, -450, 450, -270, 400, -180, 180, -180, 180, -180, 180 };
                             RobotAdapter.limitrangejoint = new float[12] { -170, 170, -100, 140, -70, 50, -180, 180, -125, 40, -180, 180 };
@@ -889,7 +890,6 @@ namespace Integrated_Robot_Interface
                             btnHold.Enabled = false;
                             btnStop.Enabled = false;
                             btnReset.Enabled = false;
-                            btnHome.Enabled = false;
                             lblState.Enabled = false;
                             lblTool.Enabled = false;
                             lblBase.Enabled = false;
@@ -1027,7 +1027,7 @@ namespace Integrated_Robot_Interface
                                 return;
                             }
                             RobotAdapter.setcposition = RobotAdapter.limitcheck;
-                            if (!myController.PointMoveC())
+                            if (!myController.PointMoveC()) //呼叫控制類別的卡式點位移動功能
                             {
                                 ShowMessage("設定座標失敗", "點到點移動狀態");
                             }
@@ -1137,7 +1137,7 @@ namespace Integrated_Robot_Interface
                 {
                     RobotAdapter.setregister.SetValue(1, 1);
                     RobotAdapter.setregister.SetValue(Convert.ToSingle(txtR1.Text), 0);
-                    if (!fanucNative.SetRegister())
+                    if (!fanucNative.SetRegister()) //呼叫Fanuc原生介面的設定暫存器功能
                     {
                         ShowMessage("設定暫存器R1失敗", "設定暫存器狀態");
                     }
@@ -2298,6 +2298,7 @@ namespace Integrated_Robot_Interface
         {
             if (fgGripperState == false)
             {
+                //呼叫夾爪介面的夾取功能
                 if (!gripper.GripperGrap())
                 {
                     MessageBox.Show("夾爪抓取失敗");
@@ -2309,9 +2310,10 @@ namespace Integrated_Robot_Interface
             }
             else
             {
+                //呼叫夾爪介面的停止功能
                 if (!gripper.GripperStop())
                 {
-                    MessageBox.Show("夾爪抓取失敗");
+                    MessageBox.Show("夾爪停止失敗");
                     return;
                 }
                 btnGrap.Text = "Grap";
@@ -2337,7 +2339,7 @@ namespace Integrated_Robot_Interface
             {
                 if (!gripper.GripperStop())
                 {
-                    MessageBox.Show("夾爪抓取失敗");
+                    MessageBox.Show("夾爪停止失敗");
                     return;
                 }
                 btnGrap.Text = "Grap";

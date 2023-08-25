@@ -14,7 +14,7 @@ using System.IO.Ports;
 
 namespace Integrated_Robot_Interface
 {
-    public class MiniABBAdapter : RobotAdapter, IGripper
+    public class YZRobotAdapter : RobotAdapter, IGripper
     {
         int port = 8000;
         string message; //Message to send
@@ -40,32 +40,34 @@ namespace Integrated_Robot_Interface
             if (port == 8000)
             {
                 client = new TcpClient("", port);
-            }
-            try
-            {
-                message = "init_point";
-                byteCount = Encoding.UTF8.GetByteCount(message);
-                sendData = new byte[byteCount]; //Prepares variable size for required data
-                sendData = Encoding.UTF8.GetBytes(message);
-                stream = client.GetStream(); //Opens up the network stream
-                stream.Write(sendData, 0, sendData.Length); //Transmits data onto the stream
-                buffer = new byte[4096]; // Adjust the buffer size according to your data
-                bytesRead = stream.Read(buffer, 0, buffer.Length);
-                receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                buffer = new byte[4096]; // Adjust the buffer size according to your data
-                bytesRead = stream.Read(buffer, 0, buffer.Length);
-                receivedData1 = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                //listBox1.Items.Add("receive Data : " + receivedData);
-                joint_point_array = ExtractDoubleArray(receivedData); //字串轉陣列
-                x_y_z_point_array = ExtractDoubleArray(receivedData1); //字串轉陣列
-                getcposition = x_y_z_point_array;
-                getjposition = joint_point_array;
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            return false;
+            //try
+            //{
+            //    message = "init_point";
+            //    byteCount = Encoding.UTF8.GetByteCount(message);
+            //    sendData = new byte[byteCount]; //Prepares variable size for required data
+            //    sendData = Encoding.UTF8.GetBytes(message);
+            //    stream = client.GetStream(); //Opens up the network stream
+            //    stream.Write(sendData, 0, sendData.Length); //Transmits data onto the stream
+            //    buffer = new byte[4096]; // Adjust the buffer size according to your data
+            //    bytesRead = stream.Read(buffer, 0, buffer.Length);
+            //    receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+            //    buffer = new byte[4096]; // Adjust the buffer size according to your data
+            //    bytesRead = stream.Read(buffer, 0, buffer.Length);
+            //    receivedData1 = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+            //    //listBox1.Items.Add("receive Data : " + receivedData);
+            //    joint_point_array = ExtractDoubleArray(receivedData); //字串轉陣列
+            //    x_y_z_point_array = ExtractDoubleArray(receivedData1); //字串轉陣列
+            //    getcposition = x_y_z_point_array;
+            //    getjposition = joint_point_array;
+            //    return true;
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
         }
         public override bool Disconnect()
         {
@@ -79,6 +81,18 @@ namespace Integrated_Robot_Interface
             stream.Write(sendData, 0, sendData.Length); //Transmits data onto the stream
             stream.Close(); //Closes data stream
             client.Close(); //Closes socket
+            return true;
+        }
+        public override bool Home()
+        {
+            message = "initialize"; //Set message variable to input
+
+            byteCount = Encoding.UTF8.GetByteCount(message);
+            sendData = new byte[byteCount]; //Prepares variable size for required data
+                                            // sendData = Encoding.ASCII.GetBytes(message);sendData = Encoding.UTF8.GetBytes(message); //Sets the sendData variable to the actual binary data (from the ASCII)
+            sendData = Encoding.UTF8.GetBytes(message);
+            stream = client.GetStream(); //Opens up the network stream
+            stream.Write(sendData, 0, sendData.Length); //Transmits data onto the stream
             return true;
         }
         public override bool GetCPosition()
@@ -500,5 +514,6 @@ namespace Integrated_Robot_Interface
             }
             return array;
         }
+        
     }
 }
